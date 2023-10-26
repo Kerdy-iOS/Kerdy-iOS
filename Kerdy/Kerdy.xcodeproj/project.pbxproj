@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		311620632AE252E600E26420 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = 311620622AE252E600E26420 /* Core */; };
+		3162F0732AEA775E001B1D32 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 3162F0722AEA775E001B1D32 /* RxCocoa */; };
+		3162F0752AEA775E001B1D32 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3162F0742AEA775E001B1D32 /* RxSwift */; };
 		3164D47F2AE21F810054F440 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3164D47E2AE21F810054F440 /* AppDelegate.swift */; };
 		3164D4812AE21F810054F440 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3164D4802AE21F810054F440 /* SceneDelegate.swift */; };
 		3164D4832AE21F810054F440 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3164D4822AE21F810054F440 /* ViewController.swift */; };
@@ -60,8 +62,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3162F0752AEA775E001B1D32 /* RxSwift in Frameworks */,
 				3164D4B72AE223400054F440 /* SnapKit in Frameworks */,
 				311620632AE252E600E26420 /* Core in Frameworks */,
+				3162F0732AEA775E001B1D32 /* RxCocoa in Frameworks */,
 				3164D4B32AE223180054F440 /* RxMoya in Frameworks */,
 				3164D4B12AE223180054F440 /* Moya in Frameworks */,
 			);
@@ -165,6 +169,8 @@
 				3164D4B22AE223180054F440 /* RxMoya */,
 				3164D4B62AE223400054F440 /* SnapKit */,
 				311620622AE252E600E26420 /* Core */,
+				3162F0722AEA775E001B1D32 /* RxCocoa */,
+				3162F0742AEA775E001B1D32 /* RxSwift */,
 			);
 			productName = Kerdy;
 			productReference = 3164D47B2AE21F810054F440 /* Kerdy.app */;
@@ -242,6 +248,7 @@
 				3164D4AF2AE223180054F440 /* XCRemoteSwiftPackageReference "Moya" */,
 				3164D4B42AE223380054F440 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				31C050092AE22AD4000F8957 /* XCLocalSwiftPackageReference "../Core" */,
+				3162F0712AEA775E001B1D32 /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = 3164D47C2AE21F810054F440 /* Products */;
 			projectDirPath = "";
@@ -635,6 +642,14 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3162F0712AEA775E001B1D32 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.6.0;
+			};
+		};
 		3164D4AF2AE223180054F440 /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya.git";
@@ -658,6 +673,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 31C050092AE22AD4000F8957 /* XCLocalSwiftPackageReference "../Core" */;
 			productName = Core;
+		};
+		3162F0722AEA775E001B1D32 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3162F0712AEA775E001B1D32 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		3162F0742AEA775E001B1D32 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3162F0712AEA775E001B1D32 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
 		};
 		3164D4B02AE223180054F440 /* Moya */ = {
 			isa = XCSwiftPackageProductDependency;
