@@ -3,10 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		096D24BC2AEBD753006B550C /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 096D24BB2AEBD753006B550C /* Colors.xcassets */; };
+		096D24BF2AEBD8E7006B550C /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096D24BE2AEBD8E7006B550C /* UIColor+.swift */; };
+		096D24DD2AEBDB71006B550C /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096D24DC2AEBDB71006B550C /* UIFont+.swift */; };
+		096D24E92AEBDFB3006B550C /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096D24DC2AEBDB71006B550C /* UIFont+.swift */; };
+		096D24EC2AEBE1BD006B550C /* NanumSquare_acB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 096D24EB2AEBE1BD006B550C /* NanumSquare_acB.ttf */; };
+		096D24EE2AEBE1C5006B550C /* NanumSquare_acR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 096D24ED2AEBE1C5006B550C /* NanumSquare_acR.ttf */; };
+		096D24F02AEBE1CE006B550C /* NanumSquare_acEB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 096D24EF2AEBE1CE006B550C /* NanumSquare_acEB.ttf */; };
 		311620632AE252E600E26420 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = 311620622AE252E600E26420 /* Core */; };
 		3162F0732AEA775E001B1D32 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 3162F0722AEA775E001B1D32 /* RxCocoa */; };
 		3162F0752AEA775E001B1D32 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3162F0742AEA775E001B1D32 /* RxSwift */; };
@@ -41,6 +48,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		096D24BB2AEBD753006B550C /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		096D24BE2AEBD8E7006B550C /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		096D24DC2AEBDB71006B550C /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
+		096D24EB2AEBE1BD006B550C /* NanumSquare_acB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = NanumSquare_acB.ttf; path = "../../../../../Downloads/나눔 글꼴/나눔스퀘어/NanumFontSetup_TTF_SQUARE/NanumSquare_acB.ttf"; sourceTree = "<group>"; };
+		096D24ED2AEBE1C5006B550C /* NanumSquare_acR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = NanumSquare_acR.ttf; path = "../../../../../Downloads/나눔 글꼴/나눔스퀘어/NanumFontSetup_TTF_SQUARE/NanumSquare_acR.ttf"; sourceTree = "<group>"; };
+		096D24EF2AEBE1CE006B550C /* NanumSquare_acEB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = NanumSquare_acEB.ttf; path = "../../../../../Downloads/나눔 글꼴/나눔스퀘어/NanumFontSetup_TTF_SQUARE/NanumSquare_acEB.ttf"; sourceTree = "<group>"; };
 		311620612AE252E200E26420 /* Core */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Core; path = ../Core; sourceTree = "<group>"; };
 		3164D47B2AE21F810054F440 /* Kerdy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kerdy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3164D47E2AE21F810054F440 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +101,53 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		096D24BD2AEBD759006B550C /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				096D24BB2AEBD753006B550C /* Colors.xcassets */,
+			);
+			path = Colors;
+			sourceTree = "<group>";
+		};
+		096D24C02AEBD95D006B550C /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				3164D47E2AE21F810054F440 /* AppDelegate.swift */,
+				3164D4802AE21F810054F440 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		096D24C12AEBD97D006B550C /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				096D24CE2AEBDB3D006B550C /* Fonts */,
+				096D24DB2AEBDB5B006B550C /* Assets */,
+				096D24BD2AEBD759006B550C /* Colors */,
+				3164D4892AE21F820054F440 /* LaunchScreen.storyboard */,
+				3164D48C2AE21F820054F440 /* Info.plist */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		096D24CE2AEBDB3D006B550C /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				096D24ED2AEBE1C5006B550C /* NanumSquare_acR.ttf */,
+				096D24EF2AEBE1CE006B550C /* NanumSquare_acEB.ttf */,
+				096D24EB2AEBE1BD006B550C /* NanumSquare_acB.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		096D24DB2AEBDB5B006B550C /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				3164D4872AE21F820054F440 /* Assets.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 		3164D4722AE21F810054F440 = {
 			isa = PBXGroup;
 			children = (
@@ -113,12 +173,11 @@
 			isa = PBXGroup;
 			children = (
 				3164D4AE2AE21FA80054F440 /* Kerdy.entitlements */,
-				3164D47E2AE21F810054F440 /* AppDelegate.swift */,
-				3164D4802AE21F810054F440 /* SceneDelegate.swift */,
+				096D24C02AEBD95D006B550C /* Application */,
 				3164D4822AE21F810054F440 /* ViewController.swift */,
-				3164D4872AE21F820054F440 /* Assets.xcassets */,
-				3164D4892AE21F820054F440 /* LaunchScreen.storyboard */,
-				3164D48C2AE21F820054F440 /* Info.plist */,
+				096D24BE2AEBD8E7006B550C /* UIColor+.swift */,
+				096D24DC2AEBDB71006B550C /* UIFont+.swift */,
+				096D24C12AEBD97D006B550C /* Resource */,
 			);
 			path = Kerdy;
 			sourceTree = "<group>";
@@ -218,7 +277,6 @@
 		3164D4732AE21F810054F440 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
@@ -247,7 +305,7 @@
 			packageReferences = (
 				3164D4AF2AE223180054F440 /* XCRemoteSwiftPackageReference "Moya" */,
 				3164D4B42AE223380054F440 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				31C050092AE22AD4000F8957 /* XCLocalSwiftPackageReference "../Core" */,
+				31C050092AE22AD4000F8957 /* XCLocalSwiftPackageReference "(null)" */,
 				3162F0712AEA775E001B1D32 /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = 3164D47C2AE21F810054F440 /* Products */;
@@ -266,7 +324,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				096D24EC2AEBE1BD006B550C /* NanumSquare_acB.ttf in Resources */,
+				096D24BC2AEBD753006B550C /* Colors.xcassets in Resources */,
+				096D24F02AEBE1CE006B550C /* NanumSquare_acEB.ttf in Resources */,
 				3164D48B2AE21F820054F440 /* LaunchScreen.storyboard in Resources */,
+				096D24EE2AEBE1C5006B550C /* NanumSquare_acR.ttf in Resources */,
 				3164D4882AE21F820054F440 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -294,7 +356,9 @@
 			files = (
 				3164D4832AE21F810054F440 /* ViewController.swift in Sources */,
 				3164D47F2AE21F810054F440 /* AppDelegate.swift in Sources */,
+				096D24DD2AEBDB71006B550C /* UIFont+.swift in Sources */,
 				3164D4812AE21F810054F440 /* SceneDelegate.swift in Sources */,
+				096D24BF2AEBD8E7006B550C /* UIColor+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +366,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				096D24E92AEBDFB3006B550C /* UIFont+.swift in Sources */,
 				3164D4962AE21F820054F440 /* KerdyTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -469,9 +534,9 @@
 				CODE_SIGN_ENTITLEMENTS = Kerdy/Kerdy.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VKW8W27KRV;
+				DEVELOPMENT_TEAM = ZLLGCJ8XUL;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Kerdy/Info.plist;
+				INFOPLIST_FILE = Kerdy/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -499,9 +564,9 @@
 				CODE_SIGN_ENTITLEMENTS = Kerdy/Kerdy.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VKW8W27KRV;
+				DEVELOPMENT_TEAM = ZLLGCJ8XUL;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Kerdy/Info.plist;
+				INFOPLIST_FILE = Kerdy/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -635,9 +700,8 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		31C050092AE22AD4000F8957 /* XCLocalSwiftPackageReference "../Core" */ = {
+		31C050092AE22AD4000F8957 /* XCLocalSwiftPackageReference "(null)" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../Core;
 		};
 /* End XCLocalSwiftPackageReference section */
 
@@ -671,7 +735,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		311620622AE252E600E26420 /* Core */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 31C050092AE22AD4000F8957 /* XCLocalSwiftPackageReference "../Core" */;
+			package = 31C050092AE22AD4000F8957 /* XCLocalSwiftPackageReference "(null)" */;
 			productName = Core;
 		};
 		3162F0722AEA775E001B1D32 /* RxCocoa */ = {
