@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		095D39032AEE79970083CC65 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 095D39022AEE79970083CC65 /* Colors.xcassets */; };
 		095D39052AEE7AFC0083CC65 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095D39042AEE7AFC0083CC65 /* UIColor+.swift */; };
+		095D390C2AEE7BC50083CC65 /* NanumSquareB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */; };
+		095D390E2AEE7BE00083CC65 /* NanumSquareEB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */; };
+		095D39102AEE7BE60083CC65 /* NanumSquareR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390F2AEE7BE60083CC65 /* NanumSquareR.ttf */; };
+		095D39122AEE7C300083CC65 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095D39112AEE7C300083CC65 /* UIFont+.swift */; };
 		311620632AE252E600E26420 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = 311620622AE252E600E26420 /* Core */; };
 		3162F0732AEA775E001B1D32 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 3162F0722AEA775E001B1D32 /* RxCocoa */; };
 		3162F0752AEA775E001B1D32 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3162F0742AEA775E001B1D32 /* RxSwift */; };
@@ -45,6 +49,10 @@
 /* Begin PBXFileReference section */
 		095D39022AEE79970083CC65 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		095D39042AEE7AFC0083CC65 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareB.ttf; sourceTree = "<group>"; };
+		095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareEB.ttf; sourceTree = "<group>"; };
+		095D390F2AEE7BE60083CC65 /* NanumSquareR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareR.ttf; sourceTree = "<group>"; };
+		095D39112AEE7C300083CC65 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		311620612AE252E200E26420 /* Core */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Core; path = ../Core; sourceTree = "<group>"; };
 		3164D47B2AE21F810054F440 /* Kerdy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kerdy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3164D47E2AE21F810054F440 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +100,53 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		095D39062AEE7B3C0083CC65 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				3164D47E2AE21F810054F440 /* AppDelegate.swift */,
+				3164D4802AE21F810054F440 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		095D39072AEE7B510083CC65 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				095D390A2AEE7B8F0083CC65 /* Fonts */,
+				095D39082AEE7B7C0083CC65 /* Assets */,
+				095D39092AEE7B850083CC65 /* Colors */,
+				3164D4892AE21F820054F440 /* LaunchScreen.storyboard */,
+				3164D48C2AE21F820054F440 /* Info.plist */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		095D39082AEE7B7C0083CC65 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				3164D4872AE21F820054F440 /* Assets.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		095D39092AEE7B850083CC65 /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				095D39022AEE79970083CC65 /* Colors.xcassets */,
+			);
+			path = Colors;
+			sourceTree = "<group>";
+		};
+		095D390A2AEE7B8F0083CC65 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */,
+				095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */,
+				095D390F2AEE7BE60083CC65 /* NanumSquareR.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		3164D4722AE21F810054F440 = {
 			isa = PBXGroup;
 			children = (
@@ -117,14 +172,11 @@
 			isa = PBXGroup;
 			children = (
 				3164D4AE2AE21FA80054F440 /* Kerdy.entitlements */,
-				3164D47E2AE21F810054F440 /* AppDelegate.swift */,
-				3164D4802AE21F810054F440 /* SceneDelegate.swift */,
+				095D39062AEE7B3C0083CC65 /* Application */,
 				3164D4822AE21F810054F440 /* ViewController.swift */,
-				3164D4872AE21F820054F440 /* Assets.xcassets */,
-				095D39022AEE79970083CC65 /* Colors.xcassets */,
 				095D39042AEE7AFC0083CC65 /* UIColor+.swift */,
-				3164D4892AE21F820054F440 /* LaunchScreen.storyboard */,
-				3164D48C2AE21F820054F440 /* Info.plist */,
+				095D39112AEE7C300083CC65 /* UIFont+.swift */,
+				095D39072AEE7B510083CC65 /* Resource */,
 			);
 			path = Kerdy;
 			sourceTree = "<group>";
@@ -274,6 +326,9 @@
 			files = (
 				095D39032AEE79970083CC65 /* Colors.xcassets in Resources */,
 				3164D48B2AE21F820054F440 /* LaunchScreen.storyboard in Resources */,
+				095D390C2AEE7BC50083CC65 /* NanumSquareB.ttf in Resources */,
+				095D390E2AEE7BE00083CC65 /* NanumSquareEB.ttf in Resources */,
+				095D39102AEE7BE60083CC65 /* NanumSquareR.ttf in Resources */,
 				3164D4882AE21F820054F440 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -301,6 +356,7 @@
 			files = (
 				3164D4832AE21F810054F440 /* ViewController.swift in Sources */,
 				095D39052AEE7AFC0083CC65 /* UIColor+.swift in Sources */,
+				095D39122AEE7C300083CC65 /* UIFont+.swift in Sources */,
 				3164D47F2AE21F810054F440 /* AppDelegate.swift in Sources */,
 				3164D4812AE21F810054F440 /* SceneDelegate.swift in Sources */,
 			);
@@ -479,7 +535,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Kerdy/Info.plist;
+				INFOPLIST_FILE = Kerdy/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -510,7 +566,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Kerdy/Info.plist;
+				INFOPLIST_FILE = Kerdy/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
