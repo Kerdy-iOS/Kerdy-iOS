@@ -2,7 +2,7 @@
 //  UIFont+.swift
 //  Kerdy
 //
-//  Created by JEONGEUN KIM on 2023/10/27.
+//  Created by JEONGEUN KIM on 10/29/23.
 //
 
 import UIKit
@@ -17,7 +17,7 @@ extension UIFont {
         case extraBold = "EB"
     }
     
-    static func nanumSqure(to type: NanumSquareType, size: CGFloat) -> UIFont {
-        return UIFont(name: "NanumSquare_ac"+type.rawValue, size: size)!
+    static func nanumSquare(to type: NanumSquareType, size: CGFloat) -> UIFont {
+        return UIFont(name: "NanumSquare"+type.rawValue, size: size)!
     }
 }

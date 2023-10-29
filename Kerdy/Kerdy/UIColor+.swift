@@ -2,7 +2,7 @@
 //  UIColor+.swift
 //  Kerdy
 //
-//  Created by JEONGEUN KIM on 2023/10/27.
+//  Created by JEONGEUN KIM on 10/29/23.
 //
 
 import UIKit

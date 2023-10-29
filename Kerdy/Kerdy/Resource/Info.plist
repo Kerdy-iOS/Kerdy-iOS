@@ -4,9 +4,9 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>NanumSquare_acR.ttf</string>
-		<string>NanumSquare_acB.ttf</string>
-		<string>NanumSquare_acEB.ttf</string>
+		<string>NanumSquareB.ttf</string>
+		<string>NanumSquareEB.ttf</string>
+		<string>NanumSquareR.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
