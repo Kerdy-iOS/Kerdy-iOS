@@ -10,12 +10,16 @@ import UIKit
 import SnapKit
 import Core
 
-private struct Const {
-    
-    static let size:CGFloat = 14
-}
 
 final class SettingBasicCell: UICollectionViewCell {
+    
+    // MARK: - Property
+    
+    private var configurationHandlers: [Int:() -> Void] = [:]
+    private struct Const {
+        
+        static let size:CGFloat = 14
+    }
     
     // MARK: - UI Components
     
@@ -85,34 +89,44 @@ extension SettingBasicCell {
         }
     }
     
+    private func configureAccount() {
+        
+        titleLabel.textColor = .red
+    }
+    
     private func setUI() {
         
         contentView.backgroundColor = .clear
         
     }
-    
-    
 }
 
 // MARK: - Methods
 
 extension SettingBasicCell {
     
-    func configureData(to data: BasicModel, of index: Int) {
+    private func configureCell() {
+        
+        configurationHandlers = [
+            0: { self.configureArrowIcon() },
+            1: { self.configureArrowIcon() },
+            2: { self.configureArrowIcon() },
+            3: { self.configureVersion() },
+            5: { self.configureAccount() }
+        ]
+    }
+    
+    func configureData(with data: BasicModel, at index: Int) {
+        
         titleLabel.text = data.title
         arrowIcon.image = data.image
         versionLabel.text = data.version
+        configureCell()
         
-        switch index {
-        case 0...2:
-            configureArrowIcon()
-        case 3:
-            configureVersion()
-        case 5:
-            titleLabel.textColor = .red
-        default:
-            break
-        }
+        if let handler = configurationHandlers[index] {
+                handler()
+            }
     }
     
 }
+

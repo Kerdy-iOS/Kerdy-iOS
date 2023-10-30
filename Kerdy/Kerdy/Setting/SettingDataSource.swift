@@ -45,7 +45,7 @@ extension SettingDataSource {
             cell.configureData(to: item)
         }
         let basicCellRegistration = CellRegistration<SettingBasicCell,BasicModel> {cell,indexPath,item in
-            cell.configureData(to: item, of: indexPath.item)
+            cell.configureData(with: item, at: indexPath.item)
         }
         
         dataSource = DataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
