@@ -8,11 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		095D39032AEE79970083CC65 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 095D39022AEE79970083CC65 /* Colors.xcassets */; };
-		095D39052AEE7AFC0083CC65 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095D39042AEE7AFC0083CC65 /* UIColor+.swift */; };
 		095D390C2AEE7BC50083CC65 /* NanumSquareB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */; };
 		095D390E2AEE7BE00083CC65 /* NanumSquareEB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */; };
 		095D39102AEE7BE60083CC65 /* NanumSquareR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390F2AEE7BE60083CC65 /* NanumSquareR.ttf */; };
-		095D39122AEE7C300083CC65 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095D39112AEE7C300083CC65 /* UIFont+.swift */; };
+		09BB55192AF0158C00A54B1B /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB55182AF0158C00A54B1B /* SettingVC.swift */; };
+		09BB551E2AF0169700A54B1B /* SettingBasicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB551D2AF0169700A54B1B /* SettingBasicCell.swift */; };
+		09BB55202AF016B200A54B1B /* SettingProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB551F2AF016B200A54B1B /* SettingProfileCell.swift */; };
+		09BB55242AF02AB600A54B1B /* SettingDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB55232AF02AB600A54B1B /* SettingDataSource.swift */; };
+		09BB55262AF0430200A54B1B /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB55252AF0430200A54B1B /* Strings.swift */; };
+		09BB55282AF0543100A54B1B /* ProfileResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB55272AF0543100A54B1B /* ProfileResponseDTO.swift */; };
+		09BB552A2AF0545400A54B1B /* SettingBasicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB55292AF0545400A54B1B /* SettingBasicModel.swift */; };
 		311620632AE252E600E26420 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = 311620622AE252E600E26420 /* Core */; };
 		3162F0732AEA775E001B1D32 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 3162F0722AEA775E001B1D32 /* RxCocoa */; };
 		3162F0752AEA775E001B1D32 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3162F0742AEA775E001B1D32 /* RxSwift */; };
@@ -48,11 +53,16 @@
 
 /* Begin PBXFileReference section */
 		095D39022AEE79970083CC65 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
-		095D39042AEE7AFC0083CC65 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareB.ttf; sourceTree = "<group>"; };
 		095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareEB.ttf; sourceTree = "<group>"; };
 		095D390F2AEE7BE60083CC65 /* NanumSquareR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareR.ttf; sourceTree = "<group>"; };
-		095D39112AEE7C300083CC65 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
+		09BB55182AF0158C00A54B1B /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
+		09BB551D2AF0169700A54B1B /* SettingBasicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingBasicCell.swift; sourceTree = "<group>"; };
+		09BB551F2AF016B200A54B1B /* SettingProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingProfileCell.swift; sourceTree = "<group>"; };
+		09BB55232AF02AB600A54B1B /* SettingDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDataSource.swift; sourceTree = "<group>"; };
+		09BB55252AF0430200A54B1B /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		09BB55272AF0543100A54B1B /* ProfileResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResponseDTO.swift; sourceTree = "<group>"; };
+		09BB55292AF0545400A54B1B /* SettingBasicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingBasicModel.swift; sourceTree = "<group>"; };
 		311620612AE252E200E26420 /* Core */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Core; path = ../Core; sourceTree = "<group>"; };
 		3164D47B2AE21F810054F440 /* Kerdy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kerdy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3164D47E2AE21F810054F440 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -147,6 +157,20 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		09BB551A2AF015D100A54B1B /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				09BB55182AF0158C00A54B1B /* SettingVC.swift */,
+				09BB551F2AF016B200A54B1B /* SettingProfileCell.swift */,
+				09BB551D2AF0169700A54B1B /* SettingBasicCell.swift */,
+				09BB55232AF02AB600A54B1B /* SettingDataSource.swift */,
+				09BB55252AF0430200A54B1B /* Strings.swift */,
+				09BB55272AF0543100A54B1B /* ProfileResponseDTO.swift */,
+				09BB55292AF0545400A54B1B /* SettingBasicModel.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
 		3164D4722AE21F810054F440 = {
 			isa = PBXGroup;
 			children = (
@@ -174,8 +198,7 @@
 				3164D4AE2AE21FA80054F440 /* Kerdy.entitlements */,
 				095D39062AEE7B3C0083CC65 /* Application */,
 				3164D4822AE21F810054F440 /* ViewController.swift */,
-				095D39042AEE7AFC0083CC65 /* UIColor+.swift */,
-				095D39112AEE7C300083CC65 /* UIFont+.swift */,
+				09BB551A2AF015D100A54B1B /* Setting */,
 				095D39072AEE7B510083CC65 /* Resource */,
 			);
 			path = Kerdy;
@@ -355,10 +378,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				3164D4832AE21F810054F440 /* ViewController.swift in Sources */,
-				095D39052AEE7AFC0083CC65 /* UIColor+.swift in Sources */,
-				095D39122AEE7C300083CC65 /* UIFont+.swift in Sources */,
+				09BB551E2AF0169700A54B1B /* SettingBasicCell.swift in Sources */,
+				09BB55262AF0430200A54B1B /* Strings.swift in Sources */,
+				09BB55202AF016B200A54B1B /* SettingProfileCell.swift in Sources */,
+				09BB55192AF0158C00A54B1B /* SettingVC.swift in Sources */,
+				09BB55242AF02AB600A54B1B /* SettingDataSource.swift in Sources */,
 				3164D47F2AE21F810054F440 /* AppDelegate.swift in Sources */,
 				3164D4812AE21F810054F440 /* SceneDelegate.swift in Sources */,
+				09BB55282AF0543100A54B1B /* ProfileResponseDTO.swift in Sources */,
+				09BB552A2AF0545400A54B1B /* SettingBasicModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
