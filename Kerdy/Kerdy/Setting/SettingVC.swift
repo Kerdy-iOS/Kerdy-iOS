@@ -49,7 +49,7 @@ extension SettingVC {
     
     private func setUI() {
         
-        view.backgroundColor = .kerdyMain
+        view.backgroundColor = .kerdyBackground
         
         collectionView.dataSource = settingDataSource.dataSource
         collectionView.bounces = false
