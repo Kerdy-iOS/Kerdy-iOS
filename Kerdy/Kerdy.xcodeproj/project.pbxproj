@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		090978E82AF0E6C0006BD8DE /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090978E72AF0E6C0006BD8DE /* TabBarVC.swift */; };
+		090978ED2AF0E7A3006BD8DE /* MyCardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090978EC2AF0E7A3006BD8DE /* MyCardVC.swift */; };
+		090978EF2AF0E7AE006BD8DE /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090978EE2AF0E7AE006BD8DE /* EventVC.swift */; };
+		090978F12AF0E7B5006BD8DE /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090978F02AF0E7B5006BD8DE /* ChatVC.swift */; };
+		090978F32AF0E809006BD8DE /* TabBarItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090978F22AF0E809006BD8DE /* TabBarItemType.swift */; };
 		095D39032AEE79970083CC65 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 095D39022AEE79970083CC65 /* Colors.xcassets */; };
 		095D390C2AEE7BC50083CC65 /* NanumSquareB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */; };
 		095D390E2AEE7BE00083CC65 /* NanumSquareEB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */; };
@@ -52,6 +57,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		090978E72AF0E6C0006BD8DE /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
+		090978EC2AF0E7A3006BD8DE /* MyCardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCardVC.swift; sourceTree = "<group>"; };
+		090978EE2AF0E7AE006BD8DE /* EventVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
+		090978F02AF0E7B5006BD8DE /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
+		090978F22AF0E809006BD8DE /* TabBarItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemType.swift; sourceTree = "<group>"; };
 		095D39022AEE79970083CC65 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareB.ttf; sourceTree = "<group>"; };
 		095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareEB.ttf; sourceTree = "<group>"; };
@@ -110,6 +120,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		090978E62AF0E689006BD8DE /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				090978E72AF0E6C0006BD8DE /* TabBarVC.swift */,
+				090978F22AF0E809006BD8DE /* TabBarItemType.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		090978E92AF0E777006BD8DE /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				090978EE2AF0E7AE006BD8DE /* EventVC.swift */,
+			);
+			path = Event;
+			sourceTree = "<group>";
+		};
+		090978EA2AF0E77B006BD8DE /* MyCard */ = {
+			isa = PBXGroup;
+			children = (
+				090978EC2AF0E7A3006BD8DE /* MyCardVC.swift */,
+			);
+			path = MyCard;
+			sourceTree = "<group>";
+		};
+		090978EB2AF0E77F006BD8DE /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				090978F02AF0E7B5006BD8DE /* ChatVC.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
 		095D39062AEE7B3C0083CC65 /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,9 +239,13 @@
 			isa = PBXGroup;
 			children = (
 				3164D4AE2AE21FA80054F440 /* Kerdy.entitlements */,
-				095D39062AEE7B3C0083CC65 /* Application */,
 				3164D4822AE21F810054F440 /* ViewController.swift */,
+				095D39062AEE7B3C0083CC65 /* Application */,
+				090978EA2AF0E77B006BD8DE /* MyCard */,
+				090978E92AF0E777006BD8DE /* Event */,
+				090978EB2AF0E77F006BD8DE /* Chat */,
 				09BB551A2AF015D100A54B1B /* Setting */,
+				090978E62AF0E689006BD8DE /* TabBar */,
 				095D39072AEE7B510083CC65 /* Resource */,
 			);
 			path = Kerdy;
@@ -379,13 +426,18 @@
 			files = (
 				3164D4832AE21F810054F440 /* ViewController.swift in Sources */,
 				09BB551E2AF0169700A54B1B /* SettingBasicCell.swift in Sources */,
+				090978E82AF0E6C0006BD8DE /* TabBarVC.swift in Sources */,
 				09BB55262AF0430200A54B1B /* Strings.swift in Sources */,
 				09BB55202AF016B200A54B1B /* SettingProfileCell.swift in Sources */,
 				09BB55192AF0158C00A54B1B /* SettingVC.swift in Sources */,
+				090978F32AF0E809006BD8DE /* TabBarItemType.swift in Sources */,
+				090978ED2AF0E7A3006BD8DE /* MyCardVC.swift in Sources */,
 				09BB55242AF02AB600A54B1B /* SettingDataSource.swift in Sources */,
+				090978F12AF0E7B5006BD8DE /* ChatVC.swift in Sources */,
 				3164D47F2AE21F810054F440 /* AppDelegate.swift in Sources */,
 				3164D4812AE21F810054F440 /* SceneDelegate.swift in Sources */,
 				09BB55282AF0543100A54B1B /* ProfileResponseDTO.swift in Sources */,
+				090978EF2AF0E7AE006BD8DE /* EventVC.swift in Sources */,
 				09BB552A2AF0545400A54B1B /* SettingBasicModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
