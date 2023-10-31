@@ -100,5 +100,41 @@ public extension UIButton {
 }
 
 public extension UIImage {
+    /// icon
     static let arrowIcon = UIImage(named: "ic_arrow")!.withRenderingMode(.alwaysOriginal)
+    
+    /// tabbar
+    static let chatOn = UIImage(named: "chat_on")!.withRenderingMode(.alwaysOriginal)
+    static let chatOff = UIImage(named: "chat_off")!.withRenderingMode(.alwaysOriginal)
+    static let settingOn = UIImage(named: "setting_on")!.withRenderingMode(.alwaysOriginal)
+    static let settingOff = UIImage(named: "setting_off")!.withRenderingMode(.alwaysOriginal)
+    static let mycardOn = UIImage(named: "mycard_on")!.withRenderingMode(.alwaysOriginal)
+    static let mycardOff = UIImage(named: "mycard_off")!.withRenderingMode(.alwaysOriginal)
+    static let eventOn = UIImage(named: "event_on")!.withRenderingMode(.alwaysOriginal)
+    static let eventOff = UIImage(named: "event_off")!.withRenderingMode(.alwaysOriginal)
 }
+
+public extension CALayer {
+    func applyShadow(
+        color: UIColor? = .black,
+        alpha: Float = 0.1,
+        x: CGFloat = 0,
+        y: CGFloat = 1,
+        blur: CGFloat = 6
+    ) {
+        shadowColor = color?.cgColor
+        shadowOpacity = alpha
+        shadowOffset = CGSize(width: x, height: y)
+        shadowRadius = blur / 2.0
+    }
+}
+
+public extension UITabBar {
+    
+    func configureTabBar() {
+        UITabBar.appearance().shadowImage = UIImage()
+        UITabBar.appearance().backgroundImage = UIImage()
+        UITabBar.appearance().backgroundColor = UIColor.clear
+    }
+}
+
