@@ -102,7 +102,9 @@ public extension UIButton {
 public extension UIImage {
     /// icon
     static let arrowIcon = UIImage(named: "ic_arrow")!.withRenderingMode(.alwaysOriginal)
-    
+    static let cancelIcon = UIImage(named: "ic_cancel")!.withRenderingMode(.alwaysOriginal)
+    static let addButtonIcon = UIImage(named: "ic_addButton")!.withRenderingMode(.alwaysOriginal)
+
     /// tabbar
     static let chatOn = UIImage(named: "chat_on")!.withRenderingMode(.alwaysOriginal)
     static let chatOff = UIImage(named: "chat_off")!.withRenderingMode(.alwaysOriginal)
@@ -138,3 +140,16 @@ public extension UITabBar {
     }
 }
 
+public extension UISwitch {
+    
+    func setSize(width: CGFloat, height: CGFloat) {
+
+        let standardHeight: CGFloat = 31
+        let standardWidth: CGFloat = 51
+
+        let heightRatio = height / standardHeight
+        let widthRatio = width / standardWidth
+
+        transform = CGAffineTransform(scaleX: widthRatio, y: heightRatio)
+    }
+}
