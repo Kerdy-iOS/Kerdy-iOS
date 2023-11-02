@@ -28,4 +28,7 @@ struct Strings {
     static let blockTitle = "차단 목록"
     static let blockSubTitle = "차단된 사용자는 내 명함과 내가 쓴 글을 볼 수 없습니다."
     static let unblock = "차단 해제"
+    
+    ///termsofuse
+    static let termsOfUseTitle = "이용 약관"
 }
