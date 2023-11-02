@@ -17,12 +17,14 @@ protocol ButtonActionProtocol {
 
 final class ModalTopView: UIView {
     
-    // MAKR: = Property
+    // MAKR: - Property
     
     private struct Const {
         static let height = 56
         static let buttonSize = 24
     }
+    
+    var delegate: ButtonActionProtocol?
     
     // MAKR: - UI Property
     
@@ -39,6 +41,9 @@ final class ModalTopView: UIView {
     private lazy var cancelButton: UIButton = {
         let button = UIButton()
         button.setImage(.cancelIcon, for: .normal)
+        button.addAction(UIAction { [weak self] _ in
+            self?.delegate?.cancelButtonTapped()
+        }, for: .touchUpInside)
         return button
         
     }()
@@ -86,4 +91,5 @@ extension ModalTopView {
         titleLabel.text = title
     
     }
+    
 }
