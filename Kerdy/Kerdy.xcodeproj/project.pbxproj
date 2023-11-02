@@ -23,6 +23,9 @@
 		095D390C2AEE7BC50083CC65 /* NanumSquareB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */; };
 		095D390E2AEE7BE00083CC65 /* NanumSquareEB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */; };
 		095D39102AEE7BE60083CC65 /* NanumSquareR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390F2AEE7BE60083CC65 /* NanumSquareR.ttf */; };
+		098294182AF341290011773A /* BlockListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098294172AF341290011773A /* BlockListVC.swift */; };
+		0982941A2AF342090011773A /* BlockListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098294192AF342090011773A /* BlockListCell.swift */; };
+		0982941E2AF35E660011773A /* BlockListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0982941D2AF35E660011773A /* BlockListModel.swift */; };
 		09BB55192AF0158C00A54B1B /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB55182AF0158C00A54B1B /* SettingVC.swift */; };
 		09BB551E2AF0169700A54B1B /* SettingBasicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB551D2AF0169700A54B1B /* SettingBasicCell.swift */; };
 		09BB55202AF016B200A54B1B /* SettingProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB551F2AF016B200A54B1B /* SettingProfileCell.swift */; };
@@ -80,6 +83,9 @@
 		095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareB.ttf; sourceTree = "<group>"; };
 		095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareEB.ttf; sourceTree = "<group>"; };
 		095D390F2AEE7BE60083CC65 /* NanumSquareR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareR.ttf; sourceTree = "<group>"; };
+		098294172AF341290011773A /* BlockListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListVC.swift; sourceTree = "<group>"; };
+		098294192AF342090011773A /* BlockListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListCell.swift; sourceTree = "<group>"; };
+		0982941D2AF35E660011773A /* BlockListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListModel.swift; sourceTree = "<group>"; };
 		09BB55182AF0158C00A54B1B /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		09BB551D2AF0169700A54B1B /* SettingBasicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingBasicCell.swift; sourceTree = "<group>"; };
 		09BB551F2AF016B200A54B1B /* SettingProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingProfileCell.swift; sourceTree = "<group>"; };
@@ -308,6 +314,16 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		098294162AF341090011773A /* BlockList */ = {
+			isa = PBXGroup;
+			children = (
+				098294172AF341290011773A /* BlockListVC.swift */,
+				098294192AF342090011773A /* BlockListCell.swift */,
+				0982941D2AF35E660011773A /* BlockListModel.swift */,
+			);
+			path = BlockList;
+			sourceTree = "<group>";
+		};
 		09BB551A2AF015D100A54B1B /* Setting */ = {
 			isa = PBXGroup;
 			children = (
@@ -353,6 +369,7 @@
 				09BB551A2AF015D100A54B1B /* Setting */,
 				090978F82AF27298006BD8DE /* Notification */,
 				090979052AF33CCC006BD8DE /* NotificationTag */,
+				098294162AF341090011773A /* BlockList */,
 				090979072AF33D31006BD8DE /* Common */,
 				090978E62AF0E689006BD8DE /* TabBar */,
 				095D39072AEE7B510083CC65 /* Resource */,
@@ -538,6 +555,7 @@
 				090978E82AF0E6C0006BD8DE /* TabBarVC.swift in Sources */,
 				09BB55262AF0430200A54B1B /* Strings.swift in Sources */,
 				09BB55202AF016B200A54B1B /* SettingProfileCell.swift in Sources */,
+				098294182AF341290011773A /* BlockListVC.swift in Sources */,
 				09BB55192AF0158C00A54B1B /* SettingVC.swift in Sources */,
 				090978FC2AF27364006BD8DE /* ModalTopView.swift in Sources */,
 				090978F32AF0E809006BD8DE /* TabBarItemType.swift in Sources */,
@@ -553,7 +571,9 @@
 				3164D4812AE21F810054F440 /* SceneDelegate.swift in Sources */,
 				09BB55282AF0543100A54B1B /* ProfileResponseDTO.swift in Sources */,
 				090978EF2AF0E7AE006BD8DE /* EventVC.swift in Sources */,
+				0982941A2AF342090011773A /* BlockListCell.swift in Sources */,
 				09BB552A2AF0545400A54B1B /* SettingBasicModel.swift in Sources */,
+				0982941E2AF35E660011773A /* BlockListModel.swift in Sources */,
 				090978FA2AF272D2006BD8DE /* NotificationVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
