@@ -120,7 +120,16 @@ extension NotificationVC {
     private func setUI() {
         
         view.backgroundColor = .kerdyBackground
+        modalTopView.delegate = self
         
     }
+}
+
+// MARK: - Protocol
+
+extension NotificationVC: ButtonActionProtocol {
     
+    func cancelButtonTapped() {
+        print("Tapped")
+    }
 }
