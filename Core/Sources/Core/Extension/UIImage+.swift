@@ -1,0 +1,26 @@
+//
+//  File.swift
+//  
+//
+//  Created by JEONGEUN KIM on 11/2/23.
+//
+
+import UIKit
+
+public extension UIImage {
+    /// icon
+    static let arrowIcon = UIImage(named: "ic_arrow")!.withRenderingMode(.alwaysOriginal)
+    static let cancelIcon = UIImage(named: "ic_cancel")!.withRenderingMode(.alwaysOriginal)
+    static let addButtonIcon = UIImage(named: "ic_addButton")!.withRenderingMode(.alwaysOriginal)
+    static let backButtonIcon = UIImage(named: "ic_backButton")!.withRenderingMode(.alwaysOriginal)
+    
+    /// tabbar
+    static let chatOn = UIImage(named: "chat_on")!.withRenderingMode(.alwaysOriginal)
+    static let chatOff = UIImage(named: "chat_off")!.withRenderingMode(.alwaysOriginal)
+    static let settingOn = UIImage(named: "setting_on")!.withRenderingMode(.alwaysOriginal)
+    static let settingOff = UIImage(named: "setting_off")!.withRenderingMode(.alwaysOriginal)
+    static let mycardOn = UIImage(named: "mycard_on")!.withRenderingMode(.alwaysOriginal)
+    static let mycardOff = UIImage(named: "mycard_off")!.withRenderingMode(.alwaysOriginal)
+    static let eventOn = UIImage(named: "event_on")!.withRenderingMode(.alwaysOriginal)
+    static let eventOff = UIImage(named: "event_off")!.withRenderingMode(.alwaysOriginal)
+}

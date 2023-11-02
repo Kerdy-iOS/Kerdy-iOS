@@ -14,6 +14,11 @@
 		090978F32AF0E809006BD8DE /* TabBarItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090978F22AF0E809006BD8DE /* TabBarItemType.swift */; };
 		090978FA2AF272D2006BD8DE /* NotificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090978F92AF272D2006BD8DE /* NotificationVC.swift */; };
 		090978FC2AF27364006BD8DE /* ModalTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090978FB2AF27364006BD8DE /* ModalTopView.swift */; };
+		090978FE2AF28778006BD8DE /* TagVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090978FD2AF28778006BD8DE /* TagVC.swift */; };
+		090979002AF287E0006BD8DE /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090978FF2AF287E0006BD8DE /* NavigationBarView.swift */; };
+		090979022AF29086006BD8DE /* TagCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090979012AF29086006BD8DE /* TagCollectionViewFlowLayout.swift */; };
+		090979042AF29121006BD8DE /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090979032AF29121006BD8DE /* TagCell.swift */; };
+		0909790D2AF33D95006BD8DE /* TagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0909790C2AF33D95006BD8DE /* TagModel.swift */; };
 		095D39032AEE79970083CC65 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 095D39022AEE79970083CC65 /* Colors.xcassets */; };
 		095D390C2AEE7BC50083CC65 /* NanumSquareB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */; };
 		095D390E2AEE7BE00083CC65 /* NanumSquareEB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */; };
@@ -66,6 +71,11 @@
 		090978F22AF0E809006BD8DE /* TabBarItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemType.swift; sourceTree = "<group>"; };
 		090978F92AF272D2006BD8DE /* NotificationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationVC.swift; sourceTree = "<group>"; };
 		090978FB2AF27364006BD8DE /* ModalTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalTopView.swift; sourceTree = "<group>"; };
+		090978FD2AF28778006BD8DE /* TagVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagVC.swift; sourceTree = "<group>"; };
+		090978FF2AF287E0006BD8DE /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
+		090979012AF29086006BD8DE /* TagCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		090979032AF29121006BD8DE /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
+		0909790C2AF33D95006BD8DE /* TagModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagModel.swift; sourceTree = "<group>"; };
 		095D39022AEE79970083CC65 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareB.ttf; sourceTree = "<group>"; };
 		095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareEB.ttf; sourceTree = "<group>"; };
@@ -194,10 +204,61 @@
 		090978F82AF27298006BD8DE /* Notification */ = {
 			isa = PBXGroup;
 			children = (
-				090978F92AF272D2006BD8DE /* NotificationVC.swift */,
-				090978FB2AF27364006BD8DE /* ModalTopView.swift */,
+				090979062AF33D19006BD8DE /* VC */,
 			);
 			path = Notification;
+			sourceTree = "<group>";
+		};
+		090979052AF33CCC006BD8DE /* NotificationTag */ = {
+			isa = PBXGroup;
+			children = (
+				0909790B2AF33D50006BD8DE /* Cell */,
+				090979092AF33D44006BD8DE /* ViewModel */,
+				090979082AF33D40006BD8DE /* VC */,
+				090979012AF29086006BD8DE /* TagCollectionViewFlowLayout.swift */,
+			);
+			path = NotificationTag;
+			sourceTree = "<group>";
+		};
+		090979062AF33D19006BD8DE /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				090978F92AF272D2006BD8DE /* NotificationVC.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		090979072AF33D31006BD8DE /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				090978FF2AF287E0006BD8DE /* NavigationBarView.swift */,
+				090978FB2AF27364006BD8DE /* ModalTopView.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		090979082AF33D40006BD8DE /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				090978FD2AF28778006BD8DE /* TagVC.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		090979092AF33D44006BD8DE /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				0909790C2AF33D95006BD8DE /* TagModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		0909790B2AF33D50006BD8DE /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				090979032AF29121006BD8DE /* TagCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		095D39062AEE7B3C0083CC65 /* Application */ = {
@@ -250,9 +311,9 @@
 		09BB551A2AF015D100A54B1B /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				090978F72AF27288006BD8DE /* ViewModel */,
-				090978F62AF2727A006BD8DE /* Model */,
 				090978F42AF27263006BD8DE /* VC */,
+				090978F62AF2727A006BD8DE /* Model */,
+				090978F72AF27288006BD8DE /* ViewModel */,
 				090978F52AF2726F006BD8DE /* Cell */,
 				09BB55252AF0430200A54B1B /* Strings.swift */,
 			);
@@ -291,6 +352,8 @@
 				090978EB2AF0E77F006BD8DE /* Chat */,
 				09BB551A2AF015D100A54B1B /* Setting */,
 				090978F82AF27298006BD8DE /* Notification */,
+				090979052AF33CCC006BD8DE /* NotificationTag */,
+				090979072AF33D31006BD8DE /* Common */,
 				090978E62AF0E689006BD8DE /* TabBar */,
 				095D39072AEE7B510083CC65 /* Resource */,
 			);
@@ -481,7 +544,12 @@
 				090978ED2AF0E7A3006BD8DE /* MyCardVC.swift in Sources */,
 				09BB55242AF02AB600A54B1B /* SettingDataSource.swift in Sources */,
 				090978F12AF0E7B5006BD8DE /* ChatVC.swift in Sources */,
+				090979022AF29086006BD8DE /* TagCollectionViewFlowLayout.swift in Sources */,
+				0909790D2AF33D95006BD8DE /* TagModel.swift in Sources */,
+				090978FE2AF28778006BD8DE /* TagVC.swift in Sources */,
 				3164D47F2AE21F810054F440 /* AppDelegate.swift in Sources */,
+				090979042AF29121006BD8DE /* TagCell.swift in Sources */,
+				090979002AF287E0006BD8DE /* NavigationBarView.swift in Sources */,
 				3164D4812AE21F810054F440 /* SceneDelegate.swift in Sources */,
 				09BB55282AF0543100A54B1B /* ProfileResponseDTO.swift in Sources */,
 				090978EF2AF0E7AE006BD8DE /* EventVC.swift in Sources */,
