@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		090978E82AF0E6C0006BD8DE /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090978E72AF0E6C0006BD8DE /* TabBarVC.swift */; };
 		090978ED2AF0E7A3006BD8DE /* MyCardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090978EC2AF0E7A3006BD8DE /* MyCardVC.swift */; };
-		090978EF2AF0E7AE006BD8DE /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090978EE2AF0E7AE006BD8DE /* EventVC.swift */; };
 		090978F12AF0E7B5006BD8DE /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090978F02AF0E7B5006BD8DE /* ChatVC.swift */; };
 		090978F32AF0E809006BD8DE /* TabBarItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090978F22AF0E809006BD8DE /* TabBarItemType.swift */; };
 		090978FA2AF272D2006BD8DE /* NotificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090978F92AF272D2006BD8DE /* NotificationVC.swift */; };
@@ -36,6 +35,15 @@
 		09BB55282AF0543100A54B1B /* ProfileResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB55272AF0543100A54B1B /* ProfileResponseDTO.swift */; };
 		09BB552A2AF0545400A54B1B /* SettingBasicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB55292AF0545400A54B1B /* SettingBasicModel.swift */; };
 		311620632AE252E600E26420 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = 311620622AE252E600E26420 /* Core */; };
+		31571C1E2AF3CBC00037A2F2 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C172AF3CBC00037A2F2 /* EventTableViewCell.swift */; };
+		31571C1F2AF3CBC00037A2F2 /* FilterSettingBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C182AF3CBC00037A2F2 /* FilterSettingBtn.swift */; };
+		31571C202AF3CBC00037A2F2 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C192AF3CBC00037A2F2 /* CategoryView.swift */; };
+		31571C212AF3CBC00037A2F2 /* ItemCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C1A2AF3CBC00037A2F2 /* ItemCountView.swift */; };
+		31571C222AF3CBC00037A2F2 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C1B2AF3CBC00037A2F2 /* TagView.swift */; };
+		31571C232AF3CBC00037A2F2 /* EventCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C1C2AF3CBC00037A2F2 /* EventCollectionViewCell.swift */; };
+		31571C242AF3CBC00037A2F2 /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C1D2AF3CBC00037A2F2 /* EventVC.swift */; };
+		31571C262AF3CBC80037A2F2 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C252AF3CBC80037A2F2 /* Event.swift */; };
+		31571C292AF3E1540037A2F2 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 31571C282AF3E1540037A2F2 /* .swiftlint.yml */; };
 		3162F0732AEA775E001B1D32 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 3162F0722AEA775E001B1D32 /* RxCocoa */; };
 		3162F0752AEA775E001B1D32 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3162F0742AEA775E001B1D32 /* RxSwift */; };
 		3164D47F2AE21F810054F440 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3164D47E2AE21F810054F440 /* AppDelegate.swift */; };
@@ -71,7 +79,6 @@
 /* Begin PBXFileReference section */
 		090978E72AF0E6C0006BD8DE /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 		090978EC2AF0E7A3006BD8DE /* MyCardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCardVC.swift; sourceTree = "<group>"; };
-		090978EE2AF0E7AE006BD8DE /* EventVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
 		090978F02AF0E7B5006BD8DE /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		090978F22AF0E809006BD8DE /* TabBarItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemType.swift; sourceTree = "<group>"; };
 		090978F92AF272D2006BD8DE /* NotificationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationVC.swift; sourceTree = "<group>"; };
@@ -98,6 +105,15 @@
 		09BB55272AF0543100A54B1B /* ProfileResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResponseDTO.swift; sourceTree = "<group>"; };
 		09BB55292AF0545400A54B1B /* SettingBasicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingBasicModel.swift; sourceTree = "<group>"; };
 		311620612AE252E200E26420 /* Core */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Core; path = ../Core; sourceTree = "<group>"; };
+		31571C172AF3CBC00037A2F2 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
+		31571C182AF3CBC00037A2F2 /* FilterSettingBtn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSettingBtn.swift; sourceTree = "<group>"; };
+		31571C192AF3CBC00037A2F2 /* CategoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
+		31571C1A2AF3CBC00037A2F2 /* ItemCountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemCountView.swift; sourceTree = "<group>"; };
+		31571C1B2AF3CBC00037A2F2 /* TagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
+		31571C1C2AF3CBC00037A2F2 /* EventCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCollectionViewCell.swift; sourceTree = "<group>"; };
+		31571C1D2AF3CBC00037A2F2 /* EventVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
+		31571C252AF3CBC80037A2F2 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		31571C282AF3E1540037A2F2 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		3164D47B2AE21F810054F440 /* Kerdy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kerdy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3164D47E2AE21F810054F440 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3164D4802AE21F810054F440 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -151,14 +167,6 @@
 				090978F22AF0E809006BD8DE /* TabBarItemType.swift */,
 			);
 			path = TabBar;
-			sourceTree = "<group>";
-		};
-		090978E92AF0E777006BD8DE /* Event */ = {
-			isa = PBXGroup;
-			children = (
-				090978EE2AF0E7AE006BD8DE /* EventVC.swift */,
-			);
-			path = Event;
 			sourceTree = "<group>";
 		};
 		090978EA2AF0E77B006BD8DE /* MyCard */ = {
@@ -349,9 +357,41 @@
 			path = Setting;
 			sourceTree = "<group>";
 		};
+		31571C142AF3CB9F0037A2F2 /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				31571C162AF3CBB20037A2F2 /* Model */,
+				31571C152AF3CBAD0037A2F2 /* View */,
+			);
+			path = Event;
+			sourceTree = "<group>";
+		};
+		31571C152AF3CBAD0037A2F2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				31571C1D2AF3CBC00037A2F2 /* EventVC.swift */,
+				31571C192AF3CBC00037A2F2 /* CategoryView.swift */,
+				31571C1C2AF3CBC00037A2F2 /* EventCollectionViewCell.swift */,
+				31571C172AF3CBC00037A2F2 /* EventTableViewCell.swift */,
+				31571C182AF3CBC00037A2F2 /* FilterSettingBtn.swift */,
+				31571C1A2AF3CBC00037A2F2 /* ItemCountView.swift */,
+				31571C1B2AF3CBC00037A2F2 /* TagView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		31571C162AF3CBB20037A2F2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				31571C252AF3CBC80037A2F2 /* Event.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		3164D4722AE21F810054F440 = {
 			isa = PBXGroup;
 			children = (
+				31571C282AF3E1540037A2F2 /* .swiftlint.yml */,
 				3164D47D2AE21F810054F440 /* Kerdy */,
 				3164D4942AE21F820054F440 /* KerdyTests */,
 				3164D49E2AE21F820054F440 /* KerdyUITests */,
@@ -376,8 +416,8 @@
 				3164D4AE2AE21FA80054F440 /* Kerdy.entitlements */,
 				3164D4822AE21F810054F440 /* ViewController.swift */,
 				095D39062AEE7B3C0083CC65 /* Application */,
+				31571C142AF3CB9F0037A2F2 /* Event */,
 				090978EA2AF0E77B006BD8DE /* MyCard */,
-				090978E92AF0E777006BD8DE /* Event */,
 				090978EB2AF0E77F006BD8DE /* Chat */,
 				09BB551A2AF015D100A54B1B /* Setting */,
 				090978F82AF27298006BD8DE /* Notification */,
@@ -423,6 +463,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3164D4A52AE21F820054F440 /* Build configuration list for PBXNativeTarget "Kerdy" */;
 			buildPhases = (
+				31571C272AF3E0470037A2F2 /* SwiftLint Script */,
 				3164D4772AE21F810054F440 /* Sources */,
 				3164D4782AE21F810054F440 /* Frameworks */,
 				3164D4792AE21F810054F440 /* Resources */,
@@ -537,6 +578,7 @@
 				095D39032AEE79970083CC65 /* Colors.xcassets in Resources */,
 				3164D48B2AE21F820054F440 /* LaunchScreen.storyboard in Resources */,
 				095D390C2AEE7BC50083CC65 /* NanumSquareB.ttf in Resources */,
+				31571C292AF3E1540037A2F2 /* .swiftlint.yml in Resources */,
 				095D390E2AEE7BE00083CC65 /* NanumSquareEB.ttf in Resources */,
 				095D39102AEE7BE60083CC65 /* NanumSquareR.ttf in Resources */,
 				3164D4882AE21F820054F440 /* Assets.xcassets in Resources */,
@@ -559,6 +601,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		31571C272AF3E0470037A2F2 /* SwiftLint Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "SwiftLint Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3164D4772AE21F810054F440 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -567,7 +630,9 @@
 				3164D4832AE21F810054F440 /* ViewController.swift in Sources */,
 				098294212AF3C1E50011773A /* TermsOfUseVC.swift in Sources */,
 				09BB551E2AF0169700A54B1B /* SettingBasicCell.swift in Sources */,
+				31571C242AF3CBC00037A2F2 /* EventVC.swift in Sources */,
 				090978E82AF0E6C0006BD8DE /* TabBarVC.swift in Sources */,
+				31571C1E2AF3CBC00037A2F2 /* EventTableViewCell.swift in Sources */,
 				09BB55262AF0430200A54B1B /* StringLiterals.swift in Sources */,
 				09BB55202AF016B200A54B1B /* SettingProfileCell.swift in Sources */,
 				098294182AF341290011773A /* BlockListVC.swift in Sources */,
@@ -577,8 +642,11 @@
 				090978ED2AF0E7A3006BD8DE /* MyCardVC.swift in Sources */,
 				09BB55242AF02AB600A54B1B /* SettingDataSource.swift in Sources */,
 				098294232AF3C6180011773A /* ExternalURL.swift in Sources */,
+				31571C202AF3CBC00037A2F2 /* CategoryView.swift in Sources */,
 				090978F12AF0E7B5006BD8DE /* ChatVC.swift in Sources */,
+				31571C232AF3CBC00037A2F2 /* EventCollectionViewCell.swift in Sources */,
 				090979022AF29086006BD8DE /* TagCollectionViewFlowLayout.swift in Sources */,
+				31571C262AF3CBC80037A2F2 /* Event.swift in Sources */,
 				0909790D2AF33D95006BD8DE /* TagModel.swift in Sources */,
 				090978FE2AF28778006BD8DE /* TagVC.swift in Sources */,
 				3164D47F2AE21F810054F440 /* AppDelegate.swift in Sources */,
@@ -586,11 +654,13 @@
 				090979002AF287E0006BD8DE /* NavigationBarView.swift in Sources */,
 				3164D4812AE21F810054F440 /* SceneDelegate.swift in Sources */,
 				09BB55282AF0543100A54B1B /* ProfileResponseDTO.swift in Sources */,
-				090978EF2AF0E7AE006BD8DE /* EventVC.swift in Sources */,
 				0982941A2AF342090011773A /* BlockListCell.swift in Sources */,
 				09BB552A2AF0545400A54B1B /* SettingBasicModel.swift in Sources */,
+				31571C1F2AF3CBC00037A2F2 /* FilterSettingBtn.swift in Sources */,
 				0982941E2AF35E660011773A /* BlockListModel.swift in Sources */,
 				090978FA2AF272D2006BD8DE /* NotificationVC.swift in Sources */,
+				31571C212AF3CBC00037A2F2 /* ItemCountView.swift in Sources */,
+				31571C222AF3CBC00037A2F2 /* TagView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -766,6 +836,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Kerdy/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -797,6 +868,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Kerdy/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
