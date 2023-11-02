@@ -39,7 +39,7 @@ final class NotificationVC: UIViewController {
     
     private let tagLabel: UILabel = {
         let label = UILabel()
-        label.text = Strings.tag
+        label.text = Strings.notificationTag
         label.font = .nanumSquare(to: .bold, size: 15)
         label.textColor = .kerdyBlack
         label.setLineSpacing(lineSpacing: 1.15)
