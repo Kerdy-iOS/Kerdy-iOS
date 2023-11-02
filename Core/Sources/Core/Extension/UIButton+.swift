@@ -7,18 +7,24 @@
 
 import UIKit
 
+@available(iOS 15.0, *)
 public extension UIButton {
-    @available(iOS 15.0, *)
     
-    static func kerdyStyle(to title: String) -> UIButton.Configuration {
+    static func kerdyStyle(to title: String,
+                           withBackground backgroundColor: UIColor? = .clear,
+                           withForeground foregroundColor: UIColor? = .kerdy_black,
+                           withStroke strokeColor: UIColor? = .kerdy_gray01,
+                           using width: CGFloat = 0.5,
+                           font: UIFont? = UIFont.nanumSquare(to: .regular, size: 11)
+    ) -> UIButton.Configuration {
         var configuration = UIButton.Configuration.plain()
         configuration.titleAlignment = .center
-        configuration.baseBackgroundColor = .clear
-        configuration.baseForegroundColor = .kerdy_black
+        configuration.background.backgroundColor = backgroundColor
+        configuration.baseForegroundColor = foregroundColor
         configuration.background.cornerRadius = 10
-        configuration.background.strokeWidth = 0.5
-        configuration.background.strokeColor = .kerdy_gray01
-        configuration.attributedTitle =  AttributedString(title, attributes: AttributeContainer([NSAttributedString.Key.font : UIFont.nanumSquare(to: .regular, size: 11)]))
+        configuration.background.strokeWidth = width
+        configuration.background.strokeColor = strokeColor
+        configuration.attributedTitle =  AttributedString(title, attributes: AttributeContainer([NSAttributedString.Key.font : font!]))
         
         return configuration
     }
