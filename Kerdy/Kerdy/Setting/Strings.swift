@@ -23,4 +23,9 @@ struct Strings {
     ///TagNotification
     static let register = "등록하기"
     static let tag = "태그"
+    
+    ///blockList
+    static let blockTitle = "차단 목록"
+    static let blockSubTitle = "차단된 사용자는 내 명함과 내가 쓴 글을 볼 수 없습니다."
+    static let unblock = "차단 해제"
 }
