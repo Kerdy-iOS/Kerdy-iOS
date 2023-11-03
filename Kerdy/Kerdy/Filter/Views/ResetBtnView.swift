@@ -45,14 +45,15 @@ class ResetBtnView: UIView {
         addSubviews(titleLabel)
         addSubviews(resetBtn)
 
-        imageView.snp.makeConstraints{
+        imageView.snp.makeConstraints {
             $0.size.equalTo(12)
             $0.leading.equalToSuperview()
             $0.centerY.equalToSuperview()
         }
 
         titleLabel.snp.makeConstraints {
-            $0.verticalEdges.leading.equalTo(imageView.snp.trailing).offset(1)
+            $0.verticalEdges.equalToSuperview()
+            $0.leading.equalTo(imageView.snp.trailing).offset(1)
             $0.height.equalTo(14)
         }
 
