@@ -20,6 +20,7 @@ final class FilterViewController: UIViewController {
     private lazy var dateFilterView = DateFilterView()
     private lazy var applyBtn: UIButton = {
         let button = UIButton()
+        button.backgroundColor = .kerdyMain
         button.setTitle("적용하기", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .nanumSquare(to: .bold, size: 16)
