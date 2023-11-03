@@ -17,24 +17,27 @@ final class TagView: UIView {
 
     init() {
         super.init(frame: .zero)
+        setLayout()
+        setUI()
+    }
 
+    private func setLayout() {
         addSubview(tagLabel)
-        makeConstraint()
+        
+        tagLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+    }
+    
+    private func setUI() {
         self.roundCorners(topLeft: 8, topRight: 15, bottomLeft: 15, bottomRight: 8)
-
+        
         if let maskLayer = self.layer.mask as? CAShapeLayer {
             let borderLayer = CAShapeLayer()
             borderLayer.path = maskLayer.path
             borderLayer.fillColor = UIColor.clear.cgColor
             borderLayer.frame = bounds
             layer.addSublayer(borderLayer)
-        }
-    }
-
-    private func makeConstraint() {
-        tagLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
         }
     }
 

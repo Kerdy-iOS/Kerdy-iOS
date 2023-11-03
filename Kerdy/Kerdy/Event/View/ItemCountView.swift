@@ -32,37 +32,33 @@ final class ItemCountView: UIView {
 
     init() {
         super.init(frame: .zero)
+        setLayout()
+    }
 
+    private func setLayout() {
         addSubview(startLabel)
         addSubview(countLabel)
         addSubview(endLabel)
-        makeConstraint()
-    }
 
-    private func makeConstraint() {
-        startLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
-            make.height.equalTo(14)
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.centerY.equalToSuperview()
+        startLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+            $0.height.equalTo(14)
+            $0.verticalEdges.equalToSuperview()
+            $0.centerY.equalToSuperview()
         }
 
-        countLabel.snp.makeConstraints { make in
-            make.leading.equalTo(startLabel.snp.trailing).offset(1)
-            make.height.equalTo(14)
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.centerY.equalToSuperview()
+        countLabel.snp.makeConstraints {
+            $0.leading.equalTo(startLabel.snp.trailing).offset(1)
+            $0.height.equalTo(14)
+            $0.verticalEdges.equalToSuperview()
+            $0.centerY.equalToSuperview()
         }
 
-        endLabel.snp.makeConstraints { make in
-            make.leading.equalTo(countLabel.snp.trailing)
-            make.height.equalTo(14)
-            make.trailing.equalToSuperview()
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.centerY.equalToSuperview()
+        endLabel.snp.makeConstraints {
+            $0.leading.equalTo(countLabel.snp.trailing)
+            $0.height.equalTo(14)
+            $0.verticalEdges.trailing.equalToSuperview()
+            $0.centerY.equalToSuperview()
         }
     }
 

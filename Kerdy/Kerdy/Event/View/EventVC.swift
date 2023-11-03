@@ -82,123 +82,118 @@ final class EventVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        setUpContainerViews()
-        setUpEventCollectionView()
+        setLayout()
     }
 
     // MARK: - 오토레이아웃 설정
-    private func setUpContainerViews() {
+    private func setLayout() {
         view.addSubview(searchContainerView)
         view.addSubview(categoryContainerView)
         view.addSubview(filterContainerView)
         view.addSubview(divideLine)
 
-        setUpSearchContainerView()
-        setUpCategoryContainerView()
-        setUpfilterContainerView()
+        setUpSearchContainerViewLayout()
+        setUpCategoryContainerViewLayout()
+        setUpfilterContainerViewLayout()
+        setEventCollectionViewLayout()
 
-        searchContainerView.snp.makeConstraints { make in
-            make.height.equalTo(56)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
+        searchContainerView.snp.makeConstraints {
+            $0.height.equalTo(56)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.horizontalEdges.equalToSuperview()
         }
 
-        filterContainerView.snp.makeConstraints { make in
-            make.height.equalTo(42).priority(250)
-            make.top.equalTo(categoryContainerView.snp.bottom)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
+        filterContainerView.snp.makeConstraints {
+            $0.height.equalTo(42).priority(250)
+            $0.top.equalTo(categoryContainerView.snp.bottom)
+            $0.horizontalEdges.equalToSuperview()
         }
 
-        divideLine.snp.makeConstraints { make in
-            make.height.equalTo(0.5)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.top.equalTo(filterContainerView.snp.bottom)
+        divideLine.snp.makeConstraints {
+            $0.height.equalTo(0.5)
+            $0.horizontalEdges.equalToSuperview()
+            $0.top.equalTo(filterContainerView.snp.bottom)
         }
     }
 
-    private func setUpsearchView() {
+    private func setUpsearchViewLayout() {
         searchView.addSubview(searchImage)
         searchView.addSubview(searchTF)
 
-        searchImage.snp.makeConstraints { make in
-            make.width.equalTo(24)
-            make.height.equalTo(24)
-            make.leading.equalToSuperview().offset(10)
-            make.centerY.equalToSuperview()
+        searchImage.snp.makeConstraints {
+            $0.width.equalTo(24)
+            $0.height.equalTo(24)
+            $0.leading.equalToSuperview().offset(10)
+            $0.centerY.equalToSuperview()
         }
 
-        searchTF.snp.makeConstraints { make in
-            make.height.equalTo(24)
-            make.centerY.equalToSuperview()
-            make.leading.equalTo(searchImage.snp.trailing).offset(10)
-            make.trailing.equalToSuperview()
+        searchTF.snp.makeConstraints {
+            $0.height.equalTo(24)
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(searchImage.snp.trailing).offset(10)
+            $0.trailing.equalToSuperview()
         }
     }
 
-    private func setUpSearchContainerView() {
-        setUpsearchView()
+    private func setUpSearchContainerViewLayout() {
+        setUpsearchViewLayout()
         searchContainerView.addSubview(searchView)
         searchContainerView.addSubview(notificationBtn)
 
-        searchView.snp.makeConstraints { make in
-            make.width.equalTo(242)
-            make.height.equalTo(36)
-            make.leading.equalToSuperview().offset(17)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
+        searchView.snp.makeConstraints {
+            $0.width.equalTo(242)
+            $0.height.equalTo(36)
+            $0.leading.equalToSuperview().offset(17)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
         }
 
-        notificationBtn.snp.makeConstraints { make in
-            make.width.equalTo(24)
-            make.height.equalTo(24)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
-            make.trailing.equalToSuperview().offset(-14)
-        }
-    }
-
-    private func setUpCategoryContainerView() {
-        categoryContainerView.snp.makeConstraints { make in
-            make.height.equalTo(38)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.top.equalTo(searchContainerView.snp.bottom)
+        notificationBtn.snp.makeConstraints {
+            $0.width.equalTo(24)
+            $0.height.equalTo(24)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
+            $0.trailing.equalToSuperview().offset(-14)
         }
     }
 
-    private func setUpfilterContainerView() {
+    private func setUpCategoryContainerViewLayout() {
+        categoryContainerView.snp.makeConstraints {
+            $0.height.equalTo(38)
+            $0.horizontalEdges.equalToSuperview()
+            $0.top.equalTo(searchContainerView.snp.bottom)
+        }
+    }
+
+    private func setUpfilterContainerViewLayout() {
         filterContainerView.addSubview(itemCountContainerView)
         filterContainerView.addSubview(filterBtn)
 
-        itemCountContainerView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(16)
-            make.leading.equalToSuperview().offset(17)
-            make.width.equalTo(38)
-            make.height.equalTo(14)
+        itemCountContainerView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(16)
+            $0.leading.equalToSuperview().offset(17)
+            $0.width.equalTo(38)
+            $0.height.equalTo(14)
         }
 
-        filterBtn.snp.makeConstraints { make in
-            make.width.equalTo(60)
-            make.height.equalTo(14)
-            make.top.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-17)
+        filterBtn.snp.makeConstraints {
+            $0.width.equalTo(60)
+            $0.height.equalTo(14)
+            $0.top.equalToSuperview().offset(16)
+            $0.trailing.equalToSuperview().offset(-17)
         }
     }
 
-    private func setUpEventCollectionView() {
+    private func setEventCollectionViewLayout() {
         eventCollectionView.delegate = self
         eventCollectionView.dataSource = self
         view.addSubview(eventCollectionView)
         eventCollectionView.register(
             EventCollectionViewCell.self,
-            forCellWithReuseIdentifier: EventCollectionViewCell.ID
+            forCellWithReuseIdentifier: EventCollectionViewCell.identifier
         )
-        eventCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(divideLine.snp.bottom)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        eventCollectionView.snp.makeConstraints {
+            $0.top.equalTo(divideLine.snp.bottom)
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
 
@@ -237,7 +232,7 @@ extension EventVC: UICollectionViewDelegate, UICollectionViewDataSource {
     ) -> UICollectionViewCell {
         guard
             let cell = eventCollectionView.dequeueReusableCell(
-                withReuseIdentifier: EventCollectionViewCell.ID,
+                withReuseIdentifier: EventCollectionViewCell.identifier,
                 for: indexPath
             ) as? EventCollectionViewCell
         else { return UICollectionViewCell() }

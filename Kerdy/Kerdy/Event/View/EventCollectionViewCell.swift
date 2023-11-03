@@ -10,7 +10,6 @@ import SnapKit
 import Core
 
 final class EventCollectionViewCell: UICollectionViewCell {
-    static let ID = "eventCVCell"
 
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -22,29 +21,30 @@ final class EventCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUpTableView()
+        setLayout()
+        setUI()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setUpTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
+    private func setLayout() {
         contentView.addSubview(tableView)
-        tableView.register(EventTableViewCell.self, forCellReuseIdentifier: EventTableViewCell.ID)
 
-        tableView.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
+        tableView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
 
-    private func configure(with events: Event) {
+    private func setUI() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(EventTableViewCell.self, forCellReuseIdentifier: EventTableViewCell.identifier)
+    }
 
+    private func configure(with events: Event) {
+        // 추후 tableViewCell 설정 관련
     }
 }
 
@@ -59,7 +59,7 @@ extension EventCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
     ) -> UITableViewCell {
         guard
             let cell = tableView.dequeueReusableCell(
-                withIdentifier: EventTableViewCell.ID,
+                withIdentifier: EventTableViewCell.identifier,
                 for: indexPath
             ) as? EventTableViewCell
         else { return UITableViewCell() }

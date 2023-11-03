@@ -30,41 +30,34 @@ final class FilterSettingBtn: UIView {
 
     init() {
         super.init(frame: .zero)
-
-        addSubview(filterImageView)
-        addSubview(label)
-        addSubview(button)
-
-        setUp()
+        setLayout()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setUp() {
-        filterImageView.snp.makeConstraints { make in
-            make.height.equalTo(14)
-            make.width.equalTo(14)
-            make.leading.equalToSuperview()
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
+    private func setLayout() {
+        addSubview(filterImageView)
+        addSubview(label)
+        addSubview(button)
+
+        filterImageView.snp.makeConstraints {
+            $0.height.equalTo(14)
+            $0.width.equalTo(14)
+            $0.verticalEdges.leading.equalToSuperview()
         }
 
-        label.snp.makeConstraints { make in
-            make.height.equalTo(14)
-            make.width.equalTo(44)
-            make.leading.equalTo(filterImageView.snp.trailing).offset(2)
-            make.trailing.equalToSuperview()
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
+        label.snp.makeConstraints {
+            $0.height.equalTo(14)
+            $0.width.equalTo(44)
+            $0.leading.equalTo(filterImageView.snp.trailing).offset(2)
+            $0.trailing.equalToSuperview()
+            $0.verticalEdges.equalToSuperview()
         }
 
-        button.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
+        button.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
 }

@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 
 final class EventTableViewCell: UITableViewCell {
-    static let ID = "eventTVCell"
 
     lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -42,44 +41,44 @@ final class EventTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setUp()
+        setLayout()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setUp() {
+    private func setLayout() {
         contentView.addSubview(tagStackView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(progressLabel)
         contentView.addSubview(eventImage)
 
-        tagStackView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(17)
-            make.top.equalToSuperview().offset(26)
-            make.height.equalTo(22)
-            make.width.equalTo(194).priority(250)
+        tagStackView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(17)
+            $0.top.equalToSuperview().offset(26)
+            $0.height.equalTo(22)
+            $0.width.equalTo(194).priority(250)
         }
 
-        titleLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(17)
-            make.top.equalTo(tagStackView.snp.bottom).offset(12)
-            make.height.equalTo(36).priority(250)
-            make.width.equalTo(177)
+        titleLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(17)
+            $0.top.equalTo(tagStackView.snp.bottom).offset(12)
+            $0.height.equalTo(36).priority(250)
+            $0.width.equalTo(177)
         }
 
-        progressLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(17)
-            make.bottom.equalToSuperview().offset(16)
-            make.height.equalTo(33)
+        progressLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(17)
+            $0.bottom.equalToSuperview().offset(16)
+            $0.height.equalTo(33)
         }
 
-        eventImage.snp.makeConstraints { make in
-            make.height.equalTo(126)
-            make.width.equalTo(100)
-            make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().offset(-17)
+        eventImage.snp.makeConstraints {
+            $0.height.equalTo(126)
+            $0.width.equalTo(100)
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-17)
         }
     }
 

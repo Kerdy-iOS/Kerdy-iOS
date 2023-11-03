@@ -30,36 +30,34 @@ final class CategoryView: UIView {
 
     init(title: String, tag: Int) {
         super.init(frame: .zero)
+        setLayout()
+        setUI(title: title, tag: tag)
+    }
+
+    private func setLayout() {
+        addSubview(label)
+        addSubview(underLine)
+        addSubview(button)
+
+        label.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+
+        underLine.snp.makeConstraints {
+            $0.height.equalTo(2)
+            $0.horizontalEdges.bottom.equalToSuperview()
+        }
+
+        button.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
+
+    private func setUI(title: String, tag: Int) {
         label.text = title
         button.tag = tag
 
         if tag == 0 { setSelected() }
-
-        addSubview(label)
-        addSubview(underLine)
-        addSubview(button)
-        makeConstraint()
-    }
-
-    private func makeConstraint() {
-        label.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
-        }
-
-        underLine.snp.makeConstraints { make in
-            make.height.equalTo(2)
-            make.bottom.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-        }
-
-        button.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
-        }
     }
 
     func setSelected() {
