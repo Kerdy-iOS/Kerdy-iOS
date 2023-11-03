@@ -34,6 +34,11 @@
 		09BB55262AF0430200A54B1B /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB55252AF0430200A54B1B /* StringLiterals.swift */; };
 		09BB55282AF0543100A54B1B /* ProfileResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB55272AF0543100A54B1B /* ProfileResponseDTO.swift */; };
 		09BB552A2AF0545400A54B1B /* SettingBasicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB55292AF0545400A54B1B /* SettingBasicModel.swift */; };
+		3109B2FA2AF52B2000B2EAD2 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3109B2F92AF52B2000B2EAD2 /* FilterViewController.swift */; };
+		3109B2FC2AF52B3800B2EAD2 /* TagFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3109B2FB2AF52B3800B2EAD2 /* TagFilterView.swift */; };
+		3109B2FE2AF52B4700B2EAD2 /* DateFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3109B2FD2AF52B4700B2EAD2 /* DateFilterView.swift */; };
+		3109B3002AF52B5600B2EAD2 /* ProgressFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3109B2FF2AF52B5600B2EAD2 /* ProgressFilterView.swift */; };
+		3109B3022AF52B6A00B2EAD2 /* ResetBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3109B3012AF52B6A00B2EAD2 /* ResetBtnView.swift */; };
 		311620632AE252E600E26420 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = 311620622AE252E600E26420 /* Core */; };
 		31571C1E2AF3CBC00037A2F2 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C172AF3CBC00037A2F2 /* EventTableViewCell.swift */; };
 		31571C1F2AF3CBC00037A2F2 /* FilterSettingBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C182AF3CBC00037A2F2 /* FilterSettingBtn.swift */; };
@@ -104,6 +109,11 @@
 		09BB55252AF0430200A54B1B /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 		09BB55272AF0543100A54B1B /* ProfileResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResponseDTO.swift; sourceTree = "<group>"; };
 		09BB55292AF0545400A54B1B /* SettingBasicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingBasicModel.swift; sourceTree = "<group>"; };
+		3109B2F92AF52B2000B2EAD2 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		3109B2FB2AF52B3800B2EAD2 /* TagFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagFilterView.swift; sourceTree = "<group>"; };
+		3109B2FD2AF52B4700B2EAD2 /* DateFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFilterView.swift; sourceTree = "<group>"; };
+		3109B2FF2AF52B5600B2EAD2 /* ProgressFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressFilterView.swift; sourceTree = "<group>"; };
+		3109B3012AF52B6A00B2EAD2 /* ResetBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetBtnView.swift; sourceTree = "<group>"; };
 		311620612AE252E200E26420 /* Core */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Core; path = ../Core; sourceTree = "<group>"; };
 		31571C172AF3CBC00037A2F2 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		31571C182AF3CBC00037A2F2 /* FilterSettingBtn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSettingBtn.swift; sourceTree = "<group>"; };
@@ -357,6 +367,26 @@
 			path = Setting;
 			sourceTree = "<group>";
 		};
+		3109B2EF2AF52A4200B2EAD2 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				3109B2F02AF52A4B00B2EAD2 /* Views */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
+		3109B2F02AF52A4B00B2EAD2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3109B2F92AF52B2000B2EAD2 /* FilterViewController.swift */,
+				3109B2FB2AF52B3800B2EAD2 /* TagFilterView.swift */,
+				3109B2FD2AF52B4700B2EAD2 /* DateFilterView.swift */,
+				3109B2FF2AF52B5600B2EAD2 /* ProgressFilterView.swift */,
+				3109B3012AF52B6A00B2EAD2 /* ResetBtnView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		31571C142AF3CB9F0037A2F2 /* Event */ = {
 			isa = PBXGroup;
 			children = (
@@ -417,6 +447,7 @@
 				3164D4822AE21F810054F440 /* ViewController.swift */,
 				095D39062AEE7B3C0083CC65 /* Application */,
 				31571C142AF3CB9F0037A2F2 /* Event */,
+				3109B2EF2AF52A4200B2EAD2 /* Filter */,
 				090978EA2AF0E77B006BD8DE /* MyCard */,
 				090978EB2AF0E77F006BD8DE /* Chat */,
 				09BB551A2AF015D100A54B1B /* Setting */,
@@ -630,6 +661,7 @@
 				3164D4832AE21F810054F440 /* ViewController.swift in Sources */,
 				098294212AF3C1E50011773A /* TermsOfUseVC.swift in Sources */,
 				09BB551E2AF0169700A54B1B /* SettingBasicCell.swift in Sources */,
+				3109B2FE2AF52B4700B2EAD2 /* DateFilterView.swift in Sources */,
 				31571C242AF3CBC00037A2F2 /* EventVC.swift in Sources */,
 				090978E82AF0E6C0006BD8DE /* TabBarVC.swift in Sources */,
 				31571C1E2AF3CBC00037A2F2 /* EventTableViewCell.swift in Sources */,
@@ -641,6 +673,8 @@
 				090978F32AF0E809006BD8DE /* TabBarItemType.swift in Sources */,
 				090978ED2AF0E7A3006BD8DE /* MyCardVC.swift in Sources */,
 				09BB55242AF02AB600A54B1B /* SettingDataSource.swift in Sources */,
+				3109B2FA2AF52B2000B2EAD2 /* FilterViewController.swift in Sources */,
+				3109B3022AF52B6A00B2EAD2 /* ResetBtnView.swift in Sources */,
 				098294232AF3C6180011773A /* ExternalURL.swift in Sources */,
 				31571C202AF3CBC00037A2F2 /* CategoryView.swift in Sources */,
 				090978F12AF0E7B5006BD8DE /* ChatVC.swift in Sources */,
@@ -661,6 +695,8 @@
 				090978FA2AF272D2006BD8DE /* NotificationVC.swift in Sources */,
 				31571C212AF3CBC00037A2F2 /* ItemCountView.swift in Sources */,
 				31571C222AF3CBC00037A2F2 /* TagView.swift in Sources */,
+				3109B2FC2AF52B3800B2EAD2 /* TagFilterView.swift in Sources */,
+				3109B3002AF52B5600B2EAD2 /* ProgressFilterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
