@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by 이동현 on 11/2/23.
 //
@@ -9,22 +9,46 @@ import UIKit
 
 public class ProtrudingBtn: UIButton {
     
-    public init(frame: CGRect, title: String, titleColor: UIColor, backgroundColor: UIColor) {
+    public init(
+        frame: CGRect,
+        title: String,
+        titleColor: UIColor,
+        backgroundColor: UIColor,
+        topLeft: CGFloat,
+        topRight: CGFloat,
+        bottomLeft: CGFloat,
+        bottomRight: CGFloat
+    ) {
         super.init(frame: frame)
-        setupButton(title: title, titleColor: titleColor, backgroundColor: backgroundColor)
+   
+        setUI(title: title,
+              titleColor: titleColor,
+              backgroundColor: backgroundColor,
+              topLeft: topLeft,
+              topRight: topRight,
+              bottomLeft: bottomLeft,
+              bottomRight: bottomRight
+        )
     }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setupButton(title: "", titleColor: .black, backgroundColor: .gray)
     }
-    
-    private func setupButton(title: String, titleColor: UIColor, backgroundColor: UIColor) {
+
+    private func setUI(
+        title: String,
+        titleColor: UIColor,
+        backgroundColor: UIColor,
+        topLeft: CGFloat,
+        topRight: CGFloat,
+        bottomLeft: CGFloat,
+        bottomRight: CGFloat
+    ) {
         setTitle(title, for: .normal)
         setTitleColor(titleColor, for: .normal)
         self.backgroundColor = backgroundColor
-    
-        self.roundCorners(topLeft: 8, topRight: 15, bottomLeft: 15, bottomRight: 8)
+        
+        self.roundCorners(topLeft: topLeft, topRight: topRight, bottomLeft: bottomLeft, bottomRight: bottomRight)
         
         let borderLayer = CAShapeLayer()
         borderLayer.path = (self.layer.mask! as! CAShapeLayer).path!

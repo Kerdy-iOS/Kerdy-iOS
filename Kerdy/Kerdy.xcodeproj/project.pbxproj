@@ -57,6 +57,11 @@
 		3164D4B12AE223180054F440 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 3164D4B02AE223180054F440 /* Moya */; };
 		3164D4B32AE223180054F440 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 3164D4B22AE223180054F440 /* RxMoya */; };
 		3164D4B72AE223400054F440 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3164D4B62AE223400054F440 /* SnapKit */; };
+		5B216AFA2AF671CF00C028A0 /* FourthInitialSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B216AF92AF671CF00C028A0 /* FourthInitialSettingVC.swift */; };
+		5B370F3C2AF53E1300D0D3DE /* FirstInitialSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B370F3B2AF53E1300D0D3DE /* FirstInitialSettingVC.swift */; };
+		5B370F402AF53F1E00D0D3DE /* SecondInitialSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B370F3F2AF53F1E00D0D3DE /* SecondInitialSettingVC.swift */; };
+		5B370F422AF546CE00D0D3DE /* ThirdInitialSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B370F412AF546CE00D0D3DE /* ThirdInitialSettingVC.swift */; };
+		5BF17B3A2AF7D17600A03CEA /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF17B392AF7D17600A03CEA /* CategoryViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,6 +132,11 @@
 		3164D49F2AE21F820054F440 /* KerdyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KerdyUITests.swift; sourceTree = "<group>"; };
 		3164D4A12AE21F820054F440 /* KerdyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KerdyUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3164D4AE2AE21FA80054F440 /* Kerdy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kerdy.entitlements; sourceTree = "<group>"; };
+		5B216AF92AF671CF00C028A0 /* FourthInitialSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthInitialSettingVC.swift; sourceTree = "<group>"; };
+		5B370F3B2AF53E1300D0D3DE /* FirstInitialSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstInitialSettingVC.swift; sourceTree = "<group>"; };
+		5B370F3F2AF53F1E00D0D3DE /* SecondInitialSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondInitialSettingVC.swift; sourceTree = "<group>"; };
+		5B370F412AF546CE00D0D3DE /* ThirdInitialSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdInitialSettingVC.swift; sourceTree = "<group>"; };
+		5BF17B392AF7D17600A03CEA /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -416,6 +426,7 @@
 				3164D4AE2AE21FA80054F440 /* Kerdy.entitlements */,
 				3164D4822AE21F810054F440 /* ViewController.swift */,
 				095D39062AEE7B3C0083CC65 /* Application */,
+				5B370F3A2AF53DD800D0D3DE /* InitialSetting */,
 				31571C142AF3CB9F0037A2F2 /* Event */,
 				090978EA2AF0E77B006BD8DE /* MyCard */,
 				090978EB2AF0E77F006BD8DE /* Chat */,
@@ -454,6 +465,34 @@
 				311620612AE252E200E26420 /* Core */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5B370F3A2AF53DD800D0D3DE /* InitialSetting */ = {
+			isa = PBXGroup;
+			children = (
+				5BF17AF42AF7C41800A03CEA /* VC */,
+			);
+			path = InitialSetting;
+			sourceTree = "<group>";
+		};
+		5BF17AF42AF7C41800A03CEA /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				5BF17AF82AF7C8CC00A03CEA /* ViewModel */,
+				5B370F3B2AF53E1300D0D3DE /* FirstInitialSettingVC.swift */,
+				5B370F3F2AF53F1E00D0D3DE /* SecondInitialSettingVC.swift */,
+				5B370F412AF546CE00D0D3DE /* ThirdInitialSettingVC.swift */,
+				5B216AF92AF671CF00C028A0 /* FourthInitialSettingVC.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		5BF17AF82AF7C8CC00A03CEA /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5BF17B392AF7D17600A03CEA /* CategoryViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -630,8 +669,12 @@
 				3164D4832AE21F810054F440 /* ViewController.swift in Sources */,
 				098294212AF3C1E50011773A /* TermsOfUseVC.swift in Sources */,
 				09BB551E2AF0169700A54B1B /* SettingBasicCell.swift in Sources */,
+				5B370F402AF53F1E00D0D3DE /* SecondInitialSettingVC.swift in Sources */,
+				5B370F422AF546CE00D0D3DE /* ThirdInitialSettingVC.swift in Sources */,
 				31571C242AF3CBC00037A2F2 /* EventVC.swift in Sources */,
+				5B216AFA2AF671CF00C028A0 /* FourthInitialSettingVC.swift in Sources */,
 				090978E82AF0E6C0006BD8DE /* TabBarVC.swift in Sources */,
+				5BF17B3A2AF7D17600A03CEA /* CategoryViewModel.swift in Sources */,
 				31571C1E2AF3CBC00037A2F2 /* EventTableViewCell.swift in Sources */,
 				09BB55262AF0430200A54B1B /* StringLiterals.swift in Sources */,
 				09BB55202AF016B200A54B1B /* SettingProfileCell.swift in Sources */,
@@ -641,6 +684,7 @@
 				090978F32AF0E809006BD8DE /* TabBarItemType.swift in Sources */,
 				090978ED2AF0E7A3006BD8DE /* MyCardVC.swift in Sources */,
 				09BB55242AF02AB600A54B1B /* SettingDataSource.swift in Sources */,
+				5B370F3C2AF53E1300D0D3DE /* FirstInitialSettingVC.swift in Sources */,
 				098294232AF3C6180011773A /* ExternalURL.swift in Sources */,
 				31571C202AF3CBC00037A2F2 /* CategoryView.swift in Sources */,
 				090978F12AF0E7B5006BD8DE /* ChatVC.swift in Sources */,
