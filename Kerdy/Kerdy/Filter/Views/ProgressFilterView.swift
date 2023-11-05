@@ -26,9 +26,9 @@ class ProgressFilterView: UIView {
 
     private lazy var divideLine = DivideLine(frame: .zero, backgroundColor: .kerdyGray01)
 
-    lazy var inProgressBtn = FilterBtn(title: "진행중", tag: 0)
-    lazy var isPlanned = FilterBtn(title: "진행예정", tag: 0)
-    lazy var isFinished = FilterBtn(title: "마감", tag: 0)
+    lazy var inProgressBtn = FilterBtn(title: "진행중")
+    lazy var isPlanned = FilterBtn(title: "진행예정")
+    lazy var isFinished = FilterBtn(title: "마감")
     
     init() {
         super.init(frame: .zero)

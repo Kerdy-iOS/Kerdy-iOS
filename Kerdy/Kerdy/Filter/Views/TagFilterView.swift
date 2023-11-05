@@ -43,12 +43,12 @@ final class TagFilterView: UIView {
 
     private lazy var divideLine = DivideLine(frame: .zero, backgroundColor: .kerdyGray01)
 
-    lazy var entireBtn = FilterBtn(title: "전체", tag: 0)
-    lazy var androidBtn = FilterBtn(title: "Android", tag: 0)
-    lazy var iOSBtn = FilterBtn(title: "iOS", tag: 0)
-    lazy var frontendBtn = FilterBtn(title: "Frontend", tag: 0)
-    lazy var backendBtn = FilterBtn(title: "Backend", tag: 0)
-    lazy var aiBtn = FilterBtn(title: "AI", tag: 0)
+    lazy var entireBtn = FilterBtn(title: "전체")
+    lazy var androidBtn = FilterBtn(title: "Android")
+    lazy var iOSBtn = FilterBtn(title: "iOS")
+    lazy var frontendBtn = FilterBtn(title: "Frontend")
+    lazy var backendBtn = FilterBtn(title: "Backend")
+    lazy var aiBtn = FilterBtn(title: "AI")
 
     init() {
         super.init(frame: .zero)
