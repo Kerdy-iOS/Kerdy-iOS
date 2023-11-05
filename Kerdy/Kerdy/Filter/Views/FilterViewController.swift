@@ -37,6 +37,7 @@ final class FilterViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         progressFilterView.setUI()
         tagFilterView.setUI()
+        dateFilterView.setUI()
     }
     
     private func setLayout() {

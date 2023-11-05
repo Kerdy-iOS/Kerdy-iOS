@@ -21,6 +21,7 @@ final class TagFilterView: UIView {
         stackView.axis = .vertical
         stackView.spacing = 11
         stackView.distribution = .equalSpacing
+        stackView.alignment = .leading
         return stackView
     }()
 

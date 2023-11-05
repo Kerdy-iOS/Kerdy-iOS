@@ -33,7 +33,7 @@ class FilterBtn: UIButton {
     func setLayer() {
         self.roundCorners(topLeft: 12, topRight: 20, bottomLeft: 20, bottomRight: 12)
         let borderLayer = CAShapeLayer()
-        guard 
+        guard
             let maskLayer = layer.mask as? CAShapeLayer,
             let path = maskLayer.path
         else { return }
