@@ -16,7 +16,7 @@ class ProgressFilterView: UIView {
         return label
     }()
 
-    lazy var progressStackView: UIStackView = {
+    private lazy var progressStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 8

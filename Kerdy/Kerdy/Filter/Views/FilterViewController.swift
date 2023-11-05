@@ -34,6 +34,11 @@ final class FilterViewController: UIViewController {
         setUI()
     }
 
+    override func viewDidLayoutSubviews() {
+        progressFilterView.setUI()
+        tagFilterView.setUI()
+    }
+    
     private func setLayout() {
         view.addSubview(navigationBar)
         view.addSubview(resetBtnView)
@@ -63,13 +68,13 @@ final class FilterViewController: UIViewController {
 
         tagFilterView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
-            $0.top.equalTo(progressFilterView.snp.bottom)
+            $0.top.equalTo(progressFilterView.snp.bottom).offset(25)
             $0.height.equalTo(159)
         }
 
         dateFilterView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
-            $0.top.equalTo(tagFilterView.snp.bottom)
+            $0.top.equalTo(tagFilterView.snp.bottom).offset(25)
             $0.height.equalTo(79)
         }
 

@@ -16,7 +16,7 @@ final class TagFilterView: UIView {
         return label
     }()
 
-    lazy var tagStackView: UIStackView = {
+    private lazy var tagStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 11
