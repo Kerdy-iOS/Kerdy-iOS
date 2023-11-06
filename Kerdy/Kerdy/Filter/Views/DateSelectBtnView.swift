@@ -37,13 +37,14 @@ final class DateSelectBtnView: UIView {
     }
 
     private func setLayout() {
-        addSubviews(imageView)
-        addSubviews(titleLabel)
-        addSubviews(button)
+        addSubviews(
+            imageView,
+            titleLabel,
+            button
+        )
 
         imageView.snp.makeConstraints {
-            $0.width.equalTo(14)
-            $0.height.equalTo(14)
+            $0.size.equalTo(14)
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(19)
         }

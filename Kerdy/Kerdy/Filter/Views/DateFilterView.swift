@@ -44,8 +44,7 @@ final class DateFilterView: UIView {
     }
 
     private func setLayout() {
-        addSubviews(titleLabel)
-        addSubviews(dateStackView)
+        addSubviews(titleLabel, dateStackView)
         setDateStackViewLayout()
 
         titleLabel.snp.makeConstraints {
@@ -69,18 +68,17 @@ final class DateFilterView: UIView {
     }
 
     private func setDateStackViewLayout() {
-        dateStackView.addArrangedSubview(startDateBtnView)
-        dateStackView.addArrangedSubview(waveLabel)
-        dateStackView.addArrangedSubview(endDateBtnView)
+        dateStackView.addArrangedSubviews(
+            startDateBtnView,
+            waveLabel,
+            endDateBtnView
+        )
 
-        startDateBtnView.snp.makeConstraints {
-            $0.width.equalTo(125)
-            $0.height.equalTo(45)
-        }
-
-        endDateBtnView.snp.makeConstraints {
-            $0.width.equalTo(125)
-            $0.height.equalTo(45)
+        [startDateBtnView,endDateBtnView].forEach {
+            $0.snp.makeConstraints{
+                $0.width.equalTo(125)
+                $0.height.equalTo(45)
+            }
         }
 
         waveLabel.snp.makeConstraints {

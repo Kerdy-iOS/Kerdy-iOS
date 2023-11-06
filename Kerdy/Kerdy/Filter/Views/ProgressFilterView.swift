@@ -40,9 +40,11 @@ class ProgressFilterView: UIView {
     }
     
     private func setLayout() {
-        addSubviews(titleLabel)
-        addSubviews(progressStackView)
-        addSubviews(divideLine)
+        addSubviews(
+            titleLabel,
+            progressStackView,
+            divideLine
+        )
         setProgressStackViewLayout()
 
         titleLabel.snp.makeConstraints {
@@ -67,9 +69,11 @@ class ProgressFilterView: UIView {
     }
 
     private func setProgressStackViewLayout() {
-        progressStackView.addArrangedSubview(inProgressBtn)
-        progressStackView.addArrangedSubview(isPlanned)
-        progressStackView.addArrangedSubview(isFinished)
+        progressStackView.addArrangedSubviews(
+            inProgressBtn,
+            isPlanned,
+            isFinished
+        )
 
         inProgressBtn.snp.makeConstraints {
             $0.height.equalTo(32)

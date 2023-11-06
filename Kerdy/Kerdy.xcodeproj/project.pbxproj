@@ -44,6 +44,7 @@
 		3109B30C2AF7F49A00B2EAD2 /* PrortudingBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3109B30B2AF7F49A00B2EAD2 /* PrortudingBtn.swift */; };
 		3109B30E2AF7F4ED00B2EAD2 /* FilterBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3109B30D2AF7F4ED00B2EAD2 /* FilterBtn.swift */; };
 		311620632AE252E600E26420 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = 311620622AE252E600E26420 /* Core */; };
+		311E982E2AF8B65F009BEB3F /* TechTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311E982D2AF8B65F009BEB3F /* TechTagView.swift */; };
 		31571C1E2AF3CBC00037A2F2 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C172AF3CBC00037A2F2 /* EventTableViewCell.swift */; };
 		31571C1F2AF3CBC00037A2F2 /* FilterSettingBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C182AF3CBC00037A2F2 /* FilterSettingBtn.swift */; };
 		31571C202AF3CBC00037A2F2 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C192AF3CBC00037A2F2 /* CategoryView.swift */; };
@@ -123,6 +124,7 @@
 		3109B30B2AF7F49A00B2EAD2 /* PrortudingBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrortudingBtn.swift; sourceTree = "<group>"; };
 		3109B30D2AF7F4ED00B2EAD2 /* FilterBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBtn.swift; sourceTree = "<group>"; };
 		311620612AE252E200E26420 /* Core */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Core; path = ../Core; sourceTree = "<group>"; };
+		311E982D2AF8B65F009BEB3F /* TechTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TechTagView.swift; sourceTree = "<group>"; };
 		31571C172AF3CBC00037A2F2 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		31571C182AF3CBC00037A2F2 /* FilterSettingBtn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSettingBtn.swift; sourceTree = "<group>"; };
 		31571C192AF3CBC00037A2F2 /* CategoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
@@ -390,6 +392,7 @@
 			children = (
 				3109B2F92AF52B2000B2EAD2 /* FilterViewController.swift */,
 				3109B2FB2AF52B3800B2EAD2 /* TagFilterView.swift */,
+				311E982D2AF8B65F009BEB3F /* TechTagView.swift */,
 				3109B3092AF7E29600B2EAD2 /* DateSelectBtnView.swift */,
 				3109B2FD2AF52B4700B2EAD2 /* DateFilterView.swift */,
 				3109B2FF2AF52B5600B2EAD2 /* ProgressFilterView.swift */,
@@ -689,6 +692,7 @@
 				09BB55262AF0430200A54B1B /* StringLiterals.swift in Sources */,
 				09BB55202AF016B200A54B1B /* SettingProfileCell.swift in Sources */,
 				098294182AF341290011773A /* BlockListVC.swift in Sources */,
+				311E982E2AF8B65F009BEB3F /* TechTagView.swift in Sources */,
 				09BB55192AF0158C00A54B1B /* SettingVC.swift in Sources */,
 				090978FC2AF27364006BD8DE /* ModalTopView.swift in Sources */,
 				090978F32AF0E809006BD8DE /* TabBarItemType.swift in Sources */,
