@@ -29,16 +29,16 @@ class ProgressFilterView: UIView {
     lazy var inProgressBtn = FilterBtn(title: "진행중")
     lazy var isPlanned = FilterBtn(title: "진행예정")
     lazy var isFinished = FilterBtn(title: "마감")
-    
+
     init() {
         super.init(frame: .zero)
         setLayout()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setLayout() {
         addSubviews(
             titleLabel,
@@ -48,7 +48,7 @@ class ProgressFilterView: UIView {
         setProgressStackViewLayout()
 
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(25)
+            $0.top.equalToSuperview()
             $0.leading.equalToSuperview().offset(17)
             $0.size.width.equalTo(28).priority(250)
             $0.size.height.equalTo(19).priority(250)

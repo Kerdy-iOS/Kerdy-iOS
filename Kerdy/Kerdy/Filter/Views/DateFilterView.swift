@@ -74,8 +74,8 @@ final class DateFilterView: UIView {
             endDateBtnView
         )
 
-        [startDateBtnView,endDateBtnView].forEach {
-            $0.snp.makeConstraints{
+        [startDateBtnView, endDateBtnView].forEach {
+            $0.snp.makeConstraints {
                 $0.width.equalTo(125)
                 $0.height.equalTo(45)
             }

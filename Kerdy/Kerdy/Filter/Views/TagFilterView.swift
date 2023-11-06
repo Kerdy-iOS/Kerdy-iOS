@@ -37,7 +37,7 @@ final class TagFilterView: UIView {
         )
 
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(25)
+            $0.top.equalToSuperview()
             $0.leading.equalToSuperview().offset(17)
             $0.size.width.equalTo(28).priority(250)
             $0.size.height.equalTo(19).priority(250)

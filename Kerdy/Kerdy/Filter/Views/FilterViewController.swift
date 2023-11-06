@@ -55,7 +55,7 @@ final class FilterViewController: UIViewController {
         }
 
         resetBtnView.snp.makeConstraints {
-            $0.top.equalTo(navigationBar.snp.bottom).offset(6)
+            $0.top.equalTo(navigationBar.snp.bottom)
             $0.trailing.equalToSuperview().offset(-17)
             $0.height.equalTo(14)
             $0.width.equalTo(74)
@@ -70,7 +70,7 @@ final class FilterViewController: UIViewController {
         tagFilterView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
             $0.top.equalTo(progressFilterView.snp.bottom).offset(25)
-            $0.height.equalTo(159)
+            $0.height.equalTo(305)
         }
 
         dateFilterView.snp.makeConstraints {
