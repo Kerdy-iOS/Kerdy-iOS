@@ -42,7 +42,7 @@ final class FirstInitialSettingVC: UIViewController {
     
     private lazy var nameTextField: UITextField = {
         let textField = UITextField()
-        textField.attributedPlaceholder = NSAttributedString(string: "입력해주세요.", attributes: [NSAttributedString.Key.foregroundColor : UIColor(named: "kerdy_gray01")!])
+        textField.attributedPlaceholder = NSAttributedString(string: "입력해주세요.", attributes: [NSAttributedString.Key.foregroundColor : UIColor.kerdyGray01!])
         textField.font = .nanumSquare(to: .regular, size: 16)
         textField.borderStyle = .none
         return textField
