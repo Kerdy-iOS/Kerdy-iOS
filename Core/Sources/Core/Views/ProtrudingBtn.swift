@@ -48,7 +48,12 @@ public class ProtrudingBtn: UIButton {
         setTitleColor(titleColor, for: .normal)
         self.backgroundColor = backgroundColor
         
-        self.roundCorners(topLeft: topLeft, topRight: topRight, bottomLeft: bottomLeft, bottomRight: bottomRight)
+        self.roundCorners(
+            topLeft: topLeft,
+            topRight: topRight,
+            bottomLeft: bottomLeft,
+            bottomRight: bottomRight
+            )
         
         let borderLayer = CAShapeLayer()
         borderLayer.path = (self.layer.mask! as! CAShapeLayer).path!
