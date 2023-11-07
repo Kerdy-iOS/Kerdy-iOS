@@ -80,11 +80,11 @@ final class FirstInitialSettingVC: UIViewController {
         self.view.addSubview(contourLine)
         self.view.addSubview(nextButton)
         
-        progressLabel.snp.makeConstraints { make in
-            make.width.equalTo(24)
-            make.height.equalTo(16)
-            make.top.equalToSuperview().offset(97)
-            make.leading.equalToSuperview().offset(21)
+        progressLabel.snp.makeConstraints {
+            $0.width.equalTo(24)
+            $0.height.equalTo(16)
+            $0.top.equalToSuperview().offset(97)
+            $0.leading.equalToSuperview().offset(21)
         }
         
         nameSettingLabel.snp.makeConstraints { make in
