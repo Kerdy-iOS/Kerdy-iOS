@@ -41,8 +41,8 @@ final class ThirdInitialSettingVC: UIViewController {
     
     private lazy var nameTextField: UITextField = {
         let textField = UITextField()
-        textField.attributedPlaceholder = NSAttributedString(string: "입력해주세요.", attributes: [NSAttributedString.Key.foregroundColor : UIColor(named: "kerdy_gray01")!])
-        textField.font = UIFont(name: "NanumSquareR", size: 16)
+        textField.attributedPlaceholder = NSAttributedString(string: "입력해주세요.", attributes: [NSAttributedString.Key.foregroundColor : UIColor.kerdyGray01])
+        textField.font = .nanumSquare(to: .regular, size: 16)
         textField.borderStyle = .none
         return textField
     }()
@@ -50,7 +50,7 @@ final class ThirdInitialSettingVC: UIViewController {
     private lazy var nameTextFieldUnderline: UIView = {
         let view = UIView()
         view.backgroundColor = .kerdyGray01
-        return view;
+        return view
     }()
     
     private lazy var enterLaterButton: UIButton = {
@@ -66,7 +66,7 @@ final class ThirdInitialSettingVC: UIViewController {
     private lazy var enterLaterButtonUnderline: UIView = {
         let view = UIView()
         view.backgroundColor = .kerdyGray02
-        return view;
+        return view
     }()
 
     

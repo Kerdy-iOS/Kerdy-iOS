@@ -42,7 +42,7 @@ final class FirstInitialSettingVC: UIViewController {
     
     private lazy var nameTextField: UITextField = {
         let textField = UITextField()
-        textField.attributedPlaceholder = NSAttributedString(string: "입력해주세요.", attributes: [NSAttributedString.Key.foregroundColor : UIColor.kerdyGray01!])
+        textField.attributedPlaceholder = NSAttributedString(string: "입력해주세요.", attributes: [NSAttributedString.Key.foregroundColor : UIColor.kerdyGray01])
         textField.font = .nanumSquare(to: .regular, size: 16)
         textField.borderStyle = .none
         return textField
@@ -51,12 +51,12 @@ final class FirstInitialSettingVC: UIViewController {
     private lazy var contourLine: UIView = {
         let view = UIView()
         view.backgroundColor = .kerdyGray01
-        return view;
+        return view
     }()
     
     private lazy var nextButton: UIButton = {
         let button = UIButton()
-        button.titleLabel?.font = UIFont(name: "NanumSquareR", size: 16)
+        button.titleLabel?.font = .nanumSquare(to: .regular, size: 16)
         button.backgroundColor = .kerdyMain
         button.layer.cornerRadius = 15
         button.setTitle("다음", for: .normal)
@@ -72,13 +72,13 @@ final class FirstInitialSettingVC: UIViewController {
     }
     
     private func setLayout(){
-        self.view.addSubview(progressLabel)
-        self.view.addSubview(nameSettingLabel)
-        self.view.addSubview(nameAskLabel)
-        self.view.addSubview(warningLabel)
-        self.view.addSubview(nameTextField)
-        self.view.addSubview(contourLine)
-        self.view.addSubview(nextButton)
+        view.addSubview(progressLabel)
+        view.addSubview(nameSettingLabel)
+        view.addSubview(nameAskLabel)
+        view.addSubview(warningLabel)
+        view.addSubview(nameTextField)
+        view.addSubview(contourLine)
+        view.addSubview(nextButton)
         
         progressLabel.snp.makeConstraints {
             $0.width.equalTo(24)
@@ -142,7 +142,6 @@ final class FirstInitialSettingVC: UIViewController {
     @objc private func nextButtonTapped() {
         let nextViewController = SecondInitialSettingVC()
         self.navigationController?.pushViewController(nextViewController, animated: true)
-        print("tapped")
     }
 }
 

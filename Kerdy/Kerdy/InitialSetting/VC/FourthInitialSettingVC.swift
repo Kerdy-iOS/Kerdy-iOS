@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FourthInitialSettingVC: UIViewController {
+final class FourthInitialSettingVC: UIViewController {
     
     private lazy var progressLabel: UILabel = {
         let label = UILabel()
@@ -50,7 +50,7 @@ class FourthInitialSettingVC: UIViewController {
     private lazy var clubTextFieldUnderline: UIView = {
         let view = UIView()
         view.backgroundColor = .kerdyGray01
-        return view;
+        return view
     }()
     
     private lazy var enterLaterButton: UIButton = {
@@ -58,7 +58,7 @@ class FourthInitialSettingVC: UIViewController {
         button.backgroundColor = .white
         button.setTitle("나중에 입력하기", for: .normal)
         button.setTitleColor(.kerdyGray02, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 15)
+        button.titleLabel?.font = .nanumSquare(to: .regular, size: 15)
         button.addTarget(self, action: #selector(enterLaterButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -66,7 +66,7 @@ class FourthInitialSettingVC: UIViewController {
     private lazy var enterLaterButtonUnderline: UIView = {
         let view = UIView()
         view.backgroundColor = .kerdyGray02
-        return view;
+        return view
     }()
     
     
@@ -82,8 +82,7 @@ class FourthInitialSettingVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .systemBackground
-        setUpUI()
+        setUI()
         setLayout()
         setNaviBar()
     }
@@ -164,7 +163,7 @@ class FourthInitialSettingVC: UIViewController {
         }
     }
     
-    private func setUpUI() {
+    private func setUI() {
         self.view.backgroundColor = .systemBackground
     }
     

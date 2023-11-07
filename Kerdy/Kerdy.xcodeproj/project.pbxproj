@@ -470,6 +470,7 @@
 		5B370F3A2AF53DD800D0D3DE /* InitialSetting */ = {
 			isa = PBXGroup;
 			children = (
+				5BF17AF82AF7C8CC00A03CEA /* ViewModel */,
 				5BF17AF42AF7C41800A03CEA /* VC */,
 			);
 			path = InitialSetting;
@@ -478,7 +479,6 @@
 		5BF17AF42AF7C41800A03CEA /* VC */ = {
 			isa = PBXGroup;
 			children = (
-				5BF17AF82AF7C8CC00A03CEA /* ViewModel */,
 				5B370F3B2AF53E1300D0D3DE /* FirstInitialSettingVC.swift */,
 				5B370F3F2AF53F1E00D0D3DE /* SecondInitialSettingVC.swift */,
 				5B370F412AF546CE00D0D3DE /* ThirdInitialSettingVC.swift */,

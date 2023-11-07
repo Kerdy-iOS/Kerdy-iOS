@@ -9,7 +9,7 @@ import UIKit
 import Core
 import RxSwift
 
-class SecondInitialSettingVC: UIViewController {
+final class SecondInitialSettingVC: UIViewController {
     
     private let categoryViewModel = CategoryViewModel()
     private let disposeBag = DisposeBag()
