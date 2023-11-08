@@ -14,7 +14,7 @@ final class FilterViewController: UIViewController {
         //backButton에 뒤로가기 함수 등록 필요
         return view
     }()
-    private lazy var resetBtnView = ResetBtnView()
+    private lazy var resetBtn = ResetBtn()
     private lazy var progressFilterView = ProgressFilterView()
     private lazy var tagFilterView = TagFilterView()
     private lazy var dateFilterView = DateFilterView()
@@ -42,7 +42,7 @@ final class FilterViewController: UIViewController {
     
     private func setLayout() {
         view.addSubview(navigationBar)
-        view.addSubview(resetBtnView)
+        view.addSubview(resetBtn)
         view.addSubview(progressFilterView)
         view.addSubview(tagFilterView)
         view.addSubview(dateFilterView)
@@ -54,16 +54,11 @@ final class FilterViewController: UIViewController {
             $0.height.equalTo(56)
         }
 
-        resetBtnView.snp.makeConstraints {
-            $0.top.equalTo(navigationBar.snp.bottom)
-            $0.trailing.equalToSuperview().offset(-17)
-            $0.height.equalTo(14)
-            $0.width.equalTo(74)
-        }
+        
 
         progressFilterView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
-            $0.top.equalTo(resetBtnView.snp.bottom).offset(6)
+            $0.top.equalTo(resetBtn.snp.bottom).offset(6)
             $0.height.equalTo(91)
         }
 

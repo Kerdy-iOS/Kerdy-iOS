@@ -33,7 +33,7 @@ extension TabBarVC {
     
     func setTabBarItems() {
         tabs = [MyCardVC(),
-                UINavigationController(rootViewController: EventVC()),
+                UINavigationController(rootViewController: DateFilterViewController()),
                 ChatVC(),
                 SettingVC()
         ]
