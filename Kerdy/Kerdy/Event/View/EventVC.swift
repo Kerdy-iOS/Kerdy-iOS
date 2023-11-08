@@ -62,7 +62,11 @@ final class EventVC: UIViewController {
 
     private lazy var itemCountContainerView = ItemCountView()
 
-    private lazy var filterBtn: UIView = FilterSettingBtn()
+    private lazy var filterBtn: FilterSettingBtn = {
+        let view = FilterSettingBtn()
+        view.button.addTarget(self, action: #selector(filterBtnTapped), for: .touchUpInside)
+        return view
+    }()
 
     private lazy var filterContainerView = UIView()
 
@@ -81,8 +85,8 @@ final class EventVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
         setLayout()
+        setUI()
     }
 
     // MARK: - 오토레이아웃 설정
@@ -114,6 +118,10 @@ final class EventVC: UIViewController {
             $0.horizontalEdges.equalToSuperview()
             $0.top.equalTo(filterContainerView.snp.bottom)
         }
+    }
+
+    private func setUI() {
+        view.backgroundColor = .systemBackground
     }
 
     private func setUpsearchViewLayout() {
@@ -216,6 +224,11 @@ final class EventVC: UIViewController {
         let indexPath = IndexPath(item: tag, section: 0)
         eventCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         updateCategoryColor(index: tag)
+    }
+
+    @objc func filterBtnTapped(_ sender: UIButton) {
+        let nextVC = FilterVC()
+        navigationController?.pushViewController(nextVC, animated: true)
     }
 }
 
