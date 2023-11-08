@@ -103,14 +103,14 @@ class DateFilterViewController: UIViewController {
 
         calendar.delegate = self
         calendar.dataSource = self
-        calendar.register(CalendarCell.self, forCellReuseIdentifier: "CalendarCell")
+//        calendar.register(CalendarCell.self, forCellReuseIdentifier: "CalendarCell")
         resetBtn.addTarget(self, action: #selector(resetBtnTapped), for: .touchUpInside)
     }
 
     @objc private func resetBtnTapped() {
         for selectedDate in calendar.selectedDates {
             calendar.deselect(selectedDate)
-            
+            periodView.reset()
         }
     }
 }
@@ -118,9 +118,12 @@ class DateFilterViewController: UIViewController {
 extension DateFilterViewController: FSCalendarDelegate, FSCalendarDataSource {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         if calendar.selectedDates.count > 2 {
-            for _ in 0 ..< calendar.selectedDates.count - 1 {
-                calendar.deselect(calendar.selectedDates[0])
+            for _ in 0 ..< calendar.selectedDates.count {
+                if let deselectDate = calendar.selectedDates.first {
+                    calendar.deselect(deselectDate)
+                }
             }
+            calendar.select(date)
         }
 
         if calendar.selectedDates.count == 2 {
@@ -128,25 +131,17 @@ extension DateFilterViewController: FSCalendarDelegate, FSCalendarDataSource {
             let startDate = calendar.selectedDates[0]
             let endDate = calendar.selectedDates[1]
 
-            if startDate < endDate {
+            if startDate > endDate {
+                for _ in 0 ..< calendar.selectedDates.count {
+                    calendar.deselect(calendar.selectedDates[0])
+                }
+                calendar.select(endDate)
+            } else {
                 var dateToAdd = startDate
                 while dateToAdd < endDate {
-                    if let dateToAdd = currentCalendar.date(byAdding: .day, value: 1, to: dateToAdd) {
+                    if let nextDate = currentCalendar.date(byAdding: .day, value: 1, to: dateToAdd) {
+                        dateToAdd = nextDate
                         calendar.select(dateToAdd)
-                    } else { return }
-                }
-            } else {
-                if startDate > endDate {
-                    for _ in 0 ..< calendar.selectedDates.count {
-                        calendar.deselect(calendar.selectedDates[0])
-                    }
-                    calendar.select(endDate)
-                } else {
-                    var dateToAdd = endDate
-                    while dateToAdd < startDate {
-                        if let dateToAdd = currentCalendar.date(byAdding: .day, value: 1, to: dateToAdd) {
-                            calendar.select(dateToAdd)
-                        } else { return }
                     }
                 }
             }

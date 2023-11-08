@@ -48,6 +48,7 @@
 		311E983A2AFB89E5009BEB3F /* DateFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311E98392AFB89E5009BEB3F /* DateFilterViewController.swift */; };
 		311E983D2AFB8A91009BEB3F /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 311E983C2AFB8A91009BEB3F /* FSCalendar */; };
 		311E98402AFB9720009BEB3F /* PeriodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311E983F2AFB9720009BEB3F /* PeriodView.swift */; };
+		311E98462AFBC0CF009BEB3F /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311E98452AFBC0CF009BEB3F /* CalendarCell.swift */; };
 		31571C1E2AF3CBC00037A2F2 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C172AF3CBC00037A2F2 /* EventTableViewCell.swift */; };
 		31571C1F2AF3CBC00037A2F2 /* FilterSettingBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C182AF3CBC00037A2F2 /* FilterSettingBtn.swift */; };
 		31571C202AF3CBC00037A2F2 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C192AF3CBC00037A2F2 /* CategoryView.swift */; };
@@ -130,6 +131,7 @@
 		311E982F2AF8C24A009BEB3F /* DateSelectBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSelectBtn.swift; sourceTree = "<group>"; };
 		311E98392AFB89E5009BEB3F /* DateFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFilterViewController.swift; sourceTree = "<group>"; };
 		311E983F2AFB9720009BEB3F /* PeriodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodView.swift; sourceTree = "<group>"; };
+		311E98452AFBC0CF009BEB3F /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		31571C172AF3CBC00037A2F2 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		31571C182AF3CBC00037A2F2 /* FilterSettingBtn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSettingBtn.swift; sourceTree = "<group>"; };
 		31571C192AF3CBC00037A2F2 /* CategoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
@@ -437,6 +439,7 @@
 			isa = PBXGroup;
 			children = (
 				311E98392AFB89E5009BEB3F /* DateFilterViewController.swift */,
+				311E98452AFBC0CF009BEB3F /* CalendarCell.swift */,
 				311E983F2AFB9720009BEB3F /* PeriodView.swift */,
 			);
 			path = Views;
@@ -748,6 +751,7 @@
 				0909790D2AF33D95006BD8DE /* TagModel.swift in Sources */,
 				090978FE2AF28778006BD8DE /* TagVC.swift in Sources */,
 				3164D47F2AE21F810054F440 /* AppDelegate.swift in Sources */,
+				311E98462AFBC0CF009BEB3F /* CalendarCell.swift in Sources */,
 				090979042AF29121006BD8DE /* TagCell.swift in Sources */,
 				090979002AF287E0006BD8DE /* NavigationBarView.swift in Sources */,
 				3164D4812AE21F810054F440 /* SceneDelegate.swift in Sources */,
