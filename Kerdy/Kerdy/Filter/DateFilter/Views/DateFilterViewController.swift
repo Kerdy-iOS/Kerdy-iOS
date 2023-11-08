@@ -8,16 +8,13 @@
 import UIKit
 import FSCalendar
 
-class DateFilterViewController: UIViewController {
-    var selectedStartDate: Date? // 선택한 시작일을 저장할 변수
-    var selectedEndDate: Date?
+final class DateFilterViewController: UIViewController {
 
     private lazy var navigationBar: NavigationBarView = {
         let view = NavigationBarView()
         // backButton에 뒤로가기 함수 등록 필요
         return view
     }()
-
     private lazy var resetBtn = ResetBtn()
     private lazy var periodView = PeriodView()
     private lazy var calendar: FSCalendar = {
@@ -35,7 +32,6 @@ class DateFilterViewController: UIViewController {
         calendar.allowsMultipleSelection = true
         return calendar
     }()
-
     private lazy var applyBtn: UIButton = {
         let button = UIButton()
         button.backgroundColor = .kerdyMain
@@ -103,7 +99,6 @@ class DateFilterViewController: UIViewController {
 
         calendar.delegate = self
         calendar.dataSource = self
-//        calendar.register(CalendarCell.self, forCellReuseIdentifier: "CalendarCell")
         resetBtn.addTarget(self, action: #selector(resetBtnTapped), for: .touchUpInside)
     }
 

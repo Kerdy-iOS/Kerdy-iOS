@@ -8,7 +8,7 @@
 import UIKit
 import Core
 
-class ProgressFilterView: UIView {
+final class ProgressFilterView: UIView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "진행 상태"
@@ -64,7 +64,7 @@ class ProgressFilterView: UIView {
         divideLine.snp.makeConstraints {
             $0.top.equalTo(progressStackView.snp.bottom).offset(26)
             $0.horizontalEdges.equalToSuperview()
-            $0.size.height.equalTo(0.5)
+            $0.height.equalTo(0.5)
         }
     }
 

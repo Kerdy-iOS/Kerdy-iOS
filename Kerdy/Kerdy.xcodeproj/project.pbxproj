@@ -34,7 +34,7 @@
 		09BB55262AF0430200A54B1B /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB55252AF0430200A54B1B /* StringLiterals.swift */; };
 		09BB55282AF0543100A54B1B /* ProfileResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB55272AF0543100A54B1B /* ProfileResponseDTO.swift */; };
 		09BB552A2AF0545400A54B1B /* SettingBasicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB55292AF0545400A54B1B /* SettingBasicModel.swift */; };
-		3109B2FA2AF52B2000B2EAD2 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3109B2F92AF52B2000B2EAD2 /* FilterViewController.swift */; };
+		3109B2FA2AF52B2000B2EAD2 /* FilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3109B2F92AF52B2000B2EAD2 /* FilterVC.swift */; };
 		3109B2FC2AF52B3800B2EAD2 /* TagFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3109B2FB2AF52B3800B2EAD2 /* TagFilterView.swift */; };
 		3109B2FE2AF52B4700B2EAD2 /* DateFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3109B2FD2AF52B4700B2EAD2 /* DateFilterView.swift */; };
 		3109B3002AF52B5600B2EAD2 /* ProgressFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3109B2FF2AF52B5600B2EAD2 /* ProgressFilterView.swift */; };
@@ -48,7 +48,6 @@
 		311E983A2AFB89E5009BEB3F /* DateFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311E98392AFB89E5009BEB3F /* DateFilterViewController.swift */; };
 		311E983D2AFB8A91009BEB3F /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 311E983C2AFB8A91009BEB3F /* FSCalendar */; };
 		311E98402AFB9720009BEB3F /* PeriodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311E983F2AFB9720009BEB3F /* PeriodView.swift */; };
-		311E98462AFBC0CF009BEB3F /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311E98452AFBC0CF009BEB3F /* CalendarCell.swift */; };
 		31571C1E2AF3CBC00037A2F2 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C172AF3CBC00037A2F2 /* EventTableViewCell.swift */; };
 		31571C1F2AF3CBC00037A2F2 /* FilterSettingBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C182AF3CBC00037A2F2 /* FilterSettingBtn.swift */; };
 		31571C202AF3CBC00037A2F2 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C192AF3CBC00037A2F2 /* CategoryView.swift */; };
@@ -118,7 +117,7 @@
 		09BB55252AF0430200A54B1B /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 		09BB55272AF0543100A54B1B /* ProfileResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResponseDTO.swift; sourceTree = "<group>"; };
 		09BB55292AF0545400A54B1B /* SettingBasicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingBasicModel.swift; sourceTree = "<group>"; };
-		3109B2F92AF52B2000B2EAD2 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		3109B2F92AF52B2000B2EAD2 /* FilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterVC.swift; sourceTree = "<group>"; };
 		3109B2FB2AF52B3800B2EAD2 /* TagFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagFilterView.swift; sourceTree = "<group>"; };
 		3109B2FD2AF52B4700B2EAD2 /* DateFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFilterView.swift; sourceTree = "<group>"; };
 		3109B2FF2AF52B5600B2EAD2 /* ProgressFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressFilterView.swift; sourceTree = "<group>"; };
@@ -131,7 +130,6 @@
 		311E982F2AF8C24A009BEB3F /* DateSelectBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSelectBtn.swift; sourceTree = "<group>"; };
 		311E98392AFB89E5009BEB3F /* DateFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFilterViewController.swift; sourceTree = "<group>"; };
 		311E983F2AFB9720009BEB3F /* PeriodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodView.swift; sourceTree = "<group>"; };
-		311E98452AFBC0CF009BEB3F /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		31571C172AF3CBC00037A2F2 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		31571C182AF3CBC00037A2F2 /* FilterSettingBtn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSettingBtn.swift; sourceTree = "<group>"; };
 		31571C192AF3CBC00037A2F2 /* CategoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
@@ -398,7 +396,7 @@
 		3109B2F02AF52A4B00B2EAD2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3109B2F92AF52B2000B2EAD2 /* FilterViewController.swift */,
+				3109B2F92AF52B2000B2EAD2 /* FilterVC.swift */,
 				3109B2FB2AF52B3800B2EAD2 /* TagFilterView.swift */,
 				311E982D2AF8B65F009BEB3F /* TechTagView.swift */,
 				311E982F2AF8C24A009BEB3F /* DateSelectBtn.swift */,
@@ -439,7 +437,6 @@
 			isa = PBXGroup;
 			children = (
 				311E98392AFB89E5009BEB3F /* DateFilterViewController.swift */,
-				311E98452AFBC0CF009BEB3F /* CalendarCell.swift */,
 				311E983F2AFB9720009BEB3F /* PeriodView.swift */,
 			);
 			path = Views;
@@ -740,7 +737,7 @@
 				311E983A2AFB89E5009BEB3F /* DateFilterViewController.swift in Sources */,
 				09BB55242AF02AB600A54B1B /* SettingDataSource.swift in Sources */,
 				3109B30E2AF7F4ED00B2EAD2 /* FilterBtn.swift in Sources */,
-				3109B2FA2AF52B2000B2EAD2 /* FilterViewController.swift in Sources */,
+				3109B2FA2AF52B2000B2EAD2 /* FilterVC.swift in Sources */,
 				3109B3022AF52B6A00B2EAD2 /* ResetBtn.swift in Sources */,
 				098294232AF3C6180011773A /* ExternalURL.swift in Sources */,
 				31571C202AF3CBC00037A2F2 /* CategoryView.swift in Sources */,
@@ -751,7 +748,6 @@
 				0909790D2AF33D95006BD8DE /* TagModel.swift in Sources */,
 				090978FE2AF28778006BD8DE /* TagVC.swift in Sources */,
 				3164D47F2AE21F810054F440 /* AppDelegate.swift in Sources */,
-				311E98462AFBC0CF009BEB3F /* CalendarCell.swift in Sources */,
 				090979042AF29121006BD8DE /* TagCell.swift in Sources */,
 				090979002AF287E0006BD8DE /* NavigationBarView.swift in Sources */,
 				3164D4812AE21F810054F440 /* SceneDelegate.swift in Sources */,

@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class DateSelectBtn: PrortudingBtn {
+final class DateSelectBtn: PrortudingBtn {
     lazy var label: UILabel = {
         let label = UILabel()
         label.text = nil

@@ -7,6 +7,7 @@
 
 import UIKit
 import Core
+import SnapKit
 
 final class TagFilterView: UIView {
     private lazy var titleLabel: UILabel = {
@@ -46,14 +47,13 @@ final class TagFilterView: UIView {
         tagView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(14)
             $0.leading.equalToSuperview().offset(17)
-            $0.trailing.equalToSuperview().offset(-17)
-            $0.size.height.equalTo(70).priority(250)
+            $0.height.equalTo(70).priority(250)
         }
 
         divideLine.snp.makeConstraints {
             $0.top.equalTo(tagView.snp.bottom).offset(26)
             $0.horizontalEdges.equalToSuperview()
-            $0.size.height.equalTo(0.5)
+            $0.height.equalTo(0.5)
         }
     }
 

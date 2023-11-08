@@ -37,14 +37,14 @@ final class TechTagView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addTagLabels()
+        setLayout()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func addTagLabels() {
+    private func setLayout() {
         for name in tagNames {
             let newBtn = FilterBtn(title: name)
             addSubview(newBtn)
@@ -74,10 +74,11 @@ final class TechTagView: UIView {
                 fatalError("non-UIButton subview found!")
             }
 
-            if currentOriginX + button.bounds.width > bounds.width {
+            if currentOriginX + button.bounds.width > 300 {
                 currentOriginX = 0
                 currentOriginY += tagHeight + tagSpacingY
             }
+
 
             button.frame.origin.x = currentOriginX
             button.frame.origin.y = currentOriginY

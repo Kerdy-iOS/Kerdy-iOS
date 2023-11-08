@@ -8,8 +8,8 @@
 import UIKit
 import SnapKit
 
-class ResetBtn: UIButton {
-    
+final class ResetBtn: UIButton {
+
     private lazy var label: UILabel = {
         let label = UILabel()
         label.text = "전체 초기화"

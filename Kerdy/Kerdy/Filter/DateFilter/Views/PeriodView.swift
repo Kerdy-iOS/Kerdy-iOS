@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class PeriodView: UIView {
+final class PeriodView: UIView {
     private lazy var startLabel: UILabel = {
         let label = UILabel()
         label.text = "시작일 선택"

@@ -7,6 +7,7 @@
 
 import UIKit
 import Core
+import SnapKit
 
 final class DateFilterView: UIView {
     private lazy var titleLabel: UILabel = {
@@ -16,7 +17,7 @@ final class DateFilterView: UIView {
         return label
     }()
 
-    private lazy var dateStackView: UIStackView = {
+    lazy var dateStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 10
@@ -42,21 +43,21 @@ final class DateFilterView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setLayout() {
         addSubviews(
             titleLabel,
             dateStackView
         )
         setDateStackViewLayout()
-        
+
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview().offset(17)
             $0.size.width.equalTo(28).priority(250)
             $0.size.height.equalTo(19).priority(250)
         }
-        
+
         dateStackView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(14)
             $0.leading.equalToSuperview().offset(17)

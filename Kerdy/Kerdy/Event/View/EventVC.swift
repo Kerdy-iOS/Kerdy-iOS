@@ -227,7 +227,7 @@ final class EventVC: UIViewController {
     }
 
     @objc func filterBtnTapped(_ sender: UIButton) {
-        let nextVC = FilterViewController()
+        let nextVC = FilterVC()
         navigationController?.pushViewController(nextVC, animated: true)
     }
 }
