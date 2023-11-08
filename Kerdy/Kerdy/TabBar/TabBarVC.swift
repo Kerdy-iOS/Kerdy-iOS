@@ -36,6 +36,7 @@ extension TabBarVC {
                 UINavigationController(rootViewController: EventVC()),
                 ChatVC(),
                 SettingVC()
+//                UINavigationController(rootViewController: FirstInitialSettingVC()) //테스트 위해 잠시 추가
         ]
         
         TabBarItemType.allCases.forEach {
