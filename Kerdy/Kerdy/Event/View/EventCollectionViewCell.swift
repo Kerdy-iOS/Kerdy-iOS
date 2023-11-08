@@ -63,6 +63,7 @@ extension EventCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
                 for: indexPath
             ) as? EventTableViewCell
         else { return UITableViewCell() }
+        cell.selectionStyle = .none
         cell.titleLabel.text = "\(indexPath.row)"
         return cell
     }
@@ -72,6 +73,6 @@ extension EventCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 158
+        return 318
     }
 }
