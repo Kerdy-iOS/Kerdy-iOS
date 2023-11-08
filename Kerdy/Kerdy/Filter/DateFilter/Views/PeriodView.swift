@@ -56,4 +56,17 @@ class PeriodView: UIView {
             $0.layer.cornerRadius = 15
         }
     }
+    
+    func reset() {
+        startLabel.text = "시작일 선택"
+        endLabel.text = "종료일 선택"
+    }
+    
+    func setStartDate(date: String) {
+        startLabel.text = date
+    }
+    
+    func setEndDate(date: String) {
+        endLabel.text = date
+    }
 }

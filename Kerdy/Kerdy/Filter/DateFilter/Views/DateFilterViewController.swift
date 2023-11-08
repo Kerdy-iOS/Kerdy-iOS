@@ -9,6 +9,9 @@ import UIKit
 import FSCalendar
 
 class DateFilterViewController: UIViewController {
+    var selectedStartDate: Date? // 선택한 시작일을 저장할 변수
+    var selectedEndDate: Date?
+
     private lazy var navigationBar: NavigationBarView = {
         let view = NavigationBarView()
         // backButton에 뒤로가기 함수 등록 필요
@@ -20,14 +23,16 @@ class DateFilterViewController: UIViewController {
     private lazy var calendar: FSCalendar = {
         let calendar = FSCalendar()
         calendar.locale = Locale(identifier: "ko_KR")
-        calendar.scrollDirection = .vertical
+        calendar.scrollDirection = .horizontal
         calendar.appearance.weekdayTextColor = .kerdyBlack
         calendar.appearance.headerTitleColor = .kerdyMain
         calendar.appearance.headerTitleFont = .nanumSquare(to: .bold, size: 20)
         calendar.appearance.titleFont = .nanumSquare(to: .regular, size: 15)
         calendar.appearance.weekdayFont = .nanumSquare(to: .regular, size: 15)
-        calendar.allowsSelection = true
-        calendar.swipeToChooseGesture.isEnabled = true
+        calendar.appearance.todayColor = .kerdyGray01
+        calendar.appearance.selectionColor = .kerdySub
+        calendar.appearance.titleSelectionColor = .kerdyBlack
+        calendar.allowsMultipleSelection = true
         return calendar
     }()
 
@@ -68,7 +73,7 @@ class DateFilterViewController: UIViewController {
             $0.height.equalTo(14)
             $0.width.equalTo(74)
         }
-        
+
         applyBtn.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(17)
             $0.trailing.equalToSuperview().offset(-17)
@@ -82,11 +87,11 @@ class DateFilterViewController: UIViewController {
             $0.trailing.equalToSuperview().offset(-17)
             $0.height.equalTo(40)
         }
-        
+
         calendar.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(17)
             $0.trailing.equalToSuperview().offset(-17)
-            $0.top.equalTo(resetBtn.snp.bottom)//.offset(10)
+            $0.top.equalTo(resetBtn.snp.bottom)
             $0.bottom.equalTo(periodView.snp.top).offset(-10)
         }
     }
@@ -95,12 +100,62 @@ class DateFilterViewController: UIViewController {
         view.backgroundColor = .systemBackground
         navigationBar.configureUI(to: "날짜 선택")
         self.navigationController?.navigationBar.isHidden = true
-        
+
         calendar.delegate = self
         calendar.dataSource = self
+        calendar.register(CalendarCell.self, forCellReuseIdentifier: "CalendarCell")
+        resetBtn.addTarget(self, action: #selector(resetBtnTapped), for: .touchUpInside)
+    }
+
+    @objc private func resetBtnTapped() {
+        for selectedDate in calendar.selectedDates {
+            calendar.deselect(selectedDate)
+            
+        }
     }
 }
 
 extension DateFilterViewController: FSCalendarDelegate, FSCalendarDataSource {
-    
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        if calendar.selectedDates.count > 2 {
+            for _ in 0 ..< calendar.selectedDates.count - 1 {
+                calendar.deselect(calendar.selectedDates[0])
+            }
+        }
+
+        if calendar.selectedDates.count == 2 {
+            let currentCalendar = Calendar.current
+            let startDate = calendar.selectedDates[0]
+            let endDate = calendar.selectedDates[1]
+
+            if startDate < endDate {
+                var dateToAdd = startDate
+                while dateToAdd < endDate {
+                    if let dateToAdd = currentCalendar.date(byAdding: .day, value: 1, to: dateToAdd) {
+                        calendar.select(dateToAdd)
+                    } else { return }
+                }
+            } else {
+                if startDate > endDate {
+                    for _ in 0 ..< calendar.selectedDates.count {
+                        calendar.deselect(calendar.selectedDates[0])
+                    }
+                    calendar.select(endDate)
+                } else {
+                    var dateToAdd = endDate
+                    while dateToAdd < startDate {
+                        if let dateToAdd = currentCalendar.date(byAdding: .day, value: 1, to: dateToAdd) {
+                            calendar.select(dateToAdd)
+                        } else { return }
+                    }
+                }
+            }
+        }
+    }
+
+    func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        while calendar.selectedDates.count > 1 {
+            calendar.deselect(calendar.selectedDates[1])
+        }
+    }
 }
