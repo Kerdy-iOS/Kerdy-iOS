@@ -10,10 +10,8 @@ import Core
 import RxSwift
 
 final class SecondInitialSettingVC: UIViewController {
-    
     private let categoryViewModel = CategoryViewModel()
     private let disposeBag = DisposeBag()
-    
     private var buttons: [UIButton] = []
     
     private lazy var progressLabel: UILabel = {
@@ -57,180 +55,48 @@ final class SecondInitialSettingVC: UIViewController {
         return button
     }()
     
-    private lazy var javaBtn: UIButton = {
-        let button = UIButton()
-        button.setTitle("Java", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
-        return button
-    }()
+    private lazy var javaBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Java")
     
-    private lazy var SpringBootBtn: UIButton = {
-        let button = UIButton()
-        button.setTitle("SpringBoot", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
-        return button
-    }()
+    private lazy var springBootBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "SpringBoot")
     
-    private lazy var AWSBtn: UIButton = {
-        let button = UIButton()
-        button.setTitle("AWS", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
-        return button
-    }()
+    private lazy var awsBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "AWS")
     
-    private lazy var MySQLBtn: UIButton = {
-        let button = UIButton()
-        button.setTitle("MySQL", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
-        return button
-    }()
+    private lazy var mySQLBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "MySQL")
     
-    private lazy var SQLBtn: UIButton = {
-        let button = UIButton()
-        button.setTitle("SQL", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
-        return button
-    }()
+    private lazy var sqlBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "SQL")
     
-    private lazy var JavascriptBtn: UIButton = {
-        let button = UIButton()
-        button.setTitle("Javascript", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
-        return button
-    }()
+    private lazy var javascriptBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Javascript")
     
-    private lazy var GithubBtn: UIButton = {
-        let button = UIButton()
-        button.setTitle("Github", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
-        return button
-    }()
+    private lazy var githubBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Github")
     
-    private lazy var SpringBtn: UIButton = {
-        let button = UIButton()
-        button.setTitle("Spring", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
-        return button
-    }()
+    private lazy var springBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Spring")
     
-    private lazy var PythonBtn: UIButton = {
-        let button = UIButton()
-        button.setTitle("Python", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
-        return button
-    }()
+    private lazy var pythonBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Python")
     
-    private lazy var DataAnalysisBtn: UIButton = {
-        let button = UIButton()
-        button.setTitle("데이터 분석", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
-        return button
-    }()
+    private lazy var dataAnalysisBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "데이터 분석")
     
-    private lazy var GitBtn: UIButton = {
-        let button = UIButton()
-        button.setTitle("Git", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
-        return button
-    }()
+    private lazy var gitBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Git")
     
-    private lazy var DockerBtn: UIButton = {
-        let button = UIButton()
-        button.setTitle("Docker", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
-        return button
-    }()
+    private lazy var dockerBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Docker")
     
-    private lazy var CommunicationBtn: UIButton = {
-        let button = UIButton()
-        button.setTitle("커뮤니케이션", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
-        return button
-    }()
+    private lazy var communicationBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "커뮤니케이션")
     
-    private lazy var TypescriptBtn: UIButton = {
-        let button = UIButton()
-        button.setTitle("typescript", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
-        return button
-    }()
+    private lazy var typescriptBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Typescript")
     
-    private lazy var ReactBtn: UIButton = {
-        let button = UIButton()
-        button.setTitle("React", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(categoryButtonTapped(_:)), for: .touchUpInside)
-        return button
-    }()
+    private lazy var reactBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "React")
     
-    private lazy var categoryStackView1: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.distribution = .fill
-        stackView.spacing = 8
-        return stackView
-    }()
+    private lazy var categoryStackView1: CategoryStackView = CategoryStackView()
     
-    private lazy var categoryStackView2: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.distribution = .fill
-        stackView.spacing = 8
-        return stackView
-    }()
+    private lazy var categoryStackView2: CategoryStackView = CategoryStackView()
     
-    private lazy var categoryStackView3: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.distribution = .fill
-        stackView.spacing = 8
-        return stackView
-    }()
+    private lazy var categoryStackView3: CategoryStackView = CategoryStackView()
     
-    private lazy var categoryStackView4: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.distribution = .fill
-        stackView.spacing = 8
-        return stackView
-    }()
+    private lazy var categoryStackView4: CategoryStackView = CategoryStackView()
     
-    private lazy var categoryStackView5: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.distribution = .fill
-        stackView.spacing = 8
-        return stackView
-    }()
+    private lazy var categoryStackView5: CategoryStackView = CategoryStackView()
     
-    private lazy var categoryStackView6: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.distribution = .fill
-        stackView.spacing = 8
-        return stackView
-    }()
-    
+    private lazy var categoryStackView6: CategoryStackView = CategoryStackView()
+
     private lazy var verticalStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -252,34 +118,33 @@ final class SecondInitialSettingVC: UIViewController {
         super.viewDidLayoutSubviews()
         if buttons.isEmpty {
             buttons.append(javaBtn)
-            buttons.append(SpringBootBtn)
-            buttons.append(AWSBtn)
-            buttons.append(MySQLBtn)
-            buttons.append(SQLBtn)
-            buttons.append(JavascriptBtn)
-            buttons.append(GithubBtn)
-            buttons.append(SpringBtn)
-            buttons.append(PythonBtn)
-            buttons.append(DataAnalysisBtn)
-            buttons.append(GitBtn)
-            buttons.append(DockerBtn)
-            buttons.append(CommunicationBtn)
-            buttons.append(TypescriptBtn)
-            buttons.append(ReactBtn)
+            buttons.append(springBootBtn)
+            buttons.append(awsBtn)
+            buttons.append(mySQLBtn)
+            buttons.append(sqlBtn)
+            buttons.append(javascriptBtn)
+            buttons.append(githubBtn)
+            buttons.append(springBtn)
+            buttons.append(pythonBtn)
+            buttons.append(dataAnalysisBtn)
+            buttons.append(gitBtn)
+            buttons.append(dockerBtn)
+            buttons.append(communicationBtn)
+            buttons.append(typescriptBtn)
+            buttons.append(reactBtn)
         }
         setButton()
     }
     
     private func setLayout() {
-        self.view.addSubview(progressLabel)
-        self.view.addSubview(interestingPartLabel)
-        self.view.addSubview(interestingCategoryLabel)
-        self.view.addSubview(notifyLabel)
-        self.view.addSubview(nextButton)
-        self.view.addSubview(javaBtn)
-        self.view.addSubview(SpringBootBtn)
-        self.view.addSubview(AWSBtn)
-        
+        addSubview(progressLabel)
+        addSubview(interestingPartLabel)
+        addSubview(interestingCategoryLabel)
+        addSubview(notifyLabel)
+        addSubview(nextButton)
+        addSubview(javaBtn)
+        addSubview(springBootBtn)
+        addSubview(awsBtn)
         setVerticalStackView()
         
         progressLabel.snp.makeConstraints {
@@ -325,115 +190,115 @@ final class SecondInitialSettingVC: UIViewController {
     
     private func setStackView1() {
         categoryStackView1.addArrangedSubview(javaBtn)
-        categoryStackView1.addArrangedSubview(SpringBootBtn)
-        categoryStackView1.addArrangedSubview(AWSBtn)
+        categoryStackView1.addArrangedSubview(springBootBtn)
+        categoryStackView1.addArrangedSubview(awsBtn)
         self.view.addSubview(categoryStackView1)
         
         javaBtn.snp.makeConstraints {
             $0.width.equalTo(77)
         }
         
-        SpringBootBtn.snp.makeConstraints {
+        springBootBtn.snp.makeConstraints {
             $0.width.equalTo(117)
         }
         
-        AWSBtn.snp.makeConstraints {
+        awsBtn.snp.makeConstraints {
             $0.width.equalTo(79)
         }
     }
     
     private func setStackView2(){
-        categoryStackView2.addArrangedSubview(MySQLBtn)
-        categoryStackView2.addArrangedSubview(SQLBtn)
-        categoryStackView2.addArrangedSubview(JavascriptBtn)
+        categoryStackView2.addArrangedSubview(mySQLBtn)
+        categoryStackView2.addArrangedSubview(sqlBtn)
+        categoryStackView2.addArrangedSubview(javascriptBtn)
         self.view.addSubview(categoryStackView2)
         
-        MySQLBtn.snp.makeConstraints {
+        mySQLBtn.snp.makeConstraints {
             $0.width.equalTo(92)
         }
         
-        SQLBtn.snp.makeConstraints {
+        sqlBtn.snp.makeConstraints {
             $0.width.equalTo(74)
         }
         
-        JavascriptBtn.snp.makeConstraints {
+        javascriptBtn.snp.makeConstraints {
             $0.width.equalTo(110)
         }
     }
     
     private func setStackView3(){
-        categoryStackView3.addArrangedSubview(GithubBtn)
-        categoryStackView3.addArrangedSubview(SpringBtn)
-        categoryStackView3.addArrangedSubview(PythonBtn)
+        categoryStackView3.addArrangedSubview(githubBtn)
+        categoryStackView3.addArrangedSubview(springBtn)
+        categoryStackView3.addArrangedSubview(pythonBtn)
         self.view.addSubview(categoryStackView3)
         
-        GithubBtn.snp.makeConstraints {
+        githubBtn.snp.makeConstraints {
             $0.width.equalTo(90)
         }
         
-        SpringBtn.snp.makeConstraints {
+        springBtn.snp.makeConstraints {
             $0.width.equalTo(89)
         }
         
-        PythonBtn.snp.makeConstraints {
+        pythonBtn.snp.makeConstraints {
             $0.width.equalTo(92)
         }
     }
     
     private func setStackView4(){
-        categoryStackView4.addArrangedSubview(DataAnalysisBtn)
-        categoryStackView4.addArrangedSubview(GitBtn)
-        categoryStackView4.addArrangedSubview(DockerBtn)
+        categoryStackView4.addArrangedSubview(dataAnalysisBtn)
+        categoryStackView4.addArrangedSubview(gitBtn)
+        categoryStackView4.addArrangedSubview(dockerBtn)
         self.view.addSubview(categoryStackView4)
         
-        DataAnalysisBtn.snp.makeConstraints {
+        dataAnalysisBtn.snp.makeConstraints {
             $0.width.equalTo(113)
         }
         
-        GitBtn.snp.makeConstraints {
+        gitBtn.snp.makeConstraints {
             $0.width.equalTo(67)
         }
         
-        DockerBtn.snp.makeConstraints {
+        dockerBtn.snp.makeConstraints {
             $0.width.equalTo(92)
         }
     }
     
     private func setStackView5(){
-        categoryStackView5.addArrangedSubview(CommunicationBtn)
-        categoryStackView5.addArrangedSubview(TypescriptBtn)
+        categoryStackView5.addArrangedSubview(communicationBtn)
+        categoryStackView5.addArrangedSubview(typescriptBtn)
         self.view.addSubview(categoryStackView5)
         
-        CommunicationBtn.snp.makeConstraints {
+        communicationBtn.snp.makeConstraints {
             $0.width.equalTo(121)
         }
         
-        TypescriptBtn.snp.makeConstraints {
+        typescriptBtn.snp.makeConstraints {
             $0.width.equalTo(110)
         }
     }
     
     private func setStackView6(){
-        categoryStackView6.addArrangedSubview(ReactBtn)
+        categoryStackView6.addArrangedSubview(reactBtn)
         self.view.addSubview(categoryStackView6)
-        
-        ReactBtn.snp.makeConstraints {
+        reactBtn.snp.makeConstraints {
             $0.width.equalTo(84)
         }
-        
     }
     
     private func setButton(){
         for button in buttons {
             button.roundCorners(topLeft: 10, topRight: 20, bottomLeft: 20, bottomRight:10)
             let borderLayer = CAShapeLayer()
-            borderLayer.path = (button.layer.mask! as! CAShapeLayer).path!
+            guard let buttonMaskLayer = button.layer.mask as? CAShapeLayer else {
+                        continue
+                    }
+            borderLayer.path = buttonMaskLayer.path
             borderLayer.strokeColor = UIColor(named: "kerdy_main")?.cgColor
             borderLayer.fillColor = UIColor.clear.cgColor
             borderLayer.lineWidth = 3
             borderLayer.frame = button.bounds
             button.layer.addSublayer(borderLayer)
-            
             button.titleLabel?.font = .nanumSquare(to: .regular, size: 13)
             
             categoryViewModel.categorySelectedDict[button] = BehaviorSubject<Bool>(value: false)
