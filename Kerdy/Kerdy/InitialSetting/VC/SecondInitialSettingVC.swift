@@ -137,14 +137,14 @@ final class SecondInitialSettingVC: UIViewController {
     }
     
     private func setLayout() {
-        self.view.addSubview(progressLabel)
-        self.view.addSubview(interestingPartLabel)
-        self.view.addSubview(interestingCategoryLabel)
-        self.view.addSubview(notifyLabel)
-        self.view.addSubview(nextButton)
-        self.view.addSubview(javaBtn)
-        self.view.addSubview(springBootBtn)
-        self.view.addSubview(awsBtn)
+        addSubview(progressLabel)
+        addSubview(interestingPartLabel)
+        addSubview(interestingCategoryLabel)
+        addSubview(notifyLabel)
+        addSubview(nextButton)
+        addSubview(javaBtn)
+        addSubview(springBootBtn)
+        addSubview(awsBtn)
         setVerticalStackView()
         
         progressLabel.snp.makeConstraints {

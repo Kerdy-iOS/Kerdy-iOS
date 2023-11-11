@@ -89,15 +89,15 @@ final class ThirdInitialSettingVC: UIViewController {
     }
     
     private func setLayout() {
-        self.view.addSubview(progressLabel)
-        self.view.addSubview(educationLabel)
-        self.view.addSubview(educationAskLabel)
-        self.view.addSubview(notifyLabel)
-        self.view.addSubview(nameTextField)
-        self.view.addSubview(nameTextFieldUnderline)
-        self.view.addSubview(nextButton)
-        self.view.addSubview(enterLaterButton)
-        self.view.addSubview(enterLaterButtonUnderline)
+        view.addSubview(progressLabel)
+        view.addSubview(educationLabel)
+        view.addSubview(educationAskLabel)
+        view.addSubview(notifyLabel)
+        view.addSubview(nameTextField)
+        view.addSubview(nameTextFieldUnderline)
+        view.addSubview(nextButton)
+        view.addSubview(enterLaterButton)
+        view.addSubview(enterLaterButtonUnderline)
         
         progressLabel.snp.makeConstraints {
             $0.width.equalTo(24)
