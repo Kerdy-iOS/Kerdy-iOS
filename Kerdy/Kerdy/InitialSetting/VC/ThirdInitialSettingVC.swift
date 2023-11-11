@@ -183,6 +183,4 @@ final class ThirdInitialSettingVC: UIViewController {
         let nextVC = FourthInitialSettingVC()
         navigationController?.pushViewController(nextVC, animated: true)
     }
-    
-
 }
