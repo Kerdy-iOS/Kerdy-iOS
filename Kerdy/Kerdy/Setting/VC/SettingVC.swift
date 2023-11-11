@@ -7,17 +7,11 @@
 
 import UIKit
 
-import SnapKit
-import RxSwift
-import RxCocoa
-import Core
-
-final class SettingVC: UIViewController {
+final class SettingVC: BaseVC {
     
     // MARK: - Properties
     
     private lazy var settingDataSource = SettingDataSource(collectionView: collectionView)
-    private lazy var safeArea = self.view.safeAreaLayoutGuide
     
     // MARK: - UI Components
     
@@ -49,8 +43,8 @@ extension SettingVC {
     
     private func setUI() {
         
-        view.backgroundColor = .kerdyBackground
-        
+        settingDataSource.delegate = self
+
         collectionView.dataSource = settingDataSource.dataSource
         collectionView.bounces = false
         collectionView.showsVerticalScrollIndicator = false
@@ -59,6 +53,10 @@ extension SettingVC {
 
 // MAKR: - Methods
 
-extension SettingVC {
+extension SettingVC: SettingProfileCellDelegate {
     
+    func didSelectButton(type: WrittenSections) {
+        let vc = SettingWrittenVC(type: type)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
