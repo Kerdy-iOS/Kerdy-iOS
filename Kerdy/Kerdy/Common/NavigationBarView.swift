@@ -10,9 +10,16 @@ import UIKit
 import Core
 import SnapKit
 
+protocol BackButtonActionProtocol {
+    
+    func backButtonTapped()
+}
+
 final class NavigationBarView: UIView {
     
     // MARK: - Property
+    
+    var delegate: BackButtonActionProtocol?
     
     // MARK: - UI Property
     
@@ -26,9 +33,11 @@ final class NavigationBarView: UIView {
     private lazy var backButton: UIButton = {
         let button = UIButton()
         button.setImage(.backButtonIcon, for: .normal)
+        button.addAction(UIAction { [weak self] _ in
+            self?.delegate?.backButtonTapped()
+        }, for: .touchUpInside)
         return button
     }()
-    
     
     // MARK: - Initialize
     
