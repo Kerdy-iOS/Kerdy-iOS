@@ -23,7 +23,7 @@ enum WrittenSections: Int {
     
 }
 
-final class SettingWrittenDataSource<T: MyWrittenProtocol> {
+final class SettingWrittenDataSource<T: SettingWrittenProtocol> {
     
     // MARK: - Property
     

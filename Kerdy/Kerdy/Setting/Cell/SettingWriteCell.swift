@@ -107,7 +107,7 @@ extension SettingWriteCell {
 
 extension SettingWriteCell {
     
-    func configureUI<T: MyWrittenProtocol>(type: WrittenSections, to data: T, count: Int = 0) {
+    func configureUI<T: SettingWrittenProtocol>(type: WrittenSections, to data: T, count: Int = 0) {
         switch type {
         case .comment:
             otherStackView.addArrangedSubviews(comment, date)

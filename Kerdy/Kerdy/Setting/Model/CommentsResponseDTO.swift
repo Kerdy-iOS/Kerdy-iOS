@@ -17,7 +17,7 @@ struct CommentsResponseDTO: Codable, Hashable {
 
 // MARK: - Comment
 
-struct Comment: Codable, Hashable, MyWrittenProtocol {
+struct Comment: Codable, Hashable, SettingWrittenProtocol {
 
     var uuid = UUID()
     let content: String

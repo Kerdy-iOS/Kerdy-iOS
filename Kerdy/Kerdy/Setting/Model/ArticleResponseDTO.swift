@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - ArticleResponseDTOElement
 
-struct ArticleResponseDTO: Codable, Hashable, MyWrittenProtocol {
+struct ArticleResponseDTO: Codable, Hashable, SettingWrittenProtocol {
     
     var uuid = UUID()
     let id: Int
@@ -38,12 +38,6 @@ struct ArticleResponseDTO: Codable, Hashable, MyWrittenProtocol {
     }
 }
 
-protocol MyWrittenProtocol: Hashable {
-    var title: String { get }
-    var content: String { get }
-    var updateDate: String { get }
-}
-
 extension ArticleResponseDTO {
     
     static func dummy() -> [ArticleResponseDTO] {
@@ -53,17 +47,4 @@ extension ArticleResponseDTO {
                 ArticleResponseDTO(id: 4, title: "ddd", content: "해커톤 프로그램 행사 기대 됩니다! 저번에 못가서 아쉬웠는데 올 해 열려서 좋네여여ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ", writerID: 1, images: [], commentCount: 1, createdAt: "111", updatedAt: "131")
         ]
     }
-}
-
-func convertDate(date: String) -> String {
-    let inputString = date
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy:MM:dd:HH:mm:ss"
-
-    if let date = dateFormatter.date(from: inputString) {
-        dateFormatter.dateFormat = "yyyy.MM.dd"
-        let outputString = dateFormatter.string(from: date)
-        return outputString
-    }
-    return date
 }
