@@ -10,8 +10,8 @@ import UIKit
 final class SettingDataSource {
     
     typealias CellRegistration = UICollectionView.CellRegistration
-    typealias DataSource = UICollectionViewDiffableDataSource<Section,Int>
-    typealias SnapShot = NSDiffableDataSourceSnapshot<Section, Int>
+    typealias DataSource = UICollectionViewDiffableDataSource<Section,UUID>
+    typealias SnapShot = NSDiffableDataSourceSnapshot<Section, UUID>
     
     enum Section: Int, CaseIterable {
         case profile
@@ -19,8 +19,9 @@ final class SettingDataSource {
     }
     
     var dataSource: DataSource?
+    var snapShot: SnapShot!
     private let collectionView: UICollectionView
-    private let allBasicData: [BasicModel] = BasicModel.basicWithIcon + BasicModel.basic
+    private let allBasicData: [SettingBasicModel] = SettingBasicModel.basicWithIcon + SettingBasicModel.basic
     
     init(dataSource: DataSource? = nil, collectionView: UICollectionView) {
         self.dataSource = dataSource
@@ -44,7 +45,7 @@ extension SettingDataSource {
         let profileCellRegistration = CellRegistration<SettingProfileCell,ProfileResponseDTO> {cell,indexPath,item in
             cell.configureData(to: item)
         }
-        let basicCellRegistration = CellRegistration<SettingBasicCell,BasicModel> {cell,indexPath,item in
+        let basicCellRegistration = CellRegistration<SettingBasicCell,SettingBasicModel> {cell,indexPath,item in
             cell.configureData(with: item, at: indexPath.item)
         }
         
@@ -63,11 +64,19 @@ extension SettingDataSource {
     
     private func setSnapShot() {
         
-        var snapShot = SnapShot()
+        snapShot = SnapShot()
         snapShot.appendSections(Section.allCases)
-        snapShot.appendItems([0], toSection: .profile)
-        snapShot.appendItems([1,2,3,4,5,6],toSection: .basic)
+        snapShot.appendItems([UUID()], toSection: .profile)
+        snapShot.appendItems([UUID(),UUID(),UUID(),UUID(),UUID(),UUID()],toSection: .basic)
         dataSource?.applySnapshotUsingReloadData(snapShot)
+    }
+    
+    func updateSnapshot(profile: [ProfileResponseDTO]) {
+        let currentProfile = snapShot.itemIdentifiers(inSection: .profile)
+        var newProfile = currentProfile
+        snapShot.deleteItems(currentProfile)
+        snapShot.appendItems(newProfile, toSection: .profile)
+        dataSource?.apply(snapShot, animatingDifferences: true)
     }
     
     func createLayout() -> UICollectionViewCompositionalLayout {
