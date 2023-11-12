@@ -42,7 +42,7 @@ final class FirstInitialSettingVC: UIViewController {
     
     private lazy var nameTextField: UITextField = {
         let textField = UITextField()
-        textField.attributedPlaceholder = NSAttributedString(string: "입력해주세요.", attributes: [NSAttributedString.Key.foregroundColor : UIColor.kerdyGray01])
+        textField.attributedPlaceholder = NSAttributedString(string: "입력해주세요.", attributes: [NSAttributedString.Key.foregroundColor: UIColor.kerdyGray01])
         textField.font = .nanumSquare(to: .regular, size: 16)
         textField.borderStyle = .none
         return textField
@@ -71,7 +71,7 @@ final class FirstInitialSettingVC: UIViewController {
         setNaviBar()
     }
     
-    private func setLayout(){
+    private func setLayout() {
         view.addSubview(progressLabel)
         view.addSubview(nameSettingLabel)
         view.addSubview(nameAskLabel)
@@ -131,17 +131,16 @@ final class FirstInitialSettingVC: UIViewController {
     }
     
     private func setUI() {
-        self.view.backgroundColor = .systemBackground
+        view.backgroundColor = .systemBackground
     }
     
-    private func setNaviBar(){
+    private func setNaviBar() {
         navigationController?.navigationBar.tintColor = .kerdyGray01
         navigationItem.backButtonTitle = ""
     }
 
     @objc private func nextButtonTapped() {
         let nextViewController = SecondInitialSettingVC()
-        self.navigationController?.pushViewController(nextViewController, animated: true)
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
 }
-

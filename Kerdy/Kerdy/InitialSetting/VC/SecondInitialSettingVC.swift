@@ -55,47 +55,47 @@ final class SecondInitialSettingVC: UIViewController {
         return button
     }()
     
-    private lazy var javaBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Java")
+    private lazy var javaBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Java")
     
-    private lazy var springBootBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "SpringBoot")
+    private lazy var springBootBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "SpringBoot")
     
-    private lazy var awsBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "AWS")
+    private lazy var awsBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "AWS")
     
-    private lazy var mySQLBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "MySQL")
+    private lazy var mySQLBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "MySQL")
     
-    private lazy var sqlBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "SQL")
+    private lazy var sqlBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "SQL")
     
-    private lazy var javascriptBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Javascript")
+    private lazy var javascriptBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Javascript")
     
-    private lazy var githubBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Github")
+    private lazy var githubBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Github")
     
-    private lazy var springBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Spring")
+    private lazy var springBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Spring")
     
-    private lazy var pythonBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Python")
+    private lazy var pythonBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Python")
     
-    private lazy var dataAnalysisBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "데이터 분석")
+    private lazy var dataAnalysisBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "데이터 분석")
     
-    private lazy var gitBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Git")
+    private lazy var gitBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Git")
     
-    private lazy var dockerBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Docker")
+    private lazy var dockerBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Docker")
     
-    private lazy var communicationBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "커뮤니케이션")
+    private lazy var communicationBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "커뮤니케이션")
     
-    private lazy var typescriptBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Typescript")
+    private lazy var typescriptBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Typescript")
     
-    private lazy var reactBtn: CategoryBtn = CategoryBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "React")
+    private lazy var reactBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "React")
     
-    private lazy var categoryStackView1: CategoryStackView = CategoryStackView()
+    private lazy var categoryStackView1: InitialSettingStackView = InitialSettingStackView()
     
-    private lazy var categoryStackView2: CategoryStackView = CategoryStackView()
+    private lazy var categoryStackView2: InitialSettingStackView = InitialSettingStackView()
     
-    private lazy var categoryStackView3: CategoryStackView = CategoryStackView()
+    private lazy var categoryStackView3: InitialSettingStackView = InitialSettingStackView()
     
-    private lazy var categoryStackView4: CategoryStackView = CategoryStackView()
+    private lazy var categoryStackView4: InitialSettingStackView = InitialSettingStackView()
     
-    private lazy var categoryStackView5: CategoryStackView = CategoryStackView()
+    private lazy var categoryStackView5: InitialSettingStackView = InitialSettingStackView()
     
-    private lazy var categoryStackView6: CategoryStackView = CategoryStackView()
+    private lazy var categoryStackView6: InitialSettingStackView = InitialSettingStackView()
 
     private lazy var verticalStackView: UIStackView = {
         let stackView = UIStackView()
@@ -142,9 +142,6 @@ final class SecondInitialSettingVC: UIViewController {
         view.addSubview(interestingCategoryLabel)
         view.addSubview(notifyLabel)
         view.addSubview(nextButton)
-        view.addSubview(javaBtn)
-        view.addSubview(springBootBtn)
-        view.addSubview(awsBtn)
         setVerticalStackView()
         
         progressLabel.snp.makeConstraints {
@@ -192,7 +189,7 @@ final class SecondInitialSettingVC: UIViewController {
         categoryStackView1.addArrangedSubview(javaBtn)
         categoryStackView1.addArrangedSubview(springBootBtn)
         categoryStackView1.addArrangedSubview(awsBtn)
-        self.view.addSubview(categoryStackView1)
+        view.addSubview(categoryStackView1)
         
         javaBtn.snp.makeConstraints {
             $0.width.equalTo(77)
@@ -207,11 +204,11 @@ final class SecondInitialSettingVC: UIViewController {
         }
     }
     
-    private func setStackView2(){
+    private func setStackView2() {
         categoryStackView2.addArrangedSubview(mySQLBtn)
         categoryStackView2.addArrangedSubview(sqlBtn)
         categoryStackView2.addArrangedSubview(javascriptBtn)
-        self.view.addSubview(categoryStackView2)
+        view.addSubview(categoryStackView2)
         
         mySQLBtn.snp.makeConstraints {
             $0.width.equalTo(92)
@@ -226,11 +223,11 @@ final class SecondInitialSettingVC: UIViewController {
         }
     }
     
-    private func setStackView3(){
+    private func setStackView3() {
         categoryStackView3.addArrangedSubview(githubBtn)
         categoryStackView3.addArrangedSubview(springBtn)
         categoryStackView3.addArrangedSubview(pythonBtn)
-        self.view.addSubview(categoryStackView3)
+        view.addSubview(categoryStackView3)
         
         githubBtn.snp.makeConstraints {
             $0.width.equalTo(90)
@@ -245,11 +242,11 @@ final class SecondInitialSettingVC: UIViewController {
         }
     }
     
-    private func setStackView4(){
+    private func setStackView4() {
         categoryStackView4.addArrangedSubview(dataAnalysisBtn)
         categoryStackView4.addArrangedSubview(gitBtn)
         categoryStackView4.addArrangedSubview(dockerBtn)
-        self.view.addSubview(categoryStackView4)
+        view.addSubview(categoryStackView4)
         
         dataAnalysisBtn.snp.makeConstraints {
             $0.width.equalTo(113)
@@ -264,10 +261,10 @@ final class SecondInitialSettingVC: UIViewController {
         }
     }
     
-    private func setStackView5(){
+    private func setStackView5() {
         categoryStackView5.addArrangedSubview(communicationBtn)
         categoryStackView5.addArrangedSubview(typescriptBtn)
-        self.view.addSubview(categoryStackView5)
+        view.addSubview(categoryStackView5)
         
         communicationBtn.snp.makeConstraints {
             $0.width.equalTo(121)
@@ -278,17 +275,17 @@ final class SecondInitialSettingVC: UIViewController {
         }
     }
     
-    private func setStackView6(){
+    private func setStackView6() {
         categoryStackView6.addArrangedSubview(reactBtn)
-        self.view.addSubview(categoryStackView6)
+        view.addSubview(categoryStackView6)
         reactBtn.snp.makeConstraints {
             $0.width.equalTo(84)
         }
     }
     
-    private func setButton(){
+    private func setButton() {
         for button in buttons {
-            button.roundCorners(topLeft: 10, topRight: 20, bottomLeft: 20, bottomRight:10)
+            button.roundCorners(topLeft: 10, topRight: 20, bottomLeft: 20, bottomRight: 10)
             let borderLayer = CAShapeLayer()
             guard let buttonMaskLayer = button.layer.mask as? CAShapeLayer else {
                         continue
@@ -312,7 +309,7 @@ final class SecondInitialSettingVC: UIViewController {
         }
     }
     
-    private func setVerticalStackView(){
+    private func setVerticalStackView() {
         setStackView1()
         setStackView2()
         setStackView3()
@@ -326,7 +323,7 @@ final class SecondInitialSettingVC: UIViewController {
         verticalStackView.addArrangedSubview(categoryStackView5)
         verticalStackView.addArrangedSubview(categoryStackView6)
         
-        self.view.addSubview(verticalStackView)
+        view.addSubview(verticalStackView)
         
         verticalStackView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(283)
@@ -336,7 +333,7 @@ final class SecondInitialSettingVC: UIViewController {
     }
     
     private func setUI() {
-        self.view.backgroundColor = .systemBackground
+        view.backgroundColor = .systemBackground
     }
     
     @objc private func nextButtonTapped() {
@@ -344,7 +341,7 @@ final class SecondInitialSettingVC: UIViewController {
         navigationController?.pushViewController(nextViewController, animated: true)
     }
     
-    @objc private func categoryButtonTapped(_ sender: UIButton){
+    @objc private func categoryButtonTapped(_ sender: UIButton) {
         categoryViewModel.categoryButtonTapped(button: sender)
     }
 }

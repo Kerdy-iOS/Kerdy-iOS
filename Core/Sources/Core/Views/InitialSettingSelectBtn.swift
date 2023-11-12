@@ -7,7 +7,7 @@
 
 import UIKit
 
-public class CategoryBtn: UIButton {
+public class InitialSettingSelectBtn: UIButton {
     
     public init(target: Any?, action: Selector, title: String) {
         super.init(frame: .zero)

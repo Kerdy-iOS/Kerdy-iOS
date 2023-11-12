@@ -7,7 +7,7 @@
 
 import UIKit
 
-public class CategoryStackView: UIStackView {
+public class InitialSettingStackView: UIStackView {
     convenience init() {
         self.init(frame: .zero)
         self.axis = .horizontal
