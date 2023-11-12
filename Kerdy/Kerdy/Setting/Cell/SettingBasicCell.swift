@@ -116,7 +116,7 @@ extension SettingBasicCell {
         ]
     }
     
-    func configureData(with data: BasicModel, at index: Int) {
+    func configureData(with data: SettingBasicModel, at index: Int) {
         
         titleLabel.text = data.title
         arrowIcon.image = data.image
