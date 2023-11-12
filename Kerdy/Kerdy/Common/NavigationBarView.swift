@@ -34,7 +34,8 @@ final class NavigationBarView: UIView {
         let button = UIButton()
         button.setImage(.backButtonIcon, for: .normal)
         button.addAction(UIAction { [weak self] _ in
-            self?.delegate?.backButtonTapped()
+            guard let self else { return }
+            self.delegate?.backButtonTapped()
         }, for: .touchUpInside)
         return button
     }()
