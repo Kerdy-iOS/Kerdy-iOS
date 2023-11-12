@@ -88,15 +88,15 @@ final class FourthInitialSettingVC: UIViewController {
     }
     
     private func setLayout() {
-        self.view.addSubview(progressLabel)
-        self.view.addSubview(clubActivityLabel)
-        self.view.addSubview(askClubActivityLabel)
-        self.view.addSubview(notifyLabel)
-        self.view.addSubview(clubTextField)
-        self.view.addSubview(clubTextFieldUnderline)
-        self.view.addSubview(doneButton)
-        self.view.addSubview(enterLaterButton)
-        self.view.addSubview(enterLaterButtonUnderline)
+        view.addSubview(progressLabel)
+        view.addSubview(clubActivityLabel)
+        view.addSubview(askClubActivityLabel)
+        view.addSubview(notifyLabel)
+        view.addSubview(clubTextField)
+        view.addSubview(clubTextFieldUnderline)
+        view.addSubview(doneButton)
+        view.addSubview(enterLaterButton)
+        view.addSubview(enterLaterButtonUnderline)
         
         progressLabel.snp.makeConstraints { make in
             make.width.equalTo(24)
