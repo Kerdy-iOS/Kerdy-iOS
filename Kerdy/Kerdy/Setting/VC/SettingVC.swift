@@ -19,6 +19,9 @@ final class SettingVC: UIViewController {
     private lazy var settingDataSource = SettingDataSource(collectionView: collectionView)
     private lazy var safeArea = self.view.safeAreaLayoutGuide
     
+    private let viewmodel = SettingViewModel()
+    private let disposeBag = DisposeBag()
+    
     // MARK: - UI Components
     
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
@@ -30,7 +33,7 @@ final class SettingVC: UIViewController {
         
         setLayout()
         setUI()
-        
+        bind()
     }
     
 }
@@ -54,6 +57,32 @@ extension SettingVC {
         collectionView.dataSource = settingDataSource.dataSource
         collectionView.bounces = false
         collectionView.showsVerticalScrollIndicator = false
+    }
+    
+    private func bind() {
+        
+        let input = SettingViewModel.Input(viewWillAppear: rx.viewWillAppear.asObservable())
+        let output = viewmodel.transform(input: input)
+        
+        output.settingList.asDriver(onErrorJustReturn: [])
+            .drive(with: self) { owner, profileList in
+                owner.settingDataSource.updateSnapshot(profile: profileList)
+            }
+            .disposed(by: disposeBag)
+    
+        collectionView.rx.itemSelected
+            .bind { indexpath in
+                var vc: UIViewController
+                switch indexpath.item {
+                case 0: vc = NotificationVC()
+                case 1: vc = BlockListVC()
+                case 2: vc = TermsOfUseVC()
+                default:
+                   return
+                }
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
