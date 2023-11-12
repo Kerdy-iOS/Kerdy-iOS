@@ -10,17 +10,25 @@ import UIKit
 import SnapKit
 import Core
 
-private struct Const {
+protocol SettingProfileCellDelegate: AnyObject {
     
-    static let cornerRadius:CGFloat = 65/2
-    static let idFontSize:CGFloat = 16
-    static let idLineSpacing: CGFloat = 18.16
-    static let emailFontSize:CGFloat = 12
-    static let emailLineSpacing: CGFloat = 13.62
-    static let spacing: CGFloat = 4
+    func didSelectButton(type: WrittenSections)
 }
 
 final class SettingProfileCell: UICollectionViewCell {
+    
+    // MARK: - Properties
+    
+    var delegate: SettingProfileCellDelegate?
+    
+    private struct Const {
+        static let cornerRadius: CGFloat = 65/2
+        static let idFontSize: CGFloat = 16
+        static let idLineSpacing: CGFloat = 18.16
+        static let emailFontSize: CGFloat = 12
+        static let emailLineSpacing: CGFloat = 13.62
+        static let spacing: CGFloat = 4
+    }
     
     // MARK: - UI Components
     
@@ -58,12 +66,22 @@ final class SettingProfileCell: UICollectionViewCell {
     private lazy var article: UIButton = {
         let button = UIButton()
         button.configuration = UIButton.kerdyStyle(to: Strings.article)
+        button.addAction(UIAction(handler: { [weak self] _ in
+            guard let self else { return }
+            self.delegate?.didSelectButton(type: .article)
+            
+        }), for: .touchUpInside)
         return button
     }()
     
     private lazy var comments: UIButton = {
         let button = UIButton()
         button.configuration = UIButton.kerdyStyle(to: Strings.comments)
+        button.addAction(UIAction(handler: { [weak self] _ in
+            guard let self else { return }
+            self.delegate?.didSelectButton(type: .comment)
+            
+        }), for: .touchUpInside)
         return button
     }()
     

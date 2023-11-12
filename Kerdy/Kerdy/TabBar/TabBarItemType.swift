@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 enum TabBarItemType: Int, CaseIterable {
     case myCard
     case event
