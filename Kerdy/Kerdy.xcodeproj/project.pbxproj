@@ -22,6 +22,9 @@
 		095D390C2AEE7BC50083CC65 /* NanumSquareB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */; };
 		095D390E2AEE7BE00083CC65 /* NanumSquareEB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */; };
 		095D39102AEE7BE60083CC65 /* NanumSquareR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390F2AEE7BE60083CC65 /* NanumSquareR.ttf */; };
+		095EBE842AFF6AE900629F06 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095EBE832AFF6AE900629F06 /* SettingViewModel.swift */; };
+		095EBE862AFF6B2700629F06 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095EBE852AFF6B2700629F06 /* ViewModelType.swift */; };
+		095EBE882AFF705900629F06 /* RxViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095EBE872AFF705900629F06 /* RxViewController+.swift */; };
 		098294182AF341290011773A /* BlockListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098294172AF341290011773A /* BlockListVC.swift */; };
 		0982941A2AF342090011773A /* BlockListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098294192AF342090011773A /* BlockListCell.swift */; };
 		0982941E2AF35E660011773A /* BlockListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0982941D2AF35E660011773A /* BlockListModel.swift */; };
@@ -110,6 +113,9 @@
 		095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareB.ttf; sourceTree = "<group>"; };
 		095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareEB.ttf; sourceTree = "<group>"; };
 		095D390F2AEE7BE60083CC65 /* NanumSquareR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareR.ttf; sourceTree = "<group>"; };
+		095EBE832AFF6AE900629F06 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		095EBE852AFF6B2700629F06 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		095EBE872AFF705900629F06 /* RxViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxViewController+.swift"; sourceTree = "<group>"; };
 		098294172AF341290011773A /* BlockListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListVC.swift; sourceTree = "<group>"; };
 		098294192AF342090011773A /* BlockListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListCell.swift; sourceTree = "<group>"; };
 		0982941D2AF35E660011773A /* BlockListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListModel.swift; sourceTree = "<group>"; };
@@ -225,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				09BB55182AF0158C00A54B1B /* SettingVC.swift */,
+				095EBE872AFF705900629F06 /* RxViewController+.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -243,6 +250,8 @@
 			children = (
 				09BB55292AF0545400A54B1B /* SettingBasicModel.swift */,
 				09BB55272AF0543100A54B1B /* ProfileResponseDTO.swift */,
+				095EBE832AFF6AE900629F06 /* SettingViewModel.swift */,
+				095EBE852AFF6B2700629F06 /* ViewModelType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -757,6 +766,7 @@
 				3164D4832AE21F810054F440 /* ViewController.swift in Sources */,
 				098294212AF3C1E50011773A /* TermsOfUseVC.swift in Sources */,
 				09BB551E2AF0169700A54B1B /* SettingBasicCell.swift in Sources */,
+				095EBE842AFF6AE900629F06 /* SettingViewModel.swift in Sources */,
 				3109B2FE2AF52B4700B2EAD2 /* DateFilterView.swift in Sources */,
 				31571C242AF3CBC00037A2F2 /* EventVC.swift in Sources */,
 				311E98302AF8C24A009BEB3F /* DateSelectBtn.swift in Sources */,
@@ -789,6 +799,7 @@
 				31571C232AF3CBC00037A2F2 /* EventCollectionViewCell.swift in Sources */,
 				090979022AF29086006BD8DE /* TagCollectionViewFlowLayout.swift in Sources */,
 				31571C262AF3CBC80037A2F2 /* Event.swift in Sources */,
+				095EBE882AFF705900629F06 /* RxViewController+.swift in Sources */,
 				0909790D2AF33D95006BD8DE /* TagModel.swift in Sources */,
 				090978FE2AF28778006BD8DE /* TagVC.swift in Sources */,
 				3164D47F2AE21F810054F440 /* AppDelegate.swift in Sources */,
@@ -803,6 +814,7 @@
 				090978FA2AF272D2006BD8DE /* NotificationVC.swift in Sources */,
 				31571C212AF3CBC00037A2F2 /* ItemCountView.swift in Sources */,
 				31571C222AF3CBC00037A2F2 /* TagView.swift in Sources */,
+				095EBE862AFF6B2700629F06 /* ViewModelType.swift in Sources */,
 				3109B2FC2AF52B3800B2EAD2 /* TagFilterView.swift in Sources */,
 				3109B3002AF52B5600B2EAD2 /* ProgressFilterView.swift in Sources */,
 			);
