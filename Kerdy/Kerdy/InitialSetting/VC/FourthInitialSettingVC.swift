@@ -116,63 +116,58 @@ final class FourthInitialSettingVC: UIViewController {
     }
     
     private func setLayout() {
-        view.addSubview(progressLabel)
-        view.addSubview(clubActivityLabel)
-        view.addSubview(askClubActivityLabel)
-        view.addSubview(notifyLabel)
-        view.addSubview(doneButton)
-        view.addSubview(enterLaterButton)
-        view.addSubview(enterLaterButtonUnderline)
+        view.addSubviews(progressLabel, clubActivityLabel, askClubActivityLabel, notifyLabel, doneButton, enterLaterButton, enterLaterButtonUnderline)
+        
         setVerticalStackView()
         
-        progressLabel.snp.makeConstraints { make in
-            make.width.equalTo(24)
-            make.height.equalTo(16)
-            make.top.equalToSuperview().offset(97)
-            make.leading.equalToSuperview().offset(21)
+        progressLabel.snp.makeConstraints {
+            $0.width.equalTo(24)
+            $0.height.equalTo(16)
+            $0.top.equalToSuperview().offset(97)
+            $0.leading.equalToSuperview().offset(21)
         }
         
-        clubActivityLabel.snp.makeConstraints { make in
-            make.width.equalTo(68)
-            make.height.equalTo(16)
-            make.top.equalToSuperview().offset(121)
-            make.leading.equalToSuperview().offset(21)
+        clubActivityLabel.snp.makeConstraints {
+            $0.width.equalTo(68)
+            $0.height.equalTo(16)
+            $0.top.equalToSuperview().offset(121)
+            $0.leading.equalToSuperview().offset(21)
         }
         
-        askClubActivityLabel.snp.makeConstraints { make in
-            make.width.equalTo(185)
-            make.height.equalTo(23)
-            make.top.equalToSuperview().offset(174)
-            make.leading.equalToSuperview().offset(21)
+        askClubActivityLabel.snp.makeConstraints {
+            $0.width.equalTo(185)
+            $0.height.equalTo(23)
+            $0.top.equalToSuperview().offset(174)
+            $0.leading.equalToSuperview().offset(21)
         }
         
-        notifyLabel.snp.makeConstraints { make in
-            make.width.equalTo(194)
-            make.height.equalTo(15)
-            make.top.equalToSuperview().offset(207)
-            make.leading.equalToSuperview().offset(21)
+        notifyLabel.snp.makeConstraints {
+            $0.width.equalTo(194)
+            $0.height.equalTo(15)
+            $0.top.equalToSuperview().offset(207)
+            $0.leading.equalToSuperview().offset(21)
         }
         
-        doneButton.snp.makeConstraints { make in
-            make.height.equalTo(60)
-            make.top.equalToSuperview().offset(675)
-            make.leading.equalToSuperview().offset(17)
-            make.trailing.equalToSuperview().offset(-17)
+        doneButton.snp.makeConstraints {
+            $0.height.equalTo(60)
+            $0.top.equalToSuperview().offset(675)
+            $0.leading.equalToSuperview().offset(17)
+            $0.trailing.equalToSuperview().offset(-17)
         }
         
-        enterLaterButton.snp.makeConstraints { make in
-            make.width.equalTo(100)
-            make.height.equalTo(17)
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(641)
+        enterLaterButton.snp.makeConstraints {
+            $0.width.equalTo(100)
+            $0.height.equalTo(17)
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().offset(641)
         }
         
-        enterLaterButtonUnderline.snp.makeConstraints { make in
-            make.width.equalTo(100)
-            make.height.equalTo(1.5)
-            make.top.equalToSuperview().offset(657)
-            make.leading.equalTo(enterLaterButton.snp.leading)
-            make.trailing.equalTo(enterLaterButton.snp.trailing)
+        enterLaterButtonUnderline.snp.makeConstraints {
+            $0.width.equalTo(100)
+            $0.height.equalTo(1.5)
+            $0.top.equalToSuperview().offset(657)
+            $0.leading.equalTo(enterLaterButton.snp.leading)
+            $0.trailing.equalTo(enterLaterButton.snp.trailing)
         }
     }
     

@@ -118,13 +118,8 @@ final class ThirdInitialSettingVC: UIViewController {
     }
     
     private func setLayout() {
-        view.addSubview(progressLabel)
-        view.addSubview(educationLabel)
-        view.addSubview(educationAskLabel)
-        view.addSubview(notifyLabel)
-        view.addSubview(nextButton)
-        view.addSubview(enterLaterButton)
-        view.addSubview(enterLaterButtonUnderline)
+        view.addSubviews(progressLabel, educationLabel, educationAskLabel, notifyLabel, nextButton, enterLaterButton, enterLaterButtonUnderline)
+        
         setVerticalStackView()
         
         progressLabel.snp.makeConstraints {
