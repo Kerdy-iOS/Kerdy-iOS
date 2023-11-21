@@ -7,8 +7,10 @@
 
 import Foundation
 
-
 struct Strings {
+    
+    /// auth
+    static let login = "Github으로 로그인"
     
     /// setting
     static let article = "작성한 글"
