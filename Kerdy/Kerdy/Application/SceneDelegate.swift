@@ -14,12 +14,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-
-        let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = TabBarVC()
-        self.window = window
-        window.makeKeyAndVisible()
+        if let windowScene = scene as? UIWindowScene {
+            let window = UIWindow(windowScene: windowScene)
+            window.overrideUserInterfaceStyle = UIUserInterfaceStyle.light
+            
+            let rootViewController = TabBarVC()
+            let navigationController = UINavigationController(rootViewController: rootViewController)
+            navigationController.isNavigationBarHidden = true
+            window.rootViewController = navigationController
+            window.makeKeyAndVisible()
+            self.window = window
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -44,4 +49,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
-

@@ -20,6 +20,7 @@ final class SettingDataSource {
     
     var dataSource: DataSource?
     var snapShot: SnapShot!
+    var delegate: SettingProfileCellDelegate?
     private let collectionView: UICollectionView
     private let allBasicData: [SettingBasicModel] = SettingBasicModel.basicWithIcon + SettingBasicModel.basic
     
@@ -42,7 +43,8 @@ extension SettingDataSource {
     
    private func setDataSource() {
        
-        let profileCellRegistration = CellRegistration<SettingProfileCell,ProfileResponseDTO> {cell,indexPath,item in
+        let profileCellRegistration = CellRegistration<SettingProfileCell, ProfileResponseDTO> {cell, indexPath, item in
+            cell.delegate = self.delegate
             cell.configureData(to: item)
         }
         let basicCellRegistration = CellRegistration<SettingBasicCell,SettingBasicModel> {cell,indexPath,item in
@@ -52,12 +54,15 @@ extension SettingDataSource {
         dataSource = DataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
             guard let sectionType = Section(rawValue: indexPath.section) else { return UICollectionViewCell() }
             switch sectionType {
-                
             case .profile:
-                return collectionView.dequeueConfiguredReusableCell(using: profileCellRegistration, for: indexPath, item: .dummy())
+                return collectionView.dequeueConfiguredReusableCell(using: profileCellRegistration,
+                                                                    for: indexPath,
+                                                                    item: .dummy())
             case .basic:
                 let basicData = self.allBasicData[indexPath.item]
-                return collectionView.dequeueConfiguredReusableCell(using: basicCellRegistration, for: indexPath, item: basicData)
+                return collectionView.dequeueConfiguredReusableCell(using: basicCellRegistration,
+                                                                    for: indexPath,
+                                                                    item: basicData)
             }
         })
     }

@@ -42,7 +42,7 @@ final class FirstInitialSettingVC: UIViewController {
     
     private lazy var nameTextField: UITextField = {
         let textField = UITextField()
-        textField.attributedPlaceholder = NSAttributedString(string: "입력해주세요.", attributes: [NSAttributedString.Key.foregroundColor : UIColor.kerdyGray01])
+        textField.attributedPlaceholder = NSAttributedString(string: "입력해주세요.", attributes: [NSAttributedString.Key.foregroundColor: UIColor.kerdyGray01])
         textField.font = .nanumSquare(to: .regular, size: 16)
         textField.borderStyle = .none
         return textField
@@ -71,14 +71,8 @@ final class FirstInitialSettingVC: UIViewController {
         setNaviBar()
     }
     
-    private func setLayout(){
-        view.addSubview(progressLabel)
-        view.addSubview(nameSettingLabel)
-        view.addSubview(nameAskLabel)
-        view.addSubview(warningLabel)
-        view.addSubview(nameTextField)
-        view.addSubview(contourLine)
-        view.addSubview(nextButton)
+    private func setLayout() {
+        view.addSubviews(progressLabel, nameSettingLabel, nameAskLabel, warningLabel, nameTextField, contourLine, nextButton)
         
         progressLabel.snp.makeConstraints {
             $0.width.equalTo(24)
@@ -87,61 +81,60 @@ final class FirstInitialSettingVC: UIViewController {
             $0.leading.equalToSuperview().offset(21)
         }
         
-        nameSettingLabel.snp.makeConstraints { make in
-            make.width.equalTo(55)
-            make.height.equalTo(16)
-            make.top.equalToSuperview().offset(121)
-            make.leading.equalToSuperview().offset(21)
+        nameSettingLabel.snp.makeConstraints {
+            $0.width.equalTo(55)
+            $0.height.equalTo(16)
+            $0.top.equalToSuperview().offset(121)
+            $0.leading.equalToSuperview().offset(21)
         }
         
-        nameAskLabel.snp.makeConstraints { make in
-            make.width.equalTo(162)
-            make.height.equalTo(23)
-            make.top.equalToSuperview().offset(174)
-            make.leading.equalToSuperview().offset(21)
+        nameAskLabel.snp.makeConstraints {
+            $0.width.equalTo(162)
+            $0.height.equalTo(23)
+            $0.top.equalToSuperview().offset(174)
+            $0.leading.equalToSuperview().offset(21)
         }
         
-        warningLabel.snp.makeConstraints { make in
-            make.width.equalTo(144)
-            make.height.equalTo(15)
-            make.top.equalToSuperview().offset(207)
-            make.leading.equalToSuperview().offset(21)
+        warningLabel.snp.makeConstraints {
+            $0.width.equalTo(144)
+            $0.height.equalTo(15)
+            $0.top.equalToSuperview().offset(207)
+            $0.leading.equalToSuperview().offset(21)
         }
         
-        nameTextField.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(257)
-            make.leading.equalToSuperview().offset(21)
-            make.trailing.equalToSuperview().offset(21)
+        nameTextField.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(257)
+            $0.leading.equalToSuperview().offset(21)
+            $0.trailing.equalToSuperview().offset(21)
         }
         
-        contourLine.snp.makeConstraints { make in
-            make.width.equalTo(318)
-            make.height.equalTo(1.5)
-            make.top.equalToSuperview().offset(285)
-            make.leading.equalToSuperview().offset(21)
-            make.trailing.equalToSuperview().offset(-21)
+        contourLine.snp.makeConstraints {
+            $0.width.equalTo(318)
+            $0.height.equalTo(1.5)
+            $0.top.equalToSuperview().offset(285)
+            $0.leading.equalToSuperview().offset(21)
+            $0.trailing.equalToSuperview().offset(-21)
         }
         
-        nextButton.snp.makeConstraints { make in
-            make.height.equalTo(60)
-            make.top.equalToSuperview().offset(675)
-            make.leading.equalToSuperview().offset(17)
-            make.trailing.equalToSuperview().offset(-17)
+        nextButton.snp.makeConstraints {
+            $0.height.equalTo(60)
+            $0.top.equalToSuperview().offset(675)
+            $0.leading.equalToSuperview().offset(17)
+            $0.trailing.equalToSuperview().offset(-17)
         }
     }
     
     private func setUI() {
-        self.view.backgroundColor = .systemBackground
+        view.backgroundColor = .systemBackground
     }
     
-    private func setNaviBar(){
+    private func setNaviBar() {
         navigationController?.navigationBar.tintColor = .kerdyGray01
         navigationItem.backButtonTitle = ""
     }
 
     @objc private func nextButtonTapped() {
         let nextViewController = SecondInitialSettingVC()
-        self.navigationController?.pushViewController(nextViewController, animated: true)
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
 }
-

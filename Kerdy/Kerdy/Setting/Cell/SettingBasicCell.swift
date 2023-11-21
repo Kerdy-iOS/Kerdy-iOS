@@ -10,14 +10,12 @@ import UIKit
 import SnapKit
 import Core
 
-
 final class SettingBasicCell: UICollectionViewCell {
     
     // MARK: - Property
     
     private var configurationHandlers: [Int:() -> Void] = [:]
     private struct Const {
-        
         static let size:CGFloat = 14
     }
     
@@ -127,6 +125,4 @@ extension SettingBasicCell {
                 handler()
             }
     }
-    
 }
-

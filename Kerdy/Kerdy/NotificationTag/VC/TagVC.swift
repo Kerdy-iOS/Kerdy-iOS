@@ -108,7 +108,7 @@ extension TagVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCell.identifier, for: indexPath) as? TagCell else{
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCell.identifier, for: indexPath) as? TagCell else {
             return UICollectionViewCell()
         }
         cell.configureCell(to: dummyData[indexPath.item])
@@ -118,4 +118,3 @@ extension TagVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollect
         return dummyData[indexPath.item].title.insetSize(font: .nanumSquare(to: .regular, size: 13))
     }
 }
-

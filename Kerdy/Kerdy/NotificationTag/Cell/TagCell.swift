@@ -23,8 +23,6 @@ final class TagCell: UICollectionViewCell {
     
     private let borderLayer = CAShapeLayer()
     
-    
-    
     // MARK: - Initialize
     
     override init(frame: CGRect) {
