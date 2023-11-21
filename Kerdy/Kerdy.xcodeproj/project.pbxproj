@@ -18,6 +18,9 @@
 		090979022AF29086006BD8DE /* TagCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090979012AF29086006BD8DE /* TagCollectionViewFlowLayout.swift */; };
 		090979042AF29121006BD8DE /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090979032AF29121006BD8DE /* TagCell.swift */; };
 		0909790D2AF33D95006BD8DE /* TagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0909790C2AF33D95006BD8DE /* TagModel.swift */; };
+		092414392B0C913500CF5CF4 /* AuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092414382B0C913500CF5CF4 /* AuthVC.swift */; };
+		0924143D2B0CA55A00CF5CF4 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0924143C2B0CA55A00CF5CF4 /* AuthAPI.swift */; };
+		0924143F2B0CADAA00CF5CF4 /* GitHub-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0924143E2B0CADAA00CF5CF4 /* GitHub-Info.plist */; };
 		095D39032AEE79970083CC65 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 095D39022AEE79970083CC65 /* Colors.xcassets */; };
 		095D390C2AEE7BC50083CC65 /* NanumSquareB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */; };
 		095D390E2AEE7BE00083CC65 /* NanumSquareEB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */; };
@@ -115,6 +118,9 @@
 		090979012AF29086006BD8DE /* TagCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		090979032AF29121006BD8DE /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		0909790C2AF33D95006BD8DE /* TagModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagModel.swift; sourceTree = "<group>"; };
+		092414382B0C913500CF5CF4 /* AuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVC.swift; sourceTree = "<group>"; };
+		0924143C2B0CA55A00CF5CF4 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
+		0924143E2B0CADAA00CF5CF4 /* GitHub-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GitHub-Info.plist"; sourceTree = "<group>"; };
 		095D39022AEE79970083CC65 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareB.ttf; sourceTree = "<group>"; };
 		095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareEB.ttf; sourceTree = "<group>"; };
@@ -340,6 +346,30 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		092414362B0C911700CF5CF4 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				092414372B0C912100CF5CF4 /* ViewController */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		092414372B0C912100CF5CF4 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				092414382B0C913500CF5CF4 /* AuthVC.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		0924143A2B0CA51200CF5CF4 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				0924143C2B0CA55A00CF5CF4 /* AuthAPI.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		095D39062AEE7B3C0083CC65 /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -357,6 +387,7 @@
 				095D39092AEE7B850083CC65 /* Colors */,
 				3164D4892AE21F820054F440 /* LaunchScreen.storyboard */,
 				3164D48C2AE21F820054F440 /* Info.plist */,
+				0924143E2B0CADAA00CF5CF4 /* GitHub-Info.plist */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -390,6 +421,7 @@
 		095EBE7B2AFF663B00629F06 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				0924143A2B0CA51200CF5CF4 /* Network */,
 				095EBE802AFF669F00629F06 /* Utils */,
 				095EBE7D2AFF665E00629F06 /* Literals */,
 				095EBE7C2AFF664B00629F06 /* Protocol */,
@@ -566,8 +598,9 @@
 			isa = PBXGroup;
 			children = (
 				3164D4AE2AE21FA80054F440 /* Kerdy.entitlements */,
-				095EBE7B2AFF663B00629F06 /* Global */,
 				095D39062AEE7B3C0083CC65 /* Application */,
+				095EBE7B2AFF663B00629F06 /* Global */,
+				092414362B0C911700CF5CF4 /* Auth */,
 				5B370F3A2AF53DD800D0D3DE /* InitialSetting */,
 				31571C142AF3CB9F0037A2F2 /* Event */,
 				3109B2EF2AF52A4200B2EAD2 /* Filter */,
@@ -768,6 +801,7 @@
 				095D390E2AEE7BE00083CC65 /* NanumSquareEB.ttf in Resources */,
 				095D39102AEE7BE60083CC65 /* NanumSquareR.ttf in Resources */,
 				3164D4882AE21F820054F440 /* Assets.xcassets in Resources */,
+				0924143F2B0CADAA00CF5CF4 /* GitHub-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -815,6 +849,7 @@
 			files = (
 				098294212AF3C1E50011773A /* TermsOfUseVC.swift in Sources */,
 				09ECB32F2AFE0AB2000F3008 /* SettingWriteCell.swift in Sources */,
+				0924143D2B0CA55A00CF5CF4 /* AuthAPI.swift in Sources */,
 				09BB551E2AF0169700A54B1B /* SettingBasicCell.swift in Sources */,
 				3109B2FE2AF52B4700B2EAD2 /* DateFilterView.swift in Sources */,
 				095EBE7A2AFF5DF200629F06 /* BaseVC.swift in Sources */,
@@ -836,6 +871,7 @@
 				09ECB3352AFE15E7000F3008 /* CommentsResponseDTO.swift in Sources */,
 				09BB55192AF0158C00A54B1B /* SettingVC.swift in Sources */,
 				090978FC2AF27364006BD8DE /* ModalTopView.swift in Sources */,
+				092414392B0C913500CF5CF4 /* AuthVC.swift in Sources */,
 				090978F32AF0E809006BD8DE /* TabBarItemType.swift in Sources */,
 				311E98402AFB9720009BEB3F /* PeriodView.swift in Sources */,
 				090978ED2AF0E7A3006BD8DE /* MyCardVC.swift in Sources */,
