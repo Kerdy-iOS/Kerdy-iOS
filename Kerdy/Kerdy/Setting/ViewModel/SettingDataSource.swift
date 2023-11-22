@@ -10,18 +10,26 @@ import UIKit
 final class SettingDataSource {
     
     typealias CellRegistration = UICollectionView.CellRegistration
-    typealias DataSource = UICollectionViewDiffableDataSource<Section,UUID>
-    typealias SnapShot = NSDiffableDataSourceSnapshot<Section, UUID>
+    typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
+    typealias SnapShot = NSDiffableDataSourceSnapshot<Section, Item>
     
     enum Section: Int, CaseIterable {
         case profile
         case basic
     }
     
+    enum Item: Hashable {
+        case profile(ProfileResponseDTO)
+        case basic(SettingBasicModel)
+    }
+    
     var dataSource: DataSource?
     var snapShot: SnapShot!
-    var delegate: SettingProfileCellDelegate?
+    
+    var cellTappedHandler: ((IndexPath) -> Void)?
+        
     private let collectionView: UICollectionView
+    private let profileDate: [ProfileResponseDTO] = [ProfileResponseDTO.dummy()]
     private let allBasicData: [SettingBasicModel] = SettingBasicModel.basicWithIcon + SettingBasicModel.basic
     
     init(dataSource: DataSource? = nil, collectionView: UICollectionView) {
@@ -44,14 +52,16 @@ extension SettingDataSource {
    private func setDataSource() {
        
         let profileCellRegistration = CellRegistration<SettingProfileCell, ProfileResponseDTO> {cell, indexPath, item in
-            cell.delegate = self.delegate
             cell.configureData(to: item)
+            print("indxepath item  :\(indexPath.item), indexPath section : \(indexPath.section)")
+//            self.cellTappedHandler?(indexPath)
         }
-        let basicCellRegistration = CellRegistration<SettingBasicCell,SettingBasicModel> {cell,indexPath,item in
+       
+        let basicCellRegistration = CellRegistration<SettingBasicCell, SettingBasicModel> {cell, indexPath, item in
             cell.configureData(with: item, at: indexPath.item)
         }
         
-        dataSource = DataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+        dataSource = DataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, _ in
             guard let sectionType = Section(rawValue: indexPath.section) else { return UICollectionViewCell() }
             switch sectionType {
             case .profile:
@@ -71,14 +81,14 @@ extension SettingDataSource {
         
         snapShot = SnapShot()
         snapShot.appendSections(Section.allCases)
-        snapShot.appendItems([UUID()], toSection: .profile)
-        snapShot.appendItems([UUID(),UUID(),UUID(),UUID(),UUID(),UUID()],toSection: .basic)
+        snapShot.appendItems( profileDate.map { .profile($0) }, toSection: .profile)
+        snapShot.appendItems( allBasicData.map { .basic($0) }, toSection: .basic)
         dataSource?.applySnapshotUsingReloadData(snapShot)
     }
     
     func updateSnapshot(profile: [ProfileResponseDTO]) {
         let currentProfile = snapShot.itemIdentifiers(inSection: .profile)
-        var newProfile = currentProfile
+        let newProfile = currentProfile
         snapShot.deleteItems(currentProfile)
         snapShot.appendItems(newProfile, toSection: .profile)
         dataSource?.apply(snapShot, animatingDifferences: true)
@@ -87,6 +97,7 @@ extension SettingDataSource {
     func createLayout() -> UICollectionViewCompositionalLayout {
         
         return UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvirnment in
+            guard self != nil else { return nil }
             guard let sectionType = Section(rawValue: sectionIndex) else { return nil }
             switch sectionType {
             case .profile:
