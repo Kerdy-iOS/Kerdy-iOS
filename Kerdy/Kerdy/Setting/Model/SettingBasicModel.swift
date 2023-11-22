@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct SettingBasicModel {
+struct SettingBasicModel: Hashable {
     
     let title: String
     var image: UIImage? = nil
