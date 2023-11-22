@@ -16,7 +16,7 @@ final class SettingBasicCell: UICollectionViewCell {
     
     private var configurationHandlers: [Int:() -> Void] = [:]
     private struct Const {
-        static let size:CGFloat = 14
+        static let size: CGFloat = 14
     }
     
     // MARK: - UI Components

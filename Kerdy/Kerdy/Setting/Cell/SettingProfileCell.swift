@@ -10,17 +10,12 @@ import UIKit
 import SnapKit
 import Core
 
-protocol SettingProfileCellDelegate: AnyObject {
-    
-    func didSelectButton(type: WrittenSections)
-}
+import RxCocoa
 
 final class SettingProfileCell: UICollectionViewCell {
     
     // MARK: - Properties
-    
-    var delegate: SettingProfileCellDelegate?
-    
+        
     private struct Const {
         static let cornerRadius: CGFloat = 65/2
         static let idFontSize: CGFloat = 16
@@ -32,12 +27,12 @@ final class SettingProfileCell: UICollectionViewCell {
     
     // MARK: - UI Components
     
-    private let profile: UIImageView = {
-        let image = UIImageView()
-        image.makeCornerRound(radius: Const.cornerRadius)
-        image.backgroundColor = .kerdyMain
-        image.tintColor = .clear
-        return image
+    private let profileButton: UIButton = {
+        let button = UIButton()
+        button.makeCornerRound(radius: Const.cornerRadius)
+        button.backgroundColor = .kerdyMain
+        button.tintColor = .clear
+        return button
     }()
     
     private let userId: UILabel = {
@@ -66,22 +61,12 @@ final class SettingProfileCell: UICollectionViewCell {
     private lazy var article: UIButton = {
         let button = UIButton()
         button.configuration = UIButton.kerdyStyle(to: Strings.article)
-        button.addAction(UIAction(handler: { [weak self] _ in
-            guard let self else { return }
-            self.delegate?.didSelectButton(type: .article)
-            
-        }), for: .touchUpInside)
         return button
     }()
     
     private lazy var comments: UIButton = {
         let button = UIButton()
         button.configuration = UIButton.kerdyStyle(to: Strings.comments)
-        button.addAction(UIAction(handler: { [weak self] _ in
-            guard let self else { return }
-            self.delegate?.didSelectButton(type: .comment)
-            
-        }), for: .touchUpInside)
         return button
     }()
     
@@ -112,8 +97,8 @@ extension SettingProfileCell {
     
     private func setLayout() {
         
-        contentView.addSubview(profile)
-        profile.snp.makeConstraints {
+        contentView.addSubview(profileButton)
+        profileButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(56)
             $0.leading.equalToSuperview().inset(17)
             $0.size.equalTo(65)
@@ -121,8 +106,8 @@ extension SettingProfileCell {
         
         contentView.addSubview(userId)
         userId.snp.makeConstraints {
-            $0.top.equalTo(profile.snp.top).offset(13)
-            $0.leading.equalTo(profile.snp.trailing).offset(12)
+            $0.top.equalTo(profileButton.snp.top).offset(13)
+            $0.leading.equalTo(profileButton.snp.trailing).offset(12)
         }
         
         contentView.addSubview(userEmail)
@@ -133,7 +118,7 @@ extension SettingProfileCell {
         
         contentView.addSubview(hStackView)
         hStackView.snp.makeConstraints {
-            $0.top.equalTo(profile.snp.bottom).offset(24)
+            $0.top.equalTo(profileButton.snp.bottom).offset(24)
             $0.horizontalEdges.equalToSuperview().inset(17)
             $0.height.equalTo(36)
         }
@@ -163,5 +148,19 @@ extension SettingProfileCell {
         
         userId.text = data.id
         userEmail.text = data.email
+        profileButton.setImage(data.image, for: .normal)
+    }
+    
+    func editProfileButtonDidTap() -> Signal<Void> {
+        print("tapped")
+        return profileButton.rx.tap.asSignal()
+    }
+    
+    func articleButtonDidTap() -> Signal<Void> {
+        return article.rx.tap.asSignal()
+    }
+    
+    func commentsButtonDidTap() -> Signal<Void> {
+        return comments.rx.tap.asSignal()
     }
 }
