@@ -14,12 +14,14 @@ final class SettingVC: BaseVC {
     
     private lazy var settingDataSource = SettingDataSource(collectionView: collectionView)
     
-    private let viewmodel = SettingViewModel()
+    private let viewModel =  SettingViewModel()
     private let disposeBag = DisposeBag()
     
     // MARK: - UI Components
     
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+    
+    // MARK: - Init
     
     // MAKR: - Life Cycle
     
@@ -47,8 +49,6 @@ extension SettingVC {
     
     private func setUI() {
         
-        settingDataSource.delegate = self
-
         collectionView.dataSource = settingDataSource.dataSource
         collectionView.bounces = false
         collectionView.showsVerticalScrollIndicator = false
@@ -56,16 +56,17 @@ extension SettingVC {
     
     private func bind() {
         
-        let input = SettingViewModel.Input(viewWillAppear: rx.viewWillAppear.asObservable())
-        let output = viewmodel.transform(input: input)
+        let input = SettingViewModel.Input(viewWillAppear: rx.viewWillAppear)
+        let output = viewModel.transform(input: input)
         
         output.settingList.asDriver(onErrorJustReturn: [])
             .drive(with: self) { owner, profileList in
                 owner.settingDataSource.updateSnapshot(profile: profileList)
             }
             .disposed(by: disposeBag)
-    
+        
         collectionView.rx.itemSelected
+            .filter { $0.section == 1 }
             .bind { indexpath in
                 var vc: UIViewController
                 switch indexpath.item {
@@ -73,20 +74,52 @@ extension SettingVC {
                 case 1: vc = BlockListVC()
                 case 2: vc = TermsOfUseVC()
                 default:
-                   return
+                    return
                 }
                 self.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
+        
+        collectionView.rx.itemSelected
+            .filter { $0.section == 0 }
+            .flatMap { [weak self] indexPath -> Observable<SettingProfileCell> in
+                dump(indexPath)
+                guard let cell = self?.collectionView.cellForItem(at: indexPath) as? SettingProfileCell else { return .empty() }
+                return .just(cell)
+            }
+            .debug()
+            .bind(with: self) { owner, cell in
+                owner.bind(cell: cell)
+            }
+            .disposed(by: disposeBag)
+
+                
     }
-}
-
-// MAKR: - Methods
-
-extension SettingVC: SettingProfileCellDelegate {
     
-    func didSelectButton(type: WrittenSections) {
-        let vc = SettingWrittenVC(type: type)
-        self.navigationController?.pushViewController(vc, animated: true)
+    private func bind(cell: SettingProfileCell) {
+        
+        let input = SettingViewModel.CellInput(tapProfileButton: cell.editProfileButtonDidTap(),
+                                               tapArticleButton: cell.articleButtonDidTap(),
+                                               tapCommentsButton: cell.commentsButtonDidTap())
+        let output = viewModel.transform(input: input)
+        
+        output.didProfileButtonTapped
+            .emit()
+            .disposed(by: disposeBag)
+        
+        output.didArticleButtonTapped
+            .emit { _ in
+                let article = SettingWrittenVC(type: .article)
+                self.navigationController?.pushViewController(article, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output.didCommentsButtonTapped
+            .emit { _ in
+                let comments = SettingWrittenVC(type: .comment)
+                self.navigationController?.pushViewController(comments, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
     }
 }
