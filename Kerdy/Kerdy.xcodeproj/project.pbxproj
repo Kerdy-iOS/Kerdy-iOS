@@ -77,6 +77,7 @@
 		3164D4B12AE223180054F440 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 3164D4B02AE223180054F440 /* Moya */; };
 		3164D4B32AE223180054F440 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 3164D4B22AE223180054F440 /* RxMoya */; };
 		3164D4B72AE223400054F440 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3164D4B62AE223400054F440 /* SnapKit */; };
+		31FBEC792B107DCD00DE68F3 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC782B107DCD00DE68F3 /* EventDetailViewController.swift */; };
 		5B20BA482B00FF8700A80781 /* EducationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B20BA472B00FF8700A80781 /* EducationViewModel.swift */; };
 		5B20BA4A2B0109DC00A80781 /* ClubViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B20BA492B0109DC00A80781 /* ClubViewModel.swift */; };
 		5B216AFA2AF671CF00C028A0 /* FourthInitialSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B216AF92AF671CF00C028A0 /* FourthInitialSettingVC.swift */; };
@@ -173,6 +174,7 @@
 		3164D49F2AE21F820054F440 /* KerdyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KerdyUITests.swift; sourceTree = "<group>"; };
 		3164D4A12AE21F820054F440 /* KerdyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KerdyUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3164D4AE2AE21FA80054F440 /* Kerdy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kerdy.entitlements; sourceTree = "<group>"; };
+		31FBEC782B107DCD00DE68F3 /* EventDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		5B20BA472B00FF8700A80781 /* EducationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationViewModel.swift; sourceTree = "<group>"; };
 		5B20BA492B0109DC00A80781 /* ClubViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubViewModel.swift; sourceTree = "<group>"; };
 		5B216AF92AF671CF00C028A0 /* FourthInitialSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthInitialSettingVC.swift; sourceTree = "<group>"; };
@@ -570,6 +572,7 @@
 				095D39062AEE7B3C0083CC65 /* Application */,
 				5B370F3A2AF53DD800D0D3DE /* InitialSetting */,
 				31571C142AF3CB9F0037A2F2 /* Event */,
+				31FBEC762B0FA1D000DE68F3 /* EventDetail */,
 				3109B2EF2AF52A4200B2EAD2 /* Filter */,
 				090978EA2AF0E77B006BD8DE /* MyCard */,
 				090978EB2AF0E77F006BD8DE /* Chat */,
@@ -608,6 +611,22 @@
 				311620612AE252E200E26420 /* Core */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		31FBEC762B0FA1D000DE68F3 /* EventDetail */ = {
+			isa = PBXGroup;
+			children = (
+				31FBEC772B107DB400DE68F3 /* Views */,
+			);
+			path = EventDetail;
+			sourceTree = "<group>";
+		};
+		31FBEC772B107DB400DE68F3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				31FBEC782B107DCD00DE68F3 /* EventDetailViewController.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		5B370F3A2AF53DD800D0D3DE /* InitialSetting */ = {
@@ -818,6 +837,7 @@
 				09BB551E2AF0169700A54B1B /* SettingBasicCell.swift in Sources */,
 				3109B2FE2AF52B4700B2EAD2 /* DateFilterView.swift in Sources */,
 				095EBE7A2AFF5DF200629F06 /* BaseVC.swift in Sources */,
+				31FBEC792B107DCD00DE68F3 /* EventDetailViewController.swift in Sources */,
 				31571C242AF3CBC00037A2F2 /* EventVC.swift in Sources */,
 				095EBE7F2AFF668200629F06 /* SettingWrittenProtocol.swift in Sources */,
 				311E98302AF8C24A009BEB3F /* DateSelectBtn.swift in Sources */,
@@ -1045,9 +1065,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Kerdy/Kerdy.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VKW8W27KRV;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Kerdy/Resource/Info.plist;
@@ -1065,6 +1087,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kerdy.Kerdy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = KerdyProvisioning;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1077,9 +1100,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Kerdy/Kerdy.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VKW8W27KRV;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Kerdy/Resource/Info.plist;
@@ -1097,6 +1122,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kerdy.Kerdy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = KerdyProvisioning;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
