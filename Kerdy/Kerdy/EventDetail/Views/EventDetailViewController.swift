@@ -34,22 +34,8 @@ class EventDetailViewController: UIViewController {
 
         return view
     }()
-    private var collectionView = UICollectionView()
-    private var bottomTabStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = 17
-        return stackView
-    }()
-    private var moveWebsiteBtn: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .kerdyMain
-        button.setTitle("웹사이트로 이동", for: .normal)
-        button.titleLabel?.font = .nanumSquare(to: .bold, size: 13)
-        button.layer.cornerRadius = 15
-        return button
-    }()
-    private var bookMarkBtn = UIButton() //구현 예정
+    private var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private var bottomView = EventDetailBottomView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,31 +47,34 @@ class EventDetailViewController: UIViewController {
         view.addSubviews(
             navigationBar,
             scrollView,
-            bottomTabStackView
+            bottomView
         )
         scrollView.addSubview(scrollContentView)
         setScrollContentViewLayout()
-        setBottomTabLayout()
         
         navigationBar.snp.makeConstraints {
-            $0.horizontalEdges.top.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.height.equalTo(56)
         }
         
-        bottomTabStackView.snp.makeConstraints {
-            $0.horizontalEdges.bottom.equalToSuperview()
+        bottomView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             $0.height.equalTo(74)
         }
         
         scrollView.snp.makeConstraints {
             $0.top.equalTo(navigationBar.snp.bottom)
-            $0.bottom.equalTo(scrollView.snp.top)
+            $0.bottom.equalTo(bottomView.snp.top)
             $0.horizontalEdges.equalToSuperview()
         }
         
         scrollContentView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-            $0.width.equalTo(scrollView.bounds.width)
+            let frameLayout = scrollView.frameLayoutGuide.snp
+            let contentLayout = scrollView.contentLayoutGuide.snp
+            $0.edges.equalTo(contentLayout.edges)
+            $0.width.equalTo(frameLayout.width)
             $0.height.equalTo(100).priority(250)
         }
     }
@@ -111,29 +100,26 @@ class EventDetailViewController: UIViewController {
             $0.trailing.equalToSuperview().offset(-17)
             $0.height.equalTo(110)
         }
-    }
-    
-    private func setBottomTabLayout() {
-        bottomTabStackView.addArrangedSubviews(
-            moveWebsiteBtn,
-            bookMarkBtn
-        )
         
-        moveWebsiteBtn.snp.makeConstraints {
-            $0.height.equalTo(50)
-            $0.width.equalTo(200).priority(250)
-            $0.centerY.equalToSuperview()
+        categoryContainerView.snp.makeConstraints {
+            $0.top.equalTo(summaryInfoView.snp.bottom).offset(16)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(38)
         }
         
-        bookMarkBtn.snp.makeConstraints {
-            $0.height.equalTo(42)
-            $0.width.equalTo(28)
-            $0.centerY.equalToSuperview()
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(categoryContainerView.snp.bottom)
+            $0.horizontalEdges.bottom.equalToSuperview()
+            $0.height.equalTo(409).priority(500)
         }
+        
     }
     
     private func setUI() {
+        view.backgroundColor = .systemBackground
+        navigationController?.navigationBar.isHidden = true
         scrollView.showsVerticalScrollIndicator = false
+        collectionView.register(EventDetailCollectionViewCell.self, forCellWithReuseIdentifier: EventDetailCollectionViewCell.identifier)
     }
 }
 // MARK: - collectionView delegate
@@ -147,7 +133,8 @@ extension EventDetailViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell() //구현 예정
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EventDetailCollectionViewCell.identifier, for: indexPath)
+        return cell
     }
 }
 
