@@ -17,7 +17,21 @@ final class EventDetailBottomView: UIView {
         button.layer.cornerRadius = 15
         return button
     }()
-    private var bookMarkBtn = UIButton() //구현 예정
+    private var bookmarkBtn = UIButton()
+    
+    private var bookemarkImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "ic_bookmark_off")
+        return image
+    }()
+    
+    private var bookmarkLabel: UILabel = {
+        let label = UILabel()
+        label.text = "스크랩"
+        label.font = .nanumSquare(to: .regular, size: 10)
+        label.textColor = .kerdyGray02
+        return label
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,21 +45,35 @@ final class EventDetailBottomView: UIView {
     private func setLayout() {
         addSubviews(
             moveWebsiteBtn,
-            bookMarkBtn
+            bookemarkImage,
+            bookmarkLabel,
+            bookmarkBtn
         )
-        bookMarkBtn.snp.makeConstraints {
+        bookemarkImage.snp.makeConstraints {
             $0.top.equalToSuperview().offset(17)
+            $0.trailing.equalToSuperview().offset(-26)
+            $0.width.equalTo(20)
+            $0.height.equalTo(25)
+        }
+        
+        bookmarkLabel.snp.makeConstraints {
+            $0.top.equalTo(bookemarkImage.snp.bottom).offset(6)
             $0.bottom.equalToSuperview().offset(-15)
-            $0.trailing.equalToSuperview().offset(-17)
-            $0.width.equalTo(38)
-            $0.height.equalTo(42)
+            $0.centerX.equalTo(bookemarkImage.snp.centerX)
+            $0.height.equalTo(11)
+        }
+        
+        bookmarkBtn.snp.makeConstraints {
+            $0.top.equalTo(bookemarkImage.snp.top)
+            $0.horizontalEdges.equalTo(bookmarkLabel.snp.horizontalEdges)
+            $0.bottom.equalTo(bookmarkLabel.snp.bottom)
         }
         
         moveWebsiteBtn.snp.makeConstraints {
             $0.top.equalToSuperview().offset(12)
             $0.bottom.equalToSuperview().offset(-12)
             $0.leading.equalToSuperview().offset(17)
-            $0.trailing.equalTo(bookMarkBtn.snp.leading).offset(-17)
+            $0.trailing.equalTo(bookmarkBtn.snp.leading).offset(-17)
         }
     }
 }
