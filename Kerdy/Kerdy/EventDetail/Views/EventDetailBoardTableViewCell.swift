@@ -59,7 +59,7 @@ class EventDetailBoardTableViewCell: UITableViewCell {
     
     private var commentIcon: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "icon_comment")
+        view.image = UIImage(named: "ic_comment")
         return view
     }()
     
@@ -80,7 +80,7 @@ class EventDetailBoardTableViewCell: UITableViewCell {
     
     private var likeIcon: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "icon_like")
+        view.image = UIImage(named: "ic_like")
         return view
     }()
     
@@ -90,9 +90,18 @@ class EventDetailBoardTableViewCell: UITableViewCell {
         label.font = .nanumSquare(to: .regular, size: 11)
         return label
     }()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setLayout()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
-extension EventDetailBoardTableViewCell{
+extension EventDetailBoardTableViewCell {
     private func setLayout() {
         addSubviews(
             titleLabel,
@@ -102,6 +111,7 @@ extension EventDetailBoardTableViewCell{
             timeLabel,
             image
         )
+        setIconLayout()
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(15)
