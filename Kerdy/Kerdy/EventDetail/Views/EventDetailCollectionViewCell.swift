@@ -34,6 +34,7 @@ enum EventDetailCellType {
 
 final class EventDetailCollectionViewCell: UICollectionViewCell {
     var delegate: EventCellDelegate?
+    private var cellType: EventDetailCellType?
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -55,7 +56,6 @@ final class EventDetailCollectionViewCell: UICollectionViewCell {
 
     private func setLayout() {
         contentView.addSubview(tableView)
-
         tableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
@@ -70,6 +70,10 @@ final class EventDetailCollectionViewCell: UICollectionViewCell {
 
     private func configure(with events: Event) {
         // 추후 tableViewCell 설정 관련
+    }
+    
+    func setCelltype(type: EventDetailCellType) {
+        cellType = type
     }
 }
 
@@ -86,9 +90,8 @@ extension EventDetailCollectionViewCell: UITableViewDelegate, UITableViewDataSou
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
-        let cellType: EventDetailCellType = (indexPath.row == 0) ? .photo : .board
-
         guard
+            let cellType = cellType,
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: cellType.identifier,
                 for: indexPath
@@ -121,14 +124,13 @@ extension EventDetailCollectionViewCell: UITableViewDelegate, UITableViewDataSou
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cellType: EventDetailCellType = (indexPath.row == 0) ? .photo : .board
         if cellType == .board {
             delegate?.showDetailVC()
         }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let cellType: EventDetailCellType = (indexPath.row == 0) ? .photo : .board
+        guard let cellType = cellType else { return 0 }
         switch cellType {
         case .photo:
             return 511

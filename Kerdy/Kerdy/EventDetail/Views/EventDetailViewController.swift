@@ -34,7 +34,16 @@ class EventDetailViewController: UIViewController {
 
         return view
     }()
-    private var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isPagingEnabled = true
+        return collectionView
+    }()
     private var bottomView = EventDetailBottomView()
     
     override func viewDidLoad() {
@@ -119,7 +128,23 @@ class EventDetailViewController: UIViewController {
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.isHidden = true
         scrollView.showsVerticalScrollIndicator = false
+        collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.register(EventDetailCollectionViewCell.self, forCellWithReuseIdentifier: EventDetailCollectionViewCell.identifier)
+    }
+    
+    private func updateCategoryColor(index: Int) {
+        for categoryIndex in 0...2 {
+            guard
+                let categoryView = categoryContainerView.arrangedSubviews[categoryIndex] as? CategoryView
+            else { return }
+
+            if categoryIndex == index {
+                categoryView.setSelected()
+            } else {
+                categoryView.setUnselected()
+            }
+        }
     }
 }
 // MARK: - collectionView delegate
@@ -133,8 +158,36 @@ extension EventDetailViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EventDetailCollectionViewCell.identifier, for: indexPath)
+        let cellType: EventDetailCellType = (indexPath.row == 0) ? .photo : .board
+        guard
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: EventDetailCollectionViewCell.identifier,
+                for: indexPath
+            ) as? EventDetailCollectionViewCell
+        else { return UICollectionViewCell() }
+        cell.setCelltype(type: cellType)
+        if indexPath.row == 0 { cell.tableView.isScrollEnabled = false}
         return cell
     }
 }
 
+extension EventDetailViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        return collectionView.frame.size
+    }
+}
+
+// MARK: - 캐러셀 메뉴를 위한 scrollView delegate
+extension EventDetailViewController: UIScrollViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let visibleIndexPaths = collectionView.indexPathsForVisibleItems
+        if let indexPath = visibleIndexPaths.first {
+            let row = indexPath.row
+            updateCategoryColor(index: row)
+        }
+    }
+}
