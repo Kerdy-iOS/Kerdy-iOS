@@ -54,6 +54,7 @@ class EventDetailBoardTableViewCell: UITableViewCell {
         view.axis = .horizontal
         view.spacing = 3
         view.distribution = .equalSpacing
+        view.alignment = .leading
         return view
     }()
     
@@ -75,6 +76,7 @@ class EventDetailBoardTableViewCell: UITableViewCell {
         view.axis = .horizontal
         view.spacing = 3
         view.distribution = .equalSpacing
+        view.alignment = .leading
         return view
     }()
     

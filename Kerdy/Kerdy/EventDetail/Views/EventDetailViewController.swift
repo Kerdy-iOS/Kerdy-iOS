@@ -28,7 +28,7 @@ class EventDetailViewController: UIViewController {
 
         for subview in view.arrangedSubviews {
             if let categoryView = subview as? CategoryView {
-//                categoryView.button.addTarget(self, action: #selector(categoryBtnTapped), for: .touchUpInside)
+                categoryView.button.addTarget(self, action: #selector(categoryBtnTapped), for: .touchUpInside)
             }
         }
 
@@ -51,7 +51,30 @@ class EventDetailViewController: UIViewController {
         setLayout()
         setUI()
     }
- // MARK: - layout 설정
+    
+    private func updateCategoryColor(index: Int) {
+        for categoryIndex in 0...2 {
+            guard
+                let categoryView = categoryContainerView.arrangedSubviews[categoryIndex] as? CategoryView
+            else { return }
+
+            if categoryIndex == index {
+                categoryView.setSelected()
+            } else {
+                categoryView.setUnselected()
+            }
+        }
+    }
+
+    @objc func categoryBtnTapped(_ sender: UIButton) {
+        let tag = sender.tag
+        let indexPath = IndexPath(item: tag, section: 0)
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        updateCategoryColor(index: tag)
+    }
+}
+// MARK: - layout 설정
+extension EventDetailViewController {
     private func setLayout() {
         view.addSubviews(
             navigationBar,
@@ -132,21 +155,8 @@ class EventDetailViewController: UIViewController {
         collectionView.delegate = self
         collectionView.register(EventDetailCollectionViewCell.self, forCellWithReuseIdentifier: EventDetailCollectionViewCell.identifier)
     }
-    
-    private func updateCategoryColor(index: Int) {
-        for categoryIndex in 0...2 {
-            guard
-                let categoryView = categoryContainerView.arrangedSubviews[categoryIndex] as? CategoryView
-            else { return }
-
-            if categoryIndex == index {
-                categoryView.setSelected()
-            } else {
-                categoryView.setUnselected()
-            }
-        }
-    }
 }
+
 // MARK: - collectionView delegate
 extension EventDetailViewController: UICollectionViewDelegate {
     
