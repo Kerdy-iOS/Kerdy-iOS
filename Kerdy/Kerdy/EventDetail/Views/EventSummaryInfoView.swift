@@ -9,118 +9,80 @@ import UIKit
 import SnapKit
 
 final class EventSummaryInfoView: UIView {
-    private lazy var titleStackView: UIStackView = {
+    private lazy var dDayLabel: UILabel = {
+        let label = UILabel()
+        label.text = "D-day"
+        label.textColor = .kerdyMain
+        label.font = .nanumSquare(to: .extraBold, size: 13)
+        return label
+    }()
+    
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "AWS 부산 클라우드데이 2023 AWS"
+        label.font = .nanumSquare(to: .bold, size: 15)
+        label.numberOfLines = 2
+        return label
+    }()
+    
+    private lazy var organizerLabel: UILabel = {
+        let label = UILabel()
+        label.text = "부산정보산업진흥원"
+        label.textColor = .kerdyGray03
+        label.font = .nanumSquare(to: .regular, size: 12)
+        return label
+    }()
+    
+    private lazy var filterStackView: UIStackView = {
         let view = UIStackView()
-        view.axis = .vertical
-        view.spacing = 10
+        view.axis = .horizontal
+        view.spacing = 3
         view.alignment = .leading
         view.distribution = .equalSpacing
         return view
     }()
     
-    private lazy var applyTitle: UILabel = {
-        let label = UILabel()
-        label.text = "접수기간"
-        label.font = .nanumSquare(to: .bold, size: 12)
-        return label
-    }()
-    
-    private lazy var dateTitle: UILabel = {
-        let label = UILabel()
-        label.text = "일시"
-        label.font = .nanumSquare(to: .bold, size: 12)
-        return label
-    }()
-    
-    private lazy var locationTitle: UILabel = {
-        let label = UILabel()
-        label.text = "장소"
-        label.font = .nanumSquare(to: .bold, size: 12)
-        return label
-    }()
-    
-    private lazy var costTitle: UILabel = {
-        let label = UILabel()
-        label.text = "비용"
-        label.font = .nanumSquare(to: .bold, size: 12)
-        return label
-    }()
-    
-    private lazy var infoStackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .vertical
-        view.spacing = 10
-        view.alignment = .leading
-        view.distribution = .equalSpacing
-        return view
-    }()
-    
-    private lazy var applyInfo: UILabel = {
-        let label = UILabel()
-        label.text = "접수기간"
-        label.font = .nanumSquare(to: .regular, size: 12)
-        return label
-    }()
-    
-    private lazy var dateInfo: UILabel = {
-        let label = UILabel()
-        label.text = "일시"
-        label.font = .nanumSquare(to: .regular, size: 12)
-        return label
-    }()
-    
-    private lazy var locationInfo: UILabel = {
-        let label = UILabel()
-        label.text = "장소"
-        label.font = .nanumSquare(to: .regular, size: 12)
-        return label
-    }()
-    
-    private lazy var costInfo: UILabel = {
-        let label = UILabel()
-        label.text = "비용"
-        label.font = .nanumSquare(to: .regular, size: 12)
-        return label
-    }()
-
     init() {
         super.init(frame: .zero)
         setLayout()
     }
-
+    
     private func setLayout() {
-        addSubviews(titleStackView, infoStackView)
-        setTitleLayout()
-        setInfoLayout()
-        
-        titleStackView.snp.makeConstraints {
-            $0.verticalEdges.leading.equalToSuperview()
-        }
-        
-        infoStackView.snp.makeConstraints {
-            $0.verticalEdges.equalToSuperview()
-            $0.leading.equalTo(titleStackView.snp.trailing).offset(20)
-        }
-    }
-
-    private func setTitleLayout() {
-        titleStackView.addArrangedSubviews(
-            applyTitle,
-            dateTitle,
-            locationTitle,
-            costTitle
+        addSubviews(
+            dDayLabel,
+            titleLabel,
+            organizerLabel,
+            filterStackView
         )
+        setFilterLayout()
+        
+        dDayLabel.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview().offset(17)
+        }
+        
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(dDayLabel.snp.bottom).offset(9)
+            $0.leading.equalTo(dDayLabel.snp.leading)
+        }
+        
+        organizerLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(6)
+            $0.leading.equalTo(dDayLabel.snp.leading)
+        }
+        
+        filterStackView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(17)
+            $0.trailing.equalToSuperview().offset(-17)
+            $0.top.equalTo(organizerLabel.snp.bottom).offset(23)
+            $0.height.equalTo(22)
+        }
     }
     
-    private func setInfoLayout() {
-        infoStackView.addArrangedSubviews(
-            applyInfo,
-            dateInfo,
-            locationInfo,
-            costInfo
-        )
+    private func setFilterLayout() {
+        //필터 관련 레이아웃
     }
-
+    
     required init?(coder decoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

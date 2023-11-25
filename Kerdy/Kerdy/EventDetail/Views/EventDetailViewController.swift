@@ -162,8 +162,7 @@ extension EventDetailViewController {
         
         summaryInfoView.snp.makeConstraints {
             $0.top.equalTo(titleImage.snp.bottom).offset(14)
-            $0.leading.equalToSuperview().offset(17)
-            $0.trailing.equalToSuperview().offset(-17)
+            $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(110)
         }
         
