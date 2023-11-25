@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 final class EventDetailBottomView: UIView {   
-    private var moveWebsiteBtn: UIButton = {
+    private lazy var moveWebsiteBtn: UIButton = {
         let button = UIButton()
         button.backgroundColor = .kerdyMain
         button.setTitle("웹사이트로 이동", for: .normal)
@@ -17,15 +17,15 @@ final class EventDetailBottomView: UIView {
         button.layer.cornerRadius = 15
         return button
     }()
-    private var bookmarkBtn = UIButton()
+    private lazy var bookmarkBtn = UIButton()
     
-    private var bookemarkImage: UIImageView = {
+    private lazy var bookemarkImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "ic_bookmark_off")
         return image
     }()
     
-    private var bookmarkLabel: UILabel = {
+    private lazy var bookmarkLabel: UILabel = {
         let label = UILabel()
         label.text = "스크랩"
         label.font = .nanumSquare(to: .regular, size: 10)

@@ -9,15 +9,15 @@ import UIKit
 import SnapKit
 import Core
 
-class EventDetailPostTVCell: UITableViewCell {
+final class EventDetailPostTVCell: UITableViewCell {
     
-    private var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .nanumSquare(to: .bold, size: 13)
         return label
     }()
     
-    private var contentLabel: UILabel = {
+    private lazy var contentLabel: UILabel = {
         let label = UILabel()
         label.font = .nanumSquare(to: .regular, size: 13)
         label.textColor = .kerdyGray03
@@ -25,7 +25,7 @@ class EventDetailPostTVCell: UITableViewCell {
         return label
     }()
     
-    private var iconStackView: UIStackView = {
+    private lazy var iconStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
         view.spacing = 6
@@ -33,22 +33,22 @@ class EventDetailPostTVCell: UITableViewCell {
         return view
     }()
     
-    private var image: UIImageView = {
+    private lazy var image: UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 10
         return view
     }()
     
-    private var divideLine = DivideLine(frame: .zero, backgroundColor: .kerdyGray01)
+    private lazy var divideLine = DivideLine(frame: .zero, backgroundColor: .kerdyGray01)
     
-    private var timeLabel: UILabel = {
+    private lazy var timeLabel: UILabel = {
         let label = UILabel()
         label.font = .nanumSquare(to: .regular, size: 11)
         label.textColor = .kerdyGray02
         return label
     }()
     
-    private var commentStackView: UIStackView = {
+    private lazy var commentStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
         view.spacing = 3
@@ -57,20 +57,20 @@ class EventDetailPostTVCell: UITableViewCell {
         return view
     }()
     
-    private var commentIcon: UIImageView = {
+    private lazy var commentIcon: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "ic_comment")
         return view
     }()
     
-    private var commentLabel: UILabel = {
+    private lazy var commentLabel: UILabel = {
         let label = UILabel()
         label.textColor = .kerdyMain
         label.font = .nanumSquare(to: .regular, size: 11)
         return label
     }()
     
-    private var likeStackView: UIStackView = {
+    private lazy var likeStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
         view.spacing = 3
@@ -79,13 +79,13 @@ class EventDetailPostTVCell: UITableViewCell {
         return view
     }()
     
-    private var likeIcon: UIImageView = {
+    private lazy var likeIcon: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "ic_like")
         return view
     }()
     
-    private var likeLabel: UILabel = {
+    private lazy var likeLabel: UILabel = {
         let label = UILabel()
         label.textColor = .kerdyRed
         label.font = .nanumSquare(to: .regular, size: 11)

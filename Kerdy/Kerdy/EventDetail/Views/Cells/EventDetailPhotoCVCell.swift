@@ -218,7 +218,7 @@ extension EventDetailPhotoCVCell: ConfigurableCell {
         locationInfo.text = data.locationInfo
         costInfo.text = data.costInfo
         //이미지 설정
-        
+        //이미지 갯수에 따라 tv 높이 바뀌도록 수정 예정
         tableView.snp.makeConstraints {
             $0.height.equalTo(511 * 5)
         }

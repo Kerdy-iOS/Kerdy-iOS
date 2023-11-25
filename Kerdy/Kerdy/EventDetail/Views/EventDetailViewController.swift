@@ -30,7 +30,7 @@ enum EventDetailCVType {
     }
 }
 
-class EventDetailViewController: UIViewController {
+final class EventDetailViewController: UIViewController {
     private var navigationBar = NavigationBarView()
     private var scrollView = UIScrollView()
     private var scrollContentView = UIView()

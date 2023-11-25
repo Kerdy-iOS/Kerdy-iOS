@@ -8,9 +8,9 @@
 import UIKit
 import SnapKit
 
-class EventDetailPhotoTVCell: UITableViewCell {
+final class EventDetailPhotoTVCell: UITableViewCell {
     
-    private let image = UIImageView()
+    private lazy var image = UIImageView()
  
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
