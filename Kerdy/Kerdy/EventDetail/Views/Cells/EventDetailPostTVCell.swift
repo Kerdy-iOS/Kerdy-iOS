@@ -9,8 +9,7 @@ import UIKit
 import SnapKit
 import Core
 
-class EventDetailBoardTableViewCell: UITableViewCell {
-    typealias DataType = BoardListModel
+class EventDetailPostTVCell: UITableViewCell {
     
     private var titleLabel: UILabel = {
         let label = UILabel()
@@ -103,7 +102,7 @@ class EventDetailBoardTableViewCell: UITableViewCell {
     }
 }
 
-extension EventDetailBoardTableViewCell {
+extension EventDetailPostTVCell {
     private func setLayout() {
         addSubviews(
             titleLabel,
@@ -192,10 +191,10 @@ extension EventDetailBoardTableViewCell {
 }
 
 
-extension EventDetailBoardTableViewCell: ConfigurableCell {
-    typealias CellType = BoardListModel
+extension EventDetailPostTVCell: ConfigurableCell {
+    typealias CellType = PostListModel
     
-    func configure(with data: BoardListModel) {
+    func configure(with data: PostListModel) {
         titleLabel.text = data.title
         contentLabel.text = data.content
         image.image = data.image

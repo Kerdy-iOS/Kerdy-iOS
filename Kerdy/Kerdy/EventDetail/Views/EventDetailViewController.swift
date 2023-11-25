@@ -7,6 +7,29 @@
 
 import UIKit
 
+enum EventDetailCVType {
+    case photo
+    case post
+
+    var className: AnyClass {
+        switch self {
+        case .photo:
+            return EventDetailPhotoCVCell.self
+        case .post:
+            return EventDetailPostCVCell.self
+        }
+    }
+    
+    var identifier: String {
+        switch self {
+        case .photo:
+            return EventDetailPhotoCVCell.identifier
+        case .post:
+            return EventDetailPostCVCell.identifier
+        }
+    }
+}
+
 class EventDetailViewController: UIViewController {
     private var navigationBar = NavigationBarView()
     private var scrollView = UIScrollView()
@@ -17,7 +40,7 @@ class EventDetailViewController: UIViewController {
         image.layer.cornerRadius = 15
         return image
     }()
-    private var summaryInfoView = UIView() // 구현 예정
+    private var summaryInfoView = EventSummaryInfoView()
     private lazy var categoryContainerView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
@@ -52,6 +75,16 @@ class EventDetailViewController: UIViewController {
         setUI()
     }
     
+    private func setUI() {
+        view.backgroundColor = .systemBackground
+        navigationController?.navigationBar.isHidden = true
+        scrollView.showsVerticalScrollIndicator = false
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(EventDetailPhotoCVCell.self, forCellWithReuseIdentifier: EventDetailPhotoCVCell.identifier)
+        collectionView.register(EventDetailPostCVCell.self, forCellWithReuseIdentifier: EventDetailPostCVCell.identifier)
+    }
+    
     private func updateCategoryColor(index: Int) {
         for categoryIndex in 0...2 {
             guard
@@ -73,6 +106,7 @@ class EventDetailViewController: UIViewController {
         updateCategoryColor(index: tag)
     }
 }
+
 // MARK: - layout 설정
 extension EventDetailViewController {
     private func setLayout() {
@@ -146,39 +180,11 @@ extension EventDetailViewController {
         }
         
     }
-    
-    private func setUI() {
-        view.backgroundColor = .systemBackground
-        navigationController?.navigationBar.isHidden = true
-        scrollView.showsVerticalScrollIndicator = false
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(EventDetailCollectionViewCell.self, forCellWithReuseIdentifier: EventDetailCollectionViewCell.identifier)
-    }
 }
 
 // MARK: - collectionView delegate
 extension EventDetailViewController: UICollectionViewDelegate {
     
-}
-// MARK: - collectionView dataSource
-extension EventDetailViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cellType: EventDetailCellType = (indexPath.row == 0) ? .photo : .board
-        guard
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: EventDetailCollectionViewCell.identifier,
-                for: indexPath
-            ) as? EventDetailCollectionViewCell
-        else { return UICollectionViewCell() }
-        cell.setCelltype(type: cellType)
-        if indexPath.row == 0 { cell.tableView.isScrollEnabled = false}
-        return cell
-    }
 }
 
 extension EventDetailViewController: UICollectionViewDelegateFlowLayout {
@@ -191,6 +197,50 @@ extension EventDetailViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - collectionView dataSource
+extension EventDetailViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cellType: EventDetailCVType = (indexPath.row == 0) ? .photo : .post
+        let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: cellType.identifier,
+                    for: indexPath
+                    )
+        
+        switch cellType {
+        case .photo:
+            if let cell = cell as? EventDetailPhotoCVCell {
+                let data = EventDetailModel(
+                    applyInfo: "이날부터 저날까지 접수",
+                    dateInfo: "언제 언제부터 언제 언제까지",
+                    locationInfo: "어디어디에서 할거임",
+                    costInfo: "무료",
+                    images: [UIImage(systemName: "pencil")!]
+                )
+                cell.configure(with: data)
+            }
+            
+        case .post:
+            if let cell = cell as? EventDetailPostCVCell {
+                let data = PostListModel(
+                    title: "제목",
+                    content: "내용내용내용내용내용내용내용내용내용",
+                    image: nil,
+                    date: Date(),
+                    isModified: false,
+                    commentCnt: 1,
+                    likeCnt: 10
+                )
+                cell.configure(with: [data])
+            }
+        }
+        
+        return cell
+    }
+}
 // MARK: - 캐러셀 메뉴를 위한 scrollView delegate
 extension EventDetailViewController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {

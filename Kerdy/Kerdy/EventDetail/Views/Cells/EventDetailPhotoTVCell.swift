@@ -8,8 +8,8 @@
 import UIKit
 import SnapKit
 
-class EventDetailPhotoTableViewCell: UITableViewCell {
-    typealias DataType = EventPhotoModel
+class EventDetailPhotoTVCell: UITableViewCell {
+    
     private let image = UIImageView()
  
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -23,7 +23,7 @@ class EventDetailPhotoTableViewCell: UITableViewCell {
     }
 }
 
-extension EventDetailPhotoTableViewCell {
+extension EventDetailPhotoTVCell {
     private func setLayout() {
         addSubview(image)
         image.snp.makeConstraints {
@@ -36,10 +36,10 @@ extension EventDetailPhotoTableViewCell {
     }
 }
 
-extension EventDetailPhotoTableViewCell: ConfigurableCell {
+extension EventDetailPhotoTVCell: ConfigurableCell {
     typealias CellType = UIImage?
     
     func configure(with data: UIImage?) {
-        image.image = UIImage(systemName: "pencil")
+        image.image = data
     }
 }

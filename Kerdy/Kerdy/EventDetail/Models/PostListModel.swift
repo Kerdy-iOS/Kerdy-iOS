@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct BoardListModel {
+struct PostListModel {
     let title: String
     let content: String
     let image: UIImage?
