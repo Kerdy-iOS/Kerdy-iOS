@@ -18,6 +18,8 @@ final class AuthViewModel {
     private var disposeBag = DisposeBag()
     private let loginManager: LoginManager
     
+    private let didLoginTapped = PublishRelay<Void>()
+    
     // MARK: - Init
     
     init(loginManager: LoginManager) {
@@ -34,7 +36,7 @@ final class AuthViewModel {
     
     func transform(input: Input) -> Output {
         
-        let output = Output(didLoginTapped: PublishRelay<Void>().asSignal())
+        let output = Output(didLoginTapped: didLoginTapped.asSignal())
         
         input.authButtonDidTap
             .subscribe(with: self, onNext: { owner, _ in
@@ -67,10 +69,7 @@ extension AuthViewModel {
         loginManager.postLogin(code: code)
             .subscribe(onSuccess: { response in
                 KeyChainManager.save(forKey: .accessToken, value: response.accessToken)
-                
-                let tabBarController = TabBarVC()
-                SceneDelegate.shared?.changeRootViewControllerTo(tabBarController)
-                
+                self.didLoginTapped.accept(())
             }, onFailure: { error in
                 if let moyaError = error as? MoyaError {
                     if let statusCode = moyaError.response?.statusCode {
