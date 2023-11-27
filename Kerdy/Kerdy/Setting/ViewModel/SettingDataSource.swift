@@ -42,7 +42,7 @@ extension SettingDataSource {
     
    private func setDataSource() {
        
-        let profileCellRegistration = CellRegistration<SettingProfileCell, ProfileResponseDTO> {cell, indexPath, item in
+        let profileCellRegistration = CellRegistration<SettingProfileCell, ProfileResponseDTO> {cell, _, item in
             cell.delegate = self.delegate
             cell.configureData(to: item)
         }
@@ -50,7 +50,7 @@ extension SettingDataSource {
             cell.configureData(with: item, at: indexPath.item)
         }
         
-        dataSource = DataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+        dataSource = DataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, _ in
             guard let sectionType = Section(rawValue: indexPath.section) else { return UICollectionViewCell() }
             switch sectionType {
             case .profile:
