@@ -8,11 +8,16 @@
 import UIKit
 
 import SnapKit
+import Alamofire
 
+import RxSwift
 
 final class AuthVC: BaseVC {
     
     // MARK: - Properties
+    
+    private let viewModel: AuthViewModel
+    private var disposeBag = DisposeBag()
     
     // MARK: - UI Components
     
@@ -34,22 +39,28 @@ final class AuthVC: BaseVC {
         config.attributedTitle =  AttributedString(Strings.login,
                                                    attributes: AttributeContainer([.font: UIFont.nanumSquare(to: .regular, size: 14)]))
         button.configuration = config
-        button.addAction(UIAction {_ in
-            self.buttonTapped()
-        }, for: .touchUpInside)
-        
         return button
     }()
     
     // MARK: - Life Cycle
-
+    
+    init(viewModel: AuthViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setUI()
         setLayout()
+        bind()
     }
-
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 }
 
 // MARK: - Setting
@@ -82,9 +93,16 @@ extension AuthVC {
     }
 }
 
+// MARK: - Network
+
 extension AuthVC {
     
-    private func buttonTapped() {
-        AuthAPI.shared.requestCode()
+    private func bind() {
+        let input = AuthViewModel.Input(authButtonDidTap: loginButton.rx.tap.asObservable())
+        let output = viewModel.transform(input: input)
+        
+        output.didLoginTapped
+            .emit()
+            .disposed(by: disposeBag)
     }
 }
