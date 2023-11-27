@@ -19,8 +19,18 @@
 		090979042AF29121006BD8DE /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090979032AF29121006BD8DE /* TagCell.swift */; };
 		0909790D2AF33D95006BD8DE /* TagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0909790C2AF33D95006BD8DE /* TagModel.swift */; };
 		092414392B0C913500CF5CF4 /* AuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092414382B0C913500CF5CF4 /* AuthVC.swift */; };
-		0924143D2B0CA55A00CF5CF4 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0924143C2B0CA55A00CF5CF4 /* AuthAPI.swift */; };
-		0924143F2B0CADAA00CF5CF4 /* GitHub-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0924143E2B0CADAA00CF5CF4 /* GitHub-Info.plist */; };
+		09242FFF2B13BC93008DE4FB /* NetworkLogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09242FFE2B13BC93008DE4FB /* NetworkLogging.swift */; };
+		092430012B146296008DE4FB /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092430002B146296008DE4FB /* AuthInterceptor.swift */; };
+		09472C152B131D4700B4A84E /* BaseInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09472C142B131D4700B4A84E /* BaseInfoManager.swift */; };
+		09472C232B1323E000B4A84E /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09472C222B1323E000B4A84E /* AuthViewModel.swift */; };
+		09472C252B135BF200B4A84E /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09472C242B135BF200B4A84E /* KeyChainManager.swift */; };
+		09472C292B13720C00B4A84E /* KerdyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09472C282B13720C00B4A84E /* KerdyAPI.swift */; };
+		09472C2D2B13735C00B4A84E /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09472C2C2B13735C00B4A84E /* NetworkError.swift */; };
+		09472C2F2B13737B00B4A84E /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09472C2E2B13737B00B4A84E /* Networking.swift */; };
+		09472C322B1374F300B4A84E /* SignInResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09472C312B1374F300B4A84E /* SignInResponseDTO.swift */; };
+		09472C362B13762000B4A84E /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09472C352B13762000B4A84E /* LoginManager.swift */; };
+		09472C382B13762900B4A84E /* LoginAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09472C372B13762900B4A84E /* LoginAPI.swift */; };
+		09472C3B2B138B5C00B4A84E /* KeyChainValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09472C3A2B138B5C00B4A84E /* KeyChainValue.swift */; };
 		095D39032AEE79970083CC65 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 095D39022AEE79970083CC65 /* Colors.xcassets */; };
 		095D390C2AEE7BC50083CC65 /* NanumSquareB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */; };
 		095D390E2AEE7BE00083CC65 /* NanumSquareEB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */; };
@@ -28,6 +38,7 @@
 		095EBE7A2AFF5DF200629F06 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095EBE792AFF5DF200629F06 /* BaseVC.swift */; };
 		095EBE7F2AFF668200629F06 /* SettingWrittenProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095EBE7E2AFF668200629F06 /* SettingWrittenProtocol.swift */; };
 		095EBE822AFF66A300629F06 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095EBE812AFF66A300629F06 /* Util.swift */; };
+		0964BA3D2B0E36A600A8984B /* Base-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0964BA3C2B0E36A600A8984B /* Base-Info.plist */; };
 		098294182AF341290011773A /* BlockListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098294172AF341290011773A /* BlockListVC.swift */; };
 		0982941A2AF342090011773A /* BlockListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098294192AF342090011773A /* BlockListCell.swift */; };
 		0982941E2AF35E660011773A /* BlockListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0982941D2AF35E660011773A /* BlockListModel.swift */; };
@@ -119,8 +130,18 @@
 		090979032AF29121006BD8DE /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		0909790C2AF33D95006BD8DE /* TagModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagModel.swift; sourceTree = "<group>"; };
 		092414382B0C913500CF5CF4 /* AuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVC.swift; sourceTree = "<group>"; };
-		0924143C2B0CA55A00CF5CF4 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
-		0924143E2B0CADAA00CF5CF4 /* GitHub-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GitHub-Info.plist"; sourceTree = "<group>"; };
+		09242FFE2B13BC93008DE4FB /* NetworkLogging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLogging.swift; sourceTree = "<group>"; };
+		092430002B146296008DE4FB /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
+		09472C142B131D4700B4A84E /* BaseInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInfoManager.swift; sourceTree = "<group>"; };
+		09472C222B1323E000B4A84E /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		09472C242B135BF200B4A84E /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
+		09472C282B13720C00B4A84E /* KerdyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KerdyAPI.swift; sourceTree = "<group>"; };
+		09472C2C2B13735C00B4A84E /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		09472C2E2B13737B00B4A84E /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		09472C312B1374F300B4A84E /* SignInResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInResponseDTO.swift; sourceTree = "<group>"; };
+		09472C352B13762000B4A84E /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
+		09472C372B13762900B4A84E /* LoginAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAPI.swift; sourceTree = "<group>"; };
+		09472C3A2B138B5C00B4A84E /* KeyChainValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainValue.swift; sourceTree = "<group>"; };
 		095D39022AEE79970083CC65 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareB.ttf; sourceTree = "<group>"; };
 		095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareEB.ttf; sourceTree = "<group>"; };
@@ -128,6 +149,7 @@
 		095EBE792AFF5DF200629F06 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		095EBE7E2AFF668200629F06 /* SettingWrittenProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingWrittenProtocol.swift; sourceTree = "<group>"; };
 		095EBE812AFF66A300629F06 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		0964BA3C2B0E36A600A8984B /* Base-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Base-Info.plist"; sourceTree = "<group>"; };
 		098294172AF341290011773A /* BlockListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListVC.swift; sourceTree = "<group>"; };
 		098294192AF342090011773A /* BlockListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListCell.swift; sourceTree = "<group>"; };
 		0982941D2AF35E660011773A /* BlockListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListModel.swift; sourceTree = "<group>"; };
@@ -358,16 +380,66 @@
 			isa = PBXGroup;
 			children = (
 				092414382B0C913500CF5CF4 /* AuthVC.swift */,
+				09472C222B1323E000B4A84E /* AuthViewModel.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		0924143A2B0CA51200CF5CF4 /* Network */ = {
+		09472C262B1371D800B4A84E /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				0924143C2B0CA55A00CF5CF4 /* AuthAPI.swift */,
+				09472C342B13760D00B4A84E /* APIManagers */,
+				09472C332B1375FC00B4A84E /* APIServices */,
+				09472C302B1374A500B4A84E /* DataModel */,
+				09472C272B1371F200B4A84E /* Foundation */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		09472C272B1371F200B4A84E /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				09472C142B131D4700B4A84E /* BaseInfoManager.swift */,
+				09472C282B13720C00B4A84E /* KerdyAPI.swift */,
+				09472C2C2B13735C00B4A84E /* NetworkError.swift */,
+				09472C2E2B13737B00B4A84E /* Networking.swift */,
+				09242FFE2B13BC93008DE4FB /* NetworkLogging.swift */,
+				092430002B146296008DE4FB /* AuthInterceptor.swift */,
+			);
+			path = Foundation;
+			sourceTree = "<group>";
+		};
+		09472C302B1374A500B4A84E /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				09472C312B1374F300B4A84E /* SignInResponseDTO.swift */,
+			);
+			path = DataModel;
+			sourceTree = "<group>";
+		};
+		09472C332B1375FC00B4A84E /* APIServices */ = {
+			isa = PBXGroup;
+			children = (
+				09472C372B13762900B4A84E /* LoginAPI.swift */,
+			);
+			path = APIServices;
+			sourceTree = "<group>";
+		};
+		09472C342B13760D00B4A84E /* APIManagers */ = {
+			isa = PBXGroup;
+			children = (
+				09472C352B13762000B4A84E /* LoginManager.swift */,
+			);
+			path = APIManagers;
+			sourceTree = "<group>";
+		};
+		09472C392B138B3F00B4A84E /* KeyChain */ = {
+			isa = PBXGroup;
+			children = (
+				09472C242B135BF200B4A84E /* KeyChainManager.swift */,
+				09472C3A2B138B5C00B4A84E /* KeyChainValue.swift */,
+			);
+			path = KeyChain;
 			sourceTree = "<group>";
 		};
 		095D39062AEE7B3C0083CC65 /* Application */ = {
@@ -387,7 +459,7 @@
 				095D39092AEE7B850083CC65 /* Colors */,
 				3164D4892AE21F820054F440 /* LaunchScreen.storyboard */,
 				3164D48C2AE21F820054F440 /* Info.plist */,
-				0924143E2B0CADAA00CF5CF4 /* GitHub-Info.plist */,
+				0964BA3C2B0E36A600A8984B /* Base-Info.plist */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -421,7 +493,8 @@
 		095EBE7B2AFF663B00629F06 /* Global */ = {
 			isa = PBXGroup;
 			children = (
-				0924143A2B0CA51200CF5CF4 /* Network */,
+				09472C392B138B3F00B4A84E /* KeyChain */,
+				09472C262B1371D800B4A84E /* Network */,
 				095EBE802AFF669F00629F06 /* Utils */,
 				095EBE7D2AFF665E00629F06 /* Literals */,
 				095EBE7C2AFF664B00629F06 /* Protocol */,
@@ -801,7 +874,7 @@
 				095D390E2AEE7BE00083CC65 /* NanumSquareEB.ttf in Resources */,
 				095D39102AEE7BE60083CC65 /* NanumSquareR.ttf in Resources */,
 				3164D4882AE21F820054F440 /* Assets.xcassets in Resources */,
-				0924143F2B0CADAA00CF5CF4 /* GitHub-Info.plist in Resources */,
+				0964BA3D2B0E36A600A8984B /* Base-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -849,10 +922,10 @@
 			files = (
 				098294212AF3C1E50011773A /* TermsOfUseVC.swift in Sources */,
 				09ECB32F2AFE0AB2000F3008 /* SettingWriteCell.swift in Sources */,
-				0924143D2B0CA55A00CF5CF4 /* AuthAPI.swift in Sources */,
 				09BB551E2AF0169700A54B1B /* SettingBasicCell.swift in Sources */,
 				3109B2FE2AF52B4700B2EAD2 /* DateFilterView.swift in Sources */,
 				095EBE7A2AFF5DF200629F06 /* BaseVC.swift in Sources */,
+				092430012B146296008DE4FB /* AuthInterceptor.swift in Sources */,
 				31571C242AF3CBC00037A2F2 /* EventVC.swift in Sources */,
 				095EBE7F2AFF668200629F06 /* SettingWrittenProtocol.swift in Sources */,
 				311E98302AF8C24A009BEB3F /* DateSelectBtn.swift in Sources */,
@@ -864,13 +937,18 @@
 				31571C1E2AF3CBC00037A2F2 /* EventTableViewCell.swift in Sources */,
 				09BB55262AF0430200A54B1B /* StringLiterals.swift in Sources */,
 				09ECB3312AFE10D6000F3008 /* SettingWrittenVC.swift in Sources */,
+				09472C232B1323E000B4A84E /* AuthViewModel.swift in Sources */,
 				09ECB3332AFE142F000F3008 /* ArticleResponseDTO.swift in Sources */,
 				09BB55202AF016B200A54B1B /* SettingProfileCell.swift in Sources */,
+				09472C2F2B13737B00B4A84E /* Networking.swift in Sources */,
 				098294182AF341290011773A /* BlockListVC.swift in Sources */,
 				311E982E2AF8B65F009BEB3F /* TechTagView.swift in Sources */,
 				09ECB3352AFE15E7000F3008 /* CommentsResponseDTO.swift in Sources */,
+				09472C3B2B138B5C00B4A84E /* KeyChainValue.swift in Sources */,
 				09BB55192AF0158C00A54B1B /* SettingVC.swift in Sources */,
 				090978FC2AF27364006BD8DE /* ModalTopView.swift in Sources */,
+				09242FFF2B13BC93008DE4FB /* NetworkLogging.swift in Sources */,
+				09472C382B13762900B4A84E /* LoginAPI.swift in Sources */,
 				092414392B0C913500CF5CF4 /* AuthVC.swift in Sources */,
 				090978F32AF0E809006BD8DE /* TabBarItemType.swift in Sources */,
 				311E98402AFB9720009BEB3F /* PeriodView.swift in Sources */,
@@ -880,12 +958,14 @@
 				311E983A2AFB89E5009BEB3F /* DateFilterViewController.swift in Sources */,
 				09BB55242AF02AB600A54B1B /* SettingDataSource.swift in Sources */,
 				3109B30E2AF7F4ED00B2EAD2 /* FilterBtn.swift in Sources */,
+				09472C292B13720C00B4A84E /* KerdyAPI.swift in Sources */,
 				3109B2FA2AF52B2000B2EAD2 /* FilterVC.swift in Sources */,
 				3109B3022AF52B6A00B2EAD2 /* ResetBtn.swift in Sources */,
 				5B370F3C2AF53E1300D0D3DE /* FirstInitialSettingVC.swift in Sources */,
 				098294232AF3C6180011773A /* ExternalURL.swift in Sources */,
 				095EBE822AFF66A300629F06 /* Util.swift in Sources */,
 				31571C202AF3CBC00037A2F2 /* CategoryView.swift in Sources */,
+				09472C252B135BF200B4A84E /* KeyChainManager.swift in Sources */,
 				090978F12AF0E7B5006BD8DE /* ChatVC.swift in Sources */,
 				31571C232AF3CBC00037A2F2 /* EventCollectionViewCell.swift in Sources */,
 				090979022AF29086006BD8DE /* TagCollectionViewFlowLayout.swift in Sources */,
@@ -893,9 +973,12 @@
 				0909790D2AF33D95006BD8DE /* TagModel.swift in Sources */,
 				090978FE2AF28778006BD8DE /* TagVC.swift in Sources */,
 				5B20BA482B00FF8700A80781 /* EducationViewModel.swift in Sources */,
+				09472C322B1374F300B4A84E /* SignInResponseDTO.swift in Sources */,
 				3164D47F2AE21F810054F440 /* AppDelegate.swift in Sources */,
 				090979042AF29121006BD8DE /* TagCell.swift in Sources */,
+				09472C2D2B13735C00B4A84E /* NetworkError.swift in Sources */,
 				5B20BA4A2B0109DC00A80781 /* ClubViewModel.swift in Sources */,
+				09472C152B131D4700B4A84E /* BaseInfoManager.swift in Sources */,
 				090979002AF287E0006BD8DE /* NavigationBarView.swift in Sources */,
 				3164D4812AE21F810054F440 /* SceneDelegate.swift in Sources */,
 				09BB55282AF0543100A54B1B /* ProfileResponseDTO.swift in Sources */,
@@ -905,6 +988,7 @@
 				0982941E2AF35E660011773A /* BlockListModel.swift in Sources */,
 				090978FA2AF272D2006BD8DE /* NotificationVC.swift in Sources */,
 				31571C212AF3CBC00037A2F2 /* ItemCountView.swift in Sources */,
+				09472C362B13762000B4A84E /* LoginManager.swift in Sources */,
 				31571C222AF3CBC00037A2F2 /* TagView.swift in Sources */,
 				3109B2FC2AF52B3800B2EAD2 /* TagFilterView.swift in Sources */,
 				3109B3002AF52B5600B2EAD2 /* ProgressFilterView.swift in Sources */,
