@@ -100,4 +100,3 @@ extension BlockListCell {
         userID.text = data.userId
     }
 }
-

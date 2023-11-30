@@ -106,7 +106,7 @@ extension BlockListVC {
     
     private func setDataSource() {
         
-        let cellRegisteration = UICollectionView.CellRegistration<BlockListCell, BlockListModel> { cell, indexPath, item in
+        let cellRegisteration = UICollectionView.CellRegistration<BlockListCell, BlockListModel> { cell, _, item in
             cell.configureCell(to: item)
         }
         
