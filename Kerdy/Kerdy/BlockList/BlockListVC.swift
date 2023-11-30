@@ -19,7 +19,7 @@ final class BlockListVC: UIViewController {
     }
     
     typealias DataSource = UICollectionViewDiffableDataSource<Section, BlockListModel>
-    typealias SnapShot = NSDiffableDataSourceSnapshot<Section,BlockListModel>
+    typealias SnapShot = NSDiffableDataSourceSnapshot<Section, BlockListModel>
     
     private var dataSource: DataSource?
     private var dummyData: [BlockListModel] = BlockListModel.dummy()
@@ -108,7 +108,7 @@ extension BlockListVC {
     
     private func setDataSource() {
         
-        let cellRegisteration = UICollectionView.CellRegistration<BlockListCell, BlockListModel> { cell, indexPath, item in
+        let cellRegisteration = UICollectionView.CellRegistration<BlockListCell, BlockListModel> { cell, _, item in
             cell.configureCell(to: item)
         }
         
