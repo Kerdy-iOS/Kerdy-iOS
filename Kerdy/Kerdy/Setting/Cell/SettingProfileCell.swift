@@ -9,13 +9,22 @@ import UIKit
 
 import SnapKit
 import Core
+import Kingfisher
 
 import RxCocoa
+import RxSwift
+
+protocol DidSettingButtonTap: AnyObject {
+    
+    func articleButtonDidTap()
+    func commentsButtonDidTap()
+    
+}
 
 final class SettingProfileCell: UICollectionViewCell {
     
     // MARK: - Properties
-        
+    
     private struct Const {
         static let cornerRadius: CGFloat = 65/2
         static let idFontSize: CGFloat = 16
@@ -25,12 +34,16 @@ final class SettingProfileCell: UICollectionViewCell {
         static let spacing: CGFloat = 4
     }
     
+    weak var delegate: DidSettingButtonTap?
+    private var disposeBag = DisposeBag()
+        
     // MARK: - UI Components
     
     private let profileButton: UIButton = {
         let button = UIButton()
         button.makeCornerRound(radius: Const.cornerRadius)
-        button.backgroundColor = .kerdyMain
+        button.makeBorder(width: 0.5, color: .kerdyGray01)
+        button.backgroundColor = .clear
         button.tintColor = .clear
         return button
     }()
@@ -78,11 +91,17 @@ final class SettingProfileCell: UICollectionViewCell {
     
     // MARK: - Initialize
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
         setLayout()
         setUI()
+        setupButtonTapHandlers()
     }
     
     required init?(coder: NSCoder) {
@@ -137,30 +156,32 @@ extension SettingProfileCell {
         self.backgroundColor = .clear
         
     }
-    
 }
 
 // MARK: - Methods
 
 extension SettingProfileCell {
     
-    func configureData(to data: ProfileResponseDTO) {
+    func configureData(to data: MemberProfileResponseDTO) {
         
-        userId.text = data.id
-        userEmail.text = data.email
-        profileButton.setImage(data.image, for: .normal)
+        userId.text = data.name ?? "KERDY"
+        userEmail.text = data.githubURL
+        profileButton.kf.setImage(with: URL(string: data.imageURL), for: .normal)
     }
     
-    func editProfileButtonDidTap() -> Signal<Void> {
-        print("tapped")
-        return profileButton.rx.tap.asSignal()
-    }
-    
-    func articleButtonDidTap() -> Signal<Void> {
-        return article.rx.tap.asSignal()
-    }
-    
-    func commentsButtonDidTap() -> Signal<Void> {
-        return comments.rx.tap.asSignal()
+    func setupButtonTapHandlers() {
+        article.rx.tap
+            .asSignal()
+            .emit(with: self, onNext: { owner, _ in
+                owner.delegate?.articleButtonDidTap()
+            })
+            .disposed(by: disposeBag)
+
+        comments.rx.tap
+            .asSignal()
+            .emit(with: self, onNext: { owner, _ in
+                owner.delegate?.commentsButtonDidTap()
+            })
+            .disposed(by: disposeBag)
     }
 }
