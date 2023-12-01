@@ -35,7 +35,7 @@ extension TabBarVC {
         tabs = [MyCardVC(),
                 UINavigationController(rootViewController: EventVC()),
                 ChatVC(),
-                SettingVC()
+                SettingVC(viewModel: SettingViewModel(settingManager: SettingManager.shared))
 //                UINavigationController(rootViewController: FirstInitialSettingVC()) //테스트 위해 잠시 추가
         ]
         

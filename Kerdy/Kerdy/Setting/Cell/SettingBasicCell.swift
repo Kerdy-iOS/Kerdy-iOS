@@ -122,7 +122,7 @@ extension SettingBasicCell {
         configureCell()
         
         if let handler = configurationHandlers[index] {
-                handler()
-            }
+            handler()
+        }
     }
 }
