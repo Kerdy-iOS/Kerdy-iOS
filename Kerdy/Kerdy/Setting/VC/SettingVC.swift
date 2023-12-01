@@ -6,7 +6,10 @@
 //
 
 import UIKit
+
 import RxSwift
+import RxCocoa
+import RxDataSources
 
 final class SettingVC: BaseVC {
     
@@ -14,14 +17,19 @@ final class SettingVC: BaseVC {
     
     private lazy var settingDataSource = SettingDataSource(collectionView: collectionView)
     
-    private let viewModel =  SettingViewModel()
-    private let disposeBag = DisposeBag()
+    private let viewModel: SettingViewModel
+    private var disposeBag = DisposeBag()
     
     // MARK: - UI Components
     
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
     
     // MARK: - Init
+    
+    init(viewModel: SettingViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
     // MAKR: - Life Cycle
     
@@ -33,11 +41,15 @@ final class SettingVC: BaseVC {
         bind()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 }
 
 // MARK: - Setting
 
-extension SettingVC {
+extension SettingVC: DidSettingButtonTap {
     
     private func setLayout() {
         
@@ -52,74 +64,45 @@ extension SettingVC {
         collectionView.dataSource = settingDataSource.dataSource
         collectionView.bounces = false
         collectionView.showsVerticalScrollIndicator = false
+        
+        settingDataSource.delegate = self
     }
     
     private func bind() {
         
-        let input = SettingViewModel.Input(viewWillAppear: rx.viewWillAppear)
+        let input = SettingViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver())
         let output = viewModel.transform(input: input)
         
-        output.settingList.asDriver(onErrorJustReturn: [])
+        output.settingList
+            .asDriver()
             .drive(with: self) { owner, profileList in
-                owner.settingDataSource.updateSnapshot(profile: profileList)
+                owner.settingDataSource.updateSnapshot(profile: [profileList])
             }
             .disposed(by: disposeBag)
         
         collectionView.rx.itemSelected
             .filter { $0.section == 1 }
             .bind { indexpath in
-                var vc: UIViewController
-                switch indexpath.item {
-                case 0: vc = NotificationVC()
-                case 1: vc = BlockListVC()
-                case 2: vc = TermsOfUseVC()
-                default:
-                    return
-                }
+                let viewControllers: [UIViewController.Type] = [NotificationVC.self,
+                                                                BlockListVC.self,
+                                                                TermsOfUseVC.self]
+                
+                guard indexpath.item < viewControllers.count else { return }
+                let vc = viewControllers[indexpath.item].init()
                 self.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
-        
-        collectionView.rx.itemSelected
-            .filter { $0.section == 0 }
-            .flatMap { [weak self] indexPath -> Observable<SettingProfileCell> in
-                dump(indexPath)
-                guard let cell = self?.collectionView.cellForItem(at: indexPath) as? SettingProfileCell else { return .empty() }
-                return .just(cell)
-            }
-            .debug()
-            .bind(with: self) { owner, cell in
-                owner.bind(cell: cell)
-            }
-            .disposed(by: disposeBag)
-
-                
     }
     
-    private func bind(cell: SettingProfileCell) {
+    func articleButtonDidTap() {
         
-        let input = SettingViewModel.CellInput(tapProfileButton: cell.editProfileButtonDidTap(),
-                                               tapArticleButton: cell.articleButtonDidTap(),
-                                               tapCommentsButton: cell.commentsButtonDidTap())
-        let output = viewModel.transform(input: input)
+        let article = SettingWrittenVC(type: .article)
+        self.navigationController?.pushViewController(article, animated: true)
+    }
+    
+    func commentsButtonDidTap() {
         
-        output.didProfileButtonTapped
-            .emit()
-            .disposed(by: disposeBag)
-        
-        output.didArticleButtonTapped
-            .emit { _ in
-                let article = SettingWrittenVC(type: .article)
-                self.navigationController?.pushViewController(article, animated: true)
-            }
-            .disposed(by: disposeBag)
-        
-        output.didCommentsButtonTapped
-            .emit { _ in
-                let comments = SettingWrittenVC(type: .comment)
-                self.navigationController?.pushViewController(comments, animated: true)
-            }
-            .disposed(by: disposeBag)
-        
+        let comments = SettingWrittenVC(type: .comment)
+        self.navigationController?.pushViewController(comments, animated: true)
     }
 }
