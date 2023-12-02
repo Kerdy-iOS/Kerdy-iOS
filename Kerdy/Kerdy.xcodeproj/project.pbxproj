@@ -80,6 +80,9 @@
 		5B20BA482B00FF8700A80781 /* EducationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B20BA472B00FF8700A80781 /* EducationViewModel.swift */; };
 		5B20BA4A2B0109DC00A80781 /* ClubViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B20BA492B0109DC00A80781 /* ClubViewModel.swift */; };
 		5B216AFA2AF671CF00C028A0 /* FourthInitialSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B216AF92AF671CF00C028A0 /* FourthInitialSettingVC.swift */; };
+		5B32AC192B0F7DCC00512DC5 /* ActivityAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B32AC182B0F7DCC00512DC5 /* ActivityAPI.swift */; };
+		5B32AC1B2B0F7DD900512DC5 /* ActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B32AC1A2B0F7DD900512DC5 /* ActivityModel.swift */; };
+		5B32AC1E2B0F7F8100512DC5 /* InitialSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B32AC1D2B0F7F8100512DC5 /* InitialSettingCell.swift */; };
 		5B370F3C2AF53E1300D0D3DE /* FirstInitialSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B370F3B2AF53E1300D0D3DE /* FirstInitialSettingVC.swift */; };
 		5B370F402AF53F1E00D0D3DE /* SecondInitialSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B370F3F2AF53F1E00D0D3DE /* SecondInitialSettingVC.swift */; };
 		5B370F422AF546CE00D0D3DE /* ThirdInitialSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B370F412AF546CE00D0D3DE /* ThirdInitialSettingVC.swift */; };
@@ -176,6 +179,9 @@
 		5B20BA472B00FF8700A80781 /* EducationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationViewModel.swift; sourceTree = "<group>"; };
 		5B20BA492B0109DC00A80781 /* ClubViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubViewModel.swift; sourceTree = "<group>"; };
 		5B216AF92AF671CF00C028A0 /* FourthInitialSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthInitialSettingVC.swift; sourceTree = "<group>"; };
+		5B32AC182B0F7DCC00512DC5 /* ActivityAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityAPI.swift; sourceTree = "<group>"; };
+		5B32AC1A2B0F7DD900512DC5 /* ActivityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityModel.swift; sourceTree = "<group>"; };
+		5B32AC1D2B0F7F8100512DC5 /* InitialSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSettingCell.swift; sourceTree = "<group>"; };
 		5B370F3B2AF53E1300D0D3DE /* FirstInitialSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstInitialSettingVC.swift; sourceTree = "<group>"; };
 		5B370F3F2AF53F1E00D0D3DE /* SecondInitialSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondInitialSettingVC.swift; sourceTree = "<group>"; };
 		5B370F412AF546CE00D0D3DE /* ThirdInitialSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdInitialSettingVC.swift; sourceTree = "<group>"; };
@@ -610,9 +616,28 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5B32AC172B0F7DAA00512DC5 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				5B32AC182B0F7DCC00512DC5 /* ActivityAPI.swift */,
+				5B32AC1A2B0F7DD900512DC5 /* ActivityModel.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		5B32AC1C2B0F7F5600512DC5 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5B32AC1D2B0F7F8100512DC5 /* InitialSettingCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		5B370F3A2AF53DD800D0D3DE /* InitialSetting */ = {
 			isa = PBXGroup;
 			children = (
+				5B32AC1C2B0F7F5600512DC5 /* Cell */,
+				5B32AC172B0F7DAA00512DC5 /* Network */,
 				5BF17AF82AF7C8CC00A03CEA /* ViewModel */,
 				5BF17AF42AF7C41800A03CEA /* VC */,
 			);
@@ -823,10 +848,12 @@
 				311E98302AF8C24A009BEB3F /* DateSelectBtn.swift in Sources */,
 				5B370F402AF53F1E00D0D3DE /* SecondInitialSettingVC.swift in Sources */,
 				5B370F422AF546CE00D0D3DE /* ThirdInitialSettingVC.swift in Sources */,
+				5B32AC1B2B0F7DD900512DC5 /* ActivityModel.swift in Sources */,
 				5B216AFA2AF671CF00C028A0 /* FourthInitialSettingVC.swift in Sources */,
 				090978E82AF0E6C0006BD8DE /* TabBarVC.swift in Sources */,
 				5BF17B3A2AF7D17600A03CEA /* CategoryViewModel.swift in Sources */,
 				31571C1E2AF3CBC00037A2F2 /* EventTableViewCell.swift in Sources */,
+				5B32AC1E2B0F7F8100512DC5 /* InitialSettingCell.swift in Sources */,
 				09BB55262AF0430200A54B1B /* StringLiterals.swift in Sources */,
 				09ECB3312AFE10D6000F3008 /* SettingWrittenVC.swift in Sources */,
 				09ECB3332AFE142F000F3008 /* ArticleResponseDTO.swift in Sources */,
@@ -868,6 +895,7 @@
 				31571C1F2AF3CBC00037A2F2 /* FilterSettingBtn.swift in Sources */,
 				0982941E2AF35E660011773A /* BlockListModel.swift in Sources */,
 				090978FA2AF272D2006BD8DE /* NotificationVC.swift in Sources */,
+				5B32AC192B0F7DCC00512DC5 /* ActivityAPI.swift in Sources */,
 				31571C212AF3CBC00037A2F2 /* ItemCountView.swift in Sources */,
 				31571C222AF3CBC00037A2F2 /* TagView.swift in Sources */,
 				3109B2FC2AF52B3800B2EAD2 /* TagFilterView.swift in Sources */,

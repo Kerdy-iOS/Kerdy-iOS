@@ -1,8 +1,8 @@
 //
-//  CategoryBtn.swift
-//  Kerdy
+//  File.swift
+//  
 //
-//  Created by 최다경 on 11/9/23.
+//  Created by 최다경 on 11/23/23.
 //
 
 import UIKit
@@ -20,6 +20,3 @@ public class InitialSettingSelectBtn: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-
-
