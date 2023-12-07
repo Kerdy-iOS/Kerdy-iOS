@@ -12,7 +12,7 @@ import RxSwift
 
 protocol SettingManagerType {
     
-    func getMemger(id: Int) -> Single<MemberProfileResponseDTO>
+    func getMember(id: Int) -> Single<MemberProfileResponseDTO>
 }
 
 final class SettingManager: Networking, SettingManagerType {
@@ -27,7 +27,7 @@ final class SettingManager: Networking, SettingManagerType {
     
     private init () {}
     
-    func getMemger(id: Int) -> Single<MemberProfileResponseDTO> {
+    func getMember(id: Int) -> Single<MemberProfileResponseDTO> {
         return provider
             .request(.profile(id: id))
             .map(MemberProfileResponseDTO.self)

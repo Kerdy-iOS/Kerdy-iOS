@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct SettingBasicModel: Hashable {
+struct SettingBasicModel: Equatable {
     
     let title: String
     var image: UIImage?
@@ -21,13 +21,13 @@ struct SettingBasicModel: Hashable {
     }
     
     static let basicWithIcon: [SettingBasicModel]  = [SettingBasicModel(title: "알림설정", image: .arrowIcon),
-                                               SettingBasicModel(title: "차단 목록", image: .arrowIcon),
-                                               SettingBasicModel(title: "이용 약관", image: .arrowIcon)
-                                               
+                                                      SettingBasicModel(title: "차단 목록", image: .arrowIcon),
+                                                      SettingBasicModel(title: "이용 약관", image: .arrowIcon)
+                                                      
     ]
     
     static let basic: [SettingBasicModel] = [SettingBasicModel(title: "버전정보", version: version ?? "0.0"),
-                                      SettingBasicModel(title: "계정 삭제"),
-                                      SettingBasicModel(title: "로그아웃")
+                                             SettingBasicModel(title: "계정 삭제"),
+                                             SettingBasicModel(title: "로그아웃")
     ]
 }

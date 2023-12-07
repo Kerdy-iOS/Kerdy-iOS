@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - MemberProfileResponseDTO
 
-struct MemberProfileResponseDTO: Decodable, Hashable {
+struct MemberProfileResponseDTO: Decodable, Equatable {
 
     var uuid = UUID()
     let id: Int
@@ -36,7 +36,7 @@ struct MemberProfileResponseDTO: Decodable, Hashable {
 
 // MARK: - Activity
 
-struct Activity: Codable, Hashable {
+struct Activity: Codable, Equatable {
     let id: Int
     let name, activityType: String
 }
