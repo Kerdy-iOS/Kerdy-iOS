@@ -8,21 +8,25 @@
 import UIKit
 
 import RxSwift
-import RxCocoa
 import RxDataSources
 
 final class SettingVC: BaseVC {
     
-    // MARK: - Properties
+    // MARK: - Property
     
-    private lazy var settingDataSource = SettingDataSource(collectionView: collectionView)
+    typealias DataSource = RxCollectionViewSectionedReloadDataSource<SettingSectionItem.Model>
     
+    private var dataSource: DataSource!
     private let viewModel: SettingViewModel
-    private var disposeBag = DisposeBag()
     
     // MARK: - UI Components
     
-    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout())
+        collectionView.bounces = false
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
+    }()
     
     // MARK: - Init
     
@@ -36,20 +40,26 @@ final class SettingVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setRegisteration()
         setLayout()
-        setUI()
+        setDataSource()
         bind()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 
 // MARK: - Setting
 
-extension SettingVC: DidSettingButtonTap {
+extension SettingVC {
+    
+    private func setRegisteration() {
+        
+        collectionView.register(SettingProfileCell.self, forCellWithReuseIdentifier: SettingProfileCell.identifier)
+        collectionView.register(SettingBasicCell.self, forCellWithReuseIdentifier: SettingBasicCell.identifier)
+    }
     
     private func setLayout() {
         
@@ -59,25 +69,13 @@ extension SettingVC: DidSettingButtonTap {
         }
     }
     
-    private func setUI() {
-        
-        collectionView.dataSource = settingDataSource.dataSource
-        collectionView.bounces = false
-        collectionView.showsVerticalScrollIndicator = false
-        
-        settingDataSource.delegate = self
-    }
-    
     private func bind() {
         
         let input = SettingViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver())
         let output = viewModel.transform(input: input)
         
         output.settingList
-            .asDriver()
-            .drive(with: self) { owner, profileList in
-                owner.settingDataSource.updateSnapshot(profile: [profileList])
-            }
+            .drive(collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
         collectionView.rx.itemSelected
@@ -93,16 +91,84 @@ extension SettingVC: DidSettingButtonTap {
             }
             .disposed(by: disposeBag)
     }
+}
+
+// MARK: - DataSource
+
+extension SettingVC {
     
-    func articleButtonDidTap() {
+    func setDataSource() {
         
-        let article = SettingWrittenVC(type: .article)
-        self.navigationController?.pushViewController(article, animated: true)
+        dataSource = DataSource { [weak self] _, collectionView, indexPath, item in
+            guard let self else { return UICollectionViewCell() }
+            switch item {
+            case let .profile(item):
+                guard let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: SettingProfileCell.identifier,
+                    for: indexPath
+                ) as? SettingProfileCell else { return UICollectionViewCell() }
+                cell.configureData(to: item)
+                self.configureButton(cell: cell)
+                return cell
+                
+            case let .basic(item):
+                guard let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: SettingBasicCell.identifier,
+                    for: indexPath
+                ) as? SettingBasicCell else { return UICollectionViewCell() }
+                cell.configureData(with: item, at: indexPath.item)
+                return cell
+            }
+        }
     }
     
-    func commentsButtonDidTap() {
+    func layout() -> UICollectionViewCompositionalLayout {
         
-        let comments = SettingWrittenVC(type: .comment)
-        self.navigationController?.pushViewController(comments, animated: true)
+        return UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
+            guard self != nil else { return nil }
+            guard let section = SettingSectionItem.Section(rawValue: sectionIndex) else { return nil }
+            switch section {
+            case .profile:
+                let itemGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                                           heightDimension: .absolute(195))
+                let item = NSCollectionLayoutItem(layoutSize: itemGroupSize)
+                
+                let group = NSCollectionLayoutGroup.vertical(layoutSize: itemGroupSize,
+                                                             subitem: item,
+                                                             count: 1)
+                let section = NSCollectionLayoutSection(group: group)
+                section.contentInsets = .init(top: 0, leading: 0, bottom: 14, trailing: 0)
+                return section
+                
+            case .basic:
+                var config = UICollectionLayoutListConfiguration(appearance: .plain)
+                config.showsSeparators = false
+                let section = NSCollectionLayoutSection.list(using: config,
+                                                             layoutEnvironment: layoutEnvironment)
+                return section
+                
+            }
+        }
+    }
+}
+
+extension SettingVC {
+    
+    func configureButton(cell: SettingProfileCell) {
+        cell.rx.article
+            .asDriver()
+            .drive(with: self) { owner, _ in
+                let nextVC = SettingWrittenVC(type: .article)
+                owner.navigationController?.pushViewController(nextVC, animated: true)
+            }
+            .disposed(by: cell.disposeBag)
+        
+        cell.rx.comment
+            .asDriver()
+            .drive(with: self) { owner, _ in
+                let nextVC = SettingWrittenVC(type: .comment)
+                owner.navigationController?.pushViewController(nextVC, animated: true)
+            }
+            .disposed(by: cell.disposeBag)
     }
 }
