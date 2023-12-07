@@ -51,10 +51,12 @@
 		09A3E1812B18E525004BD432 /* SettingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A3E1802B18E525004BD432 /* SettingAPI.swift */; };
 		09A3E1832B18EA28004BD432 /* MemberProfileResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A3E1822B18EA28004BD432 /* MemberProfileResponseDTO.swift */; };
 		09A3E1862B18EFEF004BD432 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 09A3E1852B18EFEF004BD432 /* Kingfisher */; };
+		09A66C1C2B19D7AF0035C4C7 /* SettingSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A66C1B2B19D7AF0035C4C7 /* SettingSectionModel.swift */; };
+		09A66C1F2B19D8250035C4C7 /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 09A66C1E2B19D8250035C4C7 /* Differentiator */; };
+		09A66C212B19D8250035C4C7 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 09A66C202B19D8250035C4C7 /* RxDataSources */; };
 		09BB55192AF0158C00A54B1B /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB55182AF0158C00A54B1B /* SettingVC.swift */; };
 		09BB551E2AF0169700A54B1B /* SettingBasicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB551D2AF0169700A54B1B /* SettingBasicCell.swift */; };
 		09BB55202AF016B200A54B1B /* SettingProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB551F2AF016B200A54B1B /* SettingProfileCell.swift */; };
-		09BB55242AF02AB600A54B1B /* SettingDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB55232AF02AB600A54B1B /* SettingDataSource.swift */; };
 		09BB55262AF0430200A54B1B /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB55252AF0430200A54B1B /* StringLiterals.swift */; };
 		09BB552A2AF0545400A54B1B /* SettingBasicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB55292AF0545400A54B1B /* SettingBasicModel.swift */; };
 		09ECB32F2AFE0AB2000F3008 /* SettingWriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ECB32E2AFE0AB2000F3008 /* SettingWriteCell.swift */; };
@@ -167,10 +169,10 @@
 		09A3E17E2B18E500004BD432 /* SettingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingManager.swift; sourceTree = "<group>"; };
 		09A3E1802B18E525004BD432 /* SettingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAPI.swift; sourceTree = "<group>"; };
 		09A3E1822B18EA28004BD432 /* MemberProfileResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberProfileResponseDTO.swift; sourceTree = "<group>"; };
+		09A66C1B2B19D7AF0035C4C7 /* SettingSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSectionModel.swift; sourceTree = "<group>"; };
 		09BB55182AF0158C00A54B1B /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		09BB551D2AF0169700A54B1B /* SettingBasicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingBasicCell.swift; sourceTree = "<group>"; };
 		09BB551F2AF016B200A54B1B /* SettingProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingProfileCell.swift; sourceTree = "<group>"; };
-		09BB55232AF02AB600A54B1B /* SettingDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDataSource.swift; sourceTree = "<group>"; };
 		09BB55252AF0430200A54B1B /* StringLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLiterals.swift; sourceTree = "<group>"; };
 		09BB55292AF0545400A54B1B /* SettingBasicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingBasicModel.swift; sourceTree = "<group>"; };
 		09ECB32E2AFE0AB2000F3008 /* SettingWriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingWriteCell.swift; sourceTree = "<group>"; };
@@ -229,10 +231,12 @@
 				3162F0752AEA775E001B1D32 /* RxSwift in Frameworks */,
 				3164D4B72AE223400054F440 /* SnapKit in Frameworks */,
 				311620632AE252E600E26420 /* Core in Frameworks */,
+				09A66C212B19D8250035C4C7 /* RxDataSources in Frameworks */,
 				3162F0732AEA775E001B1D32 /* RxCocoa in Frameworks */,
 				09A3E1862B18EFEF004BD432 /* Kingfisher in Frameworks */,
 				3164D4B32AE223180054F440 /* RxMoya in Frameworks */,
 				311E983D2AFB8A91009BEB3F /* FSCalendar in Frameworks */,
+				09A66C1F2B19D8250035C4C7 /* Differentiator in Frameworks */,
 				3164D4B12AE223180054F440 /* Moya in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -300,7 +304,7 @@
 			isa = PBXGroup;
 			children = (
 				09BB55292AF0545400A54B1B /* SettingBasicModel.swift */,
-				095EBE832AFF6AE900629F06 /* SettingViewModel.swift */,
+				09A66C1B2B19D7AF0035C4C7 /* SettingSectionModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -308,7 +312,7 @@
 		090978F72AF27288006BD8DE /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				09BB55232AF02AB600A54B1B /* SettingDataSource.swift */,
+				095EBE832AFF6AE900629F06 /* SettingViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -837,6 +841,8 @@
 				3162F0742AEA775E001B1D32 /* RxSwift */,
 				311E983C2AFB8A91009BEB3F /* FSCalendar */,
 				09A3E1852B18EFEF004BD432 /* Kingfisher */,
+				09A66C1E2B19D8250035C4C7 /* Differentiator */,
+				09A66C202B19D8250035C4C7 /* RxDataSources */,
 			);
 			productName = Kerdy;
 			productReference = 3164D47B2AE21F810054F440 /* Kerdy.app */;
@@ -917,6 +923,7 @@
 				3162F0712AEA775E001B1D32 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				311E983B2AFB8A91009BEB3F /* XCRemoteSwiftPackageReference "FSCalendar" */,
 				09A3E1842B18EFEF004BD432 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				09A66C1D2B19D8250035C4C7 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 			);
 			productRefGroup = 3164D47C2AE21F810054F440 /* Products */;
 			projectDirPath = "";
@@ -994,6 +1001,7 @@
 				3109B2FE2AF52B4700B2EAD2 /* DateFilterView.swift in Sources */,
 				095EBE7A2AFF5DF200629F06 /* BaseVC.swift in Sources */,
 				092430012B146296008DE4FB /* AuthInterceptor.swift in Sources */,
+				09A66C1C2B19D7AF0035C4C7 /* SettingSectionModel.swift in Sources */,
 				31571C242AF3CBC00037A2F2 /* EventVC.swift in Sources */,
 				095EBE7F2AFF668200629F06 /* SettingWrittenProtocol.swift in Sources */,
 				311E98302AF8C24A009BEB3F /* DateSelectBtn.swift in Sources */,
@@ -1026,7 +1034,6 @@
 				3109B3082AF7C21500B2EAD2 /* Tag.swift in Sources */,
 				3109B30C2AF7F49A00B2EAD2 /* PrortudingBtn.swift in Sources */,
 				311E983A2AFB89E5009BEB3F /* DateFilterViewController.swift in Sources */,
-				09BB55242AF02AB600A54B1B /* SettingDataSource.swift in Sources */,
 				3109B30E2AF7F4ED00B2EAD2 /* FilterBtn.swift in Sources */,
 				09472C292B13720C00B4A84E /* KerdyAPI.swift in Sources */,
 				3109B2FA2AF52B2000B2EAD2 /* FilterVC.swift in Sources */,
@@ -1424,6 +1431,14 @@
 				minimumVersion = 7.10.0;
 			};
 		};
+		09A66C1D2B19D8250035C4C7 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.2;
+			};
+		};
 		311E983B2AFB8A91009BEB3F /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
@@ -1463,6 +1478,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 09A3E1842B18EFEF004BD432 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		09A66C1E2B19D8250035C4C7 /* Differentiator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09A66C1D2B19D8250035C4C7 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = Differentiator;
+		};
+		09A66C202B19D8250035C4C7 /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09A66C1D2B19D8250035C4C7 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
 		};
 		311620622AE252E600E26420 /* Core */ = {
 			isa = XCSwiftPackageProductDependency;
