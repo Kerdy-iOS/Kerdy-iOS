@@ -19,77 +19,55 @@ final class SettingViewModel: ViewModelType {
     
     var disposeBag = DisposeBag()
     private let settingManager: SettingManager
-    private let id = Int(KeyChainManager.read(forkey: .memberId) ?? "0") 
-    private let profileList = BehaviorRelay<MemberProfileResponseDTO>(value: .empty())
+    private let id = Int(KeyChainManager.read(forkey: .memberId) ?? "0")
+    private let basicItems = SettingBasicModel.basicWithIcon + SettingBasicModel.basic
+    private let settingList = BehaviorRelay<([SettingSectionItem.Model])>(value: [])
     
     // MARK: - Init
     
     init(settingManager: SettingManager) {
         self.settingManager = settingManager
     }
-
+    
     struct Input {
+        
         let viewWillAppear: Driver<Bool>
     }
     
-//    struct CellInput {
-//        let tapArticleButton: Signal<Void>
-//        let tapCommentsButton: Signal<Void>
-//    }
-    
     struct Output {
-        let settingList: BehaviorRelay<MemberProfileResponseDTO>
+        
+        let settingList: Driver<[SettingSectionItem.Model]>
     }
-//    
-//    struct CellOutput {
-//        let didArticleButtonTapped: Signal<Void>
-//        let didCommentsButtonTapped: Signal<Void>
-//    }
     
     func transform(input: Input) -> Output {
         
-        let output = Output(settingList: profileList)
+        let output = Output(settingList: settingList.asDriver())
         
         input.viewWillAppear
-            .asDriver()
+            .asDriver(onErrorDriveWith: .never())
             .drive(with: self, onNext: { owner, _ in
                 guard let id = self.id else { return }
                 owner.getMember(id: id)
             })
             .disposed(by: disposeBag)
-
+        
         return output
     }
-//    
-//    func transform(input: CellInput) -> CellOutput {
-//        let didArticleButtonTapped = PublishRelay<Void>()
-//        let didCommentsButtonTapped = PublishRelay<Void>()
-//        
-//        let output = CellOutput(didArticleButtonTapped: didArticleButtonTapped.asSignal(),
-//                                didCommentsButtonTapped: didCommentsButtonTapped.asSignal())
-//        
-//        input.tapArticleButton
-//            .asObservable()
-//        .take(1)
-//        .bind(to: didCommentsButtonTapped)
-//            .disposed(by: disposeBag)
-//        
-//        input.tapCommentsButton
-//            .asObservable()
-//            .take(1)
-//            .bind(to: didCommentsButtonTapped)
-//            .disposed(by: disposeBag)
-//        
-//        return output
-//    }
 }
 
 extension SettingViewModel {
     
     func getMember(id: Int) {
-        settingManager.getMemger(id: id)
+        settingManager.getMember(id: id)
             .subscribe(onSuccess: { response in
-               self.profileList.accept(response)
+                
+                let profile = SettingSectionItem.Item.profile(response)
+                let basic = self.basicItems.map { SettingSectionItem.Item.basic($0)}
+                let profileSection = SettingSectionItem.Model(model: .profile, items: [profile])
+                let basicSection = SettingSectionItem.Model(model: .basic, items: basic)
+                
+                self.settingList.accept([profileSection, basicSection])
+                
             }, onFailure: { error in
                 if let moyaError = error as? MoyaError {
                     if let statusCode = moyaError.response?.statusCode {
@@ -104,6 +82,5 @@ extension SettingViewModel {
                 }
             })
             .disposed(by: disposeBag)
-        
     }
 }
