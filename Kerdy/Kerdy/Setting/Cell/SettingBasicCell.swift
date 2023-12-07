@@ -41,6 +41,11 @@ final class SettingBasicCell: UICollectionViewCell {
     
     // MARK: - Initialize
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        titleLabel.textColor = .kerdyBlack
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         

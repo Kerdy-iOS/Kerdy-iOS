@@ -7,19 +7,12 @@
 
 import UIKit
 
-import SnapKit
 import Core
 import Kingfisher
+import SnapKit
 
 import RxCocoa
 import RxSwift
-
-protocol DidSettingButtonTap: AnyObject {
-    
-    func articleButtonDidTap()
-    func commentsButtonDidTap()
-    
-}
 
 final class SettingProfileCell: UICollectionViewCell {
     
@@ -34,9 +27,8 @@ final class SettingProfileCell: UICollectionViewCell {
         static let spacing: CGFloat = 4
     }
     
-    weak var delegate: DidSettingButtonTap?
-    private var disposeBag = DisposeBag()
-        
+    var disposeBag = DisposeBag()
+    
     // MARK: - UI Components
     
     private let profileButton: UIButton = {
@@ -71,13 +63,13 @@ final class SettingProfileCell: UICollectionViewCell {
         return stackView
     }()
     
-    private lazy var article: UIButton = {
+    fileprivate lazy var article: UIButton = {
         let button = UIButton()
         button.configuration = UIButton.kerdyStyle(to: Strings.article)
         return button
     }()
     
-    private lazy var comments: UIButton = {
+    fileprivate lazy var comments: UIButton = {
         let button = UIButton()
         button.configuration = UIButton.kerdyStyle(to: Strings.comments)
         return button
@@ -93,7 +85,7 @@ final class SettingProfileCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        disposeBag = DisposeBag()
+        self.disposeBag = DisposeBag()
     }
     
     override init(frame: CGRect) {
@@ -101,7 +93,6 @@ final class SettingProfileCell: UICollectionViewCell {
         
         setLayout()
         setUI()
-        setupButtonTapHandlers()
     }
     
     required init?(coder: NSCoder) {
@@ -168,20 +159,17 @@ extension SettingProfileCell {
         userEmail.text = data.githubURL
         profileButton.kf.setImage(with: URL(string: data.imageURL), for: .normal)
     }
-    
-    func setupButtonTapHandlers() {
-        article.rx.tap
-            .asSignal()
-            .emit(with: self, onNext: { owner, _ in
-                owner.delegate?.articleButtonDidTap()
-            })
-            .disposed(by: disposeBag)
+}
 
-        comments.rx.tap
-            .asSignal()
-            .emit(with: self, onNext: { owner, _ in
-                owner.delegate?.commentsButtonDidTap()
-            })
-            .disposed(by: disposeBag)
+// MARK: - Reactive extension
+
+extension Reactive where Base: SettingProfileCell {
+    
+    var article: ControlEvent<Void> {
+        base.article.rx.tap
+    }
+    
+    var comment: ControlEvent<Void> {
+        base.comments.rx.tap
     }
 }
