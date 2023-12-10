@@ -27,12 +27,12 @@ final class BlockListVC: UIViewController {
     
     // MAKR: - UI Property
     
-    private let modalTopView: ModalTopView = {
-        let view = ModalTopView()
+    private let navigationBar: NavigationBarView = {
+        let view = NavigationBarView()
         view.configureUI(to: Strings.blockTitle)
         return view
     }()
-    
+
     private let subTitleLabel: UILabel = {
         let label = UILabel()
         label.text = Strings.blockSubTitle
@@ -67,14 +67,14 @@ private extension BlockListVC {
     
     func setLayout() {
         
-        view.addSubview(modalTopView)
-        modalTopView.snp.makeConstraints {
+        view.addSubview(navigationBar)
+        navigationBar.snp.makeConstraints {
             $0.top.horizontalEdges.equalTo(safeArea)
         }
         
         view.addSubview(subTitleLabel)
         subTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(modalTopView.snp.bottom).offset(8)
+            $0.top.equalTo(navigationBar.snp.bottom).offset(8)
             $0.centerX.equalTo(safeArea)
         }
         
@@ -89,19 +89,17 @@ private extension BlockListVC {
     
     func setUI() {
         view.backgroundColor = .kerdyBackground
-        modalTopView.delegate = self
+        navigationBar.delegate = self
     }
 }
 
-// MARK: - Protocol
+// MARK: - Navi BackButton Delegate
 
-extension BlockListVC: ButtonActionProtocol {
+extension BlockListVC: BackButtonActionProtocol {
     
-    func cancelButtonTapped() {
-        dump("tapped")
-        self.dismiss(animated: true)
+    func backButtonTapped() {
+        self.navigationController?.popViewController(animated: true)
     }
-    
 }
 
 extension BlockListVC {

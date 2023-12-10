@@ -7,19 +7,16 @@
 
 import UIKit
 
-import SnapKit
 import Core
+import Kingfisher
+import SnapKit
 
-protocol SettingProfileCellDelegate: AnyObject {
-    
-    func didSelectButton(type: WrittenSections)
-}
+import RxCocoa
+import RxSwift
 
 final class SettingProfileCell: UICollectionViewCell {
     
     // MARK: - Properties
-    
-    var delegate: SettingProfileCellDelegate?
     
     private struct Const {
         static let cornerRadius: CGFloat = 65/2
@@ -30,14 +27,17 @@ final class SettingProfileCell: UICollectionViewCell {
         static let spacing: CGFloat = 4
     }
     
+    var disposeBag = DisposeBag()
+    
     // MARK: - UI Components
     
-    private let profile: UIImageView = {
-        let image = UIImageView()
-        image.makeCornerRound(radius: Const.cornerRadius)
-        image.backgroundColor = .kerdyMain
-        image.tintColor = .clear
-        return image
+    private let profileButton: UIButton = {
+        let button = UIButton()
+        button.makeCornerRound(radius: Const.cornerRadius)
+        button.makeBorder(width: 0.5, color: .kerdyGray01)
+        button.backgroundColor = .clear
+        button.tintColor = .clear
+        return button
     }()
     
     private let userId: UILabel = {
@@ -63,25 +63,15 @@ final class SettingProfileCell: UICollectionViewCell {
         return stackView
     }()
     
-    private lazy var article: UIButton = {
+    fileprivate lazy var article: UIButton = {
         let button = UIButton()
         button.configuration = UIButton.kerdyStyle(to: Strings.article)
-        button.addAction(UIAction(handler: { [weak self] _ in
-            guard let self else { return }
-            self.delegate?.didSelectButton(type: .article)
-            
-        }), for: .touchUpInside)
         return button
     }()
     
-    private lazy var comments: UIButton = {
+    fileprivate lazy var comments: UIButton = {
         let button = UIButton()
         button.configuration = UIButton.kerdyStyle(to: Strings.comments)
-        button.addAction(UIAction(handler: { [weak self] _ in
-            guard let self else { return }
-            self.delegate?.didSelectButton(type: .comment)
-            
-        }), for: .touchUpInside)
         return button
     }()
     
@@ -92,6 +82,11 @@ final class SettingProfileCell: UICollectionViewCell {
     }()
     
     // MARK: - Initialize
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.disposeBag = DisposeBag()
+    }
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -112,8 +107,8 @@ extension SettingProfileCell {
     
     private func setLayout() {
         
-        contentView.addSubview(profile)
-        profile.snp.makeConstraints {
+        contentView.addSubview(profileButton)
+        profileButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(56)
             $0.leading.equalToSuperview().inset(17)
             $0.size.equalTo(65)
@@ -121,8 +116,8 @@ extension SettingProfileCell {
         
         contentView.addSubview(userId)
         userId.snp.makeConstraints {
-            $0.top.equalTo(profile.snp.top).offset(13)
-            $0.leading.equalTo(profile.snp.trailing).offset(12)
+            $0.top.equalTo(profileButton.snp.top).offset(13)
+            $0.leading.equalTo(profileButton.snp.trailing).offset(12)
         }
         
         contentView.addSubview(userEmail)
@@ -133,7 +128,7 @@ extension SettingProfileCell {
         
         contentView.addSubview(hStackView)
         hStackView.snp.makeConstraints {
-            $0.top.equalTo(profile.snp.bottom).offset(24)
+            $0.top.equalTo(profileButton.snp.bottom).offset(24)
             $0.horizontalEdges.equalToSuperview().inset(17)
             $0.height.equalTo(36)
         }
@@ -152,16 +147,29 @@ extension SettingProfileCell {
         self.backgroundColor = .clear
         
     }
-    
 }
 
 // MARK: - Methods
 
 extension SettingProfileCell {
     
-    func configureData(to data: ProfileResponseDTO) {
+    func configureData(to data: MemberProfileResponseDTO) {
         
-        userId.text = data.id
-        userEmail.text = data.email
+        userId.text = data.name ?? "KERDY"
+        userEmail.text = data.githubURL
+        profileButton.kf.setImage(with: URL(string: data.imageURL), for: .normal)
+    }
+}
+
+// MARK: - Reactive extension
+
+extension Reactive where Base: SettingProfileCell {
+    
+    var article: ControlEvent<Void> {
+        base.article.rx.tap
+    }
+    
+    var comment: ControlEvent<Void> {
+        base.comments.rx.tap
     }
 }

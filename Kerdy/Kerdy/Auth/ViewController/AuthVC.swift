@@ -17,7 +17,6 @@ final class AuthVC: BaseVC {
     // MARK: - Properties
     
     private let viewModel: AuthViewModel
-    private var disposeBag = DisposeBag()
     
     // MARK: - UI Components
     
