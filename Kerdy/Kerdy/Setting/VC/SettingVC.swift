@@ -81,12 +81,15 @@ extension SettingVC {
         collectionView.rx.itemSelected
             .filter { $0.section == 1 }
             .bind { indexpath in
-                let viewControllers: [UIViewController.Type] = [NotificationVC.self,
-                                                                BlockListVC.self,
-                                                                TermsOfUseVC.self]
-                
-                guard indexpath.item < viewControllers.count else { return }
-                let vc = viewControllers[indexpath.item].init()
+                var vc: UIViewController
+                switch indexpath.item {
+                case 0:
+                    vc = NotificationVC(viewModel: NotificationViewModel(tagManager: TagManager.shared))
+                case 1:
+                    vc = BlockListVC()
+                default:
+                    vc = TermsOfUseVC()
+                }
                 self.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)

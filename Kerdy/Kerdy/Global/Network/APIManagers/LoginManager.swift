@@ -41,7 +41,8 @@ final class LoginManager: Networking, LoginManagerType {
             authorizationCodeCallback = callback
 
             let urlString = "https://github.com/login/oauth/authorize?client_id=\(BaseInfoManager.clientID)"
-            if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
+            if let url = URL(string: urlString), 
+                UIApplication.shared.canOpenURL(url) {
                 UIApplication.shared.open(url)
             }
         }

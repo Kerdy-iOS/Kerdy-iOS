@@ -16,6 +16,6 @@ public extension CAShapeLayer {
         self.fillColor = fillColor.cgColor
         self.lineWidth = lineWidth
         self.frame = view.bounds
-        view.layer.addSublayer(self)
+//        view.layer.addSublayer(self)
     }
 }
