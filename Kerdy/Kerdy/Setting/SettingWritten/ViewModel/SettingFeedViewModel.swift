@@ -53,9 +53,10 @@ final class SettingFeedViewModel {
 extension SettingFeedViewModel {
     
     func getUserFeed() {
-        feedManager.getUserFeed()
+//        feedManager.getUserFeed()
+        feedManager.getAllFeed(eventID: 6)
             .subscribe(onSuccess: { response in
-                dump(response)
+                self.feedList.accept(response)
             }, onFailure: { error in
                 if let moyaError = error as? MoyaError {
                     if let statusCode = moyaError.response?.statusCode {

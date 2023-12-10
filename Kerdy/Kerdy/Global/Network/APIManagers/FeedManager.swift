@@ -12,6 +12,7 @@ import RxSwift
 protocol FeedManagerType {
 
     func getUserFeed() -> Single<[FeedResponseDTO]>
+    func getAllFeed(eventID: Int) -> Single<[FeedResponseDTO]>
 }
 
 final class FeedManager: Networking, FeedManagerType {
@@ -32,5 +33,12 @@ final class FeedManager: Networking, FeedManagerType {
         return provider
             .request(.getUserFeed)
             .map([FeedResponseDTO].self)
+    }
+    
+    func getAllFeed(eventID: Int) -> Single<[FeedResponseDTO]> {
+        return provider
+            .request(.getFeeds(eventID: eventID))
+            .map([FeedResponseDTO].self)
+
     }
 }
