@@ -14,7 +14,7 @@ enum SettingAPI {
 }
 
 extension SettingAPI: KerdyAPI {
-
+    
     var domain: KerdyDomain {
         return .member
     }
@@ -33,13 +33,20 @@ extension SettingAPI: KerdyAPI {
         }
     }
     
-    var parameters: [String: Any]? {
+    var task: Task {
         switch self {
         case .profile:
-            return .none
+            return .requestPlain
         }
     }
-
+    
+    var headerType: HTTPHeaderFields {
+        switch self {
+        case .profile:
+            return .plain
+        }
+    }
+    
     var error: [Int: NetworkError]? {
         switch self {
         case .profile:
