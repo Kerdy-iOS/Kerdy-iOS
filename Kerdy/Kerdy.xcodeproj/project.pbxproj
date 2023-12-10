@@ -63,7 +63,6 @@
 		09ECB32F2AFE0AB2000F3008 /* SettingWriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ECB32E2AFE0AB2000F3008 /* SettingWriteCell.swift */; };
 		09ECB3352AFE15E7000F3008 /* CommentsResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ECB3342AFE15E7000F3008 /* CommentsResponseDTO.swift */; };
 		09ED93E82B261A7A001864EF /* SettingCommentsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ED93E72B261A7A001864EF /* SettingCommentsVC.swift */; };
-		09ED93EA2B261A84001864EF /* SettingWrittenDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ED93E92B261A84001864EF /* SettingWrittenDataSource.swift */; };
 		09ED93EC2B261ACB001864EF /* SettingFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ED93EB2B261ACB001864EF /* SettingFeedViewModel.swift */; };
 		09ED93EE2B261AED001864EF /* FeedManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ED93ED2B261AED001864EF /* FeedManager.swift */; };
 		09ED93F02B261AF7001864EF /* FeedAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ED93EF2B261AF7001864EF /* FeedAPI.swift */; };
@@ -71,6 +70,7 @@
 		09ED93F52B2624A6001864EF /* SettingCommenetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ED93F42B2624A6001864EF /* SettingCommenetViewModel.swift */; };
 		09ED93F72B2624C5001864EF /* CommentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ED93F62B2624C5001864EF /* CommentAPI.swift */; };
 		09ED93F92B2624CF001864EF /* CommentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ED93F82B2624CF001864EF /* CommentManager.swift */; };
+		09ED93FB2B263683001864EF /* SettingWrittenDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ED93FA2B263683001864EF /* SettingWrittenDataSource.swift */; };
 		3109B2FA2AF52B2000B2EAD2 /* FilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3109B2F92AF52B2000B2EAD2 /* FilterVC.swift */; };
 		3109B2FC2AF52B3800B2EAD2 /* TagFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3109B2FB2AF52B3800B2EAD2 /* TagFilterView.swift */; };
 		3109B2FE2AF52B4700B2EAD2 /* DateFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3109B2FD2AF52B4700B2EAD2 /* DateFilterView.swift */; };
@@ -187,13 +187,13 @@
 		09ECB3322AFE142F000F3008 /* FeedResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedResponseDTO.swift; sourceTree = "<group>"; };
 		09ECB3342AFE15E7000F3008 /* CommentsResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsResponseDTO.swift; sourceTree = "<group>"; };
 		09ED93E72B261A7A001864EF /* SettingCommentsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingCommentsVC.swift; sourceTree = "<group>"; };
-		09ED93E92B261A84001864EF /* SettingWrittenDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingWrittenDataSource.swift; path = Kerdy/Setting/SettingWritten/ViewModel/SettingWrittenDataSource.swift; sourceTree = SOURCE_ROOT; };
 		09ED93EB2B261ACB001864EF /* SettingFeedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingFeedViewModel.swift; sourceTree = "<group>"; };
 		09ED93ED2B261AED001864EF /* FeedManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedManager.swift; sourceTree = "<group>"; };
 		09ED93EF2B261AF7001864EF /* FeedAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedAPI.swift; sourceTree = "<group>"; };
 		09ED93F42B2624A6001864EF /* SettingCommenetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCommenetViewModel.swift; sourceTree = "<group>"; };
 		09ED93F62B2624C5001864EF /* CommentAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentAPI.swift; sourceTree = "<group>"; };
 		09ED93F82B2624CF001864EF /* CommentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentManager.swift; sourceTree = "<group>"; };
+		09ED93FA2B263683001864EF /* SettingWrittenDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingWrittenDataSource.swift; path = Kerdy/SettingWritten/ViewModel/SettingWrittenDataSource.swift; sourceTree = SOURCE_ROOT; };
 		3109B2F92AF52B2000B2EAD2 /* FilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterVC.swift; sourceTree = "<group>"; };
 		3109B2FB2AF52B3800B2EAD2 /* TagFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagFilterView.swift; sourceTree = "<group>"; };
 		3109B2FD2AF52B4700B2EAD2 /* DateFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFilterView.swift; sourceTree = "<group>"; };
@@ -326,7 +326,7 @@
 		090978F72AF27288006BD8DE /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				09ED93E92B261A84001864EF /* SettingWrittenDataSource.swift */,
+				09ED93FA2B263683001864EF /* SettingWrittenDataSource.swift */,
 				095EBE832AFF6AE900629F06 /* SettingViewModel.swift */,
 			);
 			path = ViewModel;
@@ -1026,6 +1026,7 @@
 				5B216AFA2AF671CF00C028A0 /* FourthInitialSettingVC.swift in Sources */,
 				090978E82AF0E6C0006BD8DE /* TabBarVC.swift in Sources */,
 				5BF17B3A2AF7D17600A03CEA /* CategoryViewModel.swift in Sources */,
+				09ED93FB2B263683001864EF /* SettingWrittenDataSource.swift in Sources */,
 				31571C1E2AF3CBC00037A2F2 /* EventTableViewCell.swift in Sources */,
 				09BB55262AF0430200A54B1B /* StringLiterals.swift in Sources */,
 				09472C232B1323E000B4A84E /* AuthViewModel.swift in Sources */,
@@ -1068,7 +1069,6 @@
 				5B20BA482B00FF8700A80781 /* EducationViewModel.swift in Sources */,
 				09472C322B1374F300B4A84E /* SignInResponseDTO.swift in Sources */,
 				3164D47F2AE21F810054F440 /* AppDelegate.swift in Sources */,
-				09ED93EA2B261A84001864EF /* SettingWrittenDataSource.swift in Sources */,
 				09ED93F02B261AF7001864EF /* FeedAPI.swift in Sources */,
 				09ED93EE2B261AED001864EF /* FeedManager.swift in Sources */,
 				090979042AF29121006BD8DE /* TagCell.swift in Sources */,
