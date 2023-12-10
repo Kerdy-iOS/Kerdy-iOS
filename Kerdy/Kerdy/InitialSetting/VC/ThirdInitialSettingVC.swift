@@ -17,6 +17,7 @@ final class ThirdInitialSettingVC: UIViewController, UITableViewDelegate, UITabl
     private var buttons: [UIButton] = []
     private var isDataLoaded = false
     private var isDataLoading = false
+    var memberInfo: MemberInfo = MemberInfo()
     
     private lazy var progressLabel: UILabel = {
         let label = UILabel()
@@ -99,7 +100,7 @@ final class ThirdInitialSettingVC: UIViewController, UITableViewDelegate, UITabl
             educationViewModel.educationActivities
                 .subscribe(onNext: { clubActivities in
                     for activity in clubActivities {
-                        let btn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(self.educationButtonTapped(_:)), title: activity.name)
+                        let btn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(self.educationButtonTapped(_:)), title: activity.name, id: activity.id)
                         btn.snp.makeConstraints { make in
                             make.width.equalTo((btn.titleLabel?.text!.count)! * 14)
                         }
@@ -208,7 +209,7 @@ final class ThirdInitialSettingVC: UIViewController, UITableViewDelegate, UITabl
                 
                 self.educationViewModel.educationSelectedDict[button] = BehaviorSubject<Bool>(value: false)
                 self.educationViewModel.educationSelectedDict[button]?.subscribe(onNext: {isSelected in
-                    button.backgroundColor = isSelected ? .green : .white
+                    button.backgroundColor = isSelected ? .kerdyMain : .white
                 }).disposed(by: self.disposeBag)
                 
                 button.snp.makeConstraints {
@@ -227,12 +228,26 @@ final class ThirdInitialSettingVC: UIViewController, UITableViewDelegate, UITabl
         navigationItem.backButtonTitle = ""
     }
     
-    @objc private func educationButtonTapped(_ sender: UIButton) {
+    @objc private func educationButtonTapped(_ sender: InitialSettingSelectBtn) {
         educationViewModel.educationButtonTapped(button: sender)
+        
+        if let id = sender.id {
+            if let buttonState = try? educationViewModel.educationSelectedDict[sender]?.value() {
+                if buttonState == true {
+                    if memberInfo.activityIds == nil {
+                        memberInfo.activityIds = [Int]()
+                    }
+                    memberInfo.activityIds?.append(id)
+                } else if buttonState == false, let index = memberInfo.activityIds?.firstIndex(of: id) {
+                    memberInfo.activityIds?.remove(at: index)
+                }
+            }
+        }
     }
     
     @objc private func nextButtonTapped() {
         let nextVC = FourthInitialSettingVC()
+        nextVC.memberInfo = memberInfo
         navigationController?.pushViewController(nextVC, animated: true)
     }
     

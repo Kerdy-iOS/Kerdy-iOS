@@ -12,9 +12,9 @@ import Moya
 class ClubViewModel {
     
     private let provider = MoyaProvider<ActivityAPI>()
+    private let memberAPIProvider = MoyaProvider<RegisterMemberAPI>()
     private let disposeBag = DisposeBag()
     var clubActivities = PublishSubject<[ActivityModel]>()
-    let selectCount = BehaviorSubject<Int>(value: 0)
     var clubSelectedDict: [UIButton: BehaviorSubject<Bool>] = [:]
     
     func fetchActivities() {
@@ -32,17 +32,26 @@ class ClubViewModel {
     }
     
     func clubButtonTapped(button: UIButton) {
-        guard let buttonState = try? clubSelectedDict[button]?.value(),
-              let count = try? selectCount.value() else {
+        guard let buttonState = try? clubSelectedDict[button]?.value() else {
             return
         }
         
         if buttonState == true {
             clubSelectedDict[button]?.onNext(false)
-            selectCount.onNext(count - 1)
-        } else if buttonState == false, count < 4 {
+        } else if buttonState == false {
             clubSelectedDict[button]?.onNext(true)
-            selectCount.onNext(count + 1)
         }
+    }
+    
+    func registerMember(memberInfo: MemberInfo, completion: @escaping (Result<Void, Error>) -> Void) {
+        memberAPIProvider.rx.request(.postMember(memberInfo: memberInfo))
+            .subscribe { result in
+                switch result {
+                case .success:
+                    completion(.success(()))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }.disposed(by: disposeBag)
     }
 }

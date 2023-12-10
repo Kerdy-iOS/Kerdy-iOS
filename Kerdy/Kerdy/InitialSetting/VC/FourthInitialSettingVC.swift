@@ -16,6 +16,7 @@ final class FourthInitialSettingVC: UIViewController, UITableViewDataSource, UIT
     private var buttons: [UIButton] = []
     private var isDataLoaded = false
     private var isDataLoading = false
+    var memberInfo: MemberInfo = MemberInfo()
     
     private lazy var progressLabel: UILabel = {
         let label = UILabel()
@@ -97,7 +98,7 @@ final class FourthInitialSettingVC: UIViewController, UITableViewDataSource, UIT
             clubViewModel.clubActivities
                 .subscribe(onNext: { clubActivities in
                     for activity in clubActivities {
-                        let btn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(self.clubButtonTapped(_:)), title: activity.name)
+                        let btn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(self.clubButtonTapped(_:)), title: activity.name, id: activity.id)
                         btn.snp.makeConstraints { make in
                             make.width.equalTo((btn.titleLabel?.text!.count)! * 14)
                         }
@@ -205,7 +206,7 @@ final class FourthInitialSettingVC: UIViewController, UITableViewDataSource, UIT
                 
                 self.clubViewModel.clubSelectedDict[button] = BehaviorSubject<Bool>(value: false)
                 self.clubViewModel.clubSelectedDict[button]?.subscribe(onNext: {isSelected in
-                    button.backgroundColor = isSelected ? .green : .white
+                    button.backgroundColor = isSelected ? .kerdyMain : .white
                 }).disposed(by: self.disposeBag)
                 
                 button.snp.makeConstraints {
@@ -224,8 +225,21 @@ final class FourthInitialSettingVC: UIViewController, UITableViewDataSource, UIT
         navigationItem.backButtonTitle = ""
     }
     
-    @objc private func clubButtonTapped(_ sender: UIButton) {
+    @objc private func clubButtonTapped(_ sender: InitialSettingSelectBtn) {
         clubViewModel.clubButtonTapped(button: sender)
+        
+        if let id = sender.id {
+            if let buttonState = try? clubViewModel.clubSelectedDict[sender]?.value() {
+                if buttonState == true {
+                    if memberInfo.activityIds == nil {
+                        memberInfo.activityIds = [Int]()
+                    }
+                    memberInfo.activityIds?.append(id)
+                } else if buttonState == false, let index = memberInfo.activityIds?.firstIndex(of: id) {
+                    memberInfo.activityIds?.remove(at: index)
+                }
+            }
+        }
     }
     
     @objc private func enterLaterButtonTapped() {
@@ -233,7 +247,14 @@ final class FourthInitialSettingVC: UIViewController, UITableViewDataSource, UIT
     }
     
     @objc private func doneButtonTapped() {
-        
+        clubViewModel.registerMember(memberInfo: memberInfo) { result in
+            switch result {
+            case .success:
+                print("Member registration successful.")
+            case .failure(let error):
+                print("Member registration failed: \(error)")
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -16,6 +16,7 @@ final class SecondInitialSettingVC: UIViewController, UITableViewDelegate, UITab
     private var buttons: [UIButton] = []
     private var isDataLoaded = false
     private var isDataLoading = false
+    var memberInfo: MemberInfo = MemberInfo()
     
     private lazy var progressLabel: UILabel = {
         let label = UILabel()
@@ -83,7 +84,7 @@ final class SecondInitialSettingVC: UIViewController, UITableViewDelegate, UITab
             categoryViewModel.jobActivities
                 .subscribe(onNext: { clubActivities in
                     for activity in clubActivities {
-                        let btn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(self.categoryButtonTapped(_:)), title: activity.name)
+                        let btn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(self.categoryButtonTapped(_:)), title: activity.name, id: activity.id)
                         btn.snp.makeConstraints { make in
                             make.width.equalTo((btn.titleLabel?.text!.count)! * 14)
                         }
@@ -181,7 +182,7 @@ final class SecondInitialSettingVC: UIViewController, UITableViewDelegate, UITab
                 
                 self.categoryViewModel.categorySelectedDict[button] = BehaviorSubject<Bool>(value: false)
                 self.categoryViewModel.categorySelectedDict[button]?.subscribe(onNext: {isSelected in
-                    button.backgroundColor = isSelected ? .green : .white
+                    button.backgroundColor = isSelected ? .kerdyMain : .white
                 }).disposed(by: self.disposeBag)
                 
                 button.snp.makeConstraints {
@@ -196,12 +197,26 @@ final class SecondInitialSettingVC: UIViewController, UITableViewDelegate, UITab
     }
     
     @objc private func nextButtonTapped() {
-        let nextViewController = ThirdInitialSettingVC()
-        navigationController?.pushViewController(nextViewController, animated: true)
+        let nextVC = ThirdInitialSettingVC()
+        nextVC.memberInfo = memberInfo
+        navigationController?.pushViewController(nextVC, animated: true)
     }
     
-    @objc private func categoryButtonTapped(_ sender: UIButton) {
+    @objc private func categoryButtonTapped(_ sender: InitialSettingSelectBtn) {
         categoryViewModel.categoryButtonTapped(button: sender)
+
+        if let id = sender.id {
+            if let buttonState = try? categoryViewModel.categorySelectedDict[sender]?.value() {
+                if buttonState == true {
+                    if memberInfo.activityIds == nil {
+                        memberInfo.activityIds = [Int]()
+                    }
+                    memberInfo.activityIds?.append(id)
+                } else if buttonState == false, let index = memberInfo.activityIds?.firstIndex(of: id) {
+                    memberInfo.activityIds?.remove(at: index)
+                }
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

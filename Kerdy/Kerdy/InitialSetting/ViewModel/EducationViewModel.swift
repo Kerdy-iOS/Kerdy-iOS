@@ -15,7 +15,6 @@ class EducationViewModel {
     private let provider = MoyaProvider<ActivityAPI>()
     private let disposeBag = DisposeBag()
     var educationActivities = PublishSubject<[ActivityModel]>()
-    let selectCount = BehaviorSubject<Int>(value: 0)
     var educationSelectedDict: [UIButton: BehaviorSubject<Bool>] = [:]
     
     func fetchActivities() {
@@ -33,17 +32,14 @@ class EducationViewModel {
     }
     
     func educationButtonTapped(button: UIButton) {
-        guard let buttonState = try? educationSelectedDict[button]?.value(),
-              let count = try? selectCount.value() else {
+        guard let buttonState = try? educationSelectedDict[button]?.value() else {
             return
         }
         
         if buttonState == true {
             educationSelectedDict[button]?.onNext(false)
-            selectCount.onNext(count - 1)
-        } else if buttonState == false, count < 4 {
+        } else if buttonState == false {
             educationSelectedDict[button]?.onNext(true)
-            selectCount.onNext(count + 1)
         }
     }
 }
