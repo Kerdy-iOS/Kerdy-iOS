@@ -138,7 +138,7 @@ extension TagVC {
                  collectionView.rx.modelSelected(TagsResponseDTO.self))
             .bind { indexPath, model in
                 guard let cell = self.collectionView.cellForItem(at: indexPath) as? TagCell else { return }
-                cell.configureBackground()
+                cell.configureFillBackground()
                 self.selectedTag.append(model.id)
                 self.viewModel.selectTags(id: self.selectedTag)
             }

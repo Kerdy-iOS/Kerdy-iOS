@@ -22,13 +22,12 @@ final class TagCell: UICollectionViewCell {
     
     // MARK: - Proprerty
     
+    var disposeBag = DisposeBag()
     private var type: TagType = .userTag {
         didSet {
             setBorderLayer()
         }
     }
-    
-    var disposeBag = DisposeBag()
     
     // MARK: - UI Property
     
@@ -55,60 +54,43 @@ final class TagCell: UICollectionViewCell {
         self.disposeBag = DisposeBag()
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: .zero)
-        
-        setLayout()
-    }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         
         setBorderLayer()
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
 }
 
 // MARK: - Methods
 
 extension TagCell {
     
-    private func setLayout() {
-        
-        contentView.layer.addSublayer(borderLayer)
-        contentView.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints {
-            $0.center.equalToSuperview()
-        }
-    }
-    
-    private func setUI() {
+    private func setBorderLayer() {
         
         contentView.backgroundColor = .kerdyBackground
         contentView.roundCorners(topLeft: 12,
                                  topRight: 20,
                                  bottomLeft: 20,
                                  bottomRight: 12)
+        
+        contentView.layer.addSublayer(borderLayer)
+        contentView.addSubview(titleLabel)
+        
+        type == .userTag ? setUserTag() : setRegisterTag()
     }
     
     private func setRegisterTag() {
+        configureBackground()
         
-        borderLayer.configureBorder(of: contentView,
-                                    withStroke: .kerdyMain,
-                                    withFill: .clear,
-                                    using: 2)
-        
+        titleLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
     }
     
     private func setUserTag() {
+        configureFillBackground()
         
-        titleLabel.sizeToFit()
-        
-        titleLabel.snp.remakeConstraints {
+        titleLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(20)
         }
@@ -120,24 +102,9 @@ extension TagCell {
             $0.trailing.lessThanOrEqualToSuperview().inset(15)
             $0.size.equalTo(10)
         }
-        
-        configureBackground()
     }
     
-    private func setBorderLayer() {
-        
-        setUI()
-        type == .userTag ? setUserTag() : setRegisterTag()
-    }
-    
-    func configureCell(to type: TagsResponseDTO, tagType: TagType) {
-        
-        self.type = tagType
-        titleLabel.text = type.name
-        cancelButton.tag = type.id
-    }
-    
-    func configureBackground() {
+    func configureFillBackground() {
         
         layoutIfNeeded()
         borderLayer.configureBorder(of: contentView,
@@ -146,6 +113,21 @@ extension TagCell {
                                     using: 2)
     }
     
+    func configureBackground() {
+        
+        layoutIfNeeded()
+        borderLayer.configureBorder(of: contentView,
+                                    withStroke: .kerdyMain,
+                                    withFill: .clear,
+                                    using: 2)
+    }
+    
+    func configureCell(to type: TagsResponseDTO, tagType: TagType) {
+        
+        self.type = tagType
+        titleLabel.text = type.name
+        cancelButton.tag = type.id
+    }
 }
 
 // MARK: - Reactive extension
