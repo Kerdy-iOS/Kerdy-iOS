@@ -1,36 +1,35 @@
 //
-//  SettingFeedVC.swift
+//  SettingWrittenVC.swift
 //  Kerdy
 //
-//  Created by JEONGEUN KIM on 12/11/23.
+//  Created by JEONGEUN KIM on 11/10/23.
 //
 
 import UIKit
 
 import RxSwift
-import RxCocoa
 
-final class SettingFeedVC: BaseVC {
+final class SettingCommentsVC: BaseVC {
     
     // MARK: - Property
     
-    private let viewModel: SettingFeedViewModel
-    private var disposdBag = DisposeBag()
+    private let viewModel: SettingCommenetViewModel
     
     private var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-    private lazy var articleDataSource = SettingWrittenDataSource<FeedResponseDTO>(collectionView: collectionView, type: .article)
+    
+    private lazy var commentDataSource = SettingWrittenDataSource<Comment>(collectionView: collectionView, type: .comment)
     
     // MARK: - UI Components
     
     private let navigationBar: NavigationBarView = {
         let view = NavigationBarView()
-        view.configureUI(to: "작성한 글")
+        view.configureUI(to: "작성한 댓글")
         return view
     }()
     
     // MARK: - Life Cycle
     
-    init(viewModel: SettingFeedViewModel) {
+    init(viewModel: SettingCommenetViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -44,14 +43,13 @@ final class SettingFeedVC: BaseVC {
         
         setLayout()
         setUI()
-        setDataSource()
         bind()
     }
 }
 
 // MARK: - Setting
 
-extension SettingFeedVC {
+extension SettingCommentsVC {
     
     private func setLayout() {
         
@@ -71,32 +69,29 @@ extension SettingFeedVC {
     private func setUI() {
         
         navigationBar.delegate = self
+        collectionView.dataSource = commentDataSource.dataSource
     }
-    
-    private func setDataSource() {
-        
-        collectionView.dataSource = articleDataSource.dataSource
-    }
-    
+
     private func bind() {
         
-        let input = SettingFeedViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver())
+        let input = SettingCommenetViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver())
         
         let output = viewModel.transform(input: input)
         
-        output.feedList
-            .drive(with: self) { owner, feedList in
-                owner.articleDataSource.updateData(with: feedList)
+        output.commentsList
+            .drive(with: self) { owner, comments in
+                let commentsList = comments.map { $0.parentComment }
+                let count = comments.map { $0.childComments.count }
+                owner.commentDataSource.updateData(with: commentsList, count: count)
+                dump(comments)
             }
-            .disposed(by: disposdBag)
-            
+            .disposed(by: disposeBag)
     }
 }
-// MARK: - Method
 
 // MARK: - Navi BackButton Delegate
 
-extension SettingFeedVC: BackButtonActionProtocol {
+extension SettingCommentsVC: BackButtonActionProtocol {
     
     func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)

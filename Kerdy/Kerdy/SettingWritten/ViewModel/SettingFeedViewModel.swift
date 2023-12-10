@@ -53,7 +53,7 @@ final class SettingFeedViewModel {
 extension SettingFeedViewModel {
     
     func getUserFeed() {
-//        feedManager.getUserFeed()
+        //        feedManager.getUserFeed()
         feedManager.getAllFeed(eventID: 6)
             .subscribe(onSuccess: { response in
                 self.feedList.accept(response)

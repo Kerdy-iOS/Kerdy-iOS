@@ -398,7 +398,6 @@
 			isa = PBXGroup;
 			children = (
 				091A30772B0DB42B009EBF5B /* Cell */,
-				091A30762B0DB427009EBF5B /* Model */,
 				091A30752B0DB421009EBF5B /* ViewModel */,
 				091A30742B0DB41C009EBF5B /* VC */,
 			);
@@ -421,14 +420,6 @@
 				09ED93F42B2624A6001864EF /* SettingCommenetViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		091A30762B0DB427009EBF5B /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				09ECB3342AFE15E7000F3008 /* CommentsResponseDTO.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		091A30772B0DB42B009EBF5B /* Cell */ = {
@@ -495,6 +486,7 @@
 				09ECB3322AFE142F000F3008 /* FeedResponseDTO.swift */,
 				09472C312B1374F300B4A84E /* SignInResponseDTO.swift */,
 				09A3E1822B18EA28004BD432 /* MemberProfileResponseDTO.swift */,
+				09ECB3342AFE15E7000F3008 /* CommentsResponseDTO.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -637,7 +629,6 @@
 		09BB551A2AF015D100A54B1B /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				091A30732B0DB415009EBF5B /* SettingWritten */,
 				090978F42AF27263006BD8DE /* VC */,
 				090978F62AF2727A006BD8DE /* Model */,
 				090978F72AF27288006BD8DE /* ViewModel */,
@@ -770,6 +761,7 @@
 				090978EA2AF0E77B006BD8DE /* MyCard */,
 				090978EB2AF0E77F006BD8DE /* Chat */,
 				09BB551A2AF015D100A54B1B /* Setting */,
+				091A30732B0DB415009EBF5B /* SettingWritten */,
 				090978F82AF27298006BD8DE /* Notification */,
 				090979052AF33CCC006BD8DE /* NotificationTag */,
 				098294162AF341090011773A /* BlockList */,
