@@ -67,7 +67,6 @@ final class TagVC: BaseVC {
         setDataSource()
         bind()
     }
-    
 }
 
 // MARK: - Methods
@@ -104,7 +103,6 @@ extension TagVC {
             $0.bottom.horizontalEdges.equalTo(safeArea).inset(17)
             $0.height.equalTo(60)
         }
-        
     }
     
     private func setUI() {
@@ -123,26 +121,61 @@ extension TagVC {
             .drive(collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
+        output.selectedList
+            .drive(with: self) { owner, tagIDs in
+                self.selectedTag = tagIDs
+                for tagID in tagIDs {
+                    owner.updateCellBackgroundColor(forTag: tagID, isSelected: true)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        output.didRegisterButtonTap
+            .withUnretained(self)
+            .emit { _ in
+                self.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
         collectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
         
-        collectionView.rx.modelDeselected(TagsResponseDTO.self)
-            .bind { model in
-                self.selectedTag.removeAll { $0 == model.id }
-                self.viewModel.selectTags(id: self.selectedTag)
-            }
-            .disposed(by: disposeBag)
-        
         Observable
-            .zip(collectionView.rx.itemSelected,
-                 collectionView.rx.modelSelected(TagsResponseDTO.self))
-            .bind { indexPath, model in
-                guard let cell = self.collectionView.cellForItem(at: indexPath) as? TagCell else { return }
-                cell.configureFillBackground()
-                self.selectedTag.append(model.id)
+            .zip(collectionView.rx.itemSelected, collectionView.rx.modelSelected(TagsResponseDTO.self))
+            .bind { [weak self] indexPath, model in
+                guard let self else { return }
+                
+                if self.selectedTag.contains(model.id) {
+                    
+                    self.collectionView.deselectItem(at: indexPath, animated: true)
+                    self.updateCellBackgroundColor(forTag: model.id, isSelected: false)
+                    self.selectedTag.removeAll { $0 == model.id }
+                } else {
+                    
+                    self.updateCellBackgroundColor(forTag: model.id, isSelected: true)
+                    self.selectedTag.append(model.id)
+                }
+        
                 self.viewModel.selectTags(id: self.selectedTag)
             }
             .disposed(by: disposeBag)
+    }
+    
+    private func indexPath(forTag tag: Int) -> IndexPath? {
+        return dataSource.sectionModels
+            .enumerated()
+            .compactMap { sectionIndex, section in
+                section.items.firstIndex { $0.id == tag }.map { IndexPath(item: $0, section: sectionIndex) }
+            }
+            .first
+    }
+    
+    private func updateCellBackgroundColor(forTag tag: Int, isSelected: Bool) {
+        guard let indexPath = indexPath(forTag: tag),
+              let cell = collectionView.cellForItem(at: indexPath) as? TagCell else {
+            return
+        }
+        isSelected ? cell.configureFillBackground() : cell.configureBackground()
     }
 }
 
@@ -159,6 +192,7 @@ extension TagVC {
                 for: indexPath
             ) as? TagCell else { return UICollectionViewCell() }
             cell.configureCell(to: item, tagType: .registerTag)
+            
             return cell
         }
     }
