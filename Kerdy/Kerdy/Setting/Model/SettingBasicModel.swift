@@ -7,10 +7,10 @@
 
 import UIKit
 
-struct BasicModel {
+struct SettingBasicModel: Equatable {
     
     let title: String
-    var image: UIImage? = nil
+    var image: UIImage?
     var version: String? = ""
     
     static var version: String? {
@@ -20,14 +20,14 @@ struct BasicModel {
         return version
     }
     
-    static let basicWithIcon: [BasicModel]  = [BasicModel(title: "알림설정", image: .arrowIcon),
-                                               BasicModel(title: "차단 목록", image: .arrowIcon),
-                                               BasicModel(title: "이용 약관", image: .arrowIcon)
-                                               
+    static let basicWithIcon: [SettingBasicModel]  = [SettingBasicModel(title: "알림설정", image: .arrowIcon),
+                                                      SettingBasicModel(title: "차단 목록", image: .arrowIcon),
+                                                      SettingBasicModel(title: "이용 약관", image: .arrowIcon)
+                                                      
     ]
     
-    static let basic: [BasicModel] = [BasicModel(title: "버전정보", version: version ?? "0.0"),
-                                      BasicModel(title: "계정 삭제"),
-                                      BasicModel(title: "로그아웃")
+    static let basic: [SettingBasicModel] = [SettingBasicModel(title: "버전정보", version: version ?? "0.0"),
+                                             SettingBasicModel(title: "계정 삭제"),
+                                             SettingBasicModel(title: "로그아웃")
     ]
 }

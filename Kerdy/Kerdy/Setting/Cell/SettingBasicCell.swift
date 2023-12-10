@@ -41,6 +41,11 @@ final class SettingBasicCell: UICollectionViewCell {
     
     // MARK: - Initialize
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        titleLabel.textColor = .kerdyBlack
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
@@ -114,7 +119,7 @@ extension SettingBasicCell {
         ]
     }
     
-    func configureData(with data: BasicModel, at index: Int) {
+    func configureData(with data: SettingBasicModel, at index: Int) {
         
         titleLabel.text = data.title
         arrowIcon.image = data.image
@@ -122,7 +127,7 @@ extension SettingBasicCell {
         configureCell()
         
         if let handler = configurationHandlers[index] {
-                handler()
-            }
+            handler()
+        }
     }
 }

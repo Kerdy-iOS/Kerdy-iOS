@@ -69,6 +69,7 @@ extension AuthViewModel {
         loginManager.postLogin(code: code)
             .subscribe(onSuccess: { response in
                 KeyChainManager.save(forKey: .accessToken, value: response.accessToken)
+                KeyChainManager.save(forKey: .memberId, value: "\(response.id)")
                 self.didLoginTapped.accept(())
             }, onFailure: { error in
                 if let moyaError = error as? MoyaError {
