@@ -42,7 +42,6 @@
 		095EBE862AFF6B2700629F06 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095EBE852AFF6B2700629F06 /* ViewModelType.swift */; };
 		095EBE882AFF705900629F06 /* RxViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095EBE872AFF705900629F06 /* RxViewController+.swift */; };
 		0964BA3D2B0E36A600A8984B /* Base-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0964BA3C2B0E36A600A8984B /* Base-Info.plist */; };
-		097C882F2B259F2D00358218 /* NotificationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097C882E2B259F2D00358218 /* NotificationHeaderView.swift */; };
 		098294182AF341290011773A /* BlockListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098294172AF341290011773A /* BlockListVC.swift */; };
 		0982941A2AF342090011773A /* BlockListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098294192AF342090011773A /* BlockListCell.swift */; };
 		0982941E2AF35E660011773A /* BlockListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0982941D2AF35E660011773A /* BlockListModel.swift */; };
@@ -169,7 +168,6 @@
 		095EBE852AFF6B2700629F06 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		095EBE872AFF705900629F06 /* RxViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxViewController+.swift"; sourceTree = "<group>"; };
 		0964BA3C2B0E36A600A8984B /* Base-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Base-Info.plist"; sourceTree = "<group>"; };
-		097C882E2B259F2D00358218 /* NotificationHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHeaderView.swift; sourceTree = "<group>"; };
 		098294172AF341290011773A /* BlockListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListVC.swift; sourceTree = "<group>"; };
 		098294192AF342090011773A /* BlockListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListCell.swift; sourceTree = "<group>"; };
 		0982941D2AF35E660011773A /* BlockListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListModel.swift; sourceTree = "<group>"; };
@@ -336,7 +334,6 @@
 		090978F82AF27298006BD8DE /* Notification */ = {
 			isa = PBXGroup;
 			children = (
-				097C882D2B259F1300358218 /* View */,
 				099756E22B24D95C009961B5 /* ViewModel */,
 				090979062AF33D19006BD8DE /* VC */,
 			);
@@ -617,14 +614,6 @@
 				095EBE812AFF66A300629F06 /* Util.swift */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		097C882D2B259F1300358218 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				097C882E2B259F2D00358218 /* NotificationHeaderView.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		098294162AF341090011773A /* BlockList */ = {
@@ -1086,7 +1075,6 @@
 				099756BD2B222FBA009961B5 /* TagManager.swift in Sources */,
 				09472C252B135BF200B4A84E /* KeyChainManager.swift in Sources */,
 				090978F12AF0E7B5006BD8DE /* ChatVC.swift in Sources */,
-				097C882F2B259F2D00358218 /* NotificationHeaderView.swift in Sources */,
 				31571C232AF3CBC00037A2F2 /* EventCollectionViewCell.swift in Sources */,
 				090979022AF29086006BD8DE /* TagCollectionViewFlowLayout.swift in Sources */,
 				31571C262AF3CBC80037A2F2 /* Event.swift in Sources */,
