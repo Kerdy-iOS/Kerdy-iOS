@@ -158,7 +158,7 @@ extension SettingVC {
         cell.rx.article
             .asDriver()
             .drive(with: self) { owner, _ in
-                let nextVC = SettingWrittenVC(type: .article)
+                let nextVC = SettingFeedVC(viewModel: SettingFeedViewModel(feedManager: FeedManager.shared))
                 owner.navigationController?.pushViewController(nextVC, animated: true)
             }
             .disposed(by: cell.disposeBag)
@@ -166,7 +166,7 @@ extension SettingVC {
         cell.rx.comment
             .asDriver()
             .drive(with: self) { owner, _ in
-                let nextVC = SettingWrittenVC(type: .comment)
+                let nextVC = SettingCommentsVC(viewModel: SettingCommenetViewModel(commentManager: CommentManager.shared))
                 owner.navigationController?.pushViewController(nextVC, animated: true)
             }
             .disposed(by: cell.disposeBag)
