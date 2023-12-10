@@ -42,11 +42,19 @@
 		095EBE862AFF6B2700629F06 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095EBE852AFF6B2700629F06 /* ViewModelType.swift */; };
 		095EBE882AFF705900629F06 /* RxViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095EBE872AFF705900629F06 /* RxViewController+.swift */; };
 		0964BA3D2B0E36A600A8984B /* Base-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0964BA3C2B0E36A600A8984B /* Base-Info.plist */; };
+		097C882F2B259F2D00358218 /* NotificationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097C882E2B259F2D00358218 /* NotificationHeaderView.swift */; };
 		098294182AF341290011773A /* BlockListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098294172AF341290011773A /* BlockListVC.swift */; };
 		0982941A2AF342090011773A /* BlockListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098294192AF342090011773A /* BlockListCell.swift */; };
 		0982941E2AF35E660011773A /* BlockListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0982941D2AF35E660011773A /* BlockListModel.swift */; };
 		098294212AF3C1E50011773A /* TermsOfUseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098294202AF3C1E50011773A /* TermsOfUseVC.swift */; };
 		098294232AF3C6180011773A /* ExternalURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098294222AF3C6180011773A /* ExternalURL.swift */; };
+		099756B62B222D01009961B5 /* NotificationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099756B52B222D01009961B5 /* NotificationAPI.swift */; };
+		099756B82B222D8D009961B5 /* TagAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099756B72B222D8D009961B5 /* TagAPI.swift */; };
+		099756BD2B222FBA009961B5 /* TagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099756BC2B222FBA009961B5 /* TagManager.swift */; };
+		099756BF2B223002009961B5 /* TagsResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099756BE2B223002009961B5 /* TagsResponseDTO.swift */; };
+		099756C12B223078009961B5 /* TagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099756C02B223078009961B5 /* TagViewModel.swift */; };
+		099756DE2B24D3E3009961B5 /* HTTPHeaderFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099756DD2B24D3E3009961B5 /* HTTPHeaderFields.swift */; };
+		099756E42B24D96A009961B5 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099756E32B24D96A009961B5 /* NotificationViewModel.swift */; };
 		09A3E17F2B18E500004BD432 /* SettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A3E17E2B18E500004BD432 /* SettingManager.swift */; };
 		09A3E1812B18E525004BD432 /* SettingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A3E1802B18E525004BD432 /* SettingAPI.swift */; };
 		09A3E1832B18EA28004BD432 /* MemberProfileResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A3E1822B18EA28004BD432 /* MemberProfileResponseDTO.swift */; };
@@ -161,11 +169,19 @@
 		095EBE852AFF6B2700629F06 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		095EBE872AFF705900629F06 /* RxViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxViewController+.swift"; sourceTree = "<group>"; };
 		0964BA3C2B0E36A600A8984B /* Base-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Base-Info.plist"; sourceTree = "<group>"; };
+		097C882E2B259F2D00358218 /* NotificationHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHeaderView.swift; sourceTree = "<group>"; };
 		098294172AF341290011773A /* BlockListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListVC.swift; sourceTree = "<group>"; };
 		098294192AF342090011773A /* BlockListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListCell.swift; sourceTree = "<group>"; };
 		0982941D2AF35E660011773A /* BlockListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListModel.swift; sourceTree = "<group>"; };
 		098294202AF3C1E50011773A /* TermsOfUseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseVC.swift; sourceTree = "<group>"; };
 		098294222AF3C6180011773A /* ExternalURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalURL.swift; sourceTree = "<group>"; };
+		099756B52B222D01009961B5 /* NotificationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAPI.swift; sourceTree = "<group>"; };
+		099756B72B222D8D009961B5 /* TagAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagAPI.swift; sourceTree = "<group>"; };
+		099756BC2B222FBA009961B5 /* TagManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagManager.swift; sourceTree = "<group>"; };
+		099756BE2B223002009961B5 /* TagsResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsResponseDTO.swift; sourceTree = "<group>"; };
+		099756C02B223078009961B5 /* TagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewModel.swift; sourceTree = "<group>"; };
+		099756DD2B24D3E3009961B5 /* HTTPHeaderFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeaderFields.swift; sourceTree = "<group>"; };
+		099756E32B24D96A009961B5 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		09A3E17E2B18E500004BD432 /* SettingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingManager.swift; sourceTree = "<group>"; };
 		09A3E1802B18E525004BD432 /* SettingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAPI.swift; sourceTree = "<group>"; };
 		09A3E1822B18EA28004BD432 /* MemberProfileResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberProfileResponseDTO.swift; sourceTree = "<group>"; };
@@ -320,6 +336,8 @@
 		090978F82AF27298006BD8DE /* Notification */ = {
 			isa = PBXGroup;
 			children = (
+				097C882D2B259F1300358218 /* View */,
+				099756E22B24D95C009961B5 /* ViewModel */,
 				090979062AF33D19006BD8DE /* VC */,
 			);
 			path = Notification;
@@ -367,6 +385,7 @@
 			isa = PBXGroup;
 			children = (
 				0909790C2AF33D95006BD8DE /* TagModel.swift */,
+				099756C02B223078009961B5 /* TagViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -465,6 +484,7 @@
 			children = (
 				09472C142B131D4700B4A84E /* BaseInfoManager.swift */,
 				09472C282B13720C00B4A84E /* KerdyAPI.swift */,
+				099756DD2B24D3E3009961B5 /* HTTPHeaderFields.swift */,
 				09472C2C2B13735C00B4A84E /* NetworkError.swift */,
 				09472C2E2B13737B00B4A84E /* Networking.swift */,
 				09242FFE2B13BC93008DE4FB /* NetworkLogging.swift */,
@@ -478,6 +498,7 @@
 			children = (
 				09472C312B1374F300B4A84E /* SignInResponseDTO.swift */,
 				09A3E1822B18EA28004BD432 /* MemberProfileResponseDTO.swift */,
+				099756BE2B223002009961B5 /* TagsResponseDTO.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -487,6 +508,8 @@
 			children = (
 				09472C372B13762900B4A84E /* LoginAPI.swift */,
 				09A3E1802B18E525004BD432 /* SettingAPI.swift */,
+				099756B52B222D01009961B5 /* NotificationAPI.swift */,
+				099756B72B222D8D009961B5 /* TagAPI.swift */,
 			);
 			path = APIServices;
 			sourceTree = "<group>";
@@ -496,6 +519,7 @@
 			children = (
 				09472C352B13762000B4A84E /* LoginManager.swift */,
 				09A3E17E2B18E500004BD432 /* SettingManager.swift */,
+				099756BC2B222FBA009961B5 /* TagManager.swift */,
 			);
 			path = APIManagers;
 			sourceTree = "<group>";
@@ -595,6 +619,14 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		097C882D2B259F1300358218 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				097C882E2B259F2D00358218 /* NotificationHeaderView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		098294162AF341090011773A /* BlockList */ = {
 			isa = PBXGroup;
 			children = (
@@ -611,6 +643,14 @@
 				098294202AF3C1E50011773A /* TermsOfUseVC.swift */,
 			);
 			path = TermsOfUse;
+			sourceTree = "<group>";
+		};
+		099756E22B24D95C009961B5 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				099756E32B24D96A009961B5 /* NotificationViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		09BB551A2AF015D100A54B1B /* Setting */ = {
@@ -1023,6 +1063,7 @@
 				09ECB3352AFE15E7000F3008 /* CommentsResponseDTO.swift in Sources */,
 				09A3E1832B18EA28004BD432 /* MemberProfileResponseDTO.swift in Sources */,
 				09472C3B2B138B5C00B4A84E /* KeyChainValue.swift in Sources */,
+				099756B82B222D8D009961B5 /* TagAPI.swift in Sources */,
 				09BB55192AF0158C00A54B1B /* SettingVC.swift in Sources */,
 				090978FC2AF27364006BD8DE /* ModalTopView.swift in Sources */,
 				09242FFF2B13BC93008DE4FB /* NetworkLogging.swift in Sources */,
@@ -1042,12 +1083,16 @@
 				098294232AF3C6180011773A /* ExternalURL.swift in Sources */,
 				095EBE822AFF66A300629F06 /* Util.swift in Sources */,
 				31571C202AF3CBC00037A2F2 /* CategoryView.swift in Sources */,
+				099756BD2B222FBA009961B5 /* TagManager.swift in Sources */,
 				09472C252B135BF200B4A84E /* KeyChainManager.swift in Sources */,
 				090978F12AF0E7B5006BD8DE /* ChatVC.swift in Sources */,
+				097C882F2B259F2D00358218 /* NotificationHeaderView.swift in Sources */,
 				31571C232AF3CBC00037A2F2 /* EventCollectionViewCell.swift in Sources */,
 				090979022AF29086006BD8DE /* TagCollectionViewFlowLayout.swift in Sources */,
 				31571C262AF3CBC80037A2F2 /* Event.swift in Sources */,
+				099756BF2B223002009961B5 /* TagsResponseDTO.swift in Sources */,
 				095EBE882AFF705900629F06 /* RxViewController+.swift in Sources */,
+				099756C12B223078009961B5 /* TagViewModel.swift in Sources */,
 				0909790D2AF33D95006BD8DE /* TagModel.swift in Sources */,
 				090978FE2AF28778006BD8DE /* TagVC.swift in Sources */,
 				5B20BA482B00FF8700A80781 /* EducationViewModel.swift in Sources */,
@@ -1055,10 +1100,13 @@
 				3164D47F2AE21F810054F440 /* AppDelegate.swift in Sources */,
 				090979042AF29121006BD8DE /* TagCell.swift in Sources */,
 				09472C2D2B13735C00B4A84E /* NetworkError.swift in Sources */,
+				099756DE2B24D3E3009961B5 /* HTTPHeaderFields.swift in Sources */,
 				5B20BA4A2B0109DC00A80781 /* ClubViewModel.swift in Sources */,
+				099756B62B222D01009961B5 /* NotificationAPI.swift in Sources */,
 				09472C152B131D4700B4A84E /* BaseInfoManager.swift in Sources */,
 				090979002AF287E0006BD8DE /* NavigationBarView.swift in Sources */,
 				3164D4812AE21F810054F440 /* SceneDelegate.swift in Sources */,
+				099756E42B24D96A009961B5 /* NotificationViewModel.swift in Sources */,
 				09A3E17F2B18E500004BD432 /* SettingManager.swift in Sources */,
 				0982941A2AF342090011773A /* BlockListCell.swift in Sources */,
 				09BB552A2AF0545400A54B1B /* SettingBasicModel.swift in Sources */,
@@ -1171,7 +1219,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1228,7 +1276,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
