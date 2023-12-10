@@ -5,18 +5,17 @@
 //  Created by JEONGEUN KIM on 11/2/23.
 //
 
-import Foundation
+import RxDataSources
 
-struct TagType {
+struct TagSection {
+    var items: [Item]
+}
+
+extension TagSection: SectionModelType {
+    typealias Item = TagsResponseDTO
     
-    let title: String
-    
-    static func dummy() -> [TagType] {
-        return [TagType(title: "Android"),
-                TagType(title: "iOS"),
-                TagType(title: "Frontend"),
-                TagType(title: "Backend"),
-                TagType(title: "AI")
-        ]
+    init(original: TagSection, items: [TagsResponseDTO]) {
+        self = original
+        self.items = items
     }
 }
