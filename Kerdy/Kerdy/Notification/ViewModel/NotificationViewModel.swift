@@ -30,7 +30,6 @@ final class NotificationViewModel: ViewModelType {
     struct Input {
         
         let viewWillAppear: Driver<Bool>
-        
     }
 
     struct Output {
@@ -53,7 +52,6 @@ final class NotificationViewModel: ViewModelType {
 
         return output
     }
-    
 }
 
 extension NotificationViewModel {

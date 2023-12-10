@@ -30,7 +30,6 @@ final class TagViewModel: ViewModelType {
         
         let viewWillAppear: Driver<Bool>
         let tapRegisterButton: Signal<Void>
-        
     }
     
     struct Output {
@@ -104,11 +103,9 @@ extension TagViewModel {
                 }
             })
             .disposed(by: disposeBag)
-        
     }
     
     func selectTags(id: [Int]) {
         self.requestTagList.accept(id)
-        print("id:\(id)")
     }
 }
