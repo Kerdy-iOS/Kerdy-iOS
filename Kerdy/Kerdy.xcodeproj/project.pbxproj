@@ -99,6 +99,7 @@
 		3164D4B12AE223180054F440 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 3164D4B02AE223180054F440 /* Moya */; };
 		3164D4B32AE223180054F440 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 3164D4B22AE223180054F440 /* RxMoya */; };
 		3164D4B72AE223400054F440 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3164D4B62AE223400054F440 /* SnapKit */; };
+		31F8DB2B2B2A111200171D39 /* EventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31F8DB2A2B2A111200171D39 /* EventViewModel.swift */; };
 		5B20BA482B00FF8700A80781 /* EducationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B20BA472B00FF8700A80781 /* EducationViewModel.swift */; };
 		5B20BA4A2B0109DC00A80781 /* ClubViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B20BA492B0109DC00A80781 /* ClubViewModel.swift */; };
 		5B216AFA2AF671CF00C028A0 /* FourthInitialSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B216AF92AF671CF00C028A0 /* FourthInitialSettingVC.swift */; };
@@ -214,6 +215,7 @@
 		3164D49F2AE21F820054F440 /* KerdyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KerdyUITests.swift; sourceTree = "<group>"; };
 		3164D4A12AE21F820054F440 /* KerdyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KerdyUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3164D4AE2AE21FA80054F440 /* Kerdy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kerdy.entitlements; sourceTree = "<group>"; };
+		31F8DB2A2B2A111200171D39 /* EventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewModel.swift; sourceTree = "<group>"; };
 		5B20BA472B00FF8700A80781 /* EducationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationViewModel.swift; sourceTree = "<group>"; };
 		5B20BA492B0109DC00A80781 /* ClubViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubViewModel.swift; sourceTree = "<group>"; };
 		5B216AF92AF671CF00C028A0 /* FourthInitialSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthInitialSettingVC.swift; sourceTree = "<group>"; };
@@ -686,6 +688,7 @@
 		31571C142AF3CB9F0037A2F2 /* Event */ = {
 			isa = PBXGroup;
 			children = (
+				31F8DB292B2A10FA00171D39 /* Viewmodel */,
 				31571C162AF3CBB20037A2F2 /* Model */,
 				31571C152AF3CBAD0037A2F2 /* View */,
 			);
@@ -783,6 +786,14 @@
 				311620612AE252E200E26420 /* Core */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		31F8DB292B2A10FA00171D39 /* Viewmodel */ = {
+			isa = PBXGroup;
+			children = (
+				31F8DB2A2B2A111200171D39 /* EventViewModel.swift */,
+			);
+			path = Viewmodel;
 			sourceTree = "<group>";
 		};
 		5B370F3A2AF53DD800D0D3DE /* InitialSetting */ = {
@@ -1071,6 +1082,7 @@
 				095EBE862AFF6B2700629F06 /* ViewModelType.swift in Sources */,
 				3109B2FC2AF52B3800B2EAD2 /* TagFilterView.swift in Sources */,
 				3109B3002AF52B5600B2EAD2 /* ProgressFilterView.swift in Sources */,
+				31F8DB2B2B2A111200171D39 /* EventViewModel.swift in Sources */,
 				09ECB3372AFE2DAB000F3008 /* SettingWrittenDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

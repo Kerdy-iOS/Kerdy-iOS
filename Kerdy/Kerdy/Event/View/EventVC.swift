@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Core
 
-final class EventVC: UIViewController {
+final class EventVC: BaseVC {
     private lazy var searchContainerView: UIView = {
         let view = UIView()
         return view
