@@ -16,7 +16,7 @@ import RxSwift
 
 protocol BlockCellDelegate: AnyObject {
     
-    func tapBlockButton(memberID: Int, blockID: Int, indexPath: Int)
+    func tapBlockButton(indexPath: Int)
 }
 
 final class BlockListCell: UICollectionViewCell {
@@ -26,10 +26,7 @@ final class BlockListCell: UICollectionViewCell {
     private let disposeBag = DisposeBag()
     weak var delegate: BlockCellDelegate?
     
-    private var memberID: Int = 0
-    private var blockID: Int = 0
     private var indexPah: Int = 0
-    private let cellSelect = PublishSubject<Int>()
     
     // MARK: - UI Property
     
@@ -51,6 +48,12 @@ final class BlockListCell: UICollectionViewCell {
     }()
     
     // MARK: - Initialize
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        configureButton(isTapped: false)
+    }
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -99,22 +102,29 @@ extension BlockListCell {
         configureButton(isTapped: false)
     }
     
-    private func configureButtonBindings() {
+    func configureCell(to data: BlockReponseDTO, indexPath: Int) {
         
-        blockButton.rx.tap
-            .asDriver()
-            .drive(with: self, onNext: { owner, _ in
-                owner.delegate?.tapBlockButton(memberID: owner.memberID,
-                                               blockID: owner.blockID,
-                                               indexPath: self.indexPah)
-            })
-            .disposed(by: disposeBag)
+        self.indexPah = indexPath
+        guard let url = URL(string: data.imageURL ?? "") else { return }
+        profile.kf.setImage(with: url, placeholder: UIImage.emptyIcon)
+        userID.text = data.name
+        configureButton(isTapped: !data.isSelected)
     }
 }
 
 // MARK: - Button Style
 
 extension BlockListCell {
+    
+    private func configureButtonBindings() {
+        
+        blockButton.rx.tap
+            .asDriver()
+            .drive(with: self, onNext: { owner, _ in
+                owner.delegate?.tapBlockButton(indexPath: self.indexPah)
+            })
+            .disposed(by: disposeBag)
+    }
     
     func configureButton(isTapped: Bool) {
         
@@ -129,16 +139,5 @@ extension BlockListCell {
                                                              withStroke: stroke,
                                                              using: 1.0,
                                                              font: .nanumSquare(to: .bold, size: 11))
-        
-    }
-    
-    func configureCell(to data: BlockReponseDTO, indexPath: Int) {
-        guard let url = URL(string: data.imageURL ?? "") else { return }
-        profile.kf.setImage(with: url, placeholder: UIImage.emptyIcon)
-        userID.text = data.name
-        
-        self.blockID = data.id
-        self.memberID = data.memberID
-        self.indexPah = indexPath
     }
 }
