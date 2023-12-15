@@ -55,8 +55,7 @@ final class SettingCommenetViewModel {
 extension SettingCommenetViewModel {
     
     func getUserComments(id: Int) {
-        //        commentManager.getUserCommnets(id: id)
-        commentManager.getUserCommnets(id: 24)
+        commentManager.getUserCommnets(id: id)
             .subscribe(onSuccess: { response in
                 self.commentsList.accept(response)
             }, onFailure: { error in

@@ -55,20 +55,7 @@ final class SettingProfileCell: UICollectionViewCell {
         label.textColor = .kerdyGray03
         return label
     }()
-    
-    private let hStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = Const.spacing
-        return stackView
-    }()
-    
-    fileprivate lazy var article: UIButton = {
-        let button = UIButton()
-        button.configuration = UIButton.kerdyStyle(to: Strings.article)
-        return button
-    }()
-    
+
     fileprivate lazy var comments: UIButton = {
         let button = UIButton()
         button.configuration = UIButton.kerdyStyle(to: Strings.comments)
@@ -126,8 +113,8 @@ extension SettingProfileCell {
             $0.leading.equalTo(userId.snp.leading)
         }
         
-        contentView.addSubview(hStackView)
-        hStackView.snp.makeConstraints {
+        contentView.addSubview(comments)
+        comments.snp.makeConstraints {
             $0.top.equalTo(profileButton.snp.bottom).offset(24)
             $0.horizontalEdges.equalToSuperview().inset(17)
             $0.height.equalTo(36)
@@ -138,8 +125,6 @@ extension SettingProfileCell {
             $0.horizontalEdges.bottom.equalToSuperview()
             $0.height.equalTo(0.5)
         }
-        
-        hStackView.addArrangedSubviews(article, comments)
     }
     
     private func setUI() {
@@ -164,11 +149,7 @@ extension SettingProfileCell {
 // MARK: - Reactive extension
 
 extension Reactive where Base: SettingProfileCell {
-    
-    var article: ControlEvent<Void> {
-        base.article.rx.tap
-    }
-    
+
     var comment: ControlEvent<Void> {
         base.comments.rx.tap
     }
