@@ -155,18 +155,11 @@ extension SettingVC {
 extension SettingVC {
     
     func configureButton(cell: SettingProfileCell) {
-        cell.rx.article
-            .asDriver()
-            .drive(with: self) { owner, _ in
-                let nextVC = SettingWrittenVC(type: .article)
-                owner.navigationController?.pushViewController(nextVC, animated: true)
-            }
-            .disposed(by: cell.disposeBag)
         
         cell.rx.comment
             .asDriver()
             .drive(with: self) { owner, _ in
-                let nextVC = SettingWrittenVC(type: .comment)
+                let nextVC = SettingCommentsVC(viewModel: SettingCommenetViewModel(commentManager: CommentManager.shared))
                 owner.navigationController?.pushViewController(nextVC, animated: true)
             }
             .disposed(by: cell.disposeBag)
