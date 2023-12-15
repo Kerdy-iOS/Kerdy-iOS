@@ -22,11 +22,8 @@ final class BlockListVC: BaseVC {
     
     private var dataSource: DataSource!
     private var viewModel: BlockListViewModel
-    
-    private var isSelected: Bool = true
-    private let isSelectedRelay = BehaviorRelay<Bool>(value: false)
     private let indexPath = BehaviorRelay<Int>(value: 0)
-        
+    
     // MAKR: - UI Property
     
     private let navigationBar: NavigationBarView = {
@@ -44,8 +41,8 @@ final class BlockListVC: BaseVC {
         return label
     }()
     
-    private lazy var collectionView = UICollectionView(frame: .zero,
-                                                       collectionViewLayout: layout())
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+    
     private let popupView: PopUpView = {
         let view = PopUpView()
         view.configureTitle(title: Strings.unblock,
@@ -66,7 +63,7 @@ final class BlockListVC: BaseVC {
         
         setRegisteration()
         setLayout()
-        setUI()
+        setDelegate()
         setDataSource()
         bind()
     }
@@ -97,7 +94,7 @@ private extension BlockListVC {
         }
     }
     
-    func setUI() {
+    func setDelegate() {
         
         navigationBar.delegate = self
         popupView.delegate = self
@@ -108,18 +105,8 @@ private extension BlockListVC {
         let input = BlockListViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver())
         
         let output = viewModel.transform(input: input)
-        
         output.blockList
             .drive(collectionView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-        
-        Observable.zip(isSelectedRelay, indexPath)
-            .subscribe { isSecelted, indexPath in
-                
-                if let cell = self.collectionView.cellForItem(at: IndexPath(item: indexPath, section: 0)) as? BlockListCell {
-                    cell.configureButton(isTapped: !isSecelted)
-                }
-            }
             .disposed(by: disposeBag)
     }
 }
@@ -156,6 +143,16 @@ extension BlockListVC {
     }
 }
 
+// MARK: - Navi BackButton Delegate
+
+extension BlockListVC: BackButtonActionProtocol {
+    
+    func backButtonTapped() {
+        
+        self.navigationController?.popViewController(animated: true)
+    }
+}
+
 // MARK: - PopUptoBlockDelegate
 
 extension BlockListVC: PopUptoBlockDelegate {
@@ -175,26 +172,17 @@ extension BlockListVC: PopUptoBlockDelegate {
 
 extension BlockListVC: BlockCellDelegate {
     
-    func tapBlockButton(memberID: Int, blockID: Int, indexPath: Int) {
+    func tapBlockButton(indexPath: Int) {
+        
         self.indexPath.accept(indexPath)
+        guard let item = self.viewModel.cellInfo(index: indexPath) else { return }
         
-        if self.isSelected {
-            showPopupView(blockID: blockID)
+        if item.isSelected {
+            self.showPopupView(blockID: item.id)
         } else {
-            viewModel.postBlock(id: memberID)
-            isSelectedRelay.accept(true)
-            isSelected.toggle()
+            viewModel.postBlock(id: item.memberID)
+            self.viewModel.updateSelectedItem(index: indexPath, isSelected: true)
         }
-    }
-}
-
-// MARK: - Navi BackButton Delegate
-
-extension BlockListVC: BackButtonActionProtocol {
-    
-    func backButtonTapped() {
-        
-        self.navigationController?.popViewController(animated: true)
     }
 }
 
@@ -213,12 +201,10 @@ extension BlockListVC {
     }
     
     private func removePopupView(blockID: Int? = nil, isSelected: Bool) {
-        self.isSelected = isSelected
-        self.isSelectedRelay.accept(isSelected)
         
+        let indexPath = self.indexPath.value
+        self.viewModel.updateSelectedItem(index: indexPath, isSelected: isSelected)
+        self.viewModel.delegeBlockMember(blockID: blockID)
         self.popupView.removeFromSuperview()
-        if let blockID = blockID {
-            self.viewModel.deleteBlock(id: blockID)
-        }
     }
 }
