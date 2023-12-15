@@ -37,7 +37,7 @@ final class BlockListViewModel: ViewModelType {
     }
     
     private let blockList = BehaviorRelay<[BlockSection]>(value: [])
-    var selectedButton: [BlockSection.Item] = []
+    private var selectedItems: [Int: Bool] = [:]
     
     func transform(input: Input) -> Output {
         
@@ -117,5 +117,25 @@ extension BlockListViewModel {
                 }
             })
             .disposed(by: disposeBag)
+    }
+    
+    func cellInfo(index: Int) -> BlockSection.Item? {
+        
+        return blockList.value[0].items[index]
+    }
+    
+    func updateSelectedItem(index: Int, isSelected: Bool) {
+        
+        var updatedBlockList = blockList.value
+        var updatedItem = updatedBlockList[0].items[index]
+        updatedItem.isSelected = isSelected
+        updatedBlockList[0].items[index] = updatedItem
+        blockList.accept(updatedBlockList)
+    }
+    
+    func delegeBlockMember(blockID: Int? = nil) {
+        if let blockID = blockID {
+            self.deleteBlock(id: blockID)
+        }
     }
 }
