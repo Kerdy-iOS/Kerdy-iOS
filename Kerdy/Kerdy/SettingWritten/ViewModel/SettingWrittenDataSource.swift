@@ -11,16 +11,6 @@ enum WrittenSections: Int {
     
     case article
     case comment
-    
-    var title: String {
-        switch self {
-        case .article:
-            return "작성한 글"
-        case .comment:
-            return "작성한 댓글"
-        }
-    }
-    
 }
 
 final class SettingWrittenDataSource<T: SettingWrittenProtocol> {
@@ -30,7 +20,7 @@ final class SettingWrittenDataSource<T: SettingWrittenProtocol> {
     typealias Item = T
     typealias CellRegistration = UICollectionView.CellRegistration
     typealias DataSource = UICollectionViewDiffableDataSource<WrittenSections, Item>
-    typealias SnapShot = NSDiffableDataSourceSnapshot<WrittenSections, Item>
+    typealias Snaphot = NSDiffableDataSourceSnapshot<WrittenSections, Item>
     
     var dataSource: DataSource?
     var sectionType: WrittenSections
@@ -50,7 +40,7 @@ final class SettingWrittenDataSource<T: SettingWrittenProtocol> {
         
         setCollectionView()
         setDataSource()
-        setSnapShot()
+        setSnapshot()
     }
 }
 
@@ -69,29 +59,36 @@ extension SettingWrittenDataSource {
             case .article:
                 cell.configureUI(type: self.sectionType, to: item)
             case .comment:
-                    let count = self.count[indexPath.item]
-                    cell.configureUI(type: self.sectionType, 
-                                     to: item,
-                                     count: count)
+                let count = self.count[indexPath.item]
+                cell.configureUI(type: self.sectionType,
+                                 to: item,
+                                 count: count)
                 
             }
         }
         
         dataSource = DataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
             return collectionView.dequeueConfiguredReusableCell(using: cellRegistaion,
-                                                                for: indexPath, 
+                                                                for: indexPath,
                                                                 item: itemIdentifier)
         })
         
     }
     
-    private func setSnapShot() {
-        
-        updateData()
-        var snapShot = SnapShot()
+    private func setSnapshot() {
+        var snapShot = Snaphot()
         snapShot.appendSections([sectionType])
         snapShot.appendItems(data, toSection: sectionType)
         dataSource?.apply(snapShot)
+    }
+    
+    func updateData(with items: [Item], count: [Int]? = nil) {
+        data = items
+        
+        if let count = count {
+            self.count = count
+        }
+        setSnapshot()
     }
     
     private func createLayout() -> UICollectionViewLayout {
@@ -100,16 +97,5 @@ extension SettingWrittenDataSource {
         config.separatorConfiguration.bottomSeparatorInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
         let layout = UICollectionViewCompositionalLayout.list(using: config)
         return layout
-    }
-    
-    private func updateData() {
-        
-        switch sectionType {
-        case .article:
-            data = ArticleResponseDTO.dummy() as? [Item] ?? []
-        case .comment:
-            data = CommentsDTO.dummy().compactMap { $0.parentComment } as? [Item] ?? []
-            count = CommentsDTO.dummy().compactMap { $0.childComments.count }
-        }
     }
 }

@@ -19,8 +19,8 @@ final class TermsOfUseVC: UIViewController {
     
     // MARK: - UI Property
     
-    private let modalTopView: ModalTopView = {
-        let view = ModalTopView()
+    private let navigationBar: NavigationBarView = {
+        let view = NavigationBarView()
         view.configureUI(to: Strings.termsOfUseTitle)
         return view
     }()
@@ -45,15 +45,15 @@ extension TermsOfUseVC {
     
     private func setLayout() {
         
-        view.addSubview(modalTopView)
-        modalTopView.snp.makeConstraints {
+        view.addSubview(navigationBar)
+        navigationBar.snp.makeConstraints {
             $0.top.equalTo(safeArea)
             $0.horizontalEdges.equalTo(safeArea)
         }
         
         view.addSubview(webView)
         webView.snp.makeConstraints {
-            $0.top.equalTo(modalTopView.snp.bottom)
+            $0.top.equalTo(navigationBar.snp.bottom)
             $0.horizontalEdges.equalTo(safeArea)
             $0.bottom.equalToSuperview()
         }
@@ -62,6 +62,7 @@ extension TermsOfUseVC {
     private func setUI() {
         
         view.backgroundColor = .kerdyBackground
+        navigationBar.delegate = self
         
     }
     
@@ -73,5 +74,14 @@ extension TermsOfUseVC {
         let request = URLRequest(url: url)
         webView.load(request)
         
+    }
+}
+
+// MARK: - Navi BackButton Delegate
+
+extension TermsOfUseVC: BackButtonActionProtocol {
+    
+    func backButtonTapped() {
+        self.navigationController?.popViewController(animated: true)
     }
 }

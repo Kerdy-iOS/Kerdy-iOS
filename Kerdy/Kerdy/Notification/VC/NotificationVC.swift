@@ -17,8 +17,8 @@ final class NotificationVC: UIViewController {
     
     // MARK: - UI Property
     
-    private let modalTopView: ModalTopView = {
-        let view = ModalTopView()
+    private let navigationBar: NavigationBarView = {
+        let view = NavigationBarView()
         view.configureUI(to: Strings.notificationTitle)
         return view
     }()
@@ -80,14 +80,14 @@ extension NotificationVC {
     
     private func setLayout() {
         
-        view.addSubview(modalTopView)
-        modalTopView.snp.makeConstraints {
+        view.addSubview(navigationBar)
+        navigationBar.snp.makeConstraints {
             $0.top.horizontalEdges.equalTo(safeArea)
         }
         
         view.addSubview(notificationLabel)
         notificationLabel.snp.makeConstraints {
-            $0.top.equalTo(modalTopView.snp.bottom).offset(23)
+            $0.top.equalTo(navigationBar.snp.bottom).offset(23)
             $0.leading.equalTo(safeArea).inset(17)
         }
         
@@ -120,16 +120,16 @@ extension NotificationVC {
     private func setUI() {
 
         view.backgroundColor = .kerdyBackground
-        modalTopView.delegate = self
+        navigationBar.delegate = self
         
     }
 }
 
-// MARK: - Protocol
+// MARK: - Navi BackButton Delegate
 
-extension NotificationVC: ButtonActionProtocol {
+extension NotificationVC: BackButtonActionProtocol {
     
-    func cancelButtonTapped() {
-        print("Tapped")
+    func backButtonTapped() {
+        self.navigationController?.popViewController(animated: true)
     }
 }

@@ -13,6 +13,9 @@ public extension UIImage {
     static let cancelIcon = UIImage(named: "ic_cancel")!.withRenderingMode(.alwaysOriginal)
     static let addButtonIcon = UIImage(named: "ic_addButton")!.withRenderingMode(.alwaysOriginal)
     static let backButtonIcon = UIImage(named: "ic_backButton")!.withRenderingMode(.alwaysOriginal)
+    static let githubIcon =  UIImage(named: "ic_github")!.withRenderingMode(.alwaysOriginal)
+    static let logoIcon = UIImage(named: "ic_logo")!.withRenderingMode(.alwaysOriginal)
+    
     
     /// tabbar
     static let chatOn = UIImage(named: "chat_on")!.withRenderingMode(.alwaysOriginal)

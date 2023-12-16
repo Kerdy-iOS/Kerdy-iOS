@@ -79,7 +79,6 @@ final class TechTagView: UIView {
                 currentOriginY += tagHeight + tagSpacingY
             }
 
-
             button.frame.origin.x = currentOriginX
             button.frame.origin.y = currentOriginY
 
