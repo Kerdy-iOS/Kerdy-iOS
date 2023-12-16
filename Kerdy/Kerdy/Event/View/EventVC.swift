@@ -8,12 +8,13 @@
 import UIKit
 import SnapKit
 import Core
+import RxSwift
+import RxCocoa
 
 final class EventVC: BaseVC {
-    private lazy var searchContainerView: UIView = {
-        let view = UIView()
-        return view
-    }()
+    typealias EventCell = EventCollectionViewCell
+    
+    private lazy var searchContainerView = UIView()
 
     private lazy var searchView: UIView = {
         let view = UIView()
@@ -82,14 +83,49 @@ final class EventVC: BaseVC {
     }()
 
     private lazy var divideLine = DivideLine(frame: .zero, backgroundColor: .kerdyGray01)
+    
+    private let viewModel = EventViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setLayout()
         setUI()
+        setupCollectionViewBindings()
     }
 
-    // MARK: - 오토레이아웃 설정
+    private func setUI() {
+        view.backgroundColor = .systemBackground
+    }
+    
+    private func updateCategoryColor(index: Int) {
+        for categoryIndex in 0...2 {
+            guard
+                let categoryView = categoryContainerView.arrangedSubviews[categoryIndex] as? CategoryView
+            else { return }
+
+            if categoryIndex == index {
+                categoryView.setSelected()
+            } else {
+                categoryView.setUnselected()
+            }
+        }
+    }
+
+    @objc func categoryBtnTapped(_ sender: UIButton) {
+        let tag = sender.tag
+        let indexPath = IndexPath(item: tag, section: 0)
+        eventCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        updateCategoryColor(index: tag)
+    }
+
+    @objc func filterBtnTapped(_ sender: UIButton) {
+        let nextVC = FilterVC()
+        navigationController?.pushViewController(nextVC, animated: true)
+    }
+}
+
+// MARK: - 레이아웃 설정
+extension EventVC {
     private func setLayout() {
         view.addSubview(searchContainerView)
         view.addSubview(categoryContainerView)
@@ -118,10 +154,6 @@ final class EventVC: BaseVC {
             $0.horizontalEdges.equalToSuperview()
             $0.top.equalTo(filterContainerView.snp.bottom)
         }
-    }
-
-    private func setUI() {
-        view.backgroundColor = .systemBackground
     }
 
     private func setUpsearchViewLayout() {
@@ -192,43 +224,18 @@ final class EventVC: BaseVC {
 
     private func setEventCollectionViewLayout() {
         eventCollectionView.delegate = self
-        eventCollectionView.dataSource = self
         view.addSubview(eventCollectionView)
+        
         eventCollectionView.register(
-            EventCollectionViewCell.self,
-            forCellWithReuseIdentifier: EventCollectionViewCell.identifier
+            EventCell.self,
+            forCellWithReuseIdentifier: EventCell.identifier
         )
+        
         eventCollectionView.snp.makeConstraints {
             $0.top.equalTo(divideLine.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
-    }
-
-    private func updateCategoryColor(index: Int) {
-        for categoryIndex in 0...2 {
-            guard
-                let categoryView = categoryContainerView.arrangedSubviews[categoryIndex] as? CategoryView
-            else { return }
-
-            if categoryIndex == index {
-                categoryView.setSelected()
-            } else {
-                categoryView.setUnselected()
-            }
-        }
-    }
-
-    @objc func categoryBtnTapped(_ sender: UIButton) {
-        let tag = sender.tag
-        let indexPath = IndexPath(item: tag, section: 0)
-        eventCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        updateCategoryColor(index: tag)
-    }
-
-    @objc func filterBtnTapped(_ sender: UIButton) {
-        let nextVC = FilterVC()
-        navigationController?.pushViewController(nextVC, animated: true)
     }
 }
 
@@ -243,12 +250,11 @@ extension EventVC: UICollectionViewDelegate, UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        guard
-            let cell = eventCollectionView.dequeueReusableCell(
-                withReuseIdentifier: EventCollectionViewCell.identifier,
-                for: indexPath
-            ) as? EventCollectionViewCell
-        else { return UICollectionViewCell() }
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: EventCell.identifier,
+            for: indexPath
+        ) as? EventCell ?? EventCollectionViewCell()
+        
         return cell
     }
 }
@@ -271,5 +277,22 @@ extension EventVC: UIScrollViewDelegate {
             let row = indexPath.row
             updateCategoryColor(index: row)
         }
+    }
+}
+
+// MARK: - binding
+
+extension EventVC {
+    private func setupCollectionViewBindings() {
+        viewModel
+            .combinedEvents
+            .bind(
+                to: eventCollectionView.rx.items(
+                    cellIdentifier: EventCell.identifier,
+                    cellType: EventCell.self
+                )) {_, events, cell in
+                    cell.configure(with: events)
+                }
+                .disposed(by: disposeBag)
     }
 }
