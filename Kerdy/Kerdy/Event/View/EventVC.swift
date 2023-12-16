@@ -253,7 +253,7 @@ extension EventVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: EventCell.identifier,
             for: indexPath
-        ) as? EventCell ?? EventCollectionViewCell()
+        ) as? EventCell ?? UICollectionViewCell()
         
         return cell
     }
@@ -281,8 +281,6 @@ extension EventVC: UIScrollViewDelegate {
 }
 
 // MARK: - binding
-
-extension EventVC {
     private func setupCollectionViewBindings() {
         viewModel
             .combinedEvents
@@ -294,5 +292,12 @@ extension EventVC {
                     cell.configure(with: events)
                 }
                 .disposed(by: disposeBag)
+    }
+}
+
+extension EventVC: EventCellDelegate {
+    func showDetailVC() {
+        let nextVC = EventDetailViewController()
+        navigationController?.pushViewController(nextVC, animated: true)
     }
 }

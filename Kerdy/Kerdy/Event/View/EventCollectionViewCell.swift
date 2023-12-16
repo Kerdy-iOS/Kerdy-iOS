@@ -9,8 +9,13 @@ import UIKit
 import SnapKit
 import Core
 
-final class EventCollectionViewCell: UICollectionViewCell {
+protocol EventCellDelegate {
+    func showDetailVC()
+}
 
+final class EventCollectionViewCell: UICollectionViewCell {
+    var delegate: EventCellDelegate?
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.showsVerticalScrollIndicator = false

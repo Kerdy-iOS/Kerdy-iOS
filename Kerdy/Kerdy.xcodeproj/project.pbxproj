@@ -107,6 +107,16 @@
 		3164D4B32AE223180054F440 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 3164D4B22AE223180054F440 /* RxMoya */; };
 		3164D4B72AE223400054F440 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3164D4B62AE223400054F440 /* SnapKit */; };
 		31F8DB2B2B2A111200171D39 /* EventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31F8DB2A2B2A111200171D39 /* EventViewModel.swift */; };
+		31FBEC792B107DCD00DE68F3 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC782B107DCD00DE68F3 /* EventDetailViewController.swift */; };
+		31FBEC7B2B109A1C00DE68F3 /* EventDetailPostCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC7A2B109A1C00DE68F3 /* EventDetailPostCVCell.swift */; };
+		31FBEC7F2B109D4500DE68F3 /* PostListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC7E2B109D4500DE68F3 /* PostListModel.swift */; };
+		31FBEC832B109EA800DE68F3 /* EventDetailPhotoTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC822B109EA800DE68F3 /* EventDetailPhotoTVCell.swift */; };
+		31FBEC852B109EBA00DE68F3 /* EventDetailPostTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC842B109EBA00DE68F3 /* EventDetailPostTVCell.swift */; };
+		31FBEC872B10DF9600DE68F3 /* EventDetailBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC862B10DF9600DE68F3 /* EventDetailBottomView.swift */; };
+		31FBEC892B10F15300DE68F3 /* EventSummaryInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC882B10F15300DE68F3 /* EventSummaryInfoView.swift */; };
+		31FBEC8D2B10F5B100DE68F3 /* EventSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC8C2B10F5B100DE68F3 /* EventSummaryModel.swift */; };
+		31FBEC8F2B11C09100DE68F3 /* EventDetailPhotoCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC8E2B11C09100DE68F3 /* EventDetailPhotoCVCell.swift */; };
+		31FBEC942B11CB3600DE68F3 /* CellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC932B11CB3600DE68F3 /* CellProtocol.swift */; };
 		5B20BA482B00FF8700A80781 /* EducationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B20BA472B00FF8700A80781 /* EducationViewModel.swift */; };
 		5B20BA4A2B0109DC00A80781 /* ClubViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B20BA492B0109DC00A80781 /* ClubViewModel.swift */; };
 		5B216AFA2AF671CF00C028A0 /* FourthInitialSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B216AF92AF671CF00C028A0 /* FourthInitialSettingVC.swift */; };
@@ -230,6 +240,16 @@
 		3164D4A12AE21F820054F440 /* KerdyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KerdyUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3164D4AE2AE21FA80054F440 /* Kerdy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kerdy.entitlements; sourceTree = "<group>"; };
 		31F8DB2A2B2A111200171D39 /* EventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewModel.swift; sourceTree = "<group>"; };
+		31FBEC782B107DCD00DE68F3 /* EventDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
+		31FBEC7A2B109A1C00DE68F3 /* EventDetailPostCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailPostCVCell.swift; sourceTree = "<group>"; };
+		31FBEC7E2B109D4500DE68F3 /* PostListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListModel.swift; sourceTree = "<group>"; };
+		31FBEC822B109EA800DE68F3 /* EventDetailPhotoTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailPhotoTVCell.swift; sourceTree = "<group>"; };
+		31FBEC842B109EBA00DE68F3 /* EventDetailPostTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailPostTVCell.swift; sourceTree = "<group>"; };
+		31FBEC862B10DF9600DE68F3 /* EventDetailBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailBottomView.swift; sourceTree = "<group>"; };
+		31FBEC882B10F15300DE68F3 /* EventSummaryInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSummaryInfoView.swift; sourceTree = "<group>"; };
+		31FBEC8C2B10F5B100DE68F3 /* EventSummaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSummaryModel.swift; sourceTree = "<group>"; };
+		31FBEC8E2B11C09100DE68F3 /* EventDetailPhotoCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailPhotoCVCell.swift; sourceTree = "<group>"; };
+		31FBEC932B11CB3600DE68F3 /* CellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellProtocol.swift; sourceTree = "<group>"; };
 		5B20BA472B00FF8700A80781 /* EducationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationViewModel.swift; sourceTree = "<group>"; };
 		5B20BA492B0109DC00A80781 /* ClubViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubViewModel.swift; sourceTree = "<group>"; };
 		5B216AF92AF671CF00C028A0 /* FourthInitialSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthInitialSettingVC.swift; sourceTree = "<group>"; };
@@ -760,6 +780,7 @@
 				092414362B0C911700CF5CF4 /* Auth */,
 				5B370F3A2AF53DD800D0D3DE /* InitialSetting */,
 				31571C142AF3CB9F0037A2F2 /* Event */,
+				31FBEC762B0FA1D000DE68F3 /* EventDetail */,
 				3109B2EF2AF52A4200B2EAD2 /* Filter */,
 				090978EA2AF0E77B006BD8DE /* MyCard */,
 				090978EB2AF0E77F006BD8DE /* Chat */,
@@ -807,6 +828,53 @@
 				31F8DB2A2B2A111200171D39 /* EventViewModel.swift */,
 			);
 			path = Viewmodel;
+		31FBEC762B0FA1D000DE68F3 /* EventDetail */ = {
+			isa = PBXGroup;
+			children = (
+				31FBEC7D2B109CFA00DE68F3 /* Models */,
+				31FBEC7C2B109C3A00DE68F3 /* ViewModel */,
+				31FBEC772B107DB400DE68F3 /* Views */,
+			);
+			path = EventDetail;
+			sourceTree = "<group>";
+		};
+		31FBEC772B107DB400DE68F3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				31FBEC782B107DCD00DE68F3 /* EventDetailViewController.swift */,
+				31FBEC862B10DF9600DE68F3 /* EventDetailBottomView.swift */,
+				31FBEC882B10F15300DE68F3 /* EventSummaryInfoView.swift */,
+				31FBEC902B11C09600DE68F3 /* Cells */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		31FBEC7C2B109C3A00DE68F3 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				31FBEC932B11CB3600DE68F3 /* CellProtocol.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		31FBEC7D2B109CFA00DE68F3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				31FBEC7E2B109D4500DE68F3 /* PostListModel.swift */,
+				31FBEC8C2B10F5B100DE68F3 /* EventSummaryModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		31FBEC902B11C09600DE68F3 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				31FBEC8E2B11C09100DE68F3 /* EventDetailPhotoCVCell.swift */,
+				31FBEC822B109EA800DE68F3 /* EventDetailPhotoTVCell.swift */,
+				31FBEC7A2B109A1C00DE68F3 /* EventDetailPostCVCell.swift */,
+				31FBEC842B109EBA00DE68F3 /* EventDetailPostTVCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		5B370F3A2AF53DD800D0D3DE /* InitialSetting */ = {
@@ -1025,6 +1093,7 @@
 				095EBE842AFF6AE900629F06 /* SettingViewModel.swift in Sources */,
 				3109B2FE2AF52B4700B2EAD2 /* DateFilterView.swift in Sources */,
 				095EBE7A2AFF5DF200629F06 /* BaseVC.swift in Sources */,
+				31FBEC792B107DCD00DE68F3 /* EventDetailViewController.swift in Sources */,
 				092430012B146296008DE4FB /* AuthInterceptor.swift in Sources */,
 				09A66C1C2B19D7AF0035C4C7 /* SettingSectionModel.swift in Sources */,
 				31571C242AF3CBC00037A2F2 /* EventVC.swift in Sources */,
@@ -1046,6 +1115,7 @@
 				098294182AF341290011773A /* BlockListVC.swift in Sources */,
 				311E982E2AF8B65F009BEB3F /* TechTagView.swift in Sources */,
 				09ECB3352AFE15E7000F3008 /* CommentsResponseDTO.swift in Sources */,
+				31FBEC8F2B11C09100DE68F3 /* EventDetailPhotoCVCell.swift in Sources */,
 				09A3E1832B18EA28004BD432 /* MemberProfileResponseDTO.swift in Sources */,
 				09472C3B2B138B5C00B4A84E /* KeyChainValue.swift in Sources */,
 				09BB55192AF0158C00A54B1B /* SettingVC.swift in Sources */,
@@ -1065,6 +1135,7 @@
 				3109B2FA2AF52B2000B2EAD2 /* FilterVC.swift in Sources */,
 				3109B3022AF52B6A00B2EAD2 /* ResetBtn.swift in Sources */,
 				5B370F3C2AF53E1300D0D3DE /* FirstInitialSettingVC.swift in Sources */,
+				31FBEC832B109EA800DE68F3 /* EventDetailPhotoTVCell.swift in Sources */,
 				098294232AF3C6180011773A /* ExternalURL.swift in Sources */,
 				095EBE822AFF66A300629F06 /* Util.swift in Sources */,
 				31571C202AF3CBC00037A2F2 /* CategoryView.swift in Sources */,
@@ -1072,12 +1143,15 @@
 				090978F12AF0E7B5006BD8DE /* ChatVC.swift in Sources */,
 				31571C232AF3CBC00037A2F2 /* EventCollectionViewCell.swift in Sources */,
 				090979022AF29086006BD8DE /* TagCollectionViewFlowLayout.swift in Sources */,
+				31FBEC872B10DF9600DE68F3 /* EventDetailBottomView.swift in Sources */,
 				09ED93EC2B261ACB001864EF /* SettingFeedViewModel.swift in Sources */,
 				31571C262AF3CBC80037A2F2 /* Event.swift in Sources */,
 				095EBE882AFF705900629F06 /* RxViewController+.swift in Sources */,
 				0909790D2AF33D95006BD8DE /* TagModel.swift in Sources */,
+				31FBEC852B109EBA00DE68F3 /* EventDetailPostTVCell.swift in Sources */,
 				090978FE2AF28778006BD8DE /* TagVC.swift in Sources */,
 				5B20BA482B00FF8700A80781 /* EducationViewModel.swift in Sources */,
+				31FBEC892B10F15300DE68F3 /* EventSummaryInfoView.swift in Sources */,
 				09472C322B1374F300B4A84E /* SignInResponseDTO.swift in Sources */,
 				3164D47F2AE21F810054F440 /* AppDelegate.swift in Sources */,
 				09ED93F02B261AF7001864EF /* FeedAPI.swift in Sources */,
@@ -1089,11 +1163,16 @@
 				09472C152B131D4700B4A84E /* BaseInfoManager.swift in Sources */,
 				09E9709C2B2612DC003DF0B7 /* SettingFeedVC.swift in Sources */,
 				090979002AF287E0006BD8DE /* NavigationBarView.swift in Sources */,
+				31FBEC942B11CB3600DE68F3 /* CellProtocol.swift in Sources */,
 				3164D4812AE21F810054F440 /* SceneDelegate.swift in Sources */,
+				31FBEC7B2B109A1C00DE68F3 /* EventDetailPostCVCell.swift in Sources */,
+				09BB55282AF0543100A54B1B /* ProfileResponseDTO.swift in Sources */,
 				09ED93E82B261A7A001864EF /* SettingCommentsVC.swift in Sources */,
 				09A3E17F2B18E500004BD432 /* SettingManager.swift in Sources */,
 				0982941A2AF342090011773A /* BlockListCell.swift in Sources */,
+				31FBEC8D2B10F5B100DE68F3 /* EventSummaryModel.swift in Sources */,
 				09BB552A2AF0545400A54B1B /* SettingBasicModel.swift in Sources */,
+				31FBEC7F2B109D4500DE68F3 /* PostListModel.swift in Sources */,
 				31571C1F2AF3CBC00037A2F2 /* FilterSettingBtn.swift in Sources */,
 				0982941E2AF35E660011773A /* BlockListModel.swift in Sources */,
 				090978FA2AF272D2006BD8DE /* NotificationVC.swift in Sources */,
@@ -1277,9 +1356,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Kerdy/Kerdy.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VKW8W27KRV;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Kerdy/Resource/Info.plist;
@@ -1297,6 +1378,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kerdy.Kerdy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = KerdyProvisioning;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1309,9 +1391,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Kerdy/Kerdy.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VKW8W27KRV;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Kerdy/Resource/Info.plist;
@@ -1329,6 +1413,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kerdy.Kerdy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = KerdyProvisioning;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
