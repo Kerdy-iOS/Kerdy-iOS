@@ -249,6 +249,8 @@ extension EventVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 for: indexPath
             ) as? EventCollectionViewCell
         else { return UICollectionViewCell() }
+        cell.delegate = self
+        
         return cell
     }
 }
@@ -271,5 +273,12 @@ extension EventVC: UIScrollViewDelegate {
             let row = indexPath.row
             updateCategoryColor(index: row)
         }
+    }
+}
+
+extension EventVC: EventCellDelegate {
+    func showDetailVC() {
+        let nextVC = EventDetailViewController()
+        navigationController?.pushViewController(nextVC, animated: true)
     }
 }
