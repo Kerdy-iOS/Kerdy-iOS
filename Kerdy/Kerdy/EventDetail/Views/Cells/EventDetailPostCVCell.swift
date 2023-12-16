@@ -13,7 +13,7 @@ protocol PostCellDelegate {
 }
 
 final class EventDetailPostCVCell: UICollectionViewCell {
-    var delegate: EventCellDelegate?
+//    var delegate: EventCellDelegate?
     private var posts: [PostListModel] = []
     
     lazy var tableView: UITableView = {
@@ -51,7 +51,7 @@ final class EventDetailPostCVCell: UICollectionViewCell {
 // MARK: - TableViewDelegate
 extension EventDetailPostCVCell: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.showDetailVC()
+//        delegate?.showDetailVC()
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
