@@ -17,24 +17,20 @@ final class EventManager {
     private init() {}
     
     func getEvents(
-            category: String?,
-            startDate: Date?,
-            endDate: Date?,
-            statuses: [String]?,
-            keyword: String?
-    ) -> Observable<Data> {
+        category: String?,
+        eventFilter: EventFilter
+    ) -> Observable<[Event]> {
         return Observable.create { observer in
-            self.provider.request(.getEvents(
-                category: category,
-                startDate: startDate,
-                endDate: endDate,
-                statuses: statuses,
-                keyword: keyword
-            )) {
+            self.provider.request(.getEvents(category: category, filter: eventFilter)) {
                 switch $0 {
                 case .success(let response):
-                    observer.onNext(response.data)
-                    observer.onCompleted()
+                    do {
+                        let events = try parseEvents(data: response.data)
+                        observer.onNext(events)
+                        observer.onCompleted()
+                    } catch {
+                        print("Error parsing JSON:", error.localizedDescription)
+                    }
                 case .failure(let error):
                     observer.onError(error)
                 }

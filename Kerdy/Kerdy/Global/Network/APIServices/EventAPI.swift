@@ -9,13 +9,7 @@ import Foundation
 import Moya
 
 enum EventAPI {
-    case getEvents(
-        category: String?,
-        startDate: Date?,
-        endDate: Date?,
-        statuses: [String]?,
-        keyword: String?
-    )
+    case getEvents(category: String?, filter: EventFilter)
 }
 
 extension EventAPI: KerdyAPI {
@@ -39,13 +33,7 @@ extension EventAPI: KerdyAPI {
 
     var parameters: [String : Any]? {
         switch self {
-        case .getEvents(
-            category: let category,
-            startDate: let startDate,
-            endDate: let endDate,
-            statuses: let statuses,
-            keyword: let keyword
-        ):
+        case .getEvents(category: let category, filter: let filter):
             var parameters: [String: Any] = [:]
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -53,18 +41,18 @@ extension EventAPI: KerdyAPI {
             if let category = category {
                 parameters.updateValue(category, forKey: "category")
             }
-            if let startDate = startDate {
+            if let startDate = filter.startDate {
                 let start = dateFormatter.string(from: startDate)
                 parameters.updateValue(start, forKey: "startDate")
             }
-            if let endDate = endDate {
+            if let endDate = filter.endDate {
                 let end = dateFormatter.string(from: endDate)
                 parameters.updateValue(end, forKey: "endDate")
             }
-            if let statuses = statuses {
+            if let statuses = filter.statuses {
                 parameters.updateValue(statuses, forKey: "statuses")
             }
-            if let keyword = keyword {
+            if let keyword = filter.keyword {
                 parameters.updateValue(keyword, forKey: "keyword")
             }
             return parameters
