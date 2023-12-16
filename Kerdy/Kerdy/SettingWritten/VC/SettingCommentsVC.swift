@@ -7,23 +7,30 @@
 
 import UIKit
 
-final class SettingWrittenVC: BaseVC {
+import RxSwift
+
+final class SettingCommentsVC: BaseVC {
     
     // MARK: - Property
     
-    private var type: WrittenSections
+    private let viewModel: SettingCommenetViewModel
+    
     private var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
-    private lazy var articleDataSource = SettingWrittenDataSource<ArticleResponseDTO>(collectionView: collectionView, type: .article)
+    
     private lazy var commentDataSource = SettingWrittenDataSource<Comment>(collectionView: collectionView, type: .comment)
-        
+    
     // MARK: - UI Components
     
-    private let navigationBar = NavigationBarView()
+    private let navigationBar: NavigationBarView = {
+        let view = NavigationBarView()
+        view.configureUI(to: "작성한 댓글")
+        return view
+    }()
     
     // MARK: - Life Cycle
     
-    init(type: WrittenSections) {
-        self.type = type
+    init(viewModel: SettingCommenetViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -36,13 +43,13 @@ final class SettingWrittenVC: BaseVC {
         
         setLayout()
         setUI()
-        setDataSource()
+        bind()
     }
 }
 
 // MARK: - Setting
 
-extension SettingWrittenVC {
+extension SettingCommentsVC {
     
     private func setLayout() {
         
@@ -60,27 +67,31 @@ extension SettingWrittenVC {
     }
     
     private func setUI() {
-            
+        
         navigationBar.delegate = self
-        navigationBar.configureUI(to: type.title)
-        
+        collectionView.dataSource = commentDataSource.dataSource
     }
-    
-    private func setDataSource() {
+
+    private func bind() {
         
-        switch type {
-        case .article:
-            collectionView.dataSource = articleDataSource.dataSource
-        case .comment:
-            collectionView.dataSource = commentDataSource.dataSource
-        }
+        let input = SettingCommenetViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver())
+        
+        let output = viewModel.transform(input: input)
+        
+        output.commentsList
+            .drive(with: self) { owner, comments in
+                let commentsList = comments.map { $0.parentComment }
+                let count = comments.map { $0.childComments.count }
+                owner.commentDataSource.updateData(with: commentsList, count: count)
+                dump(comments)
+            }
+            .disposed(by: disposeBag)
     }
 }
-// MARK: - Method
 
 // MARK: - Navi BackButton Delegate
 
-extension SettingWrittenVC: BackButtonActionProtocol {
+extension SettingCommentsVC: BackButtonActionProtocol {
     
     func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
