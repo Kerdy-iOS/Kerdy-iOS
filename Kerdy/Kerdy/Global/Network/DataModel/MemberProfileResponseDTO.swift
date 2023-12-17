@@ -28,10 +28,6 @@ struct MemberProfileResponseDTO: Decodable, Equatable {
     static func == (lhs: MemberProfileResponseDTO, rhs: MemberProfileResponseDTO) -> Bool {
         lhs.uuid == rhs.uuid
     }
-    
-    static func empty() -> MemberProfileResponseDTO {
-        return MemberProfileResponseDTO(id: 0, name: nil, description: "", imageURL: "", githubURL: "", activities: [])
-    }
 }
 
 // MARK: - Activity
