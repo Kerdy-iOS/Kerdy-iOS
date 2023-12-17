@@ -18,6 +18,7 @@ final class SettingVC: BaseVC {
     
     private var dataSource: DataSource!
     private let viewModel: SettingViewModel
+    private var authType: AuthType?
     
     // MARK: - UI Components
     
@@ -27,6 +28,8 @@ final class SettingVC: BaseVC {
         collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
+    
+    private let authView =  PopUpView()
     
     // MARK: - Init
     
@@ -43,6 +46,7 @@ final class SettingVC: BaseVC {
         setRegisteration()
         setLayout()
         setDataSource()
+        setDelegate()
         bind()
     }
     
@@ -69,6 +73,11 @@ extension SettingVC {
         }
     }
     
+    private func setDelegate() {
+        
+        authView.delegate = self
+    }
+    
     private func bind() {
         
         let input = SettingViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver())
@@ -80,19 +89,29 @@ extension SettingVC {
         
         collectionView.rx.itemSelected
             .filter { $0.section == 1 }
-            .bind { indexpath in
-                var vc: UIViewController
-                switch indexpath.item {
+            .bind { indexPath in
+                var vc: UIViewController?
+
+                switch indexPath.item {
                 case 0:
                     vc = NotificationVC(viewModel: NotificationViewModel(tagManager: TagManager.shared))
                 case 1:
                     vc = BlockListVC(viewModel: BlockListViewModel(blockManager: BlockManager.shared))
                 case 2:
                     vc = TermsOfUseVC()
+                case 4:
+                    self.showPopupView(alert: self.authView, type: .withdrawal)
+                    self.authType = .withdrawal
+                case 5:
+                    self.showPopupView(alert: self.authView, type: .logout)
+                    self.authType = .logout
                 default:
-                    return
+                    break
                 }
-                self.navigationController?.pushViewController(vc, animated: true)
+
+                if let viewController = vc {
+                    self.navigationController?.pushViewController(viewController, animated: true)
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -130,7 +149,7 @@ extension SettingVC {
     func layout() -> UICollectionViewCompositionalLayout {
         
         return UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
-            guard self != nil else { return nil }
+            guard let self else { return nil }
             guard let section = SettingSectionItem.Section(rawValue: sectionIndex) else { return nil }
             switch section {
             case .profile:
@@ -159,7 +178,16 @@ extension SettingVC {
 
 extension SettingVC {
     
-    func configureButton(cell: SettingProfileCell) {
+    private func showPopupView(alert: PopUpView, type: AuthType) {
+        alert.configureTitle(title: type.title, subTitle: type.subTitle, unlock: type.button)
+        
+        view.addSubview(alert)
+        alert.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
+    
+    private func configureButton(cell: SettingProfileCell) {
         
         cell.rx.comment
             .asDriver()
@@ -168,5 +196,23 @@ extension SettingVC {
                 owner.navigationController?.pushViewController(nextVC, animated: true)
             }
             .disposed(by: cell.disposeBag)
+    }
+}
+
+// MARk: = PopUp Delegate
+
+extension SettingVC: PopUptoBlockDelegate {
+    
+    func action(blockID: Int) {
+        
+        guard let authType = self.authType else { return }
+        self.viewModel.authMember(type: authType)
+        
+        SceneDelegate.shared?.changeRootViewControllerTo(AuthVC(viewModel: AuthViewModel(loginManager: LoginManager.shared)))
+    }
+    
+    func cancel() {
+        
+        self.authView.removeFromSuperview()
     }
 }

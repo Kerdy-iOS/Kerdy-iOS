@@ -83,4 +83,38 @@ extension SettingViewModel {
             })
             .disposed(by: disposeBag)
     }
+    
+    func withdrawalMember() {
+        guard let id = self.id else { return }
+        settingManager.deleteMember(id: id)
+            .subscribe(onSuccess: { response in
+                dump(response)
+                KeyChainManager.removeAllKeychain()
+            }, onFailure: { error in
+                if let moyaError = error as? MoyaError {
+                    if let statusCode = moyaError.response?.statusCode {
+                        let networkError = NetworkError(rawValue: statusCode)
+                        switch networkError {
+                        case .invalidRequest:
+                            print("invalidRequest")
+                        default:
+                            print("network error")
+                        }
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func logoutMember() {
+        KeyChainManager.delete(forKey: .accessToken)
+    }
+    
+    func authMember(type: AuthType) {
+        if type == .logout {
+            self.logoutMember()
+        } else {
+            self.withdrawalMember()
+        }
+    }
 }
