@@ -36,48 +36,62 @@ final class TagViewModel: ViewModelType {
     struct Output {
         
         let tagList: Driver<[TagSection]>
-        let selectedList: Driver<[Int]>
         let didRegisterButtonTap: Signal<Void>
     }
     
     private let tagList = BehaviorRelay<[TagSection]>(value: [])
-    private let selectedTagList = BehaviorRelay<[Int]>(value: [])
     private let didRegisterButtonTap = PublishRelay<Void>()
     
     func transform(input: Input) -> Output {
         let output = Output(tagList: tagList.asDriver(),
-                            selectedList: selectedTagList.asDriver(),
                             didRegisterButtonTap: didRegisterButtonTap.asSignal())
         
         input.viewWillAppear
             .asDriver(onErrorDriveWith: .never())
             .drive(with: self) { [weak self] owner, _ in
                 guard let self = self, let id = self.id else { return }
-                owner.getAllTags()
-                owner.getUserTags(id: id)
+                owner.getAllTagsAndUserTags(id: id)
             }
             .disposed(by: disposeBag)
-        
+
         input.tapRegisterButton
-            .throttle(.seconds(1), latest: false)
-            .withLatestFrom(selectedTagList.asDriver())
-            .asDriver(onErrorDriveWith: .never())
-            .drive(with: self, onNext: { owner, id in
-                owner.postTags(id: id)
-            })
+            .withLatestFrom(tagList.asDriver())
+            .flatMap { sections -> Driver<[Int]> in
+                let selectedIds = sections[0].items
+                    .filter { $0.isSelected }
+                    .map { $0.id }
+                return Driver.just(selectedIds)
+            }
+            .drive(with: self) { owner, selectedIds in
+                owner.postTags(id: selectedIds)
+            }
             .disposed(by: disposeBag)
-        
-        return output
+
+                return output
     }
 }
 
 extension TagViewModel {
     
-    func getAllTags() {
-        tagManager.getAllTags()
-            .subscribe(onSuccess: { response in
-                let tagList = [TagSection(items: response)]
-                self.tagList.accept(tagList)
+    func getAllTagsAndUserTags(id: Int) {
+        let allTags = tagManager.getAllTags()
+        let userTags = tagManager.getUserTags(id: id)
+        
+        Single.zip(allTags, userTags)
+            .subscribe(onSuccess: { allTagsResponse, userTagsResponse in
+                let allTagsSection = TagSection(items: allTagsResponse)
+                
+                let userTagIDs = Set(userTagsResponse.map { $0.id })
+                
+                let updatedItems = allTagsSection.items.map { tag in
+                    var mutableTag = tag
+                    mutableTag.isSelected = userTagIDs.contains(tag.id)
+                    return mutableTag
+                }
+                
+                let updatedTagSection = [TagSection(items: updatedItems)]
+                self.tagList.accept(updatedTagSection)
+                
             }, onFailure: { error in
                 if let moyaError = error as? MoyaError {
                     if let statusCode = moyaError.response?.statusCode {
@@ -93,32 +107,11 @@ extension TagViewModel {
             })
             .disposed(by: disposeBag)
     }
-    
-    func getUserTags(id: Int) {
-        tagManager.getUserTags(id: id)
-            .subscribe(onSuccess: { response in
-                let idList = response.map { $0.id }
-                dump(idList)
-                self.selectedTagList.accept(idList)
-            }, onFailure: { error in
-                if let moyaError = error as? MoyaError {
-                    if let statusCode = moyaError.response?.statusCode {
-                        let networkError = NetworkError(rawValue: statusCode)
-                        switch networkError {
-                        case .invalidRequest:
-                            print("invalidRequest")
-                        default:
-                            print("network error")
-                        }
-                    }
-                }
-            })
-            .disposed(by: disposeBag)
-    }
-    
+
     func postTags(id: [Int]) {
         tagManager.postTags(id: id)
             .subscribe(onSuccess: { response in
+                dump(response)
                 self.didRegisterButtonTap.accept(())
             }, onFailure: { error in
                 if let moyaError = error as? MoyaError {
@@ -135,15 +128,20 @@ extension TagViewModel {
             })
             .disposed(by: disposeBag)
     }
-    
-    func selectTags(id: [Int]) {
-        self.selectedTagList.accept(id.uniqued())
-    }
-}
 
-extension Sequence where Element: Hashable {
-    func uniqued() -> [Element] {
-        var set = Set<Element>()
-        return filter { set.insert($0).inserted }
+    func cellInfo(index: Int) -> TagSection.Item? {
+        return tagList.value[0].items[index]
+    }
+    
+    func updateSelectedItem(index: Int, isSelected: Bool) {
+        
+        var updatedBlockList = tagList.value[0].items
+        var updatedItem = updatedBlockList[index]
+        
+        updatedItem.isSelected = !isSelected
+        updatedBlockList[index] = updatedItem
+       
+        let updatedTagList = [TagSection(items: updatedBlockList)]
+        tagList.accept(updatedTagList)
     }
 }

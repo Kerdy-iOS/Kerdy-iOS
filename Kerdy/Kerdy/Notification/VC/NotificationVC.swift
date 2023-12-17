@@ -216,6 +216,7 @@ extension NotificationVC {
             cell.configureCell(to: item, tagType: .userTag)
             
             cell.rx.cancel.asSignal()
+                .throttle(.milliseconds(500))
                 .map { item.id }
                 .emit { [weak self] id in
                     guard let self else { return }
@@ -250,7 +251,8 @@ extension NotificationVC {
         
         let containerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         
-        let containerGroup = NSCollectionLayoutGroup.vertical(layoutSize: containerSize, subitems: [hgroup1] + Array(repeating: hgroup2, count: 4))
+        let containerGroup = NSCollectionLayoutGroup.vertical(layoutSize: containerSize, 
+                                                              subitems: [hgroup1] + Array(repeating: hgroup2, count: 4))
         containerGroup.interItemSpacing = .fixed(11)
         
         let section = NSCollectionLayoutSection(group: containerGroup)

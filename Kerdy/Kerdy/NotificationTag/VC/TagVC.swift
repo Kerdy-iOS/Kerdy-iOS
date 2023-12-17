@@ -121,15 +121,6 @@ extension TagVC {
             .drive(collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-        output.selectedList
-            .drive(with: self) { owner, tagIDs in
-                self.selectedTag = tagIDs
-                for tagID in tagIDs {
-                    owner.updateCellBackgroundColor(forTag: tagID, isSelected: true)
-                }
-            }
-            .disposed(by: disposeBag)
-        
         output.didRegisterButtonTap
             .withUnretained(self)
             .emit { _ in
@@ -145,37 +136,9 @@ extension TagVC {
             .bind { [weak self] indexPath, model in
                 guard let self else { return }
                 
-                if self.selectedTag.contains(model.id) {
-                    
-                    self.collectionView.deselectItem(at: indexPath, animated: true)
-                    self.updateCellBackgroundColor(forTag: model.id, isSelected: false)
-                    self.selectedTag.removeAll { $0 == model.id }
-                } else {
-                    
-                    self.updateCellBackgroundColor(forTag: model.id, isSelected: true)
-                    self.selectedTag.append(model.id)
-                }
-        
-                self.viewModel.selectTags(id: self.selectedTag)
+                self.viewModel.updateSelectedItem(index: indexPath.item, isSelected: model.isSelected)
             }
             .disposed(by: disposeBag)
-    }
-    
-    private func indexPath(forTag tag: Int) -> IndexPath? {
-        return dataSource.sectionModels
-            .enumerated()
-            .compactMap { sectionIndex, section in
-                section.items.firstIndex { $0.id == tag }.map { IndexPath(item: $0, section: sectionIndex) }
-            }
-            .first
-    }
-    
-    private func updateCellBackgroundColor(forTag tag: Int, isSelected: Bool) {
-        guard let indexPath = indexPath(forTag: tag),
-              let cell = collectionView.cellForItem(at: indexPath) as? TagCell else {
-            return
-        }
-        isSelected ? cell.configureFillBackground() : cell.configureBackground()
     }
 }
 
@@ -191,7 +154,9 @@ extension TagVC {
                 withReuseIdentifier: TagCell.identifier,
                 for: indexPath
             ) as? TagCell else { return UICollectionViewCell() }
+            
             cell.configureCell(to: item, tagType: .registerTag)
+            cell.configureButton(isSelected: item.isSelected)
             
             return cell
         }
@@ -203,6 +168,7 @@ extension TagVC {
 extension TagVC: BackButtonActionProtocol {
     
     func backButtonTapped() {
+        
         self.navigationController?.popViewController(animated: true)
     }
 }
