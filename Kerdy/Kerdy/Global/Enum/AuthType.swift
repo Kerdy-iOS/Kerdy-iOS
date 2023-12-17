@@ -15,7 +15,7 @@ enum AuthType: Int, CaseIterable {
         case .logout:
             return "로그아웃"
         case .withdrawal:
-            return "계정삭제"
+            return "계정 삭제"
         }
     }
     
