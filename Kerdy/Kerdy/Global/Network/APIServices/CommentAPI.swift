@@ -10,7 +10,8 @@ import Foundation
 import Moya
 
 enum CommentAPI {
-    case getAllComments(memberID: Int)
+    case getUserComments(memberID: Int)
+    case getDetailComments(commentID: Int)
 }
 
 extension CommentAPI: KerdyAPI {
@@ -21,36 +22,40 @@ extension CommentAPI: KerdyAPI {
     
     var urlPath: String {
         switch self {
-        case .getAllComments:
+        case .getUserComments:
             return ""
+        case .getDetailComments(commentID: let commentID):
+            return "/\(commentID)"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .getAllComments:
+        case .getUserComments, .getDetailComments:
             return .get
         }
     }
     
     var task: Task {
         switch self {
-        case .getAllComments(memberID: let memberID):
+        case .getUserComments(memberID: let memberID):
             let parameter = ["memberId": memberID ]
             return .requestParameters(parameters: parameter, encoding: URLEncoding.default)
+        case .getDetailComments:
+            return .requestPlain
         }
     }
     
     var headerType: HTTPHeaderFields {
         switch self {
-        case .getAllComments:
+        case .getUserComments, .getDetailComments:
             return .hasAccessToken
         }
     }
 
     var error: [Int: NetworkError]? {
         switch self {
-        case .getAllComments:
+        case .getUserComments, .getDetailComments:
             return nil
         }
     }

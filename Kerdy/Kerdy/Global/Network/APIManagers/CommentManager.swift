@@ -12,7 +12,8 @@ import RxSwift
 
 protocol CommentManagerType {
     
-    func getUserCommnets(id: Int) -> Single<[CommentsResponseDTO]>
+    func getUserComments(id: Int) -> Single<[CommentsResponseDTO]>
+    func getDetailComments(commentID: Int) -> Single<CommentsResponseDTO>
 }
 
 final class CommentManager: Networking, CommentManagerType {
@@ -27,9 +28,15 @@ final class CommentManager: Networking, CommentManagerType {
     
     private init () {}
     
-    func getUserCommnets(id: Int) -> Single<[CommentsResponseDTO]> {
+    func getUserComments(id: Int) -> Single<[CommentsResponseDTO]> {
         return provider
-            .request(.getAllComments(memberID: id))
+            .request(.getUserComments(memberID: id))
             .map([CommentsResponseDTO].self)
+    }
+    
+    func getDetailComments(commentID: Int) -> Single<CommentsResponseDTO> {
+        return provider
+            .request(.getDetailComments(commentID: commentID))
+            .map(CommentsResponseDTO.self)
     }
 }
