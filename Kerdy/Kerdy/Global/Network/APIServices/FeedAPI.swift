@@ -15,7 +15,7 @@ enum FeedAPI {
 }
 
 extension FeedAPI: KerdyAPI {
-    
+
     var domain: KerdyDomain {
         return .feed
     }
@@ -35,23 +35,24 @@ extension FeedAPI: KerdyAPI {
             return .get
         }
     }
-    
-    var parameters: [String: Any]? {
+
+    var task: Task {
         switch self {
         case .getUserFeed:
-            return nil
+            return .requestPlain
         case .getFeeds(eventID: let id):
-            return ["event-id": id]
+             return .requestParameters(parameters: ["event-id": id],
+                                          encoding: URLEncoding.default)
         }
     }
-    
-    var headers: [String: String]? {
+
+    var headerType: HTTPHeaderFields {
         switch self {
         case .getUserFeed, .getFeeds:
-            return ["Authorization": "Bearer " + (KeyChainManager.read(forkey: .accessToken) ?? "")]
+            return .hasAccessToken
         }
     }
-    
+
     var error: [Int: NetworkError]? {
         switch self {
         case .getUserFeed, .getFeeds:

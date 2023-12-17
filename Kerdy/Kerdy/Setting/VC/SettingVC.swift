@@ -87,8 +87,10 @@ extension SettingVC {
                     vc = NotificationVC(viewModel: NotificationViewModel(tagManager: TagManager.shared))
                 case 1:
                     vc = BlockListVC()
-                default:
+                case 2:
                     vc = TermsOfUseVC()
+                default:
+                    return
                 }
                 self.navigationController?.pushViewController(vc, animated: true)
             }
