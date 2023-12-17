@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - CommentsResponseDTOElement
 
-struct CommentsResponseDTO: Codable, Hashable {
+struct CommentsResponseDTO: Codable, Hashable, Equatable {
     
     let parentComment: Comment
     let childComments: [Comment]
@@ -17,17 +17,18 @@ struct CommentsResponseDTO: Codable, Hashable {
 
 // MARK: - Comment
 
-struct Comment: Codable, Hashable, SettingWrittenProtocol {
+struct Comment: Codable, Hashable, SettingWrittenProtocol, Equatable {
 
     var uuid = UUID()
     let content: String
-    let commentID: Int
+    let commentID: Int?
     let parentID: Int?
     let feedID: Int
     let title: String
     let createdAt, updatedAt: String
     let memberID: Int
-    let memberImageURL, memberName: String
+    let memberImageURL: String
+    let memberName: String?
     let deleted: Bool
 
     enum CodingKeys: String, CodingKey {
@@ -52,5 +53,23 @@ struct Comment: Codable, Hashable, SettingWrittenProtocol {
         } else {
             return convertDate(date: updatedAt) + " 수정됨"
         }
+    }
+    
+    func timeAgoSinceDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy:MM:dd:HH:mm:ss"
+        
+        guard let createdDate = dateFormatter.date(from: createdAt) else {
+            return ""
+        }
+
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .full
+        formatter.maximumUnitCount = 1
+        formatter.calendar?.locale = Locale(identifier: "ko_KR")
+
+        let timeAgo = formatter.string(from: createdDate, to: Date())
+
+        return timeAgo ?? ""
     }
 }
