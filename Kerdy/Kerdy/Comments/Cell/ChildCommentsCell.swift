@@ -128,7 +128,7 @@ extension ChildCommentsCell {
         profile.kf.setImage(with: url, placeholder: UIImage.emptyIcon)
         
         userLabel.text = data.memberName ?? "KERDY"
-        dateLabel.text = data.timeAgoSinceDate() + " 전"
+        dateLabel.text = data.timeAgoSinceDate()
         commentsLabel.text = data.content
     }
 }

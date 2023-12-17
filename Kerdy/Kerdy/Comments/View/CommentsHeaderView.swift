@@ -126,7 +126,7 @@ extension CommentsHeaderView {
         profile.kf.setImage(with: url, placeholder: UIImage.emptyIcon)
         
         userLabel.text = data.memberName ?? "KERDY"
-        timeLabel.text = data.timeAgoSinceDate() + " 전"
+        timeLabel.text = data.timeAgoSinceDate()
         parentComments.text = data.content
         commentsCount.text = "답글" + "\(count)"
     }

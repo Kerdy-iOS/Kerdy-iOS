@@ -59,17 +59,16 @@ struct Comment: Codable, Hashable, SettingWrittenProtocol, Equatable {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy:MM:dd:HH:mm:ss"
         
-        guard let createdDate = dateFormatter.date(from: createdAt) else {
-            return ""
-        }
+        guard let createdDate = dateFormatter.date(from: createdAt) else { return "" }
 
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .full
         formatter.maximumUnitCount = 1
         formatter.calendar?.locale = Locale(identifier: "ko_KR")
 
-        let timeAgo = formatter.string(from: createdDate, to: Date())
-
-        return timeAgo ?? ""
+        guard let timeAgo = formatter.string(from: createdDate, to: Date()) else { return "" }
+        let modifiedText = (createdAt != updatedAt) ? " 수정됨" : ""
+            
+        return timeAgo + " 전" + modifiedText
     }
 }
