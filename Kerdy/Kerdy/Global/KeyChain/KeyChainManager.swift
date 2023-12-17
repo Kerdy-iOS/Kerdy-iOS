@@ -136,6 +136,14 @@ struct KeyChainManager {
 extension KeyChainManager {
     
     static func removeAllKeychain() {
-        KeyChainManager.delete(forKey: .accessToken)
+        Self.delete(forKey: .accessToken)
+    }
+    
+    static func loadAccessToken() -> String {
+        "Bearer " + (Self.read(forkey: .accessToken) ?? "")
+    }
+    
+    static func loadMemberID() -> String {
+        Self.read(forkey: .memberId) ?? ""
     }
 }

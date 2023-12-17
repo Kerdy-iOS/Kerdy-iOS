@@ -31,17 +31,18 @@ extension LoginAPI: KerdyAPI {
         }
     }
     
-    var parameters: [String: Any]? {
+    var task: Task {
         switch self {
         case let .signIn(code):
-            return [ "code": code ]
+            return .requestParameters(parameters: [ "code": code ],
+                                      encoding: URLEncoding.default)
         }
     }
-    
-    var headers: [String: String]? {
+        
+    var headerType: HTTPHeaderFields {
         switch self {
         case .signIn:
-            return ["Content-Type": "application/x-www-form-urlencoded"]
+            return .html
         }
     }
     

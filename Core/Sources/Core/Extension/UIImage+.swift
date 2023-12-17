@@ -11,6 +11,7 @@ public extension UIImage {
     /// icon
     static let arrowIcon = UIImage(named: "ic_arrow")!.withRenderingMode(.alwaysOriginal)
     static let cancelIcon = UIImage(named: "ic_cancel")!.withRenderingMode(.alwaysOriginal)
+    static let tagCancelIcon = UIImage(named: "ic_tagCancel")!.withRenderingMode(.alwaysOriginal)
     static let addButtonIcon = UIImage(named: "ic_addButton")!.withRenderingMode(.alwaysOriginal)
     static let backButtonIcon = UIImage(named: "ic_backButton")!.withRenderingMode(.alwaysOriginal)
     static let githubIcon =  UIImage(named: "ic_github")!.withRenderingMode(.alwaysOriginal)

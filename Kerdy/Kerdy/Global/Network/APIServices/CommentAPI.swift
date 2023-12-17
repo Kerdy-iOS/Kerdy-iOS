@@ -41,17 +41,13 @@ extension CommentAPI: KerdyAPI {
         }
     }
     
-    var parameters: [String : Any]? {
-        .none
-    }
-    
-    var headers: [String: String]? {
+    var headerType: HTTPHeaderFields {
         switch self {
         case .getAllComments:
-            return ["Authorization": "Bearer " + (KeyChainManager.read(forkey: .accessToken) ?? "")]
+            return .hasAccessToken
         }
     }
-    
+
     var error: [Int: NetworkError]? {
         switch self {
         case .getAllComments:

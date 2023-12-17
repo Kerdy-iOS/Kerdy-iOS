@@ -19,7 +19,7 @@ final class SettingViewModel: ViewModelType {
     
     var disposeBag = DisposeBag()
     private let settingManager: SettingManager
-    private let id = Int(KeyChainManager.read(forkey: .memberId) ?? "0")
+    private let id = Int(KeyChainManager.loadMemberID())
     private let basicItems = SettingBasicModel.basicWithIcon + SettingBasicModel.basic
     private let settingList = BehaviorRelay<([SettingSectionItem.Model])>(value: [])
     

@@ -31,7 +31,7 @@ final class BaseInfoManager {
         guard let url = shared.info[BaseInfoKeys.baseURL] else { fatalError("BaseURL: Base-Info Plist error")}
         return url
     }
-
+    
     private var info: [String: String] {
         guard let plistPath = Bundle.main.path(forResource: "Base-Info", ofType: "plist"),
               let plist = NSDictionary(contentsOfFile: plistPath) as? [String: String] else {

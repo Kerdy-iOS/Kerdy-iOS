@@ -12,13 +12,18 @@ import SnapKit
 
 import RxSwift
 import RxCocoa
+import RxDataSources
 
-final class TagVC: UIViewController {
+final class TagVC: BaseVC {
     
     // MARK: - Property
     
-    private lazy var safeArea = self.view.safeAreaLayoutGuide
-    private var dummyData: [TagType] = TagType.dummy()
+    typealias DataSource = RxCollectionViewSectionedReloadDataSource<TagSection>
+    
+    private var dataSource: DataSource!
+    private let viewModel: TagViewModel
+    
+    private var selectedTag = [Int]()
     
     // MARK: - UI Property
     
@@ -28,13 +33,7 @@ final class TagVC: UIViewController {
         return view
     }()
     
-    private lazy var collectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: TagCollectionViewFlowLayout())
-        view.register(TagCell.self, forCellWithReuseIdentifier: TagCell.identifier)
-        view.dataSource = self
-        view.delegate = self
-        return view
-    }()
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: TagCollectionViewFlowLayout())
     
     private let tagLabel: UILabel = {
         let label = UILabel()
@@ -54,18 +53,30 @@ final class TagVC: UIViewController {
     
     // MARK: - Life Cycle
     
+    init(viewModel: TagViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setRegisteration()
         setLayout()
         setUI()
+        setDataSource()
+        bind()
     }
-    
 }
 
 // MARK: - Methods
 
 extension TagVC {
+    
+    private func setRegisteration() {
+        
+        collectionView.register(TagCell.self, forCellWithReuseIdentifier: TagCell.identifier)
+    }
     
     private func setLayout() {
         
@@ -92,29 +103,83 @@ extension TagVC {
             $0.bottom.horizontalEdges.equalTo(safeArea).inset(17)
             $0.height.equalTo(60)
         }
-        
     }
     
     private func setUI() {
         
-        self.view.backgroundColor = .kerdyBackground
+        navigationView.delegate = self
+        collectionView.allowsMultipleSelection = true
     }
     
+    private func bind() {
+        let input = TagViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver(),
+                                       tapRegisterButton: registerButton.rx.tap.asSignal())
+        
+        let output = viewModel.transform(input: input)
+        
+        output.tagList
+            .drive(collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        output.didRegisterButtonTap
+            .withUnretained(self)
+            .emit { _ in
+                self.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        collectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        
+        Observable
+            .zip(collectionView.rx.itemSelected, collectionView.rx.modelSelected(TagsResponseDTO.self))
+            .bind { [weak self] indexPath, model in
+                guard let self else { return }
+                
+                self.viewModel.updateSelectedItem(index: indexPath.item, isSelected: model.isSelected)
+            }
+            .disposed(by: disposeBag)
+    }
 }
 
-extension TagVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dummyData.count
-    }
+// MARK: - DataSource
+
+extension TagVC {
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCell.identifier, for: indexPath) as? TagCell else {
-            return UICollectionViewCell()
+    func setDataSource() {
+        
+        dataSource = DataSource { [weak self] _, collectionView, indexPath, item in
+            guard self != nil else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: TagCell.identifier,
+                for: indexPath
+            ) as? TagCell else { return UICollectionViewCell() }
+            
+            cell.configureCell(to: item, tagType: .registerTag)
+            cell.configureButton(isSelected: item.isSelected)
+            
+            return cell
         }
-        cell.configureCell(to: dummyData[indexPath.item])
-        return cell
     }
+}
+
+// MARK: - BackButtonActionProtocol
+
+extension TagVC: BackButtonActionProtocol {
+    
+    func backButtonTapped() {
+        
+        self.navigationController?.popViewController(animated: true)
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension TagVC: UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return dummyData[indexPath.item].title.insetSize(font: .nanumSquare(to: .regular, size: 13))
+        guard let dataSource = dataSource else { return .zero }
+        let width = dataSource[indexPath.section].items[indexPath.item].name
+        return width.insetSize()
     }
 }

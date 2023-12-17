@@ -130,7 +130,6 @@ extension SettingProfileCell {
     private func setUI() {
         
         self.backgroundColor = .clear
-        
     }
 }
 
