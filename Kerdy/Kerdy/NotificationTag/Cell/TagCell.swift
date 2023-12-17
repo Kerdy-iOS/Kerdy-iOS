@@ -25,7 +25,7 @@ final class TagCell: UICollectionViewCell {
     var disposeBag = DisposeBag()
     private var type: TagType = .userTag {
         didSet {
-            setBorderLayer()
+            setLayout()
         }
     }
     
@@ -44,7 +44,7 @@ final class TagCell: UICollectionViewCell {
         return button
     }()
     
-    private let borderLayer = CAShapeLayer()
+    private var borderLayer =  CAShapeLayer()
     
     // MARK: - Initialize
     
@@ -54,10 +54,22 @@ final class TagCell: UICollectionViewCell {
         self.disposeBag = DisposeBag()
     }
     
+    override init(frame: CGRect) {
+        super.init(frame: .zero)
+        
+        setLayout()
+        setUI()
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         
         setBorderLayer()
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -65,22 +77,24 @@ final class TagCell: UICollectionViewCell {
 
 extension TagCell {
     
+    private func setLayout() {
+        
+        if type == .userTag { setUserTag() } else { setRegisterTag() }
+    }
+    
+    private func setUI() {
+        
+        contentView.backgroundColor = .kerdyMain
+    }
+    
     private func setBorderLayer() {
         
-        contentView.backgroundColor = .kerdyBackground
-        contentView.roundCorners(topLeft: 12,
-                                 topRight: 20,
-                                 bottomLeft: 20,
-                                 bottomRight: 12)
-        
-        contentView.layer.addSublayer(borderLayer)
-        contentView.addSubview(titleLabel)
-        
-        type == .userTag ? setUserTag() : setRegisterTag()
+        contentView.roundCorners(topLeft: 12, topRight: 20, bottomLeft: 20, bottomRight: 12)
     }
     
     private func setRegisterTag() {
-        configureBackground()
+        cancelButton.removeFromSuperview()
+        contentView.addSubview(titleLabel)
         
         titleLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -88,14 +102,14 @@ extension TagCell {
     }
     
     private func setUserTag() {
-        configureFillBackground()
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(cancelButton)
         
         titleLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(20)
         }
         
-        contentView.addSubview(cancelButton)
         cancelButton.snp.makeConstraints {
             $0.leading.equalTo(titleLabel.snp.trailing).offset(10)
             $0.centerY.equalToSuperview()
@@ -104,29 +118,15 @@ extension TagCell {
         }
     }
     
-    func configureFillBackground() {
-        
-        layoutIfNeeded()
-        borderLayer.configureBorder(of: contentView,
-                                    withStroke: .kerdyMain,
-                                    withFill: .kerdyMain,
-                                    using: 2)
-    }
-    
-    func configureBackground() {
-        
-        layoutIfNeeded()
-        borderLayer.configureBorder(of: contentView,
-                                    withStroke: .kerdyMain,
-                                    withFill: .clear,
-                                    using: 2)
-    }
-    
     func configureCell(to type: TagsResponseDTO, tagType: TagType) {
         
         self.type = tagType
         titleLabel.text = type.name
-        cancelButton.tag = type.id
+    }
+    
+    func configureButton(isSelected: Bool) {
+        
+        contentView.backgroundColor = isSelected ? .kerdyMain : .clear
     }
 }
 
