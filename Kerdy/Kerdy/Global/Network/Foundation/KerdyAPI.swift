@@ -13,7 +13,6 @@ import Moya
 enum KerdyDomain {
     case activity
     case member
-    case interestTag
     case event
     case comment
     case login
@@ -35,8 +34,6 @@ extension KerdyDomain {
             return "/activities"
         case .member:
             return "/members"
-        case .interestTag:
-            return "/interest-tags"
         case .event:
             return "/events"
         case .comment:
@@ -46,7 +43,7 @@ extension KerdyDomain {
         case .block:
             return "/blocks"
         case .tag:
-            return "/tags"
+            return ""
         case .report:
             return "/reports"
         case .scrap:
@@ -66,35 +63,41 @@ extension KerdyDomain {
 /// domain : Kerdy Domain(ex. activity, member, login ...)
 /// urlPath : Domain 뒤에 붙는 상세 경로(path)
 /// error : 상태코드에 따른 NetworkError 구분하는데 사용되는 딕셔너리
-/// parameters : Request에 사용될 Paramter - 기본적으로 URLEncoding 방식으로 인코딩
 protocol KerdyAPI: TargetType {
     var domain: KerdyDomain { get }
     var urlPath: String { get }
     var error: [Int: NetworkError]? { get }
-    var parameters: [String: Any]? { get }
+    var headerType: HTTPHeaderFields { get }
 }
 
 extension KerdyAPI {
     var baseURL: URL {
         return URL(string: BaseInfoManager.baseURL)!
     }
-
+    
     var path: String {
         return domain.url + urlPath
     }
-
+    
     var validationType: ValidationType {
         return .successCodes
     }
-
+    
     var headers: [String: String]? {
-        return .none
-    }
-
-    var task: Task {
-        if let parameters = parameters {
-            return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
+        switch headerType {
+        case .plain:
+            return [
+                HTTPHeaderFieldsKey.contentType: HTTPHeaderFieldsValue.json
+            ]
+        case .html:
+            return [
+                HTTPHeaderFieldsKey.contentType: HTTPHeaderFieldsValue.html
+            ]
+        case .hasAccessToken:
+            return [
+                HTTPHeaderFieldsKey.contentType: HTTPHeaderFieldsValue.json,
+                HTTPHeaderFieldsKey.authorization: HTTPHeaderFieldsValue.accessToken
+            ]
         }
-        return .requestPlain
     }
 }

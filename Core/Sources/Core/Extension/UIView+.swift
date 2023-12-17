@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by JEONGEUN KIM on 11/2/23.
 //
@@ -35,9 +35,26 @@ public extension UIView {
         let topRightRadius = CGSize(width: topRight, height: topRight)
         let bottomLeftRadius = CGSize(width: bottomLeft, height: bottomLeft)
         let bottomRightRadius = CGSize(width: bottomRight, height: bottomRight)
-        let maskPath = UIBezierPath(shouldRoundRect: bounds, topLeftRadius: topLeftRadius, topRightRadius: topRightRadius, bottomLeftRadius: bottomLeftRadius, bottomRightRadius: bottomRightRadius)
-        let shape = CAShapeLayer()
-        shape.path = maskPath.cgPath
-        layer.mask = shape
+        
+        let maskPath = UIBezierPath(shouldRoundRect: bounds,
+                                    topLeftRadius: topLeftRadius,
+                                    topRightRadius: topRightRadius,
+                                    bottomLeftRadius: bottomLeftRadius,
+                                    bottomRightRadius: bottomRightRadius)
+        
+        layer.sublayers?.filter { $0 is CAShapeLayer }.forEach { $0.removeFromSuperlayer() }
+        
+        let maskShape = CAShapeLayer()
+        maskShape.path = maskPath.cgPath
+        layer.mask = maskShape
+        
+        let borderShape = CAShapeLayer()
+        borderShape.path = maskPath.cgPath
+        borderShape.lineWidth = 2
+        borderShape.strokeColor = UIColor.kerdy_main?.cgColor
+        borderShape.fillColor = UIColor.clear.cgColor
+        borderShape.frame = bounds
+        
+        layer.addSublayer(borderShape)
     }
 }

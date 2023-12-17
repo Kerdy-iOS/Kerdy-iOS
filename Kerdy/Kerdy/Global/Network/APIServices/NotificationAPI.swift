@@ -1,20 +1,20 @@
 //
-//  SettingAPI.swift
+//  NotificationAPI.swift
 //  Kerdy
 //
-//  Created by JEONGEUN KIM on 12/1/23.
+//  Created by JEONGEUN KIM on 12/8/23.
 //
 
 import Foundation
 
 import Moya
 
-enum SettingAPI {
+enum NotificationAPI {
     case profile(id: Int)
 }
 
-extension SettingAPI: KerdyAPI {
-    
+extension NotificationAPI: KerdyAPI {
+
     var domain: KerdyDomain {
         return .member
     }
@@ -46,7 +46,7 @@ extension SettingAPI: KerdyAPI {
             return .plain
         }
     }
-    
+
     var error: [Int: NetworkError]? {
         switch self {
         case .profile:

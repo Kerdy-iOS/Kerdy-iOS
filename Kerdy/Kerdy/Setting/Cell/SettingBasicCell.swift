@@ -56,7 +56,6 @@ final class SettingBasicCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 
 // MARK: - Setting
@@ -99,8 +98,7 @@ extension SettingBasicCell {
     
     private func setUI() {
         
-        contentView.backgroundColor = .clear
-        
+        contentView.backgroundColor = .clear  
     }
 }
 
