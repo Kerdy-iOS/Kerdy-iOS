@@ -9,8 +9,13 @@ import UIKit
 import SnapKit
 import Core
 
-final class EventCollectionViewCell: UICollectionViewCell {
+protocol EventCellDelegate {
+    func showDetailVC()
+}
 
+final class EventCollectionViewCell: UICollectionViewCell {
+    var delegate: EventCellDelegate?
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.showsVerticalScrollIndicator = false
@@ -70,6 +75,7 @@ extension EventCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath.row)
+        delegate?.showDetailVC()
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
