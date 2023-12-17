@@ -121,7 +121,7 @@ extension BlockListVC {
     private func setDataSource() {
         
         dataSource = DataSource { [weak self] _, collectionView, indexPath, item in
-            guard self != nil else { return UICollectionViewCell() }
+            guard let self = self else { return UICollectionViewCell() }
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: BlockListCell.identifier,
                 for: indexPath

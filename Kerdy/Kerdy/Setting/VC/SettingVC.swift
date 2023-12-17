@@ -86,7 +86,7 @@ extension SettingVC {
                 case 0:
                     vc = NotificationVC(viewModel: NotificationViewModel(tagManager: TagManager.shared))
                 case 1:
-                    vc = BlockListVC()
+                    vc = BlockListVC(viewModel: BlockListViewModel(blockManager: BlockManager.shared))
                 case 2:
                     vc = TermsOfUseVC()
                 default:

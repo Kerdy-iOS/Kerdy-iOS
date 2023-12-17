@@ -16,7 +16,7 @@ enum BlockAPI {
 }
 
 extension BlockAPI: KerdyAPI {
-
+    
     var domain: KerdyDomain {
         return .block
     }
@@ -41,13 +41,6 @@ extension BlockAPI: KerdyAPI {
         }
     }
     
-    var parameters: [String: Any]? {
-        switch self {
-        case .getBlockList, .deleteBlock, .postBlock:
-            return .none
-        }
-    }
-    
     var task: Task {
         switch self {
         case .postBlock(id: let id):
@@ -56,16 +49,14 @@ extension BlockAPI: KerdyAPI {
             return .requestPlain
         }
     }
-        
     
-    var headers: [String : String]? {
+    var headerType: HTTPHeaderFields {
         switch self {
-        case .getBlockList, .deleteBlock, .postBlock:
-            return ["Content-Type": "application/json",
-                    "Authorization": "Bearer " + (KeyChainManager.read(forkey: .accessToken) ?? "")]
+        case  .getBlockList, .deleteBlock, .postBlock:
+            return .hasAccessToken
         }
     }
-
+    
     var error: [Int: NetworkError]? {
         switch self {
         case .getBlockList, .deleteBlock, .postBlock:
