@@ -12,6 +12,7 @@ import SnapKit
 
 import RxSwift
 import RxDataSources
+import RxKeyboard
 
 final class CommentsVC: BaseVC {
     
@@ -24,13 +25,15 @@ final class CommentsVC: BaseVC {
     
     // MARK: - UI Components
     
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout())
+    
     private let navigationBar: NavigationBarView = {
         let view = NavigationBarView()
-        view.configureUI(to: "답글")
+        view.configureUI(to: Strings.commentsTitle)
         return view
     }()
     
-    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout())
+    private let textFieldView = CommentsContainerView()
     
     // MARK: - Init
     
@@ -78,6 +81,12 @@ extension CommentsVC {
             $0.top.equalTo(navigationBar.snp.bottom)
             $0.horizontalEdges.bottom.equalTo(safeArea)
         }
+        
+        view.addSubview(textFieldView)
+        textFieldView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(safeArea)
+        }
     }
     
     private func setDelegate() {
@@ -87,11 +96,31 @@ extension CommentsVC {
     
     private func bind() {
         
-        let input = CommentsViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver())
+        let input = CommentsViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver(),
+                                            textField: textFieldView.comments.rx.text.orEmpty.asDriver(),
+                                            tapEnterButton: textFieldView.enterbutton.rx.tap.asSignal()
+        )
+        
         let output = viewModel.transform(input: input)
         
         output.commentsList
             .drive(collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        output.clearTextField
+            .bind(to: textFieldView.comments.rx.text)
+            .disposed(by: disposeBag)
+
+        RxKeyboard.instance.visibleHeight
+            .drive(onNext: { [unowned self] keyboardHeight in
+                let height = keyboardHeight > 0 ? -keyboardHeight + view.safeAreaInsets.bottom : 18
+                
+                UIView.animate(withDuration: 0.23) {
+                    self.textFieldView.snp.updateConstraints {
+                        $0.bottom.equalTo(self.safeArea).offset(height)
+                    }
+                }
+            })
             .disposed(by: disposeBag)
     }
     
@@ -116,32 +145,32 @@ extension CommentsVC {
     func setDataSource() {
         
         dataSource = DataSource(configureCell: { [weak self] _, collectionView, indexPath, item in
-                guard let self = self else { return UICollectionViewCell() }
-                guard let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: ChildCommentsCell.identifier,
-                    for: indexPath
-                ) as? ChildCommentsCell else { return UICollectionViewCell() }
-                
-                cell.configureCell(with: item)
-                self.configure(cell: cell)
+            guard let self = self else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: ChildCommentsCell.identifier,
+                for: indexPath
+            ) as? ChildCommentsCell else { return UICollectionViewCell() }
             
-                return cell
-            }, configureSupplementaryView: { dataSource, collectionview, _, indexPath in
-                
-                guard let header = collectionview.dequeueReusableSupplementaryView(
-                    ofKind: UICollectionView.elementKindSectionHeader,
-                    withReuseIdentifier: CommentsHeaderView.identifier,
-                    for: indexPath
-                ) as? CommentsHeaderView else { return UICollectionReusableView() }
-                
-                let item = dataSource.sectionModels[indexPath.section].header
-                let count = dataSource.sectionModels[indexPath.section].items.count
-                header.configureHeader(with: item, count: count)
-                self.configure(header: header)
-                
-                return header
-            }
-        )
+            cell.configureCell(with: item)
+            self.configure(cell: cell)
+            
+            return cell
+            
+        }, configureSupplementaryView: { dataSource, collectionview, _, indexPath in
+            
+            guard let header = collectionview.dequeueReusableSupplementaryView(
+                ofKind: UICollectionView.elementKindSectionHeader,
+                withReuseIdentifier: CommentsHeaderView.identifier,
+                for: indexPath
+            ) as? CommentsHeaderView else { return UICollectionReusableView() }
+            
+            let item = dataSource.sectionModels[indexPath.section].header
+            let count = dataSource.sectionModels[indexPath.section].items.count
+            header.configureHeader(with: item, count: count)
+            self.configure(header: header)
+            
+            return header
+        })
     }
 }
 
