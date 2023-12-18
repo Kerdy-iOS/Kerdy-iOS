@@ -42,6 +42,7 @@
 		095EBE882AFF705900629F06 /* RxViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095EBE872AFF705900629F06 /* RxViewController+.swift */; };
 		0964BA3D2B0E36A600A8984B /* Base-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0964BA3C2B0E36A600A8984B /* Base-Info.plist */; };
 		0964F9452B2EEFE10031D574 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0964F9442B2EEFE10031D574 /* Colors.xcassets */; };
+		0964F94B2B2F05520031D574 /* AuthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964F94A2B2F05520031D574 /* AuthType.swift */; };
 		098294182AF341290011773A /* BlockListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098294172AF341290011773A /* BlockListVC.swift */; };
 		0982941A2AF342090011773A /* BlockListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098294192AF342090011773A /* BlockListCell.swift */; };
 		0982941E2AF35E660011773A /* BlockSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0982941D2AF35E660011773A /* BlockSectionModel.swift */; };
@@ -190,6 +191,7 @@
 		095EBE872AFF705900629F06 /* RxViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxViewController+.swift"; sourceTree = "<group>"; };
 		0964BA3C2B0E36A600A8984B /* Base-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Base-Info.plist"; sourceTree = "<group>"; };
 		0964F9442B2EEFE10031D574 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		0964F94A2B2F05520031D574 /* AuthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthType.swift; sourceTree = "<group>"; };
 		098294172AF341290011773A /* BlockListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListVC.swift; sourceTree = "<group>"; };
 		098294192AF342090011773A /* BlockListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListCell.swift; sourceTree = "<group>"; };
 		0982941D2AF35E660011773A /* BlockSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockSectionModel.swift; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 				090978FF2AF287E0006BD8DE /* NavigationBarView.swift */,
 				090978FB2AF27364006BD8DE /* ModalTopView.swift */,
 				3109B30B2AF7F49A00B2EAD2 /* PrortudingBtn.swift */,
+				09ED94202B2C31B9001864EF /* PopUpView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -619,6 +622,7 @@
 		095EBE7B2AFF663B00629F06 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				0964F9492B2F05490031D574 /* Enum */,
 				09472C392B138B3F00B4A84E /* KeyChain */,
 				09472C262B1371D800B4A84E /* Network */,
 				095EBE802AFF669F00629F06 /* Utils */,
@@ -660,6 +664,14 @@
 				0964F9442B2EEFE10031D574 /* Colors.xcassets */,
 			);
 			path = Colors;
+			sourceTree = "<group>";
+		};
+		0964F9492B2F05490031D574 /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				0964F94A2B2F05520031D574 /* AuthType.swift */,
+			);
+			path = Enum;
 			sourceTree = "<group>";
 		};
 		098294162AF341090011773A /* BlockList */ = {
@@ -704,7 +716,6 @@
 			isa = PBXGroup;
 			children = (
 				098294172AF341290011773A /* BlockListVC.swift */,
-				09ED94202B2C31B9001864EF /* PopUpView.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -1186,6 +1197,7 @@
 				311E982E2AF8B65F009BEB3F /* TechTagView.swift in Sources */,
 				09ECB3352AFE15E7000F3008 /* CommentsResponseDTO.swift in Sources */,
 				31FBEC8F2B11C09100DE68F3 /* EventDetailPhotoCVCell.swift in Sources */,
+				0964F94B2B2F05520031D574 /* AuthType.swift in Sources */,
 				09A3E1832B18EA28004BD432 /* MemberProfileResponseDTO.swift in Sources */,
 				09472C3B2B138B5C00B4A84E /* KeyChainValue.swift in Sources */,
 				099756B82B222D8D009961B5 /* TagAPI.swift in Sources */,
