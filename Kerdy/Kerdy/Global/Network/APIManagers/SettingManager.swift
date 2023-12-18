@@ -13,6 +13,7 @@ import RxSwift
 protocol SettingManagerType {
     
     func getMember(id: Int) -> Single<MemberProfileResponseDTO>
+    func deleteMember(id: Int) -> Single<Void>
 }
 
 final class SettingManager: Networking, SettingManagerType {
@@ -31,5 +32,11 @@ final class SettingManager: Networking, SettingManagerType {
         return provider
             .request(.profile(id: id))
             .map(MemberProfileResponseDTO.self)
+    }
+    
+    func deleteMember(id: Int) -> Single<Void> {
+        return provider
+            .request(.withdrawal(id: id))
+            .map { _ in }
     }
 }

@@ -14,7 +14,7 @@ import RxSwift
 
 protocol PopUptoBlockDelegate: AnyObject {
     func action(blockID: Int)
-    func cancel()  
+    func cancel()
 }
 
 final class PopUpView: UIView {
@@ -52,6 +52,7 @@ final class PopUpView: UIView {
         let label = UILabel()
         label.font = .nanumSquare(to: .regular, size: 14)
         label.textColor = .kerdyBlack
+        label.numberOfLines = 2
         return label
     }()
     
@@ -165,7 +166,7 @@ extension PopUpView {
     func configureTitle(title: String, subTitle: String, unlock: String) {
         
         titleLabel.text = title
-        subLabel.text = subTitle
+        subLabel.setLineHeight(by: 1.15, with: subTitle)
         unlockButton.setTitle(unlock, for: .normal)
     }
     

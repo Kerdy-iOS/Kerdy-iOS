@@ -11,6 +11,7 @@ import Moya
 
 enum SettingAPI {
     case profile(id: Int)
+    case withdrawal(id: Int)
 }
 
 extension SettingAPI: KerdyAPI {
@@ -21,7 +22,7 @@ extension SettingAPI: KerdyAPI {
     
     var urlPath: String {
         switch self {
-        case .profile(id: let id):
+        case .profile(id: let id), .withdrawal(id: let id):
             return "/\(id)"
         }
     }
@@ -30,12 +31,14 @@ extension SettingAPI: KerdyAPI {
         switch self {
         case .profile:
             return .get
+        case .withdrawal:
+            return .delete
         }
     }
     
     var task: Task {
         switch self {
-        case .profile:
+        case .profile, .withdrawal:
             return .requestPlain
         }
     }
@@ -44,12 +47,14 @@ extension SettingAPI: KerdyAPI {
         switch self {
         case .profile:
             return .plain
+        case .withdrawal:
+            return .hasAccessToken
         }
     }
     
     var error: [Int: NetworkError]? {
         switch self {
-        case .profile:
+        case .profile, .withdrawal:
             return nil
         }
     }
