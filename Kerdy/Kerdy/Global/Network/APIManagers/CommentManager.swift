@@ -14,6 +14,7 @@ protocol CommentManagerType {
     
     func getUserComments(id: Int) -> Single<[CommentsResponseDTO]>
     func getDetailComments(commentID: Int) -> Single<CommentsResponseDTO>
+    func postComments(request: CommentsRequestDTO) -> Single<Comment>
 }
 
 final class CommentManager: Networking, CommentManagerType {
@@ -38,5 +39,11 @@ final class CommentManager: Networking, CommentManagerType {
         return provider
             .request(.getDetailComments(commentID: commentID))
             .map(CommentsResponseDTO.self)
+    }
+    
+    func postComments(request: CommentsRequestDTO) -> Single<Comment> {
+        return provider
+            .request(.postComments(request: request))
+            .map(Comment.self)
     }
 }
