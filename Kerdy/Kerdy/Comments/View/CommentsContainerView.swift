@@ -11,6 +11,7 @@ import Core
 import SnapKit
 
 import RxSwift
+import RxCocoa
 
 final class CommentsContainerView: UIView {
     
@@ -18,7 +19,7 @@ final class CommentsContainerView: UIView {
     
     // MARK: - UI Components
     
-    lazy var enterbutton: UIButton = {
+    private lazy var enterbutton: UIButton = {
         let button = UIButton()
         var config = UIButton.Configuration.plain()
         config.titleAlignment = .center
@@ -30,7 +31,7 @@ final class CommentsContainerView: UIView {
         return button
     }()
     
-    let comments: UITextField = {
+    private let comments: UITextField = {
         let textField = UITextField()
         textField.placeholder = Strings.placeholder
         textField.setPlaceholder(color: .kerdyGray02, font: .nanumSquare(to: .regular, size: 14))
@@ -76,5 +77,16 @@ extension CommentsContainerView {
         
         self.backgroundColor = .kerdyBackground
         comments.setRightView(enterbutton, width: 65)
+    }
+    
+    func commentsText() -> Driver<String> {
+        return comments.rx.text.orEmpty.asDriver()
+    }
+    
+    func tapEnterButton() -> Signal<Void> {
+        return enterbutton.rx.tap
+            .do(onNext: { _ in self.comments.text = "" })
+            .map { _ in () }
+            .asSignal(onErrorJustReturn: ())
     }
 }

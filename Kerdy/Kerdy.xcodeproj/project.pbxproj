@@ -692,7 +692,6 @@
 			isa = PBXGroup;
 			children = (
 				0964F94F2B2F283F0031D574 /* CommentsVC.swift */,
-				098D801C2B2FF8A600706897 /* CommentsContainerView.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -716,6 +715,7 @@
 		0964F95E2B2F70810031D574 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				098D801C2B2FF8A600706897 /* CommentsContainerView.swift */,
 				0964F9592B2F60F00031D574 /* CommentsHeaderView.swift */,
 			);
 			path = View;
