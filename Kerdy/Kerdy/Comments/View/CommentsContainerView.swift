@@ -17,6 +17,8 @@ final class CommentsContainerView: UIView {
     
     // MARK: - Property
     
+    private var disposeBag = DisposeBag()
+    
     // MARK: - UI Components
     
     private lazy var enterbutton: UIButton = {
@@ -49,6 +51,7 @@ final class CommentsContainerView: UIView {
         
         setLayout()
         setUI()
+        setupBindings()
     }
     
     required init?(coder: NSCoder) {
@@ -79,14 +82,49 @@ extension CommentsContainerView {
         comments.setRightView(enterbutton, width: 65)
     }
     
+    func setupBindings() {
+        commentsText()
+            .map { $0.isEmpty }
+            .drive(with: self, onNext: { owner, isEmpty in
+                owner.updateEnterButtonUI(isEmpty: isEmpty)
+            })
+            .disposed(by: disposeBag)
+
+        tapEnterButton()
+            .emit(with: self, onNext: { owner, _ in
+                owner.handleEnterButtonTap()
+            })
+            .disposed(by: disposeBag)
+    }
+
     func commentsText() -> Driver<String> {
         return comments.rx.text.orEmpty.asDriver()
     }
-    
+
     func tapEnterButton() -> Signal<Void> {
         return enterbutton.rx.tap
-            .do(onNext: { _ in self.comments.text = "" })
-            .map { _ in () }
+            .do(onNext: { [weak self] in
+                guard let self else { return }
+                self.clearComments()
+            })
+            .map { () }
             .asSignal(onErrorJustReturn: ())
     }
+
+    private func updateEnterButtonUI(isEmpty: Bool) {
+        enterbutton.isEnabled = !isEmpty
+        enterbutton.setTitleColor(isEmpty ? UIColor.kerdyGray02 : UIColor.kerdyMain, for: .normal)
+    }
+
+    private func handleEnterButtonTap() {
+        
+        clearComments()
+        updateEnterButtonUI(isEmpty: true)
+    }
+
+    private func clearComments() {
+        
+        comments.text = ""
+    }
+
 }
