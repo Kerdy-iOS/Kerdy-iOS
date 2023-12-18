@@ -59,27 +59,17 @@ extension SettingViewModel {
     
     func getMember(id: Int) {
         settingManager.getMember(id: id)
-            .subscribe(onSuccess: { response in
-                
+            .map { response in
                 let profile = SettingSectionItem.Item.profile(response)
-                let basic = self.basicItems.map { SettingSectionItem.Item.basic($0)}
+                let basic = self.basicItems.map { SettingSectionItem.Item.basic($0) }
                 let profileSection = SettingSectionItem.Model(model: .profile, items: [profile])
                 let basicSection = SettingSectionItem.Model(model: .basic, items: basic)
-                
-                self.settingList.accept([profileSection, basicSection])
-                
+                return [profileSection, basicSection]
+            }
+            .subscribe(onSuccess: { settingList in
+                self.settingList.accept(settingList)
             }, onFailure: { error in
-                if let moyaError = error as? MoyaError {
-                    if let statusCode = moyaError.response?.statusCode {
-                        let networkError = NetworkError(rawValue: statusCode)
-                        switch networkError {
-                        case .invalidRequest:
-                            print("invalidRequest")
-                        default:
-                            print("network error")
-                        }
-                    }
-                }
+                HandleNetworkError.handleNetworkError(error)
             })
             .disposed(by: disposeBag)
     }

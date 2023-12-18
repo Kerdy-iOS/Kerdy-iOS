@@ -18,7 +18,7 @@ final class SettingCommenetViewModel {
     
     private var disposeBag = DisposeBag()
     private let commentManager: CommentManager
-    private let id = Int(KeyChainManager.read(forkey: .memberId) ?? "" )
+    private let id = Int(KeyChainManager.loadMemberID())
     
     // MARK: - Init
     
@@ -31,10 +31,10 @@ final class SettingCommenetViewModel {
     }
     
     struct Output {
-        let commentsList: Driver<[CommentsResponseDTO]>
+        let commentsList: Driver<[Comment]>
     }
     
-    private let commentsList = BehaviorRelay<[CommentsResponseDTO]>(value: [])
+    private let commentsList = BehaviorRelay<[Comment]>(value: [])
     func transform(input: Input) -> Output {
         
         let output = Output(commentsList: commentsList.asDriver())
@@ -55,22 +55,21 @@ final class SettingCommenetViewModel {
 extension SettingCommenetViewModel {
     
     func getUserComments(id: Int) {
-        commentManager.getUserCommnets(id: id)
-            .subscribe(onSuccess: { response in
-                self.commentsList.accept(response)
+        commentManager.getUserComments(id: id)
+            .map { response in
+                Dictionary(grouping: response.flatMap { [$0.parentComment] + $0.childComments },
+                           by: { $0.memberID })
+            }
+            .map { groupedComments in
+                groupedComments.map(\.value).flatMap { $0 }
+            }
+            .subscribe(onSuccess: { [weak self] commentsList in
+                guard let self else { return }
+                self.commentsList.accept(commentsList)
             }, onFailure: { error in
-                if let moyaError = error as? MoyaError {
-                    if let statusCode = moyaError.response?.statusCode {
-                        let networkError = NetworkError(rawValue: statusCode)
-                        switch networkError {
-                        case .invalidRequest:
-                            print("invalidRequest")
-                        default:
-                            print("network error")
-                        }
-                    }
-                }
+                HandleNetworkError.handleNetworkError(error)
             })
             .disposed(by: disposeBag)
     }
+
 }

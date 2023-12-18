@@ -34,13 +34,6 @@ final class SettingWriteCell: UICollectionViewCell {
         return label
     }()
     
-    private let otherStackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .horizontal
-        view.spacing = 8
-        return view
-    }()
-    
     private let comment: UILabel = {
         let label = UILabel()
         label.font = .nanumSquare(to: .regular, size: 11)
@@ -87,8 +80,8 @@ extension SettingWriteCell {
             $0.horizontalEdges.equalToSuperview().inset(17)
         }
         
-        contentView.addSubview(otherStackView)
-        otherStackView.snp.makeConstraints {
+        contentView.addSubview(date)
+        date.snp.makeConstraints {
             $0.top.equalTo(content.snp.bottom).offset(8)
             $0.leading.equalToSuperview().inset(17)
             $0.bottom.equalToSuperview().inset(17)
@@ -98,7 +91,6 @@ extension SettingWriteCell {
     private func setUI() {
         
         contentView.backgroundColor = .clear
-        
     }
     
 }
@@ -107,19 +99,11 @@ extension SettingWriteCell {
 
 extension SettingWriteCell {
     
-    func configureUI<T: SettingWrittenProtocol>(type: WrittenSections, to data: T, count: Int = 0) {
-        switch type {
-        case .comment:
-            otherStackView.addArrangedSubviews(comment, date)
-            comment.text = "댓글 " + String(describing: count)
-        case .article:
-            otherStackView.addArrangedSubview(date)
-        }
-        
+    func configureUI<T: SettingWrittenProtocol>(to data: T) {
+         
         title.text = data.title
         content.text = data.content
         content.setLineSpacing(lineSpacing: 1.19)
         date.text = data.updateDate
     }
-    
 }

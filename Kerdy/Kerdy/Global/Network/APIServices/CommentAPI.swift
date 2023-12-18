@@ -9,8 +9,16 @@ import Foundation
 
 import Moya
 
+struct CommentsRequestDTO: Codable {
+    let content: String
+    let feedId: Int
+    let parentId: Int?
+}
+
 enum CommentAPI {
-    case getAllComments(memberID: Int)
+    case getUserComments(memberID: Int)
+    case getDetailComments(commentID: Int)
+    case postComments(request: CommentsRequestDTO)
 }
 
 extension CommentAPI: KerdyAPI {
@@ -21,36 +29,44 @@ extension CommentAPI: KerdyAPI {
     
     var urlPath: String {
         switch self {
-        case .getAllComments:
+        case .getUserComments, .postComments:
             return ""
+        case .getDetailComments(commentID: let commentID):
+            return "/\(commentID)"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .getAllComments:
+        case .getUserComments, .getDetailComments:
             return .get
+        case .postComments:
+            return .post
         }
     }
     
     var task: Task {
         switch self {
-        case .getAllComments(memberID: let memberID):
+        case .getUserComments(memberID: let memberID):
             let parameter = ["memberId": memberID ]
             return .requestParameters(parameters: parameter, encoding: URLEncoding.default)
+        case .getDetailComments:
+            return .requestPlain
+        case .postComments(request: let data):
+            return .requestJSONEncodable(data)
         }
     }
     
     var headerType: HTTPHeaderFields {
         switch self {
-        case .getAllComments:
+        case .getUserComments, .getDetailComments, .postComments:
             return .hasAccessToken
         }
     }
 
     var error: [Int: NetworkError]? {
         switch self {
-        case .getAllComments:
+        case .getUserComments, .getDetailComments, .postComments:
             return nil
         }
     }

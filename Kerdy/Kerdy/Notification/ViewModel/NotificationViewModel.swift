@@ -31,12 +31,12 @@ final class NotificationViewModel: ViewModelType {
         
         let viewWillAppear: Driver<Bool>
     }
-
+    
     struct Output {
         
         let tagList: Driver<[TagSection]>
     }
-
+    
     private let tagList = BehaviorRelay<[TagSection]>(value: [])
     
     func transform(input: Input) -> Output {
@@ -49,52 +49,40 @@ final class NotificationViewModel: ViewModelType {
                 owner.getTags(id: id)
             })
             .disposed(by: disposeBag)
-
+        
         return output
     }
 }
 
 extension NotificationViewModel {
     
+    private func updateTagList(with response: [TagsResponseDTO]) {
+        let tagList = [TagSection(items: response)]
+        self.tagList.accept(tagList)
+    }
+
     func getTags(id: Int) {
         tagManager.getUserTags(id: id)
-            .subscribe(onSuccess: { response in
-                let tagList = [TagSection(items: response)]
-                 self.tagList.accept(tagList)
+            .map { [TagSection(items: $0)] }
+            .subscribe(onSuccess: { [weak self] updatedList in
+                guard let self else { return }
+                self.tagList.accept(updatedList)
             }, onFailure: { error in
-                if let moyaError = error as? MoyaError {
-                    if let statusCode = moyaError.response?.statusCode {
-                        let networkError = NetworkError(rawValue: statusCode)
-                        switch networkError {
-                        case .invalidRequest:
-                            print("invalidRequest")
-                        default:
-                            print("network error")
-                        }
-                    }
-                }
+                HandleNetworkError.handleNetworkError(error)
             })
             .disposed(by: disposeBag)
     }
-    
+
     func deleteTags(id: [Int]) {
         tagManager.deleteTags(id: id)
-            .subscribe(onSuccess: { response in
-                let tagList = [TagSection(items: response)]
-                 self.tagList.accept(tagList)
+            .map { [TagSection(items: $0)] }
+            .subscribe(onSuccess: { [weak self] updatedList in
+                guard let self else { return }
+                self.tagList.accept(updatedList)
             }, onFailure: { error in
-                if let moyaError = error as? MoyaError {
-                    if let statusCode = moyaError.response?.statusCode {
-                        let networkError = NetworkError(rawValue: statusCode)
-                        switch networkError {
-                        case .invalidRequest:
-                            print("invalidRequest")
-                        default:
-                            print("network error")
-                        }
-                    }
-                }
+                HandleNetworkError.handleNetworkError(error)
             })
             .disposed(by: disposeBag)
     }
+
 }

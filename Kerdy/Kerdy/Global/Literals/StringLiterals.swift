@@ -38,4 +38,9 @@ struct Strings {
     ///Alert
     static let alertUnlock = "해제"
     static let alertUnlockTitle = "해당 유저를 차단 해제 하시겠습니까?"
+    
+    /// comments
+    static let commentsTitle = "답글"
+    static let enterButton = "입력"
+    static let placeholder = "답글을 입력하세요."
 }

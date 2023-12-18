@@ -58,23 +58,12 @@ extension BlockListViewModel {
     
     func getBlockList() {
         blockManager.getBlockList()
-            .subscribe(onSuccess: { response in
-                
-                let blockList = [BlockSection(items: response)]
+            .map { [BlockSection(items: $0)] }
+            .subscribe(onSuccess: { [weak self] blockList in
+                guard let self else { return }
                 self.blockList.accept(blockList)
-                
             }, onFailure: { error in
-                if let moyaError = error as? MoyaError {
-                    if let statusCode = moyaError.response?.statusCode {
-                        let networkError = NetworkError(rawValue: statusCode)
-                        switch networkError {
-                        case .invalidRequest:
-                            print("invalidRequest")
-                        default:
-                            print("network error")
-                        }
-                    }
-                }
+                HandleNetworkError.handleNetworkError(error)
             })
             .disposed(by: disposeBag)
     }
@@ -84,17 +73,7 @@ extension BlockListViewModel {
             .subscribe(onSuccess: { response in
                 dump(response)
             }, onFailure: { error in
-                if let moyaError = error as? MoyaError {
-                    if let statusCode = moyaError.response?.statusCode {
-                        let networkError = NetworkError(rawValue: statusCode)
-                        switch networkError {
-                        case .invalidRequest:
-                            print("invalidRequest")
-                        default:
-                            print("network error")
-                        }
-                    }
-                }
+                HandleNetworkError.handleNetworkError(error)
             })
             .disposed(by: disposeBag)
     }
@@ -104,17 +83,7 @@ extension BlockListViewModel {
             .subscribe(onSuccess: { response in
                 dump(response)
             }, onFailure: { error in
-                if let moyaError = error as? MoyaError {
-                    if let statusCode = moyaError.response?.statusCode {
-                        let networkError = NetworkError(rawValue: statusCode)
-                        switch networkError {
-                        case .invalidRequest:
-                            print("invalidRequest")
-                        default:
-                            print("network error")
-                        }
-                    }
-                }
+                HandleNetworkError.handleNetworkError(error)
             })
             .disposed(by: disposeBag)
     }

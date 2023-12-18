@@ -11,4 +11,5 @@ protocol SettingWrittenProtocol: Hashable {
     var title: String { get }
     var content: String { get }
     var updateDate: String { get }
+    var commentID: Int? { get }
 }
