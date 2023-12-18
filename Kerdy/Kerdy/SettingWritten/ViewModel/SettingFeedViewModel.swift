@@ -58,17 +58,7 @@ extension SettingFeedViewModel {
             .subscribe(onSuccess: { response in
                 self.feedList.accept(response)
             }, onFailure: { error in
-                if let moyaError = error as? MoyaError {
-                    if let statusCode = moyaError.response?.statusCode {
-                        let networkError = NetworkError(rawValue: statusCode)
-                        switch networkError {
-                        case .invalidRequest:
-                            print("invalidRequest")
-                        default:
-                            print("network error")
-                        }
-                    }
-                }
+                HandleNetworkError.handleNetworkError(error)
             })
             .disposed(by: disposeBag)
     }

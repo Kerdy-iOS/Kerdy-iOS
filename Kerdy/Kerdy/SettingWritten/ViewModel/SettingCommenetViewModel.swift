@@ -56,24 +56,20 @@ extension SettingCommenetViewModel {
     
     func getUserComments(id: Int) {
         commentManager.getUserComments(id: id)
-            .subscribe(onSuccess: { response in
-                let groupedComments = Dictionary(grouping: response.flatMap { [$0.parentComment] + $0.childComments }, by: { $0.memberID })
-                
-                self.commentsList.accept((groupedComments.map { $0.value }.flatMap { $0 }))
-                print("comment ID:\(self.commentsList.value.map {$0.commentID})")
+            .map { response in
+                Dictionary(grouping: response.flatMap { [$0.parentComment] + $0.childComments },
+                           by: { $0.memberID })
+            }
+            .map { groupedComments in
+                groupedComments.map(\.value).flatMap { $0 }
+            }
+            .subscribe(onSuccess: { [weak self] commentsList in
+                guard let self else { return }
+                self.commentsList.accept(commentsList)
             }, onFailure: { error in
-                if let moyaError = error as? MoyaError {
-                    if let statusCode = moyaError.response?.statusCode {
-                        let networkError = NetworkError(rawValue: statusCode)
-                        switch networkError {
-                        case .invalidRequest:
-                            print("invalidRequest")
-                        default:
-                            print("network error")
-                        }
-                    }
-                }
+                HandleNetworkError.handleNetworkError(error)
             })
             .disposed(by: disposeBag)
     }
+
 }

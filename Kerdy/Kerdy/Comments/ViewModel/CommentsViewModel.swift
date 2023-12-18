@@ -22,7 +22,7 @@ final class CommentsViewModel: ViewModelType {
     private var commentID: Int
     
     // MARK: - Init
-
+    
     init(commentID: Int, commentsManager: CommentManager) {
         self.commentsManager = commentsManager
         self.commentID = commentID
@@ -75,23 +75,12 @@ extension CommentsViewModel {
     func getDetailComments(commentID: Int) {
         commentsManager.getDetailComments(commentID: commentID)
             .subscribe(onSuccess: { response in
-                print("response: \(response)")
                 let commentsList = [CommentsSection(header: response.parentComment, items: response.childComments)]
                 self.commentsList.accept(commentsList)
                 self.feedID.accept(response.parentComment.feedID)
-                self.parentID.accept(response.parentComment.parentID)
+                self.parentID.accept(response.parentComment.commentID)
             }, onFailure: { error in
-                if let moyaError = error as? MoyaError {
-                    if let statusCode = moyaError.response?.statusCode {
-                        let networkError = NetworkError(rawValue: statusCode)
-                        switch networkError {
-                        case .invalidRequest:
-                            print("invalidRequest")
-                        default:
-                            print("network error")
-                        }
-                    }
-                }
+                HandleNetworkError.handleNetworkError(error)
             })
             .disposed(by: disposeBag)
     }
@@ -99,19 +88,10 @@ extension CommentsViewModel {
     func postComments(request: CommentsRequestDTO) {
         commentsManager.postComments(request: request)
             .subscribe(onSuccess: { response in
-                dump(response)
+                guard let commentID = response.commentID else { return }
+                self.getDetailComments(commentID: commentID)
             }, onFailure: { error in
-                if let moyaError = error as? MoyaError {
-                    if let statusCode = moyaError.response?.statusCode {
-                        let networkError = NetworkError(rawValue: statusCode)
-                        switch networkError {
-                        case .invalidRequest:
-                            print("invalidRequest")
-                        default:
-                            print("network error")
-                        }
-                    }
-                }
+                HandleNetworkError.handleNetworkError(error)
             })
             .disposed(by: disposeBag)
     }
