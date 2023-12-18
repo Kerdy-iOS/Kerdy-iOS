@@ -38,16 +38,14 @@ final class CommentsViewModel: ViewModelType {
     struct Output {
         
         let commentsList: Driver<[CommentsSection]>
-        let clearTextField: PublishRelay<String>
     }
     
     private let commentsList = BehaviorRelay<([CommentsSection])>(value: [])
-    private let clearTextField = PublishRelay<String>()
     private let feedID = BehaviorRelay<Int>(value: 0)
     private let parentID = BehaviorRelay<Int?>(value: 0)
     
     func transform(input: Input) -> Output {
-        let output = Output(commentsList: commentsList.asDriver(), clearTextField: clearTextField)
+        let output = Output(commentsList: commentsList.asDriver())
         
         input.viewWillAppear
             .asDriver(onErrorDriveWith: .never())
@@ -64,7 +62,6 @@ final class CommentsViewModel: ViewModelType {
                 let parentID = self.parentID.value
                 let request = CommentsRequestDTO(content: text, feedId: feedID, parentId: parentID)
                 owner.postComments(request: request)
-                owner.clearTextField.accept("")
             }
             .disposed(by: disposeBag)
         

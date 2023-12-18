@@ -57,7 +57,7 @@ extension SettingWrittenDataSource {
     
     private func setDataSource() {
         
-        let cellRegistaion = CellRegistration<SettingWriteCell, Item> { cell, indexPath, item in
+        let cellRegistaion = CellRegistration<SettingWriteCell, Item> { cell, _, item in
             
             switch self.sectionType {
             case .article:

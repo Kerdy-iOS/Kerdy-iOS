@@ -97,8 +97,8 @@ extension CommentsVC {
     private func bind() {
         
         let input = CommentsViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver(),
-                                            textField: textFieldView.comments.rx.text.orEmpty.asDriver(),
-                                            tapEnterButton: textFieldView.enterbutton.rx.tap.asSignal()
+                                            textField: textFieldView.commentsText(),
+                                            tapEnterButton: textFieldView.tapEnterButton()
         )
         
         let output = viewModel.transform(input: input)
@@ -106,11 +106,7 @@ extension CommentsVC {
         output.commentsList
             .drive(collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-        
-        output.clearTextField
-            .bind(to: textFieldView.comments.rx.text)
-            .disposed(by: disposeBag)
-
+    
         RxKeyboard.instance.visibleHeight
             .drive(onNext: { [unowned self] keyboardHeight in
                 let height = keyboardHeight > 0 ? -keyboardHeight + view.safeAreaInsets.bottom : 18
