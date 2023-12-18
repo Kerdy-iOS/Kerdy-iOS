@@ -54,6 +54,8 @@
 		0982941E2AF35E660011773A /* BlockSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0982941D2AF35E660011773A /* BlockSectionModel.swift */; };
 		098294212AF3C1E50011773A /* TermsOfUseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098294202AF3C1E50011773A /* TermsOfUseVC.swift */; };
 		098294232AF3C6180011773A /* ExternalURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098294222AF3C6180011773A /* ExternalURL.swift */; };
+		098D801D2B2FF8A600706897 /* CommentsContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098D801C2B2FF8A600706897 /* CommentsContainerView.swift */; };
+		098D80252B30092200706897 /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = 098D80242B30092200706897 /* RxKeyboard */; };
 		099756B62B222D01009961B5 /* NotificationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099756B52B222D01009961B5 /* NotificationAPI.swift */; };
 		099756B82B222D8D009961B5 /* TagAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099756B72B222D8D009961B5 /* TagAPI.swift */; };
 		099756BD2B222FBA009961B5 /* TagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099756BC2B222FBA009961B5 /* TagManager.swift */; };
@@ -207,6 +209,8 @@
 		0982941D2AF35E660011773A /* BlockSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockSectionModel.swift; sourceTree = "<group>"; };
 		098294202AF3C1E50011773A /* TermsOfUseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseVC.swift; sourceTree = "<group>"; };
 		098294222AF3C6180011773A /* ExternalURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalURL.swift; sourceTree = "<group>"; };
+		098D801C2B2FF8A600706897 /* CommentsContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsContainerView.swift; sourceTree = "<group>"; };
+		098D801F2B30016000706897 /* Kerdy.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Kerdy.entitlements; sourceTree = "<group>"; };
 		099756B52B222D01009961B5 /* NotificationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAPI.swift; sourceTree = "<group>"; };
 		099756B72B222D8D009961B5 /* TagAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagAPI.swift; sourceTree = "<group>"; };
 		099756BC2B222FBA009961B5 /* TagManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagManager.swift; sourceTree = "<group>"; };
@@ -271,7 +275,6 @@
 		3164D49B2AE21F820054F440 /* KerdyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KerdyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3164D49F2AE21F820054F440 /* KerdyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KerdyUITests.swift; sourceTree = "<group>"; };
 		3164D4A12AE21F820054F440 /* KerdyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KerdyUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		3164D4AE2AE21FA80054F440 /* Kerdy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kerdy.entitlements; sourceTree = "<group>"; };
 		31FBEC782B107DCD00DE68F3 /* EventDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		31FBEC7A2B109A1C00DE68F3 /* EventDetailPostCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailPostCVCell.swift; sourceTree = "<group>"; };
 		31FBEC7E2B109D4500DE68F3 /* PostListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListModel.swift; sourceTree = "<group>"; };
@@ -297,6 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3162F0752AEA775E001B1D32 /* RxSwift in Frameworks */,
+				098D80252B30092200706897 /* RxKeyboard in Frameworks */,
 				3164D4B72AE223400054F440 /* SnapKit in Frameworks */,
 				311620632AE252E600E26420 /* Core in Frameworks */,
 				09A66C212B19D8250035C4C7 /* RxDataSources in Frameworks */,
@@ -688,6 +692,7 @@
 			isa = PBXGroup;
 			children = (
 				0964F94F2B2F283F0031D574 /* CommentsVC.swift */,
+				098D801C2B2FF8A600706897 /* CommentsContainerView.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -909,7 +914,7 @@
 		3164D47D2AE21F810054F440 /* Kerdy */ = {
 			isa = PBXGroup;
 			children = (
-				3164D4AE2AE21FA80054F440 /* Kerdy.entitlements */,
+				098D801F2B30016000706897 /* Kerdy.entitlements */,
 				095D39062AEE7B3C0083CC65 /* Application */,
 				095EBE7B2AFF663B00629F06 /* Global */,
 				092414362B0C911700CF5CF4 /* Auth */,
@@ -1065,6 +1070,7 @@
 				09A3E1852B18EFEF004BD432 /* Kingfisher */,
 				09A66C1E2B19D8250035C4C7 /* Differentiator */,
 				09A66C202B19D8250035C4C7 /* RxDataSources */,
+				098D80242B30092200706897 /* RxKeyboard */,
 			);
 			productName = Kerdy;
 			productReference = 3164D47B2AE21F810054F440 /* Kerdy.app */;
@@ -1146,6 +1152,7 @@
 				311E983B2AFB8A91009BEB3F /* XCRemoteSwiftPackageReference "FSCalendar" */,
 				09A3E1842B18EFEF004BD432 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				09A66C1D2B19D8250035C4C7 /* XCRemoteSwiftPackageReference "RxDataSources" */,
+				098D80232B30092200706897 /* XCRemoteSwiftPackageReference "RxKeyboard" */,
 			);
 			productRefGroup = 3164D47C2AE21F810054F440 /* Products */;
 			projectDirPath = "";
@@ -1270,6 +1277,7 @@
 				3109B30C2AF7F49A00B2EAD2 /* PrortudingBtn.swift in Sources */,
 				311E983A2AFB89E5009BEB3F /* DateFilterViewController.swift in Sources */,
 				3109B30E2AF7F4ED00B2EAD2 /* FilterBtn.swift in Sources */,
+				098D801D2B2FF8A600706897 /* CommentsContainerView.swift in Sources */,
 				09472C292B13720C00B4A84E /* KerdyAPI.swift in Sources */,
 				09ED94312B2C3249001864EF /* CommentManager.swift in Sources */,
 				3109B2FA2AF52B2000B2EAD2 /* FilterVC.swift in Sources */,
@@ -1500,14 +1508,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Kerdy/Kerdy.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VKW8W27KRV;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Kerdy/Resource/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Kerdy;
 				"INFOPLIST_KEY_CFBundleDisplayName[sdk=*]" = Kerdy;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1523,7 +1531,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kerdy.Kerdy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = KerdyProvisioning;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1687,6 +1694,14 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		098D80232B30092200706897 /* XCRemoteSwiftPackageReference "RxKeyboard" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxKeyboard";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.1;
+			};
+		};
 		09A3E1842B18EFEF004BD432 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -1738,6 +1753,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		098D80242B30092200706897 /* RxKeyboard */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 098D80232B30092200706897 /* XCRemoteSwiftPackageReference "RxKeyboard" */;
+			productName = RxKeyboard;
+		};
 		09A3E1852B18EFEF004BD432 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 09A3E1842B18EFEF004BD432 /* XCRemoteSwiftPackageReference "Kingfisher" */;
