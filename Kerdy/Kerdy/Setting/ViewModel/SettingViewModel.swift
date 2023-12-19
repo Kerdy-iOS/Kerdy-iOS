@@ -59,15 +59,27 @@ extension SettingViewModel {
     
     func getMember(id: Int) {
         settingManager.getMember(id: id)
-            .subscribe(onSuccess: { response in
-                
+            .map { response in
                 let profile = SettingSectionItem.Item.profile(response)
-                let basic = self.basicItems.map { SettingSectionItem.Item.basic($0)}
+                let basic = self.basicItems.map { SettingSectionItem.Item.basic($0) }
                 let profileSection = SettingSectionItem.Model(model: .profile, items: [profile])
                 let basicSection = SettingSectionItem.Model(model: .basic, items: basic)
-                
-                self.settingList.accept([profileSection, basicSection])
-                
+                return [profileSection, basicSection]
+            }
+            .subscribe(onSuccess: { settingList in
+                self.settingList.accept(settingList)
+            }, onFailure: { error in
+                HandleNetworkError.handleNetworkError(error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func withdrawalMember() {
+        guard let id = self.id else { return }
+        settingManager.deleteMember(id: id)
+            .subscribe(onSuccess: { response in
+                dump(response)
+                KeyChainManager.removeAllKeychain()
             }, onFailure: { error in
                 if let moyaError = error as? MoyaError {
                     if let statusCode = moyaError.response?.statusCode {
@@ -82,5 +94,17 @@ extension SettingViewModel {
                 }
             })
             .disposed(by: disposeBag)
+    }
+    
+    func logoutMember() {
+        KeyChainManager.delete(forKey: .accessToken)
+    }
+    
+    func authMember(type: AuthType) {
+        if type == .logout {
+            self.logoutMember()
+        } else {
+            self.withdrawalMember()
+        }
     }
 }

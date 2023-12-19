@@ -71,7 +71,7 @@ extension SettingCommentsVC {
         navigationBar.delegate = self
         collectionView.dataSource = commentDataSource.dataSource
     }
-
+    
     private func bind() {
         
         let input = SettingCommenetViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver())
@@ -79,11 +79,16 @@ extension SettingCommentsVC {
         let output = viewModel.transform(input: input)
         
         output.commentsList
-            .drive(with: self) { owner, comments in
-                let commentsList = comments.map { $0.parentComment }
-                let count = comments.map { $0.childComments.count }
-                owner.commentDataSource.updateData(with: commentsList, count: count)
-                dump(comments)
+            .drive(with: self, onNext: { owner, comments in
+                owner.commentDataSource.updateData(with: comments)
+            })
+            .disposed(by: disposeBag)
+        
+        commentDataSource.itemSelectedSubject
+            .bind(with: self) { owner, commentID in
+                
+                let commentsVC = CommentsVC(viewModel: CommentsViewModel(commentID: commentID, commentsManager: CommentManager.shared))
+                owner.navigationController?.pushViewController(commentsVC, animated: true)
             }
             .disposed(by: disposeBag)
     }

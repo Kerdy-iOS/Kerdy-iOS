@@ -53,7 +53,7 @@ final class TagViewModel: ViewModelType {
                 owner.getAllTagsAndUserTags(id: id)
             }
             .disposed(by: disposeBag)
-
+        
         input.tapRegisterButton
             .withLatestFrom(tagList.asDriver())
             .flatMap { sections -> Driver<[Int]> in
@@ -66,8 +66,8 @@ final class TagViewModel: ViewModelType {
                 owner.postTags(id: selectedIds)
             }
             .disposed(by: disposeBag)
-
-                return output
+        
+        return output
     }
 }
 
@@ -78,7 +78,8 @@ extension TagViewModel {
         let userTags = tagManager.getUserTags(id: id)
         
         Single.zip(allTags, userTags)
-            .subscribe(onSuccess: { allTagsResponse, userTagsResponse in
+            .subscribe(onSuccess: { [weak self] allTagsResponse, userTagsResponse in
+                guard let self else { return }
                 let allTagsSection = TagSection(items: allTagsResponse)
                 
                 let userTagIDs = Set(userTagsResponse.map { $0.id })
@@ -88,47 +89,26 @@ extension TagViewModel {
                     mutableTag.isSelected = userTagIDs.contains(tag.id)
                     return mutableTag
                 }
-                
                 let updatedTagSection = [TagSection(items: updatedItems)]
                 self.tagList.accept(updatedTagSection)
                 
             }, onFailure: { error in
-                if let moyaError = error as? MoyaError {
-                    if let statusCode = moyaError.response?.statusCode {
-                        let networkError = NetworkError(rawValue: statusCode)
-                        switch networkError {
-                        case .invalidRequest:
-                            print("invalidRequest")
-                        default:
-                            print("network error")
-                        }
-                    }
-                }
+                HandleNetworkError.handleNetworkError(error)
             })
             .disposed(by: disposeBag)
     }
-
+    
     func postTags(id: [Int]) {
         tagManager.postTags(id: id)
             .subscribe(onSuccess: { response in
                 dump(response)
                 self.didRegisterButtonTap.accept(())
             }, onFailure: { error in
-                if let moyaError = error as? MoyaError {
-                    if let statusCode = moyaError.response?.statusCode {
-                        let networkError = NetworkError(rawValue: statusCode)
-                        switch networkError {
-                        case .invalidRequest:
-                            print("invalidRequest")
-                        default:
-                            print("network error")
-                        }
-                    }
-                }
+                HandleNetworkError.handleNetworkError(error)
             })
             .disposed(by: disposeBag)
     }
-
+    
     func cellInfo(index: Int) -> TagSection.Item? {
         return tagList.value[0].items[index]
     }
@@ -140,7 +120,7 @@ extension TagViewModel {
         
         updatedItem.isSelected = !isSelected
         updatedBlockList[index] = updatedItem
-       
+        
         let updatedTagList = [TagSection(items: updatedBlockList)]
         tagList.accept(updatedTagList)
     }

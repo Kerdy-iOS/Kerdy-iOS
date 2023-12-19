@@ -18,9 +18,10 @@ struct FeedResponseDTO: Codable, Hashable, SettingWrittenProtocol {
     let images: [String]
     let commentCount: Int
     let createdAt, updatedAt: String
+    var commentID: Int?
     
     enum CodingKeys: String, CodingKey {
-        case id, title, content
+        case id, title, content, commentID
         case eventID = "eventId"
         case images, commentCount, createdAt, updatedAt, writer
     }

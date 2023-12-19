@@ -7,6 +7,8 @@
 
 import UIKit
 
+import RxSwift
+
 enum WrittenSections: Int {
     
     case article
@@ -24,9 +26,11 @@ final class SettingWrittenDataSource<T: SettingWrittenProtocol> {
     
     var dataSource: DataSource?
     var sectionType: WrittenSections
+    let itemSelectedSubject = PublishSubject<Int>()
+
+    private let disposeBag = DisposeBag()
     
     private var data: [Item] = []
-    private var count: [Int] = []
     
     // MARK: - UI Components
     
@@ -53,17 +57,13 @@ extension SettingWrittenDataSource {
     
     private func setDataSource() {
         
-        let cellRegistaion = CellRegistration<SettingWriteCell, Item> { cell, indexPath, item in
+        let cellRegistaion = CellRegistration<SettingWriteCell, Item> { cell, _, item in
             
             switch self.sectionType {
             case .article:
-                cell.configureUI(type: self.sectionType, to: item)
+                cell.configureUI(to: item)
             case .comment:
-                let count = self.count[indexPath.item]
-                cell.configureUI(type: self.sectionType,
-                                 to: item,
-                                 count: count)
-                
+                cell.configureUI(to: item)
             }
         }
         
@@ -73,6 +73,14 @@ extension SettingWrittenDataSource {
                                                                 item: itemIdentifier)
         })
         
+        collectionView.rx.itemSelected
+            .asDriver()
+            .drive(onNext: { [weak self] index in
+                    guard let self = self else { return }
+                    guard let commentID = self.data[index.item].commentID else { return }
+                    self.itemSelectedSubject.onNext(commentID)
+                })
+            .disposed(by: disposeBag)
     }
     
     private func setSnapshot() {
@@ -82,19 +90,16 @@ extension SettingWrittenDataSource {
         dataSource?.apply(snapShot)
     }
     
-    func updateData(with items: [Item], count: [Int]? = nil) {
+    func updateData(with items: [Item]) {
         data = items
-        
-        if let count = count {
-            self.count = count
-        }
         setSnapshot()
     }
     
     private func createLayout() -> UICollectionViewLayout {
         var config = UICollectionLayoutListConfiguration(appearance: .plain)
         config.showsSeparators = true
-        config.separatorConfiguration.bottomSeparatorInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
+        config.separatorConfiguration.bottomSeparatorInsets = .zero
+        config.separatorConfiguration.color = .kerdyGray01
         let layout = UICollectionViewCompositionalLayout.list(using: config)
         return layout
     }
