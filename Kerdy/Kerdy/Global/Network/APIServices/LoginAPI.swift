@@ -7,26 +7,35 @@
 
 import Moya
 
+
+struct AuthRequestDTO: Codable {
+    let token: String
+    let memberId: Int
+}
+
 enum LoginAPI {
     case signIn(code: String)
+    case fcm(request: AuthRequestDTO)
 }
 
 extension LoginAPI: KerdyAPI {
     
     var domain: KerdyDomain {
-        return .login
+        return .auth
     }
     
     var urlPath: String {
         switch self {
         case .signIn:
-            return "/github/callback"
+            return "/login/github/callback"
+        case .fcm:
+            return "/notifications/token"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .signIn:
+        case .signIn, .fcm:
             return .post
         }
     }
@@ -36,6 +45,8 @@ extension LoginAPI: KerdyAPI {
         case let .signIn(code):
             return .requestParameters(parameters: [ "code": code ],
                                       encoding: URLEncoding.default)
+        case let .fcm(request: request):
+            return .requestJSONEncodable(request)
         }
     }
         
@@ -43,12 +54,14 @@ extension LoginAPI: KerdyAPI {
         switch self {
         case .signIn:
             return .html
+        case .fcm:
+            return .plain
         }
     }
     
     var error: [Int: NetworkError]? {
         switch self {
-        case .signIn:
+        case .signIn, .fcm:
             return nil
         }
     }
