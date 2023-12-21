@@ -13,6 +13,14 @@ enum EventAPI {
 }
 
 extension EventAPI: KerdyAPI {
+    var headerType: HTTPHeaderFields {
+        return.plain
+    }
+    
+    var task: Task {
+        return .requestPlain
+    }
+    
     var domain: KerdyDomain {
         return .event
     }
@@ -35,25 +43,25 @@ extension EventAPI: KerdyAPI {
         switch self {
         case .getEvents(category: let category, filter: let filter):
             var parameters: [String: Any] = [:]
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
         
             if let category = category {
                 parameters.updateValue(category, forKey: "category")
             }
             if let startDate = filter.startDate {
-                let start = dateFormatter.string(from: startDate)
-                parameters.updateValue(start, forKey: "startDate")
+                parameters.updateValue(startDate, forKey: "startDate")
             }
             if let endDate = filter.endDate {
-                let end = dateFormatter.string(from: endDate)
-                parameters.updateValue(end, forKey: "endDate")
+                parameters.updateValue(endDate, forKey: "endDate")
             }
             if let statuses = filter.statuses {
                 parameters.updateValue(statuses, forKey: "statuses")
             }
             if let keyword = filter.keyword {
                 parameters.updateValue(keyword, forKey: "keyword")
+            }
+            if let tags = filter.tags {
+                let tags = tags.joined(separator: ",")
+                parameters.updateValue(tags, forKey: "tags")
             }
             return parameters
         }
