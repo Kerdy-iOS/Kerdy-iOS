@@ -33,7 +33,7 @@ final class EventTableViewCell: UITableViewCell {
         return label
     }()
 
-    lazy var placeLabel: UILabel = {
+    lazy var eventMode: UILabel = {
         let label = UILabel()
         label.text = "온라인"
         label.font = .nanumSquare(to: .regular, size: 12)
@@ -67,13 +67,58 @@ final class EventTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private func setUpTag() {
+        contentView.addSubview(tagStackView)
+        for index in 0...2 {
+            tagStackView.addArrangedSubview(TagView())
+            tagStackView.arrangedSubviews[index].isHidden = true
+        }
+    }
+    
+    func configure(_ event: Event) {
+        titleLabel.text = event.name
+        dDayLabel.text = getDdayString(event.startDate)
+        priceLabel.text = event.paymentType
+        eventMode.text = event.eventMode
+    }
+    
+    private func convertStringToDate(_ dateString: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.date(from: dateString) ?? Date()
+    }
+    
+    private func calculateDaysDifference(_ from: Date) -> Int {
+        let todayDate = Date()
+        
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.day], from: todayDate, to: from)
+        return components.day ?? 0
+    }
+    
+    private func getDdayString(_ from: String) -> String {
+        let targetDate = convertStringToDate(from)
+        let dateDifference = calculateDaysDifference(targetDate)
+        
+        if dateDifference < 0 {
+            return "D\(dateDifference)"
+        } else if dateDifference > 0{
+            return "D+\(dateDifference)"
+        } else {
+            return "D-day"
+        }
+    }
+}
+
+// MARK: - layout 설정
+extension EventTableViewCell {
     private func setLayout() {
         contentView.addSubview(eventImage)
         contentView.addSubview(titleLabel)
         contentView.addSubview(dDayLabel)
         contentView.addSubview(priceLabel)
         contentView.addSubview(divideLine)
-        contentView.addSubview(placeLabel)
+        contentView.addSubview(eventMode)
         contentView.addSubview(tagStackView)
 
         eventImage.snp.makeConstraints {
@@ -86,7 +131,7 @@ final class EventTableViewCell: UITableViewCell {
 
         dDayLabel.snp.makeConstraints {
             $0.height.equalTo(15)
-            $0.width.equalTo(31)
+            $0.width.equalTo(31).priority(500)
             $0.top.equalTo(eventImage.snp.bottom).offset(12)
             $0.leading.equalToSuperview().offset(17)
         }
@@ -113,7 +158,7 @@ final class EventTableViewCell: UITableViewCell {
             $0.top.equalTo(priceLabel.snp.top)
         }
 
-        placeLabel.snp.makeConstraints {
+        eventMode.snp.makeConstraints {
             $0.height.equalTo(14)
             $0.width.equalTo(33).priority(250)
             $0.leading.equalTo(divideLine.snp.trailing).offset(6)
@@ -128,11 +173,4 @@ final class EventTableViewCell: UITableViewCell {
         }
     }
 
-    private func setUpTag() {
-        contentView.addSubview(tagStackView)
-        for index in 0...2 {
-            tagStackView.addArrangedSubview(TagView())
-            tagStackView.arrangedSubviews[index].isHidden = true
-        }
-    }
 }
