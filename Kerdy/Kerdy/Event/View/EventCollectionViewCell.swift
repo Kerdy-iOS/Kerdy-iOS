@@ -9,20 +9,15 @@ import UIKit
 import SnapKit
 import Core
 
-protocol EventCellDelegate {
-    func showDetailVC()
-}
-
 final class EventCollectionViewCell: UICollectionViewCell {
-    var delegate: EventCellDelegate?
-    
+
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
 
-    var tableViewItems: [Event]?
+    private var tableViewItems: [Event] = []
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,14 +43,14 @@ final class EventCollectionViewCell: UICollectionViewCell {
         tableView.register(EventTableViewCell.self, forCellReuseIdentifier: EventTableViewCell.identifier)
     }
 
-    private func configure(with events: Event) {
-        // 추후 tableViewCell 설정 관련
+    func configure(with events: [Event]) {
+        tableViewItems = events
     }
 }
 
 extension EventCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableViewItems?.count ?? 5 // 임시 숫자
+        return tableViewItems.count
     }
 
     func tableView(
@@ -69,13 +64,12 @@ extension EventCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
             ) as? EventTableViewCell
         else { return UITableViewCell() }
         cell.selectionStyle = .none
-        cell.titleLabel.text = "\(indexPath.row)"
+        cell.configure(tableViewItems[indexPath.row])
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
-        delegate?.showDetailVC()
+        //이동하는 code 작성
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
