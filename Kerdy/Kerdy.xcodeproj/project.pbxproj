@@ -57,6 +57,10 @@
 		098294232AF3C6180011773A /* ExternalURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098294222AF3C6180011773A /* ExternalURL.swift */; };
 		0986664B2B309FFD0066E394 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0986664A2B309FFD0066E394 /* GoogleService-Info.plist */; };
 		098666512B30A27C0066E394 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 098666502B30A27C0066E394 /* FirebaseMessaging */; };
+		0986666A2B3493C30066E394 /* SwitchNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098666692B3493C30066E394 /* SwitchNotificationView.swift */; };
+		0986666C2B3495940066E394 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0986666B2B3495940066E394 /* NotificationCell.swift */; };
+		0986667B2B34D6BF0066E394 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0986667A2B34D6BF0066E394 /* NotificationViewModel.swift */; };
+		0986667D2B35136D0066E394 /* NotificationSectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0986667C2B35136D0066E394 /* NotificationSectionItem.swift */; };
 		098D801D2B2FF8A600706897 /* CommentsContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098D801C2B2FF8A600706897 /* CommentsContainerView.swift */; };
 		098D80252B30092200706897 /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = 098D80242B30092200706897 /* RxKeyboard */; };
 		099756B62B222D01009961B5 /* NotificationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099756B52B222D01009961B5 /* NotificationAPI.swift */; };
@@ -65,7 +69,6 @@
 		099756BF2B223002009961B5 /* TagsResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099756BE2B223002009961B5 /* TagsResponseDTO.swift */; };
 		099756C12B223078009961B5 /* TagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099756C02B223078009961B5 /* TagViewModel.swift */; };
 		099756DE2B24D3E3009961B5 /* HTTPHeaderFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099756DD2B24D3E3009961B5 /* HTTPHeaderFields.swift */; };
-		099756E42B24D96A009961B5 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099756E32B24D96A009961B5 /* NotificationViewModel.swift */; };
 		09A3E17F2B18E500004BD432 /* SettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A3E17E2B18E500004BD432 /* SettingManager.swift */; };
 		09A3E1812B18E525004BD432 /* SettingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A3E1802B18E525004BD432 /* SettingAPI.swift */; };
 		09A3E1832B18EA28004BD432 /* MemberProfileResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A3E1822B18EA28004BD432 /* MemberProfileResponseDTO.swift */; };
@@ -214,6 +217,10 @@
 		098294202AF3C1E50011773A /* TermsOfUseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseVC.swift; sourceTree = "<group>"; };
 		098294222AF3C6180011773A /* ExternalURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalURL.swift; sourceTree = "<group>"; };
 		0986664A2B309FFD0066E394 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		098666692B3493C30066E394 /* SwitchNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchNotificationView.swift; sourceTree = "<group>"; };
+		0986666B2B3495940066E394 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
+		0986667A2B34D6BF0066E394 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
+		0986667C2B35136D0066E394 /* NotificationSectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSectionItem.swift; sourceTree = "<group>"; };
 		098D801C2B2FF8A600706897 /* CommentsContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsContainerView.swift; sourceTree = "<group>"; };
 		098D801F2B30016000706897 /* Kerdy.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Kerdy.entitlements; sourceTree = "<group>"; };
 		099756B52B222D01009961B5 /* NotificationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAPI.swift; sourceTree = "<group>"; };
@@ -222,7 +229,6 @@
 		099756BE2B223002009961B5 /* TagsResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsResponseDTO.swift; sourceTree = "<group>"; };
 		099756C02B223078009961B5 /* TagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewModel.swift; sourceTree = "<group>"; };
 		099756DD2B24D3E3009961B5 /* HTTPHeaderFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeaderFields.swift; sourceTree = "<group>"; };
-		099756E32B24D96A009961B5 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		09A3E17E2B18E500004BD432 /* SettingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingManager.swift; sourceTree = "<group>"; };
 		09A3E1802B18E525004BD432 /* SettingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAPI.swift; sourceTree = "<group>"; };
 		09A3E1822B18EA28004BD432 /* MemberProfileResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberProfileResponseDTO.swift; sourceTree = "<group>"; };
@@ -400,11 +406,13 @@
 			children = (
 				099756E22B24D95C009961B5 /* ViewModel */,
 				090979062AF33D19006BD8DE /* VC */,
+				098666712B3496070066E394 /* Cell */,
+				098666732B3496980066E394 /* View */,
 			);
 			path = Notification;
 			sourceTree = "<group>";
 		};
-		090979052AF33CCC006BD8DE /* NotificationTag */ = {
+		090979052AF33CCC006BD8DE /* TagNotification */ = {
 			isa = PBXGroup;
 			children = (
 				0909790B2AF33D50006BD8DE /* Cell */,
@@ -412,7 +420,7 @@
 				090979082AF33D40006BD8DE /* VC */,
 				090979012AF29086006BD8DE /* TagCollectionViewFlowLayout.swift */,
 			);
-			path = NotificationTag;
+			path = TagNotification;
 			sourceTree = "<group>";
 		};
 		090979062AF33D19006BD8DE /* VC */ = {
@@ -765,10 +773,28 @@
 			path = TermsOfUse;
 			sourceTree = "<group>";
 		};
+		098666712B3496070066E394 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				0986666B2B3495940066E394 /* NotificationCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		098666732B3496980066E394 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				098666692B3493C30066E394 /* SwitchNotificationView.swift */,
+			);
+			name = View;
+			path = ../View;
+			sourceTree = "<group>";
+		};
 		099756E22B24D95C009961B5 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				099756E32B24D96A009961B5 /* NotificationViewModel.swift */,
+				0986667A2B34D6BF0066E394 /* NotificationViewModel.swift */,
+				0986667C2B35136D0066E394 /* NotificationSectionItem.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -944,7 +970,7 @@
 				09BB551A2AF015D100A54B1B /* Setting */,
 				091A30732B0DB415009EBF5B /* SettingWritten */,
 				090978F82AF27298006BD8DE /* Notification */,
-				090979052AF33CCC006BD8DE /* NotificationTag */,
+				090979052AF33CCC006BD8DE /* TagNotification */,
 				098294162AF341090011773A /* BlockList */,
 				0982941F2AF3C1C90011773A /* TermsOfUse */,
 				090979072AF33D31006BD8DE /* Common */,
@@ -1283,7 +1309,9 @@
 				099756B82B222D8D009961B5 /* TagAPI.swift in Sources */,
 				09BB55192AF0158C00A54B1B /* SettingVC.swift in Sources */,
 				090978FC2AF27364006BD8DE /* ModalTopView.swift in Sources */,
+				0986667B2B34D6BF0066E394 /* NotificationViewModel.swift in Sources */,
 				09242FFF2B13BC93008DE4FB /* NetworkLogging.swift in Sources */,
+				0986666A2B3493C30066E394 /* SwitchNotificationView.swift in Sources */,
 				09ED941F2B2C31A0001864EF /* BlockListViewModel.swift in Sources */,
 				09ED942A2B2C31F2001864EF /* SettingCommentsVC.swift in Sources */,
 				09472C382B13762900B4A84E /* LoginAPI.swift in Sources */,
@@ -1299,6 +1327,7 @@
 				3109B30E2AF7F4ED00B2EAD2 /* FilterBtn.swift in Sources */,
 				098D801D2B2FF8A600706897 /* CommentsContainerView.swift in Sources */,
 				09472C292B13720C00B4A84E /* KerdyAPI.swift in Sources */,
+				0986667D2B35136D0066E394 /* NotificationSectionItem.swift in Sources */,
 				09ED94312B2C3249001864EF /* CommentManager.swift in Sources */,
 				3109B2FA2AF52B2000B2EAD2 /* FilterVC.swift in Sources */,
 				3109B3022AF52B6A00B2EAD2 /* ResetBtn.swift in Sources */,
@@ -1312,6 +1341,7 @@
 				09472C252B135BF200B4A84E /* KeyChainManager.swift in Sources */,
 				090978F12AF0E7B5006BD8DE /* ChatVC.swift in Sources */,
 				31571C232AF3CBC00037A2F2 /* EventCollectionViewCell.swift in Sources */,
+				0986666C2B3495940066E394 /* NotificationCell.swift in Sources */,
 				090979022AF29086006BD8DE /* TagCollectionViewFlowLayout.swift in Sources */,
 				31FBEC872B10DF9600DE68F3 /* EventDetailBottomView.swift in Sources */,
 				31571C262AF3CBC80037A2F2 /* Event.swift in Sources */,
@@ -1339,7 +1369,6 @@
 				31FBEC942B11CB3600DE68F3 /* CellProtocol.swift in Sources */,
 				3164D4812AE21F810054F440 /* SceneDelegate.swift in Sources */,
 				31FBEC7B2B109A1C00DE68F3 /* EventDetailPostCVCell.swift in Sources */,
-				099756E42B24D96A009961B5 /* NotificationViewModel.swift in Sources */,
 				09A3E17F2B18E500004BD432 /* SettingManager.swift in Sources */,
 				0982941A2AF342090011773A /* BlockListCell.swift in Sources */,
 				31FBEC8D2B10F5B100DE68F3 /* EventSummaryModel.swift in Sources */,
