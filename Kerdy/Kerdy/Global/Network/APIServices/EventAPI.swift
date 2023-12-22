@@ -13,6 +13,7 @@ enum EventAPI {
 }
 
 extension EventAPI: KerdyAPI {
+    
     var domain: KerdyDomain {
         return .event
     }
@@ -23,21 +24,21 @@ extension EventAPI: KerdyAPI {
             return ""
         }
     }
-
-    var error: [Int : NetworkError]? {
+    
+    var error: [Int: NetworkError]? {
         switch self {
         case .getEvents:
             return nil
         }
     }
-
-    var parameters: [String : Any]? {
+    
+    var task: Task {
         switch self {
         case .getEvents(category: let category, filter: let filter):
             var parameters: [String: Any] = [:]
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
-        
+            
             if let category = category {
                 parameters.updateValue(category, forKey: "category")
             }
@@ -55,7 +56,7 @@ extension EventAPI: KerdyAPI {
             if let keyword = filter.keyword {
                 parameters.updateValue(keyword, forKey: "keyword")
             }
-            return parameters
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
         }
     }
     
@@ -65,5 +66,11 @@ extension EventAPI: KerdyAPI {
             return .get
         }
     }
-}
     
+    var headerType: HTTPHeaderFields {
+        switch self {
+        case .getEvents:
+            return .plain
+        }
+    }
+}
