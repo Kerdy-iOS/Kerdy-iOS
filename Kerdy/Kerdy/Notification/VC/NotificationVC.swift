@@ -12,13 +12,15 @@ import SnapKit
 
 import RxSwift
 import RxCocoa
-import RxDataSources
 
 final class NotificationVC: BaseVC {
     
     // MARK: - Property
     
-    typealias DataSource = RxCollectionViewSectionedReloadDataSource<TagSection>
+    typealias DataSource = UICollectionViewDiffableDataSource<NotificationSection, NotificationItem>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<NotificationSection, NotificationItem>
+    typealias SectionSnapshot = NSDiffableDataSourceSectionSnapshot<NotificationItem>
+    typealias Item = NotificationCellItem
     
     private var dataSource: DataSource!
     private let viewModel: NotificationViewModel
@@ -31,58 +33,14 @@ final class NotificationVC: BaseVC {
         return view
     }()
     
-    private let lineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .kerdyGray01
+    private lazy var collectionView: UICollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: self.layout())
         return view
     }()
     
-    private let notificationLabel: UILabel = {
-        let label = UILabel()
-        label.text = Strings.notification
-        label.font = .nanumSquare(to: .regular, size: 14)
-        label.textColor = .kerdyBlack
-        return label
-    }()
-    
-    private let tagLabel: UILabel = {
-        let label = UILabel()
-        label.text = Strings.notificationTag
-        label.font = .nanumSquare(to: .bold, size: 15)
-        label.textColor = .kerdyBlack
-        label.setLineSpacing(lineSpacing: 1.15)
-        return label
-    }()
-    
-    private let tagSubLabel: UILabel = {
-        let label = UILabel()
-        label.text = Strings.subTag
-        label.font = .nanumSquare(to: .regular, size: 11)
-        label.textColor = .kerdyGray02
-        return label
-    }()
-    
-    private lazy var switchButton: UISwitch = {
-        let button = UISwitch()
-        button.onTintColor = .kerdyMain
-        button.tintColor = .kerdyGray01
-        button.thumbTintColor = .kerdyBackground
-        button.setSize(width: 36, height: 20)
-        return button
-    }()
-    
-    private let addButton: UIButton = {
-        let button = UIButton()
-        button.setImage(.icAddButton, for: .normal)
-        button.backgroundColor = .clear
-        return button
-    }()
-    
-    private lazy var collectionView: UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: self.layout())
-        view.allowsMultipleSelection = true
-        view.bounces = false
-        view.isScrollEnabled = false
+    private let switchView: UISwitch = {
+        let view = UISwitch()
+        view.onTintColor = .kerdyMain
         return view
     }()
     
@@ -98,22 +56,16 @@ final class NotificationVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setRegisteration()
         setLayout()
-        setUI()
+        setDelegate()
         setDataSource()
-        bind()
+        setBindings()
     }
 }
 
 // MARK: = Methods
 
 extension NotificationVC {
-    
-    private func setRegisteration() {
-        
-        collectionView.register(TagCell.self, forCellWithReuseIdentifier: TagCell.identifier)
-    }
     
     private func setLayout() {
         
@@ -122,80 +74,29 @@ extension NotificationVC {
             $0.top.horizontalEdges.equalTo(safeArea)
         }
         
-        view.addSubview(notificationLabel)
-        notificationLabel.snp.makeConstraints {
-            $0.top.equalTo(navigationBar.snp.bottom).offset(23)
-            $0.leading.equalTo(safeArea).inset(17)
-        }
-        
-        view.addSubview(switchButton)
-        switchButton.snp.makeConstraints {
-            $0.centerY.equalTo(notificationLabel.snp.centerY)
-            $0.trailing.equalTo(safeArea).inset(17)
-        }
-        
-        view.addSubview(lineView)
-        lineView.snp.makeConstraints {
-            $0.top.equalTo(notificationLabel.snp.bottom).offset(23)
-            $0.horizontalEdges.equalTo(safeArea)
-            $0.height.equalTo(0.5)
-        }
-        
-        view.addSubview(tagLabel)
-        tagLabel.snp.makeConstraints {
-            $0.top.equalTo(lineView.snp.bottom).offset(25)
-            $0.leading.equalTo(safeArea).inset(17)
-        }
-        
-        view.addSubview(tagSubLabel)
-        tagSubLabel.snp.makeConstraints {
-            $0.top.equalTo(tagLabel.snp.bottom).offset(14)
-            $0.leading.equalTo(safeArea).inset(17)
-        }
-        
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(tagSubLabel.snp.bottom).offset(22)
-            $0.horizontalEdges.bottom.equalTo(safeArea).inset(17)
-        }
-        
-        view.addSubview(addButton)
-        addButton.snp.makeConstraints {
-            $0.top.equalTo(tagSubLabel.snp.bottom).offset(22)
-            $0.leading.equalTo(safeArea).inset(17)
-            $0.size.equalTo(CGSize(width: 60, height: 32))
+            $0.top.equalTo(navigationBar.snp.bottom)
+            $0.horizontalEdges.bottom.equalTo(safeArea)
         }
     }
     
-    private func setUI() {
+    private func setDelegate() {
         
         navigationBar.delegate = self
     }
-}
-
-// MARK: - Navi BackButton Delegate
-
-extension NotificationVC: BackButtonActionProtocol {
     
-    func backButtonTapped() {
+    private func setBindings() {
         
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    func bind() {
-        
-        let input = NotificationViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver())
+        let input = NotificationViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver(),
+                                                switchValueChanged: switchView.rx.isOn.asDriver())
         let output = viewModel.transform(input: input)
         
-        output.tagList
-            .drive(collectionView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-        
-        addButton.rx.tap
-            .asDriver()
-            .drive(with: self) { owner, _ in
-                owner.navigationController?.pushViewController(TagVC(viewModel: TagViewModel(tagManager: TagManager.shared)), animated: true)
-            }
+        output.isSwitch
+            .drive(with: self, onNext: { owner, data in
+                let (isSwitch, tagList) = data
+                owner.updateCollectionView(isSwitch: isSwitch, tagList: tagList)
+            })
             .disposed(by: disposeBag)
     }
 }
@@ -206,26 +107,69 @@ extension NotificationVC {
     
     func setDataSource() {
         
-        dataSource = DataSource { [weak self] _, collectionView, indexPath, item in
-            guard self != nil else { return UICollectionViewCell() }
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: TagCell.identifier,
-                for: indexPath
-            ) as? TagCell else { return UICollectionViewCell() }
+        let cellRegistration =  UICollectionView.CellRegistration<NotificationCell, Item> { cell, _, item  in
             
-            cell.configureCell(to: item, tagType: .userTag)
-            
-            cell.rx.cancel.asSignal()
-                .throttle(.milliseconds(500))
-                .map { item.id }
-                .emit { [weak self] id in
-                    guard let self else { return }
-                    self.viewModel.deleteTags(id: [id])
-                }
-                .disposed(by: cell.disposeBag)
-            
-            return cell
+            cell.setBindings(tagList: item.tagList)
+            self.configureButton(cell: cell)
+            self.configureBackgroundView(cell: cell)
         }
+        
+        let headerCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, UUID> { cell, _, _ in
+            
+            var content = cell.defaultContentConfiguration()
+            content.text = Strings.receiveAllNotification
+            content.textProperties.font = .nanumSquare(to: .regular, size: 14)
+            cell.contentConfiguration = content
+            
+            cell.accessories = [
+                .customView(configuration: .init(customView: self.switchView,
+                                                 placement: .trailing()))
+            ]
+            self.configureBackgroundView(cell: cell)
+        }
+        
+        dataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, item -> UICollectionViewCell in
+            switch item {
+            case .header(let uuid):
+                return collectionView.dequeueConfiguredReusableCell(using: headerCellRegistration,
+                                                                    for: indexPath,
+                                                                    item: uuid)
+            case .cellItem(let data):
+                return collectionView.dequeueConfiguredReusableCell(using: cellRegistration,
+                                                                    for: indexPath,
+                                                                    item: data)
+            }
+        }
+    }
+    
+    private func updateCollectionView(isSwitch: Bool, tagList: [NotificationCellItem]) {
+        var sectionSnapshot = SectionSnapshot()
+        
+        let headerItem = NotificationItem.header(UUID())
+        sectionSnapshot.append([headerItem])
+        
+        let cellItems = isSwitch ? tagList.map { NotificationItem.cellItem($0) } : []
+        sectionSnapshot.append(cellItems, to: headerItem)
+        isSwitch ? sectionSnapshot.expand([headerItem]) : sectionSnapshot.collapse([headerItem])
+        
+        dataSource.apply(sectionSnapshot, to: .main, animatingDifferences: false)
+    }
+    
+    private func configureButton(cell: NotificationCell) {
+        
+        cell.rx.addButton
+            .withUnretained(self)
+            .bind {_ in
+                let vc = TagVC(viewModel: TagViewModel(tagManager: TagManager.shared))
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: cell.disposeBag)
+        
+        cell.selectedTagCell()
+            .drive(with: self, onNext: { owner, selectedTag in
+                owner.viewModel.deleteTags(id: [selectedTag.id])
+            })
+            .disposed(by: cell.disposeBag)
     }
 }
 
@@ -234,30 +178,28 @@ extension NotificationVC {
 extension NotificationVC {
     
     private func layout() -> UICollectionViewCompositionalLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(30), heightDimension: .absolute(32))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(32))
+        var config = UICollectionLayoutListConfiguration(appearance: .plain)
+        config.showsSeparators = false
+        let layout = UICollectionViewCompositionalLayout.list(using: config)
         
-        func createHorizontalGroup(insets: NSDirectionalEdgeInsets) -> NSCollectionLayoutGroup {
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-            group.interItemSpacing = .fixed(5)
-            group.contentInsets = insets
-            return group
-        }
+        return layout
+    }
+    
+    private func configureBackgroundView(cell: UICollectionViewListCell) {
         
-        let hgroup1 = createHorizontalGroup(insets: .init(top: 0, leading: 65, bottom: 0, trailing: 0))
-        let hgroup2 = createHorizontalGroup(insets: .zero)
+        let selectedBackgroundView = UIView()
+        selectedBackgroundView.backgroundColor = .clear
+        cell.selectedBackgroundView = selectedBackgroundView
+    }
+}
+
+// MARK: - Navi BackButton Delegate
+
+extension NotificationVC: BackButtonActionProtocol {
+    
+    func backButtonTapped() {
         
-        let containerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-        
-        let containerGroup = NSCollectionLayoutGroup.vertical(layoutSize: containerSize, 
-                                                              subitems: [hgroup1] + Array(repeating: hgroup2, count: 4))
-        containerGroup.interItemSpacing = .fixed(11)
-        
-        let section = NSCollectionLayoutSection(group: containerGroup)
-        section.orthogonalScrollingBehavior = .none
-        
-        return UICollectionViewCompositionalLayout(section: section)
+        self.navigationController?.popViewController(animated: true)
     }
 }
