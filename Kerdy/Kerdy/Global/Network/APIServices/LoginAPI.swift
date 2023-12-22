@@ -7,7 +7,6 @@
 
 import Moya
 
-
 struct AuthRequestDTO: Codable {
     let token: String
     let memberId: Int

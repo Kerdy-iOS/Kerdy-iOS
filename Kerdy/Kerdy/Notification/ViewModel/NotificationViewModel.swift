@@ -2,7 +2,7 @@
 //  NotificationViewModel.swift
 //  Kerdy
 //
-//  Created by JEONGEUN KIM on 12/10/23.
+//  Created by JEONGEUN KIM on 12/22/23.
 //
 
 import Foundation
@@ -30,18 +30,21 @@ final class NotificationViewModel: ViewModelType {
     struct Input {
         
         let viewWillAppear: Driver<Bool>
+        let switchValueChanged: Driver<Bool>
     }
     
     struct Output {
         
-        let tagList: Driver<[TagSection]>
+        let isSwitch: Driver<(Bool, [NotificationCellItem])>
     }
     
-    private let tagList = BehaviorRelay<[TagSection]>(value: [])
+    private let switchValueRelay = BehaviorRelay<Bool>(value: false)
+    private let tagList = BehaviorRelay<[NotificationCellItem]>(value: [])
     
     func transform(input: Input) -> Output {
-        let output = Output(tagList: tagList.asDriver())
         
+        let isSwitch = Observable.combineLatest(switchValueRelay.asObservable(),
+                                                tagList.asObservable())        
         input.viewWillAppear
             .asDriver(onErrorDriveWith: .never())
             .drive(with: self, onNext: { owner, _ in
@@ -50,20 +53,25 @@ final class NotificationViewModel: ViewModelType {
             })
             .disposed(by: disposeBag)
         
-        return output
+        input.switchValueChanged
+            .debug()
+            .drive(switchValueRelay)
+            .disposed(by: disposeBag)
+        
+        return Output(isSwitch: isSwitch.asDriver(onErrorJustReturn: (false, [])))
     }
 }
 
 extension NotificationViewModel {
     
     private func updateTagList(with response: [TagsResponseDTO]) {
-        let tagList = [TagSection(items: response)]
+        let tagList = [NotificationCellItem(tagList: response)]
         self.tagList.accept(tagList)
     }
-
+    
     func getTags(id: Int) {
         tagManager.getUserTags(id: id)
-            .map { [TagSection(items: $0)] }
+            .map { [NotificationCellItem(tagList: $0)] }
             .subscribe(onSuccess: { [weak self] updatedList in
                 guard let self else { return }
                 self.tagList.accept(updatedList)
@@ -72,10 +80,10 @@ extension NotificationViewModel {
             })
             .disposed(by: disposeBag)
     }
-
+    
     func deleteTags(id: [Int]) {
         tagManager.deleteTags(id: id)
-            .map { [TagSection(items: $0)] }
+            .map { [NotificationCellItem(tagList: $0)] }
             .subscribe(onSuccess: { [weak self] updatedList in
                 guard let self else { return }
                 self.tagList.accept(updatedList)
@@ -84,5 +92,4 @@ extension NotificationViewModel {
             })
             .disposed(by: disposeBag)
     }
-
 }
