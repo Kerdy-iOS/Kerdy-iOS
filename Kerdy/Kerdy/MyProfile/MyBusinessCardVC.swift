@@ -17,7 +17,7 @@ class MyBusinessCardVC: UIViewController {
     private lazy var editBtn: UIButton = {
         let btn = UIButton()
         btn.titleLabel?.text = ""
-        btn.setImage(UIImage(named: "ic_edit_profile"), for: .normal)
+        btn.setImage(.icEditProfile, for: .normal)
         return btn
     }()
     
@@ -44,7 +44,7 @@ class MyBusinessCardVC: UIViewController {
     
     private lazy var userImgBtn: UIButton = {
         let btn = UIButton()
-        btn.setImage(UIImage(named: "img_user"), for: .normal)
+        btn.setImage(.imgUser, for: .normal)
         return btn
     }()
     

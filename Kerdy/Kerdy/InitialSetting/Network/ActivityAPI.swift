@@ -13,7 +13,7 @@ enum ActivityAPI {
 }
 
 extension ActivityAPI: TargetType {
-    var baseURL: URL { return URL(string: "https://dev.kerdy.kro.kr")! }
+    var baseURL: URL { return URL(string: "")! }
     
     var path: String {
         switch self {

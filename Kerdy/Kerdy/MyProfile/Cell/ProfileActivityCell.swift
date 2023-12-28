@@ -23,7 +23,7 @@ class ProfileActivityCell: UITableViewCell {
     
     let activityImg: UIImageView = {
         let img = UIImageView()
-        img.image = UIImage(named: "ic_activity")
+        img.image = .icActivity
         return img
     }()
     
@@ -53,16 +53,6 @@ class ProfileActivityCell: UITableViewCell {
             $0.top.equalToSuperview().offset(5)
             $0.leading.equalTo(activityImg.snp.trailing).offset(10)
         }
-        
-//        for label in labels {
-//            contentView.addSubview(label)
-//            label.snp.makeConstraints {
-//                $0.top.equalToSuperview().offset(labelOffset)
-//                $0.leading.equalToSuperview()
-//                $0.bottom.equalToSuperview()
-//            }
-//            labelOffset += 20
-//        }
     }
 
     required init?(coder: NSCoder) {
