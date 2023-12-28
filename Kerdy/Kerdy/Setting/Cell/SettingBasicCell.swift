@@ -14,9 +14,9 @@ final class SettingBasicCell: UICollectionViewCell {
     
     // MARK: - Property
     
-    private var configurationHandlers: [Int:() -> Void] = [:]
+    private var configurationHandlers: [Int: () -> Void] = [:]
     private struct Const {
-        static let size:CGFloat = 14
+        static let size: CGFloat = 14
     }
     
     // MARK: - UI Components
@@ -41,6 +41,11 @@ final class SettingBasicCell: UICollectionViewCell {
     
     // MARK: - Initialize
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        titleLabel.textColor = .kerdyBlack
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
@@ -51,7 +56,6 @@ final class SettingBasicCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 
 // MARK: - Setting
@@ -94,8 +98,7 @@ extension SettingBasicCell {
     
     private func setUI() {
         
-        contentView.backgroundColor = .clear
-        
+        contentView.backgroundColor = .clear  
     }
 }
 
@@ -114,7 +117,7 @@ extension SettingBasicCell {
         ]
     }
     
-    func configureData(with data: BasicModel, at index: Int) {
+    func configureData(with data: SettingBasicModel, at index: Int) {
         
         titleLabel.text = data.title
         arrowIcon.image = data.image
@@ -122,7 +125,7 @@ extension SettingBasicCell {
         configureCell()
         
         if let handler = configurationHandlers[index] {
-                handler()
-            }
+            handler()
+        }
     }
 }

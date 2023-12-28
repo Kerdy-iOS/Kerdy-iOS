@@ -8,7 +8,7 @@
 import UIKit
 
 final class TagCollectionViewFlowLayout: UICollectionViewFlowLayout {
-
+    
     override init() {
         super.init()
         
@@ -17,13 +17,13 @@ final class TagCollectionViewFlowLayout: UICollectionViewFlowLayout {
         self.minimumInteritemSpacing = 8
         self.sectionInset = .zero
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     let cellSpacing: CGFloat = 8
-
+    
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
         let attributes = super.layoutAttributesForElements(in: rect)

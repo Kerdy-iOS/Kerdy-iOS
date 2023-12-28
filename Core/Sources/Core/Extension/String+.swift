@@ -9,7 +9,7 @@ import UIKit
 
 public extension String {
     
-    func insetSize(font: UIFont ,
+    func insetSize(font: UIFont = .nanumSquare(to: .regular, size: 13),
                    xInset: CGFloat = 50,
                    height: CGFloat = 32) -> CGSize {
         let attributes: [NSAttributedString.Key : UIFont] = [.font: font]
