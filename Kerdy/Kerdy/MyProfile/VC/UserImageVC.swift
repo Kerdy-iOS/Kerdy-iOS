@@ -11,13 +11,13 @@ class UserImageVC: UIViewController {
     
     private lazy var userImg: UIImageView = {
         let imgView = UIImageView()
-        imgView.image = UIImage(named: "img_user")
+        imgView.image = .imgUser
         return imgView
     }()
     
     private lazy var closeBtn: UIButton = {
         let btn = UIButton()
-        btn.setImage(UIImage(named: "ic_cancel"), for: .normal)
+        btn.setImage(.icCancel, for: .normal)
         btn.addTarget(self, action: #selector(closeBtnTapped), for: .touchUpInside)
         return btn
     }()
@@ -29,7 +29,10 @@ class UserImageVC: UIViewController {
     }
     
     private func setLayout() {
-        view.addSubviews(userImg, closeBtn)
+        view.addSubviews(
+            userImg,
+            closeBtn
+        )
         
         userImg.snp.makeConstraints {
             $0.width.equalTo(300)
@@ -38,9 +41,9 @@ class UserImageVC: UIViewController {
         }
         
         closeBtn.snp.makeConstraints {
-            $0.width.equalTo(30)
-            $0.height.equalTo(30)
-            $0.top.equalToSuperview().offset(40)
+            $0.width.equalTo(24)
+            $0.height.equalTo(24)
+            $0.top.equalToSuperview().offset(55)
             $0.leading.equalToSuperview().offset(17)
         }
     }

@@ -11,13 +11,15 @@ import Core
 
 class MyBusinessCardVC: UIViewController {
     
-    let dummy = ["DDD 5기1", "KEEPER 12기2", "DDD 5기3", "멋쟁이 사자들 5기4", "DDD5 기5", "KEEPER 12기6"]
-    let dummyTitle = ["교육 활동", "동아리 활동", "참여 행사"]
+    let clubDummy = ["DDD5 기5", "KEEPER 12기6"]
+    let educationDummy = ["DDD 5기", "KEEPER 12기", "멋쟁이 사자들 5기"]
+    let dummyTitle = ["교육 활동", "동아리 활동"]
     
     private lazy var editBtn: UIButton = {
         let btn = UIButton()
         btn.titleLabel?.text = ""
         btn.setImage(.icEditProfile, for: .normal)
+        btn.addTarget(self, action: #selector(editBtnTapped), for: .touchUpInside)
         return btn
     }()
     
@@ -221,6 +223,13 @@ class MyBusinessCardVC: UIViewController {
         self.present(imgVC, animated: false, completion: nil)
     }
     
+    @objc func editBtnTapped(_ sender: UIButton) {
+        let nextVC = ProfileEditVC()
+        nextVC.modalTransitionStyle = .coverVertical
+        nextVC.modalPresentationStyle = .fullScreen
+        self.present(nextVC, animated: false, completion: nil)
+    }
+    
     private func setUI() {
         view.backgroundColor = .systemBackground
     }
@@ -229,15 +238,14 @@ class MyBusinessCardVC: UIViewController {
 
 extension MyBusinessCardVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileActivityCell", for: indexPath) as! ProfileActivityCell
         cell.selectionStyle = .none
         cell.titleLabel.text = dummyTitle[indexPath.row]
-        let label1 = UILabel()
-        let label2 = UILabel()
+        cell.addBtn.isHidden = true
         
         let clearView: UIView = {
             let view = UIView()
@@ -245,16 +253,28 @@ extension MyBusinessCardVC: UITableViewDataSource, UITableViewDelegate {
             return view
         }()
         
-        label1.text = dummy[indexPath.row]
-        label1.font = .nanumSquare(to: .regular, size: 13)
-        label2.text = dummy[indexPath.row + 1]
-        label2.font = .nanumSquare(to: .regular, size: 13)
-        cell.labels.append(contentsOf: [label1, label2])
+        if indexPath.row == 0 {
+            for data in educationDummy {
+                let activitySV = ProfileTagBtn()
+                activitySV.img.isHidden = true
+                activitySV.closeBtn.isEnabled = false
+                activitySV.setTitle(title: data)
+                cell.labels.append(activitySV)
+            }
+        } else {
+            for data in clubDummy {
+                let activitySV = ProfileTagBtn()
+                activitySV.img.isHidden = true
+                activitySV.closeBtn.isEnabled = false
+                activitySV.setTitle(title: data)
+                cell.labels.append(activitySV)
+            }
+        }
 
         for label in cell.labels {
             let dotImg: UIImageView = {
                 let img = UIImageView()
-                img.image = UIImage(named: "ic_dot")
+                img.image = .icDot
                 return img
             }()
             cell.contentView.addSubview(label)
@@ -266,20 +286,23 @@ extension MyBusinessCardVC: UITableViewDataSource, UITableViewDelegate {
             }
             
             label.snp.makeConstraints {
-                $0.top.equalToSuperview().offset(cell.labelOffset)
-                $0.leading.equalToSuperview().offset(60)
+                $0.top.equalToSuperview().offset(cell.labelOffset - 5)
+                $0.height.equalTo(26)
+                $0.leading.equalToSuperview().offset(45)
             }
             cell.labelOffset += 25
         }
+        
         cell.contentView.addSubview(clearView)
+        
         clearView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(cell.labelOffset)
             $0.leading.equalToSuperview().offset(46)
             $0.bottom.equalToSuperview()
-            $0.height.equalTo(32)
+            $0.height.equalTo(25)
         }
         
-        if indexPath.row == 2 {
+        if indexPath.row == 1 {
             cell.divideLine.isHidden = true
         }
         
