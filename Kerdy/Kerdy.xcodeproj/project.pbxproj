@@ -1011,7 +1011,7 @@
 				5B32AC1D2B0F7F8100512DC5 /* InitialSettingCell.swift */,
 			);
 			path = Cell;
-
+		};
 		31FBEC762B0FA1D000DE68F3 /* EventDetail */ = {
 			isa = PBXGroup;
 			children = (
