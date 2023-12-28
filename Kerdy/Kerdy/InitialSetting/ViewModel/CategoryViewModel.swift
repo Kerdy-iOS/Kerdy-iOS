@@ -7,11 +7,29 @@
 
 import UIKit
 import RxSwift
+import Moya
 
 class CategoryViewModel {
-    let selectCount = BehaviorSubject<Int>(value: 0)
     
+    private let provider = MoyaProvider<ActivityAPI>()
+    private let disposeBag = DisposeBag()
+    var jobActivities = PublishSubject<[ActivityModel]>()
+    let selectCount = BehaviorSubject<Int>(value: 0)
     var categorySelectedDict: [UIButton: BehaviorSubject<Bool>] = [:]
+    
+    func fetchActivities() {
+        provider.rx.request(.getActivities)
+            .map([ActivityModel].self, using: JSONDecoder(), failsOnEmptyData: false)
+            .subscribe { result in
+                switch result {
+                case .success(let activities):
+                    let jobActivities = activities.filter { $0.activityType == "직무" }
+                    self.jobActivities.onNext(jobActivities)
+                case .failure(let error):
+                    print(error)
+                }
+            }.disposed(by: disposeBag)
+    }
     
     func categoryButtonTapped(button: UIButton) {
         guard let buttonState = try? categorySelectedDict[button]?.value(),

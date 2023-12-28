@@ -10,10 +10,14 @@ import Core
 import RxSwift
 import SnapKit
 
-final class ThirdInitialSettingVC: UIViewController {
+final class ThirdInitialSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
     private let educationViewModel = EducationViewModel()
     private let disposeBag = DisposeBag()
     private var buttons: [UIButton] = []
+    private var isDataLoaded = false
+    private var isDataLoading = false
+    var memberInfo: MemberInfo = MemberInfo()
     
     private lazy var progressLabel: UILabel = {
         let label = UILabel()
@@ -45,29 +49,9 @@ final class ThirdInitialSettingVC: UIViewController {
         return label
     }()
     
-    private lazy var woowaBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(educationButtonTapped(_:)), title: "우아한테크코스")
-    
-    private lazy var swBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(educationButtonTapped(_:)), title: "sw 마에스트로")
-    
-    private lazy var nextersBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(educationButtonTapped(_:)), title: "NEXTERS")
-    
-    private lazy var seoulBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(educationButtonTapped(_:)), title: "42 서울")
-    
-    private lazy var ssafyBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(educationButtonTapped(_:)), title: "SAFFY")
-    
-    private lazy var boostCampBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(educationButtonTapped(_:)), title: "부스트캠프")
-    
-    private lazy var educationStackView1: InitialSettingStackView = InitialSettingStackView()
-    
-    private lazy var educationStackView2: InitialSettingStackView = InitialSettingStackView()
-    
-    private lazy var verticalStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.alignment = .leading
-        stackView.distribution = .fill
-        stackView.spacing = 11
-        return stackView
+    private lazy var tableView: UITableView = {
+        let tv = UITableView()
+        return tv
     }()
     
     private lazy var enterLaterButton: UIButton = {
@@ -102,25 +86,58 @@ final class ThirdInitialSettingVC: UIViewController {
         setUpUI()
         setLayout()
         setNaviBar()
+        setTableView()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if buttons.isEmpty {
-            buttons.append(woowaBtn)
-            buttons.append(swBtn)
-            buttons.append(nextersBtn)
-            buttons.append(seoulBtn)
-            buttons.append(ssafyBtn)
-            buttons.append(boostCampBtn)
+        getEducationActivities()
+    }
+    
+    private func getEducationActivities() {
+        if !isDataLoaded && !isDataLoading {
+            isDataLoading = true
+            educationViewModel.educationActivities
+                .subscribe(onNext: { clubActivities in
+                    for activity in clubActivities {
+                        let btn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(self.educationButtonTapped(_:)), title: activity.name, id: activity.id)
+                        btn.snp.makeConstraints { make in
+                            make.width.equalTo((btn.titleLabel?.text!.count)! * 14)
+                        }
+                        self.buttons.append(btn)
+                    }
+                    self.tableView.reloadData()
+                    if self.buttons.count >= 21 {
+                        self.tableView.isScrollEnabled = true
+                    } else {
+                        self.tableView.isScrollEnabled = false
+                    }
+                    self.setButton()
+                    self.isDataLoaded = true
+                    self.isDataLoading = false
+                }).disposed(by: disposeBag)
+
+            educationViewModel.fetchActivities()
         }
-        setButton()
+    }
+    
+    private func setTableView() {
+        view.addSubview(tableView)
+        tableView.register(InitialSettingCell.self, forCellReuseIdentifier: "cell")
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+
+        tableView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(277.5)
+            $0.leading.equalToSuperview().offset(21)
+            $0.trailing.equalToSuperview().offset(-21)
+            $0.bottom.equalTo(enterLaterButton.snp.top).offset(-10)
+        }
     }
     
     private func setLayout() {
         view.addSubviews(progressLabel, educationLabel, educationAskLabel, notifyLabel, nextButton, enterLaterButton, enterLaterButtonUnderline)
-        
-        setVerticalStackView()
         
         progressLabel.snp.makeConstraints {
             $0.width.equalTo(24)
@@ -174,82 +191,31 @@ final class ThirdInitialSettingVC: UIViewController {
 
     }
     
-    private func setStackView1() {
-        educationStackView1.addArrangedSubview(woowaBtn)
-        educationStackView1.addArrangedSubview(swBtn)
-        educationStackView1.addArrangedSubview(nextersBtn)
-        view.addSubview(educationStackView1)
-        
-        woowaBtn.snp.makeConstraints {
-            $0.width.equalTo(100)
-        }
-        
-        swBtn.snp.makeConstraints {
-            $0.width.equalTo(100)
-        }
-        
-        nextersBtn.snp.makeConstraints {
-            $0.width.equalTo(80)
-        }
-    }
-    
-    private func setStackView2() {
-        educationStackView2.addArrangedSubview(seoulBtn)
-        educationStackView2.addArrangedSubview(ssafyBtn)
-        educationStackView2.addArrangedSubview(boostCampBtn)
-        view.addSubview(educationStackView2)
-        
-        seoulBtn.snp.makeConstraints {
-            $0.width.equalTo(80)
-        }
-        
-        ssafyBtn.snp.makeConstraints {
-            $0.width.equalTo(80)
-        }
-        
-        boostCampBtn.snp.makeConstraints {
-            $0.width.equalTo(100)
-        }
-    }
-    
     private func setButton() {
-        for button in buttons {
-            button.roundCorners(topLeft: 10, topRight: 20, bottomLeft: 20, bottomRight: 10)
-            let borderLayer = CAShapeLayer()
-            guard let buttonMaskLayer = button.layer.mask as? CAShapeLayer else {
-                continue
+        DispatchQueue.main.async {
+            for button in self.buttons {
+                button.roundCorners(topLeft: 10, topRight: 20, bottomLeft: 20, bottomRight: 10)
+                let borderLayer = CAShapeLayer()
+                guard let buttonMaskLayer = button.layer.mask as? CAShapeLayer else {
+                    continue
+                }
+                borderLayer.path = buttonMaskLayer.path
+                borderLayer.strokeColor = UIColor(named: "kerdy_main")?.cgColor
+                borderLayer.fillColor = UIColor.clear.cgColor
+                borderLayer.lineWidth = 3
+                borderLayer.frame = button.bounds
+                button.layer.addSublayer(borderLayer)
+                button.titleLabel?.font = .nanumSquare(to: .regular, size: 13)
+                
+                self.educationViewModel.educationSelectedDict[button] = BehaviorSubject<Bool>(value: false)
+                self.educationViewModel.educationSelectedDict[button]?.subscribe(onNext: {isSelected in
+                    button.backgroundColor = isSelected ? .kerdyMain : .white
+                }).disposed(by: self.disposeBag)
+                
+                button.snp.makeConstraints {
+                    $0.height.equalTo(32)
+                }
             }
-            borderLayer.path = buttonMaskLayer.path
-            borderLayer.strokeColor = UIColor(named: "kerdy_main")?.cgColor
-            borderLayer.fillColor = UIColor.clear.cgColor
-            borderLayer.lineWidth = 3
-            borderLayer.frame = button.bounds
-            button.layer.addSublayer(borderLayer)
-            button.titleLabel?.font = .nanumSquare(to: .regular, size: 13)
-            
-            educationViewModel.educationSelectedDict[button] = BehaviorSubject<Bool>(value: false)
-            educationViewModel.educationSelectedDict[button]?.subscribe(onNext: {isSelected in
-                button.backgroundColor = isSelected ? .kerdyMain : .white
-            }).disposed(by: disposeBag)
-            
-            button.snp.makeConstraints {
-                $0.height.equalTo(32)
-            }
-        }
-    }
-    
-    private func setVerticalStackView() {
-        setStackView1()
-        setStackView2()
-        verticalStackView.addArrangedSubview(educationStackView1)
-        verticalStackView.addArrangedSubview(educationStackView2)
-        
-        view.addSubview(verticalStackView)
-        
-        verticalStackView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(283)
-            $0.leading.equalToSuperview().offset(21)
-            $0.trailing.equalToSuperview().offset(-21)
         }
     }
      
@@ -262,17 +228,51 @@ final class ThirdInitialSettingVC: UIViewController {
         navigationItem.backButtonTitle = ""
     }
     
-    @objc private func educationButtonTapped(_ sender: UIButton) {
+    @objc private func educationButtonTapped(_ sender: InitialSettingSelectBtn) {
         educationViewModel.educationButtonTapped(button: sender)
+        
+        if let id = sender.id {
+            if let buttonState = try? educationViewModel.educationSelectedDict[sender]?.value() {
+                if buttonState == true {
+                    if memberInfo.activityIds == nil {
+                        memberInfo.activityIds = [Int]()
+                    }
+                    memberInfo.activityIds?.append(id)
+                } else if buttonState == false, let index = memberInfo.activityIds?.firstIndex(of: id) {
+                    memberInfo.activityIds?.remove(at: index)
+                }
+            }
+        }
     }
     
     @objc private func nextButtonTapped() {
         let nextVC = FourthInitialSettingVC()
+        nextVC.memberInfo = memberInfo
         navigationController?.pushViewController(nextVC, animated: true)
     }
     
     @objc private func enterLaterButtonTapped() {
         let nextVC = FourthInitialSettingVC()
         navigationController?.pushViewController(nextVC, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (buttons.count + 2) / 3
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! InitialSettingCell
+        cell.selectionStyle = .none
+
+        if buttons.count > indexPath.row * 3 {
+            cell.buttonStackView.addArrangedSubview(buttons[indexPath.row * 3])
+        }
+        if buttons.count > indexPath.row * 3 + 1 {
+            cell.buttonStackView.addArrangedSubview(buttons[indexPath.row * 3 + 1])
+        }
+        if buttons.count > indexPath.row * 3 + 2 {
+            cell.buttonStackView.addArrangedSubview(buttons[indexPath.row * 3 + 2])
+        }
+        return cell
     }
 }
