@@ -89,13 +89,13 @@ final class FilterVC: BaseVC {
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     
-    @objc func resetBtnTapped() {
+    @objc private func resetBtnTapped() {
         viewModel.resetFilter()
         clearCells()
         dateFilterView.setDateLabelText(start: nil, end: nil)
     }
     
-    @objc func applyBtnTapped() {
+    @objc private func applyBtnTapped() {
         let filter = viewModel.applyFilter()
         delegate?.dataTransfered(data: filter)
         self.navigationController?.popViewController(animated: true)
