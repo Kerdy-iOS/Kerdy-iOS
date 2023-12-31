@@ -319,7 +319,7 @@
 		5B216AF92AF671CF00C028A0 /* FourthInitialSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthInitialSettingVC.swift; sourceTree = "<group>"; };
 		5B32AC182B0F7DCC00512DC5 /* ActivityAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityAPI.swift; sourceTree = "<group>"; };
 		5B32AC1A2B0F7DD900512DC5 /* ActivityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityModel.swift; sourceTree = "<group>"; };
-		5B32AC1D2B0F7F8100512DC5 /* InitialSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSettingCell.swift; sourceTree = "<group>"; };
+		5B32AC1D2B0F7F8100512DC5 /* InitialSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InitialSettingCell.swift; path = "/Users/idonghyeon/Downloads/Kerdy-iOS-design-tags 4/Kerdy/무제 폴더/Kerdy-iOS/Kerdy/Kerdy/InitialSetting/Cell/InitialSettingCell.swift"; sourceTree = "<absolute>"; };
 		5B370F3B2AF53E1300D0D3DE /* FirstInitialSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstInitialSettingVC.swift; sourceTree = "<group>"; };
 		5B370F3F2AF53F1E00D0D3DE /* SecondInitialSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondInitialSettingVC.swift; sourceTree = "<group>"; };
 		5B370F412AF546CE00D0D3DE /* ThirdInitialSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdInitialSettingVC.swift; sourceTree = "<group>"; };
@@ -971,12 +971,9 @@
 				31747CC62B343F9600559716 /* Base-Info.plist */,
 				098D801F2B30016000706897 /* Kerdy.entitlements */,
 				095D39062AEE7B3C0083CC65 /* Application */,
-
 				5BE9BA9C2B25D68F00D5971F /* MyProfile */,
-
 				095EBE7B2AFF663B00629F06 /* Global */,
 				092414362B0C911700CF5CF4 /* Auth */,
-
 				5B370F3A2AF53DD800D0D3DE /* InitialSetting */,
 				31571C142AF3CB9F0037A2F2 /* Event */,
 				31FBEC762B0FA1D000DE68F3 /* EventDetail */,
@@ -1046,23 +1043,6 @@
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
-
-		5B32AC172B0F7DAA00512DC5 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				5B32AC182B0F7DCC00512DC5 /* ActivityAPI.swift */,
-				5B32AC1A2B0F7DD900512DC5 /* ActivityModel.swift */,
-				5B81F9B82B1B90C400DF1F25 /* RegisterMemberAPI.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		5B32AC1C2B0F7F5600512DC5 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				5B32AC1D2B0F7F8100512DC5 /* InitialSettingCell.swift */,
-			);
-			path = Cell;
 		};
 		31FBEC762B0FA1D000DE68F3 /* EventDetail */ = {
 			isa = PBXGroup;
@@ -1111,7 +1091,24 @@
 				31FBEC842B109EBA00DE68F3 /* EventDetailPostTVCell.swift */,
 			);
 			path = Cells;
-
+			sourceTree = "<group>";
+		};
+		5B32AC172B0F7DAA00512DC5 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				5B32AC182B0F7DCC00512DC5 /* ActivityAPI.swift */,
+				5B32AC1A2B0F7DD900512DC5 /* ActivityModel.swift */,
+				5B81F9B82B1B90C400DF1F25 /* RegisterMemberAPI.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		5B32AC1C2B0F7F5600512DC5 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5B32AC1D2B0F7F8100512DC5 /* InitialSettingCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		5B370F3A2AF53DD800D0D3DE /* InitialSetting */ = {
@@ -1356,11 +1353,8 @@
 			files = (
 				098294212AF3C1E50011773A /* TermsOfUseVC.swift in Sources */,
 				09ECB32F2AFE0AB2000F3008 /* SettingWriteCell.swift in Sources */,
-
 				5B5D084A2B35D7B800490678 /* UserImageVC.swift in Sources */,
-
 				0964F95A2B2F60F00031D574 /* CommentsHeaderView.swift in Sources */,
-
 				09BB551E2AF0169700A54B1B /* SettingBasicCell.swift in Sources */,
 				09ED94332B2C3249001864EF /* BlockManager.swift in Sources */,
 				095EBE842AFF6AE900629F06 /* SettingViewModel.swift in Sources */,
@@ -1376,12 +1370,9 @@
 				09ED94212B2C31B9001864EF /* PopUpView.swift in Sources */,
 				09A3E1812B18E525004BD432 /* SettingAPI.swift in Sources */,
 				5B370F422AF546CE00D0D3DE /* ThirdInitialSettingVC.swift in Sources */,
-
 				5B32AC1B2B0F7DD900512DC5 /* ActivityModel.swift in Sources */,
-
 				09ED94252B2C31D3001864EF /* SettingWrittenDataSource.swift in Sources */,
 				09ED94392B2C325C001864EF /* FeedAPI.swift in Sources */,
-
 				5B216AFA2AF671CF00C028A0 /* FourthInitialSettingVC.swift in Sources */,
 				31747CD92B344E3300559716 /* EventAPI.swift in Sources */,
 				090978E82AF0E6C0006BD8DE /* TabBarVC.swift in Sources */,
@@ -1423,11 +1414,7 @@
 				3109B3082AF7C21500B2EAD2 /* Tag.swift in Sources */,
 				3109B30C2AF7F49A00B2EAD2 /* PrortudingBtn.swift in Sources */,
 				311E983A2AFB89E5009BEB3F /* DateFilterViewController.swift in Sources */,
-
 				5BE9BA9E2B25D6FD00D5971F /* MyBusinessCardVC.swift in Sources */,
-				09BB55242AF02AB600A54B1B /* SettingDataSource.swift in Sources */,
-
-
 				3109B30E2AF7F4ED00B2EAD2 /* FilterBtn.swift in Sources */,
 				098D801D2B2FF8A600706897 /* CommentsContainerView.swift in Sources */,
 				09472C292B13720C00B4A84E /* KerdyAPI.swift in Sources */,
@@ -1435,11 +1422,8 @@
 				3109B2FA2AF52B2000B2EAD2 /* FilterVC.swift in Sources */,
 				31747CCE2B3449DC00559716 /* TagFilterCollectionViewCell.swift in Sources */,
 				3109B3022AF52B6A00B2EAD2 /* ResetBtn.swift in Sources */,
-
 				5BD220812B2A1DE600DC9784 /* ProfileActivityCell.swift in Sources */,
-
 				09ED94372B2C325C001864EF /* CommentAPI.swift in Sources */,
-
 				5B370F3C2AF53E1300D0D3DE /* FirstInitialSettingVC.swift in Sources */,
 				31FBEC832B109EA800DE68F3 /* EventDetailPhotoTVCell.swift in Sources */,
 				098294232AF3C6180011773A /* ExternalURL.swift in Sources */,
@@ -1476,12 +1460,9 @@
 				09472C152B131D4700B4A84E /* BaseInfoManager.swift in Sources */,
 				31747CD72B344E2100559716 /* EventManager.swift in Sources */,
 				090979002AF287E0006BD8DE /* NavigationBarView.swift in Sources */,
-
 				5B81F9B92B1B90C400DF1F25 /* RegisterMemberAPI.swift in Sources */,
-
 				09ED941D2B2C316E001864EF /* BlockReponseDTO.swift in Sources */,
 				31FBEC942B11CB3600DE68F3 /* CellProtocol.swift in Sources */,
-
 				3164D4812AE21F810054F440 /* SceneDelegate.swift in Sources */,
 				31FBEC7B2B109A1C00DE68F3 /* EventDetailPostCVCell.swift in Sources */,
 				099756E42B24D96A009961B5 /* NotificationViewModel.swift in Sources */,
@@ -1495,11 +1476,8 @@
 				31571C1F2AF3CBC00037A2F2 /* FilterSettingBtn.swift in Sources */,
 				0982941E2AF35E660011773A /* BlockSectionModel.swift in Sources */,
 				090978FA2AF272D2006BD8DE /* NotificationVC.swift in Sources */,
-
 				5B32AC192B0F7DCC00512DC5 /* ActivityAPI.swift in Sources */,
-
 				09ED94262B2C31D3001864EF /* SettingCommenetViewModel.swift in Sources */,
-
 				31571C212AF3CBC00037A2F2 /* ItemCountView.swift in Sources */,
 				09472C362B13762000B4A84E /* LoginManager.swift in Sources */,
 				31571C222AF3CBC00037A2F2 /* TagView.swift in Sources */,
@@ -1676,11 +1654,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Kerdy/Kerdy.entitlements;
-
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-
 				CODE_SIGN_IDENTITY = "Apple Development";
-
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -1717,11 +1692,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Kerdy/Kerdy.entitlements;
-
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -1744,12 +1715,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kerdy.Kerdy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-
-
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = KerdyDistributionProvisioning;
-
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = KerdyProvisioning;
-
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
