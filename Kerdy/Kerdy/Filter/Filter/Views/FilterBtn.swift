@@ -8,11 +8,9 @@
 import UIKit
 
 final class FilterBtn: PrortudingBtn {
-    private var selectedStatus = FilterStatus.deselected
-    
+
     init(title: String) {
         super.init(title: title, titleColor: .black, fontSize: 13, backgroundColor: .white)
-        addTarget(self, action: #selector(toggleStatus), for: .touchUpInside)
     }
 
     required init?(coder: NSCoder) {
@@ -27,21 +25,5 @@ final class FilterBtn: PrortudingBtn {
             bottomRight: 12,
             strokeColor: .kerdyMain
         )
-    }
-    
-    @objc private func toggleStatus() {
-        switch selectedStatus {
-        case .selected:
-            selectedStatus = .deselected
-            backgroundColor = .white
-        case .deselected:
-            selectedStatus = .selected
-            backgroundColor = .kerdyMain
-        }
-    }
-    
-    func setDeselected() {
-        selectedStatus = .deselected
-        backgroundColor = .white
     }
 }

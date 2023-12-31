@@ -9,13 +9,13 @@ import UIKit
 import SnapKit
 
 final class PeriodView: UIView {
-    private(set) lazy var startLabel: UILabel = {
+    private lazy var startLabel: UILabel = {
         let label = UILabel()
         label.text = "시작일 선택"
         return label
     }()
     
-    private(set) lazy var endLabel: UILabel = {
+    private lazy var endLabel: UILabel = {
         let label = UILabel()
         label.text = "종료일 선택"
         return label

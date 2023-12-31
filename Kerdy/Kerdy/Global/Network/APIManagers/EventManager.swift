@@ -16,11 +16,27 @@ final class EventManager {
     
     private init() {}
     
-    func getEvents(category: String?, eventFilter: EventFilter) -> Observable<[Event]> {
-        return provider.rx.request(.getEvents(category: category, filter: eventFilter))
-            .map { response in
-                return try parseEvents(data: response.data)
+    func getEvents(
+        category: String?,
+        eventFilter: EventFilter
+    ) -> Observable<[Event]> {
+        return Observable.create { observer in
+            self.provider.request(.getEvents(category: category, filter: eventFilter)) {
+                switch $0 {
+                case .success(let response):
+                    do {
+                        let events = try parseEvents(data: response.data)
+                        observer.onNext(events)
+                        observer.onCompleted()
+                    } catch {
+                        print("Error parsing JSON:", error.localizedDescription)
+                    }
+                case .failure(let error):
+                    observer.onError(error)
+                }
             }
-            .asObservable()
+            
+            return Disposables.create()
+        }
     }
 }

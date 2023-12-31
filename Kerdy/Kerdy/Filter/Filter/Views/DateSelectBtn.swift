@@ -8,23 +8,15 @@
 import UIKit
 import SnapKit
 
-enum DateType {
-    case startDate
-    case endDate
-}
-
 final class DateSelectBtn: PrortudingBtn {
-    private lazy var label: UILabel = {
+    lazy var label: UILabel = {
         let label = UILabel()
         label.text = nil
         label.font = .nanumSquare(to: .regular, size: 13)
         return label
     }()
 
-    let dateType: DateType
-    
-    init(type: DateType) {
-        dateType = type
+    init() {
         super.init(title: "", titleColor: .black, fontSize: 13, backgroundColor: .white)
         setLayout()
         setUI()
@@ -52,40 +44,17 @@ final class DateSelectBtn: PrortudingBtn {
         var buttonConfiguration = UIButton.Configuration.plain()
         buttonConfiguration.imagePadding = 19
         configuration = buttonConfiguration
-        setLayer()
-    }
-    
-    func setDateString(_ dateString: String?) {
-        label.text = dateString
-        
-        if dateString == nil {
-            tintColor = .kerdyGray01
-        } else {
-            tintColor = .kerdyMain
-        }
+        setLayer(color: .kerdyGray01)
     }
 
-    func setLayer() {
-        
-        let layers = self.layer.sublayers
-        layers?.filter { $0 is CAGradientLayer }.forEach { $0.removeFromSuperlayer() }
-        
-        if label.text == nil {
-            super.setLayer(
-                topLeft: 15,
-                topRight: 25,
-                bottomLeft: 25,
-                bottomRight: 15,
-                strokeColor: .kerdyGray01
-            )
-        } else {
-            super.setLayer(
-                topLeft: 15,
-                topRight: 25,
-                bottomLeft: 25,
-                bottomRight: 15,
-                strokeColor: .kerdyMain
-            )
-        }
+    func setLayer(color: UIColor) {
+        super.setLayer(
+            topLeft: 15,
+            topRight: 25,
+            bottomLeft: 25,
+            bottomRight: 15,
+            strokeColor: color
+        )
     }
+
 }

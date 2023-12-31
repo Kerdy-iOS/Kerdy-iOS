@@ -24,11 +24,11 @@ final class DateFilterView: UIView {
         stackView.distribution = .equalSpacing
         return stackView
     }()
-    
-    private(set) lazy var startDateBtn = DateSelectBtn(type: .startDate)
-    private(set) lazy var endDateBtn = DateSelectBtn(type: .endDate)
 
-    private lazy var waveLabel: UILabel = {
+    lazy var startDateBtn = DateSelectBtn()
+    lazy var endDateBtn = DateSelectBtn()
+
+    lazy var waveLabel: UILabel = {
         let label = UILabel()
         label.font = .nanumSquare(to: .regular, size: 15)
         label.text = "~"
@@ -68,7 +68,7 @@ final class DateFilterView: UIView {
 
     func setUI() {
         [startDateBtn, endDateBtn].forEach {
-            $0.setLayer()
+            $0.setLayer(color: .kerdyGray01)
         }
     }
 
@@ -81,7 +81,7 @@ final class DateFilterView: UIView {
         
         [startDateBtn, endDateBtn].forEach {
             $0.snp.makeConstraints {
-                $0.width.equalTo(135)
+                $0.width.equalTo(125)
                 $0.height.equalTo(45)
             }
         }
@@ -89,10 +89,5 @@ final class DateFilterView: UIView {
         waveLabel.snp.makeConstraints {
             $0.width.equalTo(19)
         }
-    }
-    
-    func setDateLabelText(start: String?, end: String?) {
-        startDateBtn.setDateString(start)
-        endDateBtn.setDateString(end)
     }
 }

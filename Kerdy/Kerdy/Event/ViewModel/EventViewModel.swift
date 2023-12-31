@@ -14,24 +14,15 @@ final class EventViewModel {
     private let eventManager = EventManager.shared
     private let disposeBag = DisposeBag()
     private let filterRelay = BehaviorRelay<EventFilter>(value: EventFilter())
-    private let curEventRelay = BehaviorRelay<[Event]>(value: [])
-    private var eventCVIndex: BehaviorRelay<Int> = BehaviorRelay(value: 0)
+    
+    private var filterObservable: Observable<EventFilter> {
+        return filterRelay.asObservable().distinctUntilChanged()
+    }
+    
     private let scrapEvents: BehaviorRelay<[Event]> = BehaviorRelay(value: [])
     private let conferenceEvents: BehaviorRelay<[Event]> = BehaviorRelay(value: [])
     private let competitionEvents: BehaviorRelay<[Event]> = BehaviorRelay(value: [])
 
-    var filterObservable: Observable<EventFilter> {
-        return filterRelay.asObservable().distinctUntilChanged()
-    }
-    
-    var curEventObservable: Observable<[Event]> {
-        return curEventRelay.asObservable()
-    }
-    
-    private var indexObservable: Observable<Int> {
-        return eventCVIndex.asObservable()
-    }
-    
     var combinedEvents: Observable<[[Event]]> {
         return Observable.zip(scrapEvents, conferenceEvents, competitionEvents) {
             [$0, $1, $2]
@@ -56,51 +47,14 @@ final class EventViewModel {
                     self.scrapEvents.accept(scrapEvents)
                     self.conferenceEvents.accept(conferenceEvents)
                     self.competitionEvents.accept(competitionEvents)
-                    
-                    let eventsArray = [scrapEvents, conferenceEvents, competitionEvents]
-                    self.curEventRelay.accept(eventsArray[self.eventCVIndex.value])
                 }
                 .catchAndReturn(())
             }
             .subscribe()
             .disposed(by: disposeBag)
-        
-        indexObservable
-            .subscribe(onNext: { [weak self] index in
-                guard let self = self else { return }
-                let eventsArray = [self.scrapEvents.value, self.conferenceEvents.value, self.competitionEvents.value]
-                self.curEventRelay.accept(eventsArray[index])
-            })
-            .disposed(by: disposeBag)
     }
 
     func updateFilter(_ newFilter: EventFilter) {
         filterRelay.accept(newFilter)
-    }
-    
-    func getCurrentFilter() -> EventFilter {
-        return filterRelay.value
-    }
-    
-    func deleteFilter(type: FilterType, name: String) {
-        var currentFilter = filterRelay.value
-        
-        switch type {
-        case .progress:
-            if let progress = EventProgress.allCases.first(where: { $0.value == name}) {
-                currentFilter.statuses = currentFilter.statuses?.filter { $0 != progress.rawValue }
-            }
-        case .tag:
-            currentFilter.tags = currentFilter.tags?.filter { $0 != name }
-        case .date:
-            currentFilter.startDate = nil
-            currentFilter.endDate = nil
-        }
-        
-        filterRelay.accept(currentFilter)
-    }
-    
-    func setEventCVIndex(index: Int) {
-        eventCVIndex.accept(index)
     }
 }
