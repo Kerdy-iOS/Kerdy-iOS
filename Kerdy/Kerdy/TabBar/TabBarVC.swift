@@ -32,7 +32,7 @@ final class TabBarVC: UITabBarController {
 extension TabBarVC {
     
     func setTabBarItems() {
-        tabs = [MyCardVC(),
+        tabs = [MyBusinessCardVC(),
                 UINavigationController(rootViewController: EventVC()),
                 ChatVC(),
                 SettingVC(viewModel: SettingViewModel(settingManager: SettingManager.shared))
