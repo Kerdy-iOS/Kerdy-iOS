@@ -12,6 +12,7 @@ import RxSwift
 
 final class EventViewModel {
     private let eventManager = EventManager.shared
+    private let scrapManager = ScrapManager.shared
     private let disposeBag = DisposeBag()
     private let filterRelay = BehaviorRelay<EventFilter>(value: EventFilter())
     private let curEventRelay = BehaviorRelay<[Event]>(value: [])
@@ -46,11 +47,10 @@ final class EventViewModel {
         filterObservable
             .flatMapLatest { [weak self] filter -> Observable<Void> in
                 guard let self = self else { return Observable.just(()) }
-                
                 return Observable.combineLatest(
-                    self.eventManager.getEvents(category: nil, eventFilter: filter),
-                    self.eventManager.getEvents(category: "CONFERENCE", eventFilter: filter),
-                    self.eventManager.getEvents(category: "COMPETITION", eventFilter: filter)
+                    self.scrapManager.getScraps().asObservable(),
+                    self.eventManager.getEvents(category: "CONFERENCE", eventFilter: filter).asObservable(),
+                    self.eventManager.getEvents(category: "COMPETITION", eventFilter: filter).asObservable()
                 )
                 .map { scrapEvents, conferenceEvents, competitionEvents in
                     self.scrapEvents.accept(scrapEvents)
@@ -88,7 +88,7 @@ final class EventViewModel {
         switch type {
         case .progress:
             if let progress = EventProgress.allCases.first(where: { $0.value == name}) {
-                currentFilter.statuses = currentFilter.statuses?.filter { $0 != progress.rawValue }
+                currentFilter.statuses = currentFilter.statuses?.filter { $0 != progress.value }
             }
         case .tag:
             currentFilter.tags = currentFilter.tags?.filter { $0 != name }

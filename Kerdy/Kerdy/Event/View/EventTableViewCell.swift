@@ -113,7 +113,7 @@ final class EventTableViewCell: UITableViewCell {
                 title = "외 +\(tags.count - 3)"
             }
             if let title = title {
-                tagLabel.text = "  \(title)  "
+                tagLabel.text = "   \(title)   "
             }
         }
     }
