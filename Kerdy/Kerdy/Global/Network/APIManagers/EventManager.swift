@@ -12,15 +12,12 @@ import RxSwift
 final class EventManager {
     typealias API = EventAPI
     static let shared = EventManager()
-    private let provider = MoyaProvider<API>()
+    private let provider = NetworkProvider<API>(plugins: [NetworkLogging()])
     
     private init() {}
     
-    func getEvents(category: String?, eventFilter: EventFilter) -> Observable<[Event]> {
-        return provider.rx.request(.getEvents(category: category, filter: eventFilter))
-            .map { response in
-                return try parseEvents(data: response.data)
-            }
-            .asObservable()
+    func getEvents(category: String?, eventFilter: EventFilter) -> Single<[Event]> {
+        return provider.request(.getEvents(category: category, filter: eventFilter))
+            .map([Event].self)
     }
 }
