@@ -103,6 +103,30 @@ final class FilterVC: BaseVC {
     
     func setViewModel(filter: EventFilter) {
         viewModel.setFilter(filter)
+        
+        var dates: [String] = []
+        if let startDate = filter.startDate {
+            dates.append(startDate)
+        }
+        if let endDate = filter.endDate {
+            dates.append(endDate)
+        }
+        
+        setDateUI(dates: dates)
+    }
+    
+    private func setDateUI(dates: [String]) {
+        switch dates.count {
+        case 1:
+            viewModel.setDate(startDate: dates.first, endDate: nil)
+            dateFilterView.setDateLabelText(start: dates.first, end: nil)
+        case 2:
+            viewModel.setDate(startDate: dates.first, endDate: dates.last)
+            dateFilterView.setDateLabelText(start: dates.first, end: dates.last)
+        default:
+            viewModel.setDate(startDate: nil, endDate: nil)
+            dateFilterView.setDateLabelText(start: nil, end: nil)
+        }
     }
 }
 
@@ -175,8 +199,7 @@ extension FilterVC {
 }
 
 // MARK: - collectionView datasource, layout 설정
-extension FilterVC
-{
+extension FilterVC {
     private func configureDataSource() {
         let cellRegistration = UICollectionView.CellRegistration<TagFilterCollectionViewCell, String> {
             cell, indexPath, itemIdentifier in
@@ -353,18 +376,8 @@ extension FilterVC {
 extension FilterVC: DataTransferDelegate {
     func dataTransfered(data: Any) {
         guard let data = data as? [String] else { return }
-        let count = data.count
-        switch count {
-        case 1:
-            viewModel.setDate(startDate: data.first, endDate: nil)
-            dateFilterView.setDateLabelText(start: data.first, end: nil)
-        case 2:
-            viewModel.setDate(startDate: data.first, endDate: data.last)
-            dateFilterView.setDateLabelText(start: data.first, end: data.last)
-        default:
-            viewModel.setDate(startDate: nil, endDate: nil)
-            dateFilterView.setDateLabelText(start: nil, end: nil)
-        }
+        
+        setDateUI(dates: data)
     }
 }
 
