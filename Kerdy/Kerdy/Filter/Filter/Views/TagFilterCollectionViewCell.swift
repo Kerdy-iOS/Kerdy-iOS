@@ -67,17 +67,6 @@ extension TagFilterCollectionViewCell {
             bottomLeft: 20,
             bottomRight: 12
         )
-        let borderLayer = CAShapeLayer()
-        guard
-            let maskLayer = layer.mask as? CAShapeLayer,
-            let path = maskLayer.path
-        else { return }
-        borderLayer.path = path
-        borderLayer.strokeColor = UIColor.kerdyMain.cgColor
-        borderLayer.fillColor = UIColor.clear.cgColor
-        borderLayer.lineWidth = 3
-        borderLayer.frame = self.bounds
-        self.layer.addSublayer(borderLayer)
     }
 }
 
