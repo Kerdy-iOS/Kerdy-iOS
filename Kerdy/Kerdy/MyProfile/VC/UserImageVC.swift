@@ -7,7 +7,7 @@
 
 import UIKit
 
-class UserImageVC: UIViewController {
+final class UserImageVC: UIViewController {
     
     private lazy var userImg: UIImageView = {
         let imgView = UIImageView()

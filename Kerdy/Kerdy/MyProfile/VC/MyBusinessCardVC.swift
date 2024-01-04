@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Core
 
-class MyBusinessCardVC: UIViewController {
+final class MyBusinessCardVC: UIViewController {
     
     let clubDummy = ["DDD5 기5", "KEEPER 12기6"]
     let educationDummy = ["DDD 5기", "KEEPER 12기", "멋쟁이 사자들 5기"]

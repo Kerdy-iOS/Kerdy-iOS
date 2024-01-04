@@ -37,7 +37,7 @@ final class ActivityEditHalfVC: UIViewController {
         btn.titleLabel?.font = .nanumSquare(to: .bold, size: 13)
         btn.setTitleColor(.black, for: .normal)
         btn.layer.borderWidth = 2.0
-        btn.layer.borderColor = UIColor(named: "kerdy_gray01")?.cgColor
+        btn.layer.borderColor = UIColor.kerdyGray01.cgColor
         btn.layer.cornerRadius = 10.0
         btn.contentHorizontalAlignment = .left
         btn.addTarget(self, action: #selector(clubBtnTapped), for: .touchUpInside)
@@ -50,7 +50,7 @@ final class ActivityEditHalfVC: UIViewController {
         btn.titleLabel?.font = .nanumSquare(to: .bold, size: 13)
         btn.setTitleColor(.black, for: .normal)
         btn.layer.borderWidth = 2.0
-        btn.layer.borderColor = UIColor(named: "kerdy_gray01")?.cgColor
+        btn.layer.borderColor = UIColor.kerdyGray01.cgColor
         btn.layer.cornerRadius = 10.0
         btn.contentHorizontalAlignment = .left
         btn.addTarget(self, action: #selector(educationBtnTapped), for: .touchUpInside)
@@ -135,7 +135,14 @@ final class ActivityEditHalfVC: UIViewController {
         }
         containerView.addSubview(baseView)
     
-        baseView.addSubviews(clubBtn, educationBtn, titleLabel, notesLabel, grabBar, nextBtn)
+        baseView.addSubviews(
+            clubBtn,
+            educationBtn,
+            titleLabel,
+            notesLabel,
+            grabBar,
+            nextBtn
+        )
         
         grabBar.snp.makeConstraints {
             $0.width.equalTo(44)
@@ -192,20 +199,20 @@ final class ActivityEditHalfVC: UIViewController {
     @objc func clubBtnTapped(_ sender: UIButton) {
         if clubBtn.isSelected {
             clubBtn.isSelected = false
-            clubBtn.layer.borderColor = UIColor(named: "kerdy_gray01")?.cgColor
+            clubBtn.layer.borderColor = UIColor.kerdyGray01.cgColor
         } else {
             clubBtn.isSelected = true
-            clubBtn.layer.borderColor = UIColor(named: "kerdy_main")?.cgColor
+            clubBtn.layer.borderColor = UIColor.kerdyGray01.cgColor
         }
     }
     
     @objc func educationBtnTapped(_ sender: UIButton) {
         if educationBtn.isSelected {
             educationBtn.isSelected = false
-            educationBtn.layer.borderColor = UIColor(named: "kerdy_gray01")?.cgColor
+            educationBtn.layer.borderColor = UIColor.kerdyGray01.cgColor
         } else {
             educationBtn.isSelected = true
-            educationBtn.layer.borderColor = UIColor(named: "kerdy_main")?.cgColor
+            educationBtn.layer.borderColor = UIColor.kerdyGray01.cgColor
         }
     }
     

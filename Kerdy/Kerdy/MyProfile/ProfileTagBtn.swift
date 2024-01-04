@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileTagBtn: UIStackView {
+final class ProfileTagBtn: UIStackView {
     
     var label: UILabel = {
         let label = UILabel()
@@ -27,7 +27,6 @@ class ProfileTagBtn: UIStackView {
         super.init(frame: .zero)
         
         self.axis = .horizontal
-        self.axis = .horizontal
         self.alignment = .fill
         self.distribution = .equalSpacing
         self.spacing = 0
@@ -37,8 +36,7 @@ class ProfileTagBtn: UIStackView {
     }
     
     private func setLayout() {
-        self.addArrangedSubviews(label)
-        self.addArrangedSubviews(closeBtn)
+        self.addArrangedSubviews(label, closeBtn)
         closeBtn.addSubview(img)
         
         label.snp.makeConstraints {
@@ -74,6 +72,7 @@ class ProfileTagBtn: UIStackView {
         }
         borderLayer.path = buttonMaskLayer.path
         borderLayer.strokeColor = UIColor(named: "kerdy_main")?.cgColor
+        borderLayer.strokeColor = UIColor.kerdyMain.cgColor
         borderLayer.fillColor = UIColor.clear.cgColor
         borderLayer.lineWidth = 3
         borderLayer.frame = self.bounds

@@ -13,7 +13,7 @@ protocol ProfileActivityCellDelegate: AnyObject {
     func addBtnTapped(cell: ProfileActivityCell)
 }
 
-class ProfileActivityCell: UITableViewCell {
+final class ProfileActivityCell: UITableViewCell {
     
     weak var delegate: ProfileActivityCellDelegate?
     var labels: [ProfileTagBtn] = []
@@ -33,7 +33,7 @@ class ProfileActivityCell: UITableViewCell {
         return btn
     }()
     
-    let activityImg: UIImageView = {
+    private let activityImg: UIImageView = {
         let img = UIImageView()
         img.image = .icActivity
         return img

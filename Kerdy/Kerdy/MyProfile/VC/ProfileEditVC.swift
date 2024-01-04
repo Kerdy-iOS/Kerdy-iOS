@@ -8,7 +8,7 @@
 import UIKit
 import Core
 
-class ProfileEditVC: UIViewController, ProfileActivityCellDelegate {
+final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate {
     
     let clubDummy = ["DDD5 기5", "KEEPER 12기6"]
     let educationDummy = ["DDD 5기", "KEEPER 12기", "멋쟁이 사자들 5기"]

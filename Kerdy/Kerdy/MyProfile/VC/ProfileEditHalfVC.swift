@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class ProfileEditHalfVC: UIViewController {
+final class ProfileEditHalfVC: UIViewController {
     
     typealias DataSource = UICollectionViewDiffableDataSource<Int, String>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Int, String>
@@ -135,7 +135,6 @@ extension ProfileEditHalfVC {
             let isSelected = self.viewModel.selectedTechs.value.contains(tag)
             cell.confiure(tag: tag)
             cell.setBackgroundColor(isSelected: isSelected)
-            
         }
         
         dataSource = DataSource(collectionView: collectionView) {

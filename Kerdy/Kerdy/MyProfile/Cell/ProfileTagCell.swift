@@ -7,14 +7,14 @@
 
 import UIKit
 
-class ProfileTagCell: UICollectionViewCell {
+final class ProfileTagCell: UICollectionViewCell {
     private lazy var tagBackground: UIView = {
         let view = UIView()
         view.layer.masksToBounds = true
         return view
     }()
     
-    private(set) lazy var tagLabel: UILabel = {
+    private lazy var tagLabel: UILabel = {
         let label = UILabel()
         label.font = .nanumSquare(to: .regular, size: 13)
         return label
