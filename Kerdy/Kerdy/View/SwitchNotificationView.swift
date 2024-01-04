@@ -49,7 +49,7 @@ extension SwitchNotificationView {
     private func setLayout() {
         
         self.snp.makeConstraints {
-            $0.height.equalTo(55)
+            $0.height.equalTo(44)
         }
         
         addSubview(titleLabel)
