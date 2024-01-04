@@ -36,18 +36,6 @@ final class NotificationCell: UICollectionViewListCell {
         return view
     }()
     
-    private let commentsView: SwitchNotificationView = {
-        let view = SwitchNotificationView()
-        view.configureUI(title: Strings.notificationComments)
-        return view
-    }()
-    
-    private let noteView: SwitchNotificationView = {
-        let view = SwitchNotificationView()
-        view.configureUI(title: Strings.notificationNote)
-        return view
-    }()
-    
     private let tagSubLabel: UILabel = {
         let label = UILabel()
         label.text = Strings.subTag
@@ -68,6 +56,18 @@ final class NotificationCell: UICollectionViewListCell {
         view.allowsMultipleSelection = true
         view.bounces = false
         view.isScrollEnabled = false
+        return view
+    }()
+    
+    private let commentsView: SwitchNotificationView = {
+        let view = SwitchNotificationView()
+        view.configureUI(title: Strings.notificationComments)
+        return view
+    }()
+    
+    private let noteView: SwitchNotificationView = {
+        let view = SwitchNotificationView()
+        view.configureUI(title: Strings.notificationNote)
         return view
     }()
     
@@ -102,53 +102,53 @@ extension NotificationCell {
     
     private func setLayout() {
         
-        contentView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
         contentView.addSubview(lineView)
         lineView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(13)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(0.5)
         }
+        
         contentView.addSubview(tagView)
         tagView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(20)
-            $0.horizontalEdges.equalToSuperview().inset(17)
         }
         
         contentView.addSubview(tagSubLabel)
         tagSubLabel.snp.makeConstraints {
             $0.top.equalTo(tagView.snp.bottom)
-            $0.leading.equalToSuperview().inset(17)
+            $0.leading.equalToSuperview().inset(7)
         }
         
         contentView.addSubview(collectionView)
         collectionView.snp.makeConstraints {
             $0.top.equalTo(tagSubLabel.snp.bottom).offset(22)
-            $0.horizontalEdges.equalToSuperview().inset(17)
-            $0.bottom.equalToSuperview()
+            $0.height.equalTo(32)
         }
         
         contentView.addSubview(addButton)
         addButton.snp.makeConstraints {
             $0.top.equalTo(tagSubLabel.snp.bottom).offset(22)
-            $0.leading.equalToSuperview().inset(17)
+            $0.leading.equalToSuperview().inset(7)
             $0.size.equalTo(CGSize(width: 60, height: 32))
         }
         
         contentView.addSubview(commentsView)
         commentsView.snp.makeConstraints {
-            $0.top.equalTo(addButton.snp.bottom).offset(10)
-            $0.horizontalEdges.equalToSuperview().inset(17)
+            $0.top.equalTo(collectionView.snp.bottom).offset(10)
         }
         
         contentView.addSubview(noteView)
         noteView.snp.makeConstraints {
             $0.top.equalTo(commentsView.snp.bottom)
-            $0.horizontalEdges.equalToSuperview().inset(17)
             $0.bottom.equalToSuperview()
+        }
+        
+        [tagView, collectionView, commentsView, noteView].forEach {
+            $0.snp.makeConstraints {
+                $0.leading.equalToSuperview().inset(7)
+                $0.trailing.equalToSuperview().inset(17)
+            }
         }
     }
 }
@@ -177,14 +177,32 @@ extension NotificationCell {
         
         let dataSource = configureDataSource()
         
+        resize(tagList: tagList)
+        
         Observable.just(tagList)
             .map { [TagSection(items: $0)] }
+            .observe(on: MainScheduler.instance)
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
     
     func selectedTagCell() -> Driver<TagsResponseDTO> {
         return collectionView.rx.modelSelected(TagsResponseDTO.self).asDriver()
+    }
+    
+    private func resize(tagList: [TagsResponseDTO]) {
+        
+        let totalWidth: CGFloat = tagList
+            .map { $0.name }
+            .map({ $0.insetSize(xInset: 55).width })
+            .reduce(65, +)
+        let totalXInset: CGFloat = CGFloat(5 * (tagList.count - 1))
+        let numberOfRows = ceil((totalWidth + totalXInset) / (contentView.bounds.width - 34))
+        let height: CGFloat = numberOfRows * 32 + 11 * (numberOfRows - 1)
+        
+        self.collectionView.snp.updateConstraints {
+            $0.height.equalTo(height)
+        }
     }
 }
 
@@ -209,7 +227,6 @@ extension NotificationCell {
         let hgroup2 = createHorizontalGroup(insets: .zero)
         
         let containerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-        
         let containerGroup = NSCollectionLayoutGroup.vertical(layoutSize: containerSize,
                                                               subitems: [hgroup1] + Array(repeating: hgroup2, count: 4))
         containerGroup.interItemSpacing = .fixed(11)
