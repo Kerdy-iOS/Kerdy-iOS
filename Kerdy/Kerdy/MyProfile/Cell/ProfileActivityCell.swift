@@ -9,9 +9,14 @@ import UIKit
 import SnapKit
 import Core
 
-class ProfileActivityCell: UITableViewCell {
+protocol ProfileActivityCellDelegate: AnyObject {
+    func addBtnTapped(cell: ProfileActivityCell)
+}
+
+final class ProfileActivityCell: UITableViewCell {
     
-    var labels: [UILabel] = []
+    weak var delegate: ProfileActivityCellDelegate?
+    var labels: [ProfileTagBtn] = []
     var labelOffset = 50
     
     let titleLabel: UILabel = {
@@ -21,7 +26,14 @@ class ProfileActivityCell: UITableViewCell {
         return label
     }()
     
-    let activityImg: UIImageView = {
+    let addBtn: UIButton = {
+        let btn = UIButton()
+        btn.setImage(.icAddButton, for: .normal)
+        btn.addTarget(self, action: #selector(addBtnTapped), for: .touchUpInside)
+        return btn
+    }()
+    
+    private let activityImg: UIImageView = {
         let img = UIImageView()
         img.image = .icActivity
         return img
@@ -31,10 +43,14 @@ class ProfileActivityCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        labelOffset = 50
+        setLayout()
+    }
+    
+    private func setLayout() {
         contentView.addSubview(divideLine)
         contentView.addSubview(activityImg)
         contentView.addSubview(titleLabel)
+        contentView.addSubview(addBtn)
         
         divideLine.snp.makeConstraints {
             $0.verticalEdges.equalToSuperview()
@@ -53,10 +69,21 @@ class ProfileActivityCell: UITableViewCell {
             $0.top.equalToSuperview().offset(5)
             $0.leading.equalTo(activityImg.snp.trailing).offset(10)
         }
+
+        addBtn.snp.makeConstraints {
+            $0.width.equalTo(36)
+            $0.height.equalTo(18)
+            $0.top.equalToSuperview().offset(5)
+            $0.leading.equalTo(titleLabel.snp.trailing).offset(7)
+        }
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func addBtnTapped(_ sender: UIButton) {
+        delegate?.addBtnTapped(cell: self)
     }
 
 }
