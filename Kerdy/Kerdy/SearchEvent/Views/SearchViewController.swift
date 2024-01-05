@@ -71,6 +71,8 @@ class SearchEventViewController: BaseVC {
     
     private lazy var divideLine = DivideLine(frame: .zero, backgroundColor: .kerdyGray01)
     
+    private var viewModel = SearchEventViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -79,6 +81,7 @@ class SearchEventViewController: BaseVC {
     
     private func setUI() {
         view.backgroundColor = .systemBackground
+        bindViewModel()
         searchTF.becomeFirstResponder()
         
         recentDiscriptionView.clearButton.addTarget(
@@ -104,7 +107,7 @@ class SearchEventViewController: BaseVC {
     }
     
     @objc private func recentClearBtnTapped() {
-
+        self.viewModel.removeRecentAll()
     }
 }
 
@@ -205,18 +208,118 @@ extension SearchEventViewController {
 
 extension SearchEventViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        if viewModel.isSearching.value {
+            return viewModel.recentSearches.value.count
+        } else {
+            return viewModel.eventsRelay.value.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        if viewModel.isSearching.value {
+            let recentSearches = viewModel.recentSearches.value
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: RecentKeywordTableViewCell.identifier, for: indexPath) as? RecentKeywordTableViewCell else { return UITableViewCell()}
+            cell.delegate = self
+            cell.configure(keyword: recentSearches[indexPath.row])
+            cell.selectionStyle = .none
+            return cell
+        } else {
+            let events = viewModel.eventsRelay.value
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: EventTableViewCell.identifier, for: indexPath) as? EventTableViewCell else { return UITableViewCell() }
+            cell.selectionStyle = .none
+            cell.configure(events[indexPath.row])
+            return cell
+        }
     }
-
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if viewModel.isSearching.value {
+            let recentSearches = viewModel.recentSearches.value
+            searchTF.text = recentSearches[indexPath.row]
+            searchTF.becomeFirstResponder()
+        } else {
+            let cell = tableView.cellForRow(at: indexPath) as! EventTableViewCell
+            // 상세 페이지로 이동
+        }
+    }
 }
 // MARK: - tableViewDataSource
 extension SearchEventViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 34
+        return viewModel.isSearching.value ? 34 : 318
+    }
+}
+
+// MARK: - binding
+extension SearchEventViewController {
+    private func bindViewModel() {
+        viewModel.isSearching
+            .subscribe(onNext: { [weak self] state in
+                if state {
+                    self?.noResultImage.isHidden = true
+                    self?.tableView.isHidden = false
+                    self?.tableView.separatorStyle = .none
+                } else {
+                    self?.tableView.separatorStyle = .singleLine
+                    if
+                        let keyword = self?.searchTF.text,
+                        !keyword.isEmpty {
+                        self?.viewModel.getEvents(keyword: keyword)
+                    }
+                }
+                self?.configureHidden(isSearching: state)
+                self?.tableView.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.eventsRelay
+            .subscribe(onNext: { [weak self] events in
+                let isSearcing = self?.viewModel.isSearching.value
+                guard
+                    let isSearching = isSearcing,
+                    !isSearching
+                else { return }
+                
+                if events.count == 0 {
+                    self?.noResultImage.isHidden = false
+                    self?.tableView.isHidden = true
+                } else {
+                    self?.noResultImage.isHidden = true
+                    self?.tableView.isHidden = false
+                    self?.itemCountContainerView.setCount(count: events.count)
+                    self?.tableView.reloadData()
+                }
+            })
+             .disposed(by: disposeBag)
+        
+        viewModel.recentSearches
+            .subscribe(onNext: { [weak self] _ in
+                let isSearcing = self?.viewModel.isSearching.value
+                guard
+                    let isSearching = isSearcing,
+                    isSearching
+                else { return }
+                self?.tableView.reloadData()
+            })
+             .disposed(by: disposeBag)
+        
+        searchTF.rx.controlEvent(.editingDidBegin)
+            .subscribe(onNext: { [weak self] in
+                self?.viewModel.isSearching.accept(true)
+            })
+            .disposed(by: disposeBag)
+
+        searchTF.rx.controlEvent(.editingDidEnd)
+            .subscribe(onNext: { [weak self] in
+                if
+                    let keyword = self?.searchTF.text,
+                    !keyword.isEmpty
+                {
+                    self?.viewModel.addRecentSearch(keyword: keyword)
+                }
+                self?.viewModel.isSearching.accept(false)
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -231,6 +334,14 @@ extension SearchEventViewController: BackButtonActionProtocol {
 extension SearchEventViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        viewModel.isSearching.accept(false)
         return true
+    }
+}
+
+extension SearchEventViewController: DataTransferDelegate {
+    func dataTransfered(data: Any) {
+        guard let keyword = data as? String else { return }
+        viewModel.deleteRecentSearch(keyword: keyword)
     }
 }
