@@ -136,6 +136,8 @@ final class EventVC: BaseVC {
     }
     
     @objc func searchBtnTapped(_ sender: UIButton) {
+        let nextVC = SearchEventViewController()
+        navigationController?.pushViewController(nextVC, animated: true)
     }
 }
 
