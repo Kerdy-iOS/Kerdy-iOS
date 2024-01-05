@@ -283,6 +283,7 @@ extension SearchEventViewController {
                 if events.count == 0 {
                     self?.noResultImage.isHidden = false
                     self?.tableView.isHidden = true
+                    self?.itemCountContainerView.setCount(count: 0)
                 } else {
                     self?.noResultImage.isHidden = true
                     self?.tableView.isHidden = false
