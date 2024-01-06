@@ -29,6 +29,7 @@ struct UserDefault<T> {
 
 enum UserDefaultKey: String, CaseIterable {
     case isSelected
+    case isTagSelected
     case isCommentsSelected
     case isNoteSelected
 }
@@ -36,6 +37,9 @@ enum UserDefaultKey: String, CaseIterable {
 enum UserDefaultStore {
     @UserDefault(key: UserDefaultKey.isSelected.rawValue, defaultValue: false)
     static var isSelected: Bool
+    
+    @UserDefault(key: UserDefaultKey.isTagSelected.rawValue, defaultValue: false)
+    static var isTagSelected: Bool
     
     @UserDefault(key: UserDefaultKey.isCommentsSelected.rawValue, defaultValue: false)
     static var isCommentsSelected: Bool

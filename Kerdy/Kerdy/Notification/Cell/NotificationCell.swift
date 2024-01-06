@@ -33,6 +33,7 @@ final class NotificationCell: UICollectionViewListCell {
     private let tagView: SwitchNotificationView = {
         let view = SwitchNotificationView()
         view.configureUI(title: Strings.notificationTag)
+        view.setSwitchState(isOn: UserDefaultStore.isTagSelected)
         return view
     }()
     
@@ -62,12 +63,14 @@ final class NotificationCell: UICollectionViewListCell {
     private let commentsView: SwitchNotificationView = {
         let view = SwitchNotificationView()
         view.configureUI(title: Strings.notificationComments)
+        view.setSwitchState(isOn: UserDefaultStore.isCommentsSelected)
         return view
     }()
     
     private let noteView: SwitchNotificationView = {
         let view = SwitchNotificationView()
         view.configureUI(title: Strings.notificationNote)
+        view.setSwitchState(isOn: UserDefaultStore.isNoteSelected)
         return view
     }()
     
@@ -84,6 +87,7 @@ final class NotificationCell: UICollectionViewListCell {
         
         setRegisteration()
         setLayout()
+        setSwitchState()
     }
     
     required init?(coder: NSCoder) {
@@ -203,6 +207,27 @@ extension NotificationCell {
         self.collectionView.snp.updateConstraints {
             $0.height.equalTo(height)
         }
+    }
+    
+    func setSwitchState() {
+        
+        tagView.rx.isSelected
+            .bind { isSelected in
+                UserDefaultStore.isTagSelected = isSelected
+            }
+            .disposed(by: disposeBag)
+        
+        commentsView.rx.isSelected
+            .bind { isSelected in
+                UserDefaultStore.isCommentsSelected = isSelected
+            }
+            .disposed(by: disposeBag)
+        
+        noteView.rx.isSelected
+            .bind { isSelected in
+                UserDefaultStore.isNoteSelected = isSelected
+            }
+            .disposed(by: disposeBag)
     }
 }
 
