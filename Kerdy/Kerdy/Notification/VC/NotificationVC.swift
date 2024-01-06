@@ -38,12 +38,6 @@ final class NotificationVC: BaseVC {
         return view
     }()
     
-    private let switchView: UISwitch = {
-        let view = UISwitch()
-        view.onTintColor = .kerdyMain
-        return view
-    }()
-    
     // MARK: - Init
     
     init(viewModel: NotificationViewModel) {
@@ -88,15 +82,13 @@ extension NotificationVC {
     
     private func setBindings() {
         
-        let input = NotificationViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver(),
-                                                switchValueChanged: switchView.rx.isOn.asDriver())
+        let input = NotificationViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver())
         let output = viewModel.transform(input: input)
         
-        output.isSwitch
-            .drive(with: self, onNext: { owner, data in
-                let (isSwitch, tagList) = data
-                owner.updateCollectionView(isSwitch: isSwitch, tagList: tagList)
-            })
+        output.tagList
+            .drive(with: self) { owner, tagList in
+                owner.updateCollectionView(tagList: tagList)
+            }
             .disposed(by: disposeBag)
     }
 }
@@ -114,17 +106,9 @@ extension NotificationVC {
             self.configureBackgroundView(cell: cell)
         }
         
-        let headerCellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, UUID> { cell, _, _ in
+        let headerCellRegistration = UICollectionView.CellRegistration<HeaderNotificationCell, UUID> { cell, _, _ in
             
-            var content = cell.defaultContentConfiguration()
-            content.text = Strings.receiveAllNotification
-            content.textProperties.font = .nanumSquare(to: .regular, size: 14)
-            cell.contentConfiguration = content
-            
-            cell.accessories = [
-                .customView(configuration: .init(customView: self.switchView,
-                                                 placement: .trailing()))
-            ]
+            self.configureSwitch(cell: cell)
             self.configureBackgroundView(cell: cell)
         }
         
@@ -142,15 +126,16 @@ extension NotificationVC {
         }
     }
     
-    private func updateCollectionView(isSwitch: Bool, tagList: [NotificationCellItem]) {
+    private func updateCollectionView(tagList: [NotificationCellItem]) {
         var sectionSnapshot = SectionSnapshot()
         
         let headerItem = NotificationItem.header(UUID())
         sectionSnapshot.append([headerItem])
         
-        let cellItems = isSwitch ? tagList.map { NotificationItem.cellItem($0) } : []
+        let cellItems = tagList.map { NotificationItem.cellItem($0) }
+        
         sectionSnapshot.append(cellItems, to: headerItem)
-        isSwitch ? sectionSnapshot.expand([headerItem]) : sectionSnapshot.collapse([headerItem])
+        sectionSnapshot.expand([headerItem])
         
         dataSource.apply(sectionSnapshot, to: .main, animatingDifferences: false)
     }
@@ -159,7 +144,7 @@ extension NotificationVC {
         
         cell.rx.addButton
             .withUnretained(self)
-            .bind {_ in
+            .bind { _ in
                 let vc = TagVC(viewModel: TagViewModel(tagManager: TagManager.shared))
                 self.navigationController?.pushViewController(vc, animated: true)
             }
@@ -168,6 +153,15 @@ extension NotificationVC {
         cell.selectedTagCell()
             .drive(with: self, onNext: { owner, selectedTag in
                 owner.viewModel.deleteTags(id: [selectedTag.id])
+            })
+            .disposed(by: cell.disposeBag)
+    }
+    
+    private func configureSwitch(cell: HeaderNotificationCell) {
+        
+        cell.rx.valueChanged
+            .bind(with: self, onNext: { owner, isOn in
+                owner.viewModel.updateIsSelected(isOn)
             })
             .disposed(by: cell.disposeBag)
     }

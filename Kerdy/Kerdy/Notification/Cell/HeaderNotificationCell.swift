@@ -20,7 +20,9 @@ final class HeaderNotificationCell: UICollectionViewListCell {
     
     fileprivate lazy var switchView: UISwitch = {
         let view = UISwitch()
+        view.isOn = UserDefaultStore.isSelected
         view.onTintColor = .kerdyMain
+        
         return view
     }()
     

@@ -18,6 +18,7 @@ final class NotificationViewModel: ViewModelType {
     // MARK: - Property
     
     var disposeBag = DisposeBag()
+    
     private let tagManager: TagManager
     private let id = Int(KeyChainManager.loadMemberID())
     
@@ -28,37 +29,31 @@ final class NotificationViewModel: ViewModelType {
     }
     
     struct Input {
-        
         let viewWillAppear: Driver<Bool>
-        let switchValueChanged: Driver<Bool>
     }
     
     struct Output {
-        
-        let isSwitch: Driver<(Bool, [NotificationCellItem])>
+        let tagList: Driver<[NotificationCellItem]>
     }
     
-    private let switchValueRelay = BehaviorRelay<Bool>(value: false)
+    private let isSelectedRelay = BehaviorRelay<Bool>(value: UserDefaultStore.isSelected)
     private let tagList = BehaviorRelay<[NotificationCellItem]>(value: [])
     
     func transform(input: Input) -> Output {
         
-        let isSwitch = Observable.combineLatest(switchValueRelay.asObservable(),
-                                                tagList.asObservable())        
-        input.viewWillAppear
-            .asDriver(onErrorDriveWith: .never())
-            .drive(with: self, onNext: { owner, _ in
+        let output = Output(tagList: tagList.asDriver())
+        
+        let combinedSwitchSignal = Observable.merge(input.viewWillAppear.asObservable(), isSelectedRelay.asObservable())
+        
+        combinedSwitchSignal
+            .asDriver(onErrorJustReturn: Bool())
+            .drive(with: self) { owner, _ in
                 guard let id = self.id else { return }
-                owner.getTags(id: id)
-            })
+                owner.isSelectedRelay.value ? owner.getTags(id: id) : owner.tagList.accept([])
+            }
             .disposed(by: disposeBag)
         
-        input.switchValueChanged
-            .debug()
-            .drive(switchValueRelay)
-            .disposed(by: disposeBag)
-        
-        return Output(isSwitch: isSwitch.asDriver(onErrorJustReturn: (false, [])))
+        return output
     }
 }
 
@@ -91,5 +86,12 @@ extension NotificationViewModel {
                 HandleNetworkError.handleNetworkError(error)
             })
             .disposed(by: disposeBag)
+    }
+    
+    func updateIsSelected(_ isSelected: Bool) {
+        if isSelectedRelay.value != isSelected {
+            isSelectedRelay.accept(isSelected)
+            UserDefaultStore.isSelected = isSelected
+        }
     }
 }

@@ -8,6 +8,7 @@
 import Foundation
 
 enum NotificationSection: Hashable {
+    
     case main
 }
 
@@ -15,11 +16,9 @@ enum NotificationItem: Hashable {
     
     case header(UUID)
     case cellItem(NotificationCellItem)
-    
 }
 
 struct NotificationCellItem: Hashable {
-    
-    let uuid = UUID()
+
     let tagList: [TagsResponseDTO]
 }
