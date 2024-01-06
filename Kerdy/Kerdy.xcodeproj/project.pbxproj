@@ -34,6 +34,7 @@
 		095D390C2AEE7BC50083CC65 /* NanumSquareB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */; };
 		095D390E2AEE7BE00083CC65 /* NanumSquareEB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */; };
 		095D39102AEE7BE60083CC65 /* NanumSquareR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390F2AEE7BE60083CC65 /* NanumSquareR.ttf */; };
+		095DA0CA2B485391000128DB /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095DA0C92B485391000128DB /* UserDefaultsManager.swift */; };
 		095EBE7A2AFF5DF200629F06 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095EBE792AFF5DF200629F06 /* BaseVC.swift */; };
 		095EBE7F2AFF668200629F06 /* SettingWrittenProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095EBE7E2AFF668200629F06 /* SettingWrittenProtocol.swift */; };
 		095EBE822AFF66A300629F06 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095EBE812AFF66A300629F06 /* Util.swift */; };
@@ -200,6 +201,7 @@
 		095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareB.ttf; sourceTree = "<group>"; };
 		095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareEB.ttf; sourceTree = "<group>"; };
 		095D390F2AEE7BE60083CC65 /* NanumSquareR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareR.ttf; sourceTree = "<group>"; };
+		095DA0C92B485391000128DB /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		095EBE792AFF5DF200629F06 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		095EBE7E2AFF668200629F06 /* SettingWrittenProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingWrittenProtocol.swift; sourceTree = "<group>"; };
 		095EBE812AFF66A300629F06 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
@@ -613,6 +615,7 @@
 			children = (
 				09472C242B135BF200B4A84E /* KeyChainManager.swift */,
 				09472C3A2B138B5C00B4A84E /* KeyChainValue.swift */,
+				095DA0C92B485391000128DB /* UserDefaultsManager.swift */,
 			);
 			path = KeyChain;
 			sourceTree = "<group>";
@@ -1348,6 +1351,7 @@
 				09EEFF6C2B39CEFA0010754C /* SwitchNotificationView.swift in Sources */,
 				090978ED2AF0E7A3006BD8DE /* MyCardVC.swift in Sources */,
 				3109B3082AF7C21500B2EAD2 /* Tag.swift in Sources */,
+				095DA0CA2B485391000128DB /* UserDefaultsManager.swift in Sources */,
 				3109B30C2AF7F49A00B2EAD2 /* PrortudingBtn.swift in Sources */,
 				311E983A2AFB89E5009BEB3F /* DateFilterViewController.swift in Sources */,
 				3109B30E2AF7F4ED00B2EAD2 /* FilterBtn.swift in Sources */,
