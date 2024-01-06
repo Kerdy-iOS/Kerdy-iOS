@@ -70,7 +70,7 @@ final class FirstInitialSettingVC: UIViewController {
         setLayout()
         setNaviBar()
     }
-    
+
     private func setLayout() {
         view.addSubviews(progressLabel, nameSettingLabel, nameAskLabel, warningLabel, nameTextField, contourLine, nextButton)
         
@@ -109,7 +109,6 @@ final class FirstInitialSettingVC: UIViewController {
         }
         
         contourLine.snp.makeConstraints {
-            $0.width.equalTo(318)
             $0.height.equalTo(1.5)
             $0.top.equalToSuperview().offset(285)
             $0.leading.equalToSuperview().offset(21)
@@ -135,6 +134,10 @@ final class FirstInitialSettingVC: UIViewController {
 
     @objc private func nextButtonTapped() {
         let nextViewController = SecondInitialSettingVC()
-        navigationController?.pushViewController(nextViewController, animated: true)
+        if let name = nameTextField.text, !name.isEmpty {
+            nextViewController.memberInfo.name = name
+            navigationController?.pushViewController(nextViewController, animated: true)
+        }
     }
+
 }

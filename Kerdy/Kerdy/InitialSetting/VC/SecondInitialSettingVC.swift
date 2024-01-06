@@ -8,11 +8,15 @@
 import UIKit
 import Core
 import RxSwift
+import Moya
 
-final class SecondInitialSettingVC: UIViewController {
+final class SecondInitialSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     private let categoryViewModel = CategoryViewModel()
     private let disposeBag = DisposeBag()
     private var buttons: [UIButton] = []
+    private var isDataLoaded = false
+    private var isDataLoading = false
+    var memberInfo: MemberInfo = MemberInfo()
     
     private lazy var progressLabel: UILabel = {
         let label = UILabel()
@@ -55,55 +59,9 @@ final class SecondInitialSettingVC: UIViewController {
         return button
     }()
     
-    private lazy var javaBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Java")
-    
-    private lazy var springBootBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "SpringBoot")
-    
-    private lazy var awsBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "AWS")
-    
-    private lazy var mySQLBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "MySQL")
-    
-    private lazy var sqlBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "SQL")
-    
-    private lazy var javascriptBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Javascript")
-    
-    private lazy var githubBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Github")
-    
-    private lazy var springBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Spring")
-    
-    private lazy var pythonBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Python")
-    
-    private lazy var dataAnalysisBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "데이터 분석")
-    
-    private lazy var gitBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Git")
-    
-    private lazy var dockerBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Docker")
-    
-    private lazy var communicationBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "커뮤니케이션")
-    
-    private lazy var typescriptBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "Typescript")
-    
-    private lazy var reactBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(categoryButtonTapped(_:)), title: "React")
-    
-    private lazy var categoryStackView1: InitialSettingStackView = InitialSettingStackView()
-    
-    private lazy var categoryStackView2: InitialSettingStackView = InitialSettingStackView()
-    
-    private lazy var categoryStackView3: InitialSettingStackView = InitialSettingStackView()
-    
-    private lazy var categoryStackView4: InitialSettingStackView = InitialSettingStackView()
-    
-    private lazy var categoryStackView5: InitialSettingStackView = InitialSettingStackView()
-    
-    private lazy var categoryStackView6: InitialSettingStackView = InitialSettingStackView()
-
-    private lazy var verticalStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.alignment = .leading
-        stackView.distribution = .fill
-        stackView.spacing = 11
-        return stackView
+    private lazy var tableView: UITableView = {
+        let tv = UITableView()
+        return tv
     }()
     
     override func viewDidLoad() {
@@ -112,33 +70,58 @@ final class SecondInitialSettingVC: UIViewController {
         setUI()
         setLayout()
         setNaviBar()
+        setTableView()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if buttons.isEmpty {
-            buttons.append(javaBtn)
-            buttons.append(springBootBtn)
-            buttons.append(awsBtn)
-            buttons.append(mySQLBtn)
-            buttons.append(sqlBtn)
-            buttons.append(javascriptBtn)
-            buttons.append(githubBtn)
-            buttons.append(springBtn)
-            buttons.append(pythonBtn)
-            buttons.append(dataAnalysisBtn)
-            buttons.append(gitBtn)
-            buttons.append(dockerBtn)
-            buttons.append(communicationBtn)
-            buttons.append(typescriptBtn)
-            buttons.append(reactBtn)
+        getJobActivities()
+    }
+    
+    private func getJobActivities() {
+        if !isDataLoaded && !isDataLoading {
+            isDataLoading = true
+            categoryViewModel.jobActivities
+                .subscribe(onNext: { clubActivities in
+                    for activity in clubActivities {
+                        let btn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(self.categoryButtonTapped(_:)), title: activity.name, id: activity.id)
+                        btn.snp.makeConstraints { make in
+                            make.width.equalTo((btn.titleLabel?.text!.count)! * 14)
+                        }
+                        self.buttons.append(btn)
+                    }
+                    self.tableView.reloadData()
+                    if self.buttons.count >= 21 {
+                        self.tableView.isScrollEnabled = true
+                    } else {
+                        self.tableView.isScrollEnabled = false
+                    }
+                    self.setButton()
+                    self.isDataLoaded = true
+                    self.isDataLoading = false
+                }).disposed(by: disposeBag)
+
+            categoryViewModel.fetchActivities()
         }
-        setButton()
+    }
+    
+    private func setTableView() {
+        view.addSubview(tableView)
+        tableView.register(InitialSettingCell.self, forCellReuseIdentifier: "cell")
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+
+        tableView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(277.5)
+            $0.leading.equalToSuperview().offset(21)
+            $0.trailing.equalToSuperview().offset(-21)
+            $0.bottom.equalTo(nextButton.snp.top).offset(-10)
+        }
     }
     
     private func setLayout() {
         view.addSubviews(progressLabel, interestingPartLabel, interestingCategoryLabel, notifyLabel, nextButton)
-        setVerticalStackView()
         
         progressLabel.snp.makeConstraints {
             $0.width.equalTo(24)
@@ -181,150 +164,31 @@ final class SecondInitialSettingVC: UIViewController {
         navigationItem.backButtonTitle = ""
     }
     
-    private func setStackView1() {
-        categoryStackView1.addArrangedSubview(javaBtn)
-        categoryStackView1.addArrangedSubview(springBootBtn)
-        categoryStackView1.addArrangedSubview(awsBtn)
-        view.addSubview(categoryStackView1)
-        
-        javaBtn.snp.makeConstraints {
-            $0.width.equalTo(77)
-        }
-        
-        springBootBtn.snp.makeConstraints {
-            $0.width.equalTo(117)
-        }
-        
-        awsBtn.snp.makeConstraints {
-            $0.width.equalTo(79)
-        }
-    }
-    
-    private func setStackView2() {
-        categoryStackView2.addArrangedSubview(mySQLBtn)
-        categoryStackView2.addArrangedSubview(sqlBtn)
-        categoryStackView2.addArrangedSubview(javascriptBtn)
-        view.addSubview(categoryStackView2)
-        
-        mySQLBtn.snp.makeConstraints {
-            $0.width.equalTo(92)
-        }
-        
-        sqlBtn.snp.makeConstraints {
-            $0.width.equalTo(74)
-        }
-        
-        javascriptBtn.snp.makeConstraints {
-            $0.width.equalTo(110)
-        }
-    }
-    
-    private func setStackView3() {
-        categoryStackView3.addArrangedSubview(githubBtn)
-        categoryStackView3.addArrangedSubview(springBtn)
-        categoryStackView3.addArrangedSubview(pythonBtn)
-        view.addSubview(categoryStackView3)
-        
-        githubBtn.snp.makeConstraints {
-            $0.width.equalTo(90)
-        }
-        
-        springBtn.snp.makeConstraints {
-            $0.width.equalTo(89)
-        }
-        
-        pythonBtn.snp.makeConstraints {
-            $0.width.equalTo(92)
-        }
-    }
-    
-    private func setStackView4() {
-        categoryStackView4.addArrangedSubview(dataAnalysisBtn)
-        categoryStackView4.addArrangedSubview(gitBtn)
-        categoryStackView4.addArrangedSubview(dockerBtn)
-        view.addSubview(categoryStackView4)
-        
-        dataAnalysisBtn.snp.makeConstraints {
-            $0.width.equalTo(113)
-        }
-        
-        gitBtn.snp.makeConstraints {
-            $0.width.equalTo(67)
-        }
-        
-        dockerBtn.snp.makeConstraints {
-            $0.width.equalTo(92)
-        }
-    }
-    
-    private func setStackView5() {
-        categoryStackView5.addArrangedSubview(communicationBtn)
-        categoryStackView5.addArrangedSubview(typescriptBtn)
-        view.addSubview(categoryStackView5)
-        
-        communicationBtn.snp.makeConstraints {
-            $0.width.equalTo(121)
-        }
-        
-        typescriptBtn.snp.makeConstraints {
-            $0.width.equalTo(110)
-        }
-    }
-    
-    private func setStackView6() {
-        categoryStackView6.addArrangedSubview(reactBtn)
-        view.addSubview(categoryStackView6)
-        reactBtn.snp.makeConstraints {
-            $0.width.equalTo(84)
-        }
-    }
-    
     private func setButton() {
-        for button in buttons {
-            button.roundCorners(topLeft: 10, topRight: 20, bottomLeft: 20, bottomRight: 10)
-            let borderLayer = CAShapeLayer()
-            guard let buttonMaskLayer = button.layer.mask as? CAShapeLayer else {
-                        continue
-                    }
-            borderLayer.path = buttonMaskLayer.path
-            borderLayer.strokeColor = UIColor(named: "kerdy_main")?.cgColor
-            borderLayer.fillColor = UIColor.clear.cgColor
-            borderLayer.lineWidth = 3
-            borderLayer.frame = button.bounds
-            button.layer.addSublayer(borderLayer)
-            button.titleLabel?.font = .nanumSquare(to: .regular, size: 13)
-            
-            categoryViewModel.categorySelectedDict[button] = BehaviorSubject<Bool>(value: false)
-            categoryViewModel.categorySelectedDict[button]?.subscribe(onNext: {isSelected in
-                button.backgroundColor = isSelected ? .kerdyMain : .white
-            }).disposed(by: disposeBag)
-            
-            button.snp.makeConstraints {
-                $0.height.equalTo(32)
+        DispatchQueue.main.async {
+            for button in self.buttons {
+                button.roundCorners(topLeft: 10, topRight: 20, bottomLeft: 20, bottomRight: 10)
+                let borderLayer = CAShapeLayer()
+                guard let buttonMaskLayer = button.layer.mask as? CAShapeLayer else {
+                    continue
+                }
+                borderLayer.path = buttonMaskLayer.path
+                borderLayer.strokeColor = UIColor(named: "kerdy_main")?.cgColor
+                borderLayer.fillColor = UIColor.clear.cgColor
+                borderLayer.lineWidth = 3
+                borderLayer.frame = button.bounds
+                button.layer.addSublayer(borderLayer)
+                button.titleLabel?.font = .nanumSquare(to: .regular, size: 13)
+                
+                self.categoryViewModel.categorySelectedDict[button] = BehaviorSubject<Bool>(value: false)
+                self.categoryViewModel.categorySelectedDict[button]?.subscribe(onNext: {isSelected in
+                    button.backgroundColor = isSelected ? .kerdyMain : .white
+                }).disposed(by: self.disposeBag)
+                
+                button.snp.makeConstraints {
+                    $0.height.equalTo(32)
+                }
             }
-        }
-    }
-    
-    private func setVerticalStackView() {
-        setStackView1()
-        setStackView2()
-        setStackView3()
-        setStackView4()
-        setStackView5()
-        setStackView6()
-        verticalStackView.addArrangedSubview(categoryStackView1)
-        verticalStackView.addArrangedSubview(categoryStackView2)
-        verticalStackView.addArrangedSubview(categoryStackView3)
-        verticalStackView.addArrangedSubview(categoryStackView4)
-        verticalStackView.addArrangedSubview(categoryStackView5)
-        verticalStackView.addArrangedSubview(categoryStackView6)
-        
-        view.addSubview(verticalStackView)
-        
-        verticalStackView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(283)
-            $0.leading.equalToSuperview().offset(21)
-            $0.trailing.equalToSuperview().offset(-21)
         }
     }
     
@@ -333,11 +197,45 @@ final class SecondInitialSettingVC: UIViewController {
     }
     
     @objc private func nextButtonTapped() {
-        let nextViewController = ThirdInitialSettingVC()
-        navigationController?.pushViewController(nextViewController, animated: true)
+        let nextVC = ThirdInitialSettingVC()
+        nextVC.memberInfo = memberInfo
+        navigationController?.pushViewController(nextVC, animated: true)
     }
     
-    @objc private func categoryButtonTapped(_ sender: UIButton) {
+    @objc private func categoryButtonTapped(_ sender: InitialSettingSelectBtn) {
         categoryViewModel.categoryButtonTapped(button: sender)
+
+        if let id = sender.id {
+            if let buttonState = try? categoryViewModel.categorySelectedDict[sender]?.value() {
+                if buttonState == true {
+                    if memberInfo.activityIds == nil {
+                        memberInfo.activityIds = [Int]()
+                    }
+                    memberInfo.activityIds?.append(id)
+                } else if buttonState == false, let index = memberInfo.activityIds?.firstIndex(of: id) {
+                    memberInfo.activityIds?.remove(at: index)
+                }
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (buttons.count + 2) / 3
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! InitialSettingCell
+        cell.selectionStyle = .none
+
+        if buttons.count > indexPath.row * 3 {
+            cell.buttonStackView.addArrangedSubview(buttons[indexPath.row * 3])
+        }
+        if buttons.count > indexPath.row * 3 + 1 {
+            cell.buttonStackView.addArrangedSubview(buttons[indexPath.row * 3 + 1])
+        }
+        if buttons.count > indexPath.row * 3 + 2 {
+            cell.buttonStackView.addArrangedSubview(buttons[indexPath.row * 3 + 2])
+        }
+        return cell
     }
 }

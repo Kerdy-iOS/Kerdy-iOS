@@ -11,7 +11,7 @@ import Moya
 enum EventAPI {
     case getEvents(category: String?, filter: EventFilter)
 }
-
+    
 extension EventAPI: KerdyAPI {
     
     var domain: KerdyDomain {
@@ -25,38 +25,17 @@ extension EventAPI: KerdyAPI {
         }
     }
     
-    var error: [Int: NetworkError]? {
+    var error: [Int : NetworkError]? {
         switch self {
         case .getEvents:
             return nil
         }
     }
     
-    var task: Task {
+    var headerType: HTTPHeaderFields {
         switch self {
-        case .getEvents(category: let category, filter: let filter):
-            var parameters: [String: Any] = [:]
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-            
-            if let category = category {
-                parameters.updateValue(category, forKey: "category")
-            }
-            if let startDate = filter.startDate {
-                let start = dateFormatter.string(from: startDate)
-                parameters.updateValue(start, forKey: "startDate")
-            }
-            if let endDate = filter.endDate {
-                let end = dateFormatter.string(from: endDate)
-                parameters.updateValue(end, forKey: "endDate")
-            }
-            if let statuses = filter.statuses {
-                parameters.updateValue(statuses, forKey: "statuses")
-            }
-            if let keyword = filter.keyword {
-                parameters.updateValue(keyword, forKey: "keyword")
-            }
-            return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
+        case .getEvents:
+            return .plain
         }
     }
     
@@ -67,10 +46,38 @@ extension EventAPI: KerdyAPI {
         }
     }
     
-    var headerType: HTTPHeaderFields {
+    var task: Moya.Task {
         switch self {
-        case .getEvents:
-            return .plain
+        case .getEvents(category: let category, filter: let filter):
+            var parameters: [String: Any] = [:]
+            
+            if let category = category {
+                parameters.updateValue(category, forKey: "category")
+            }
+            if let startDate = filter.startDate {
+                parameters.updateValue(startDate, forKey: "startDate")
+            }
+            if let endDate = filter.endDate {
+                parameters.updateValue(endDate, forKey: "endDate")
+            }
+            if
+                let statuses = filter.statuses,
+                statuses.count > 0
+            {
+                let statuses = statuses.joined(separator: ",")
+                parameters.updateValue(statuses, forKey: "statuses")
+            }
+            if let keyword = filter.keyword {
+                parameters.updateValue(keyword, forKey: "keyword")
+            }
+            if
+                let tags = filter.tags,
+                tags.count > 0
+            {
+                let tags = tags.joined(separator: ",")
+                parameters.updateValue(tags, forKey: "tags")
+            }
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
         }
     }
 }

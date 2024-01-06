@@ -9,10 +9,14 @@ import UIKit
 import Core
 import RxSwift
 
-final class FourthInitialSettingVC: UIViewController {
+final class FourthInitialSettingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
     private let clubViewModel = ClubViewModel()
     private let disposeBag = DisposeBag()
     private var buttons: [UIButton] = []
+    private var isDataLoaded = false
+    private var isDataLoading = false
+    var memberInfo: MemberInfo = MemberInfo()
     
     private lazy var progressLabel: UILabel = {
         let label = UILabel()
@@ -44,29 +48,9 @@ final class FourthInitialSettingVC: UIViewController {
         return label
     }()
     
-    private lazy var yappBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(doneButtonTapped(_:)), title: "YAPP")
-    
-    private lazy var soptBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(doneButtonTapped(_:)), title: "SOPT")
-    
-    private lazy var gdscBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(doneButtonTapped(_:)), title: "GDSC")
-    
-    private lazy var mashUpBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(doneButtonTapped(_:)), title: "매쉬업")
-    
-    private lazy var nextersBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(doneButtonTapped(_:)), title: "NEXTERS")
-    
-    private lazy var likeLionBtn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(doneButtonTapped(_:)), title: "멋쟁이 사자처럼")
-    
-    private lazy var clubStackView1: InitialSettingStackView = InitialSettingStackView()
-    
-    private lazy var clubStackView2: InitialSettingStackView = InitialSettingStackView()
-    
-    private lazy var verticalStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.alignment = .leading
-        stackView.distribution = .fill
-        stackView.spacing = 11
-        return stackView
+    private lazy var tableView: UITableView = {
+        let tv = UITableView()
+        return tv
     }()
     
     private lazy var enterLaterButton: UIButton = {
@@ -100,25 +84,58 @@ final class FourthInitialSettingVC: UIViewController {
         setUI()
         setLayout()
         setNaviBar()
+        setTableView()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if buttons.isEmpty {
-            buttons.append(yappBtn)
-            buttons.append(soptBtn)
-            buttons.append(gdscBtn)
-            buttons.append(mashUpBtn)
-            buttons.append(nextersBtn)
-            buttons.append(likeLionBtn)
+        getClubActivities()
+    }
+    
+    private func getClubActivities() {
+        if !isDataLoaded && !isDataLoading {
+            isDataLoading = true
+            clubViewModel.clubActivities
+                .subscribe(onNext: { clubActivities in
+                    for activity in clubActivities {
+                        let btn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(self.clubButtonTapped(_:)), title: activity.name, id: activity.id)
+                        btn.snp.makeConstraints { make in
+                            make.width.equalTo((btn.titleLabel?.text!.count)! * 14)
+                        }
+                        self.buttons.append(btn)
+                    }
+                    self.tableView.reloadData()
+                    if self.buttons.count >= 21 {
+                        self.tableView.isScrollEnabled = true
+                    } else {
+                        self.tableView.isScrollEnabled = false
+                    }
+                    self.setButton()
+                    self.isDataLoaded = true
+                    self.isDataLoading = false
+                }).disposed(by: disposeBag)
+
+            clubViewModel.fetchActivities()
         }
-        setButton()
+    }
+    
+    private func setTableView() {
+        view.addSubview(tableView)
+        tableView.register(InitialSettingCell.self, forCellReuseIdentifier: "cell")
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+
+        tableView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(277.5)
+            $0.leading.equalToSuperview().offset(21)
+            $0.trailing.equalToSuperview().offset(-21)
+            $0.bottom.equalTo(enterLaterButton.snp.top).offset(-10)
+        }
     }
     
     private func setLayout() {
         view.addSubviews(progressLabel, clubActivityLabel, askClubActivityLabel, notifyLabel, doneButton, enterLaterButton, enterLaterButtonUnderline)
-        
-        setVerticalStackView()
         
         progressLabel.snp.makeConstraints {
             $0.width.equalTo(24)
@@ -171,82 +188,31 @@ final class FourthInitialSettingVC: UIViewController {
         }
     }
     
-    private func setStackView1() {
-        clubStackView1.addArrangedSubview(yappBtn)
-        clubStackView1.addArrangedSubview(soptBtn)
-        clubStackView1.addArrangedSubview(gdscBtn)
-        view.addSubview(clubStackView1)
-        
-        yappBtn.snp.makeConstraints {
-            $0.width.equalTo(70)
-        }
-        
-        soptBtn.snp.makeConstraints {
-            $0.width.equalTo(70)
-        }
-        
-        gdscBtn.snp.makeConstraints {
-            $0.width.equalTo(70)
-        }
-    }
-    
-    private func setStackView2() {
-        clubStackView2.addArrangedSubview(mashUpBtn)
-        clubStackView2.addArrangedSubview(nextersBtn)
-        clubStackView2.addArrangedSubview(likeLionBtn)
-        view.addSubview(clubStackView2)
-        
-        mashUpBtn.snp.makeConstraints {
-            $0.width.equalTo(65)
-        }
-        
-        nextersBtn.snp.makeConstraints {
-            $0.width.equalTo(90)
-        }
-        
-        likeLionBtn.snp.makeConstraints {
-            $0.width.equalTo(110)
-        }
-    }
-    
     private func setButton() {
-        for button in buttons {
-            button.roundCorners(topLeft: 10, topRight: 20, bottomLeft: 20, bottomRight: 10)
-            let borderLayer = CAShapeLayer()
-            guard let buttonMaskLayer = button.layer.mask as? CAShapeLayer else {
-                continue
+        DispatchQueue.main.async {
+            for button in self.buttons {
+                button.roundCorners(topLeft: 10, topRight: 20, bottomLeft: 20, bottomRight: 10)
+                let borderLayer = CAShapeLayer()
+                guard let buttonMaskLayer = button.layer.mask as? CAShapeLayer else {
+                    continue
+                }
+                borderLayer.path = buttonMaskLayer.path
+                borderLayer.strokeColor = UIColor(named: "kerdy_main")?.cgColor
+                borderLayer.fillColor = UIColor.clear.cgColor
+                borderLayer.lineWidth = 3
+                borderLayer.frame = button.bounds
+                button.layer.addSublayer(borderLayer)
+                button.titleLabel?.font = .nanumSquare(to: .regular, size: 13)
+                
+                self.clubViewModel.clubSelectedDict[button] = BehaviorSubject<Bool>(value: false)
+                self.clubViewModel.clubSelectedDict[button]?.subscribe(onNext: {isSelected in
+                    button.backgroundColor = isSelected ? .kerdyMain : .white
+                }).disposed(by: self.disposeBag)
+                
+                button.snp.makeConstraints {
+                    $0.height.equalTo(32)
+                }
             }
-            borderLayer.path = buttonMaskLayer.path
-            borderLayer.strokeColor = UIColor(named: "kerdy_main")?.cgColor
-            borderLayer.fillColor = UIColor.clear.cgColor
-            borderLayer.lineWidth = 3
-            borderLayer.frame = button.bounds
-            button.layer.addSublayer(borderLayer)
-            button.titleLabel?.font = .nanumSquare(to: .regular, size: 13)
-            
-            clubViewModel.clubSelectedDict[button] = BehaviorSubject<Bool>(value: false)
-            clubViewModel.clubSelectedDict[button]?.subscribe(onNext: {isSelected in
-                button.backgroundColor = isSelected ? .kerdyMain : .white
-            }).disposed(by: disposeBag)
-            
-            button.snp.makeConstraints {
-                $0.height.equalTo(32)
-            }
-        }
-    }
-    
-    private func setVerticalStackView() {
-        setStackView1()
-        setStackView2()
-        verticalStackView.addArrangedSubview(clubStackView1)
-        verticalStackView.addArrangedSubview(clubStackView2)
-        
-        view.addSubview(verticalStackView)
-        
-        verticalStackView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(283)
-            $0.leading.equalToSuperview().offset(21)
-            $0.trailing.equalToSuperview().offset(-21)
         }
     }
     
@@ -259,12 +225,55 @@ final class FourthInitialSettingVC: UIViewController {
         navigationItem.backButtonTitle = ""
     }
     
-    @objc private func doneButtonTapped(_ sender: UIButton) {
+    @objc private func clubButtonTapped(_ sender: InitialSettingSelectBtn) {
         clubViewModel.clubButtonTapped(button: sender)
-            
+        
+        if let id = sender.id {
+            if let buttonState = try? clubViewModel.clubSelectedDict[sender]?.value() {
+                if buttonState == true {
+                    if memberInfo.activityIds == nil {
+                        memberInfo.activityIds = [Int]()
+                    }
+                    memberInfo.activityIds?.append(id)
+                } else if buttonState == false, let index = memberInfo.activityIds?.firstIndex(of: id) {
+                    memberInfo.activityIds?.remove(at: index)
+                }
+            }
+        }
     }
     
     @objc private func enterLaterButtonTapped() {
         
+    }
+    
+    @objc private func doneButtonTapped() {
+        clubViewModel.registerMember(memberInfo: memberInfo) { result in
+            switch result {
+            case .success:
+                print("Member registration successful.")
+            case .failure(let error):
+                print("Member registration failed: \(error)")
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (buttons.count + 2) / 3
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! InitialSettingCell
+        cell.selectionStyle = .none
+
+        if buttons.count > indexPath.row * 3 {
+            cell.buttonStackView.addArrangedSubview(buttons[indexPath.row * 3])
+        }
+        if buttons.count > indexPath.row * 3 + 1 {
+            cell.buttonStackView.addArrangedSubview(buttons[indexPath.row * 3 + 1])
+        }
+        if buttons.count > indexPath.row * 3 + 2 {
+            cell.buttonStackView.addArrangedSubview(buttons[indexPath.row * 3 + 2])
+        }
+        return cell
     }
 }

@@ -8,17 +8,18 @@
 import UIKit
 import SnapKit
 import Core
+import RxSwift
 
 final class EventTableViewCell: UITableViewCell {
 
-    lazy var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .nanumSquare(to: .bold, size: 19)
         label.numberOfLines = 2
         return label
     }()
 
-    lazy var dDayLabel: UILabel = {
+    private lazy var dDayLabel: UILabel = {
         let label = UILabel()
         label.text = "D-14"
         label.font = .nanumSquare(to: .extraBold, size: 13)
@@ -26,38 +27,66 @@ final class EventTableViewCell: UITableViewCell {
         return label
     }()
 
-    lazy var priceLabel: UILabel = {
+    private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.text = "무료"
         label.font = .nanumSquare(to: .regular, size: 12)
         return label
     }()
 
-    lazy var eventMode: UILabel = {
+    private lazy var eventMode: UILabel = {
         let label = UILabel()
         label.text = "온라인"
         label.font = .nanumSquare(to: .regular, size: 12)
         return label
     }()
 
-    lazy var divideLine = DivideLine(frame: .zero, backgroundColor: .kerdyGray01)
+    private lazy var divideLine = DivideLine(frame: .zero, backgroundColor: .kerdyGray01)
 
-    lazy var tagStackView: UIStackView = {
+    private lazy var tagStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 3
         return stackView
     }()
 
-//    lazy var androidTag: TagView
-
-    lazy var eventImage: UIImageView = {
+    private lazy var eventImage: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .kerdyGray01
         imageView.layer.cornerRadius = 15
         return imageView
     }()
 
+    private lazy var tag1: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .kerdySub
+        label.font = .nanumSquare(to: .regular, size: 12)
+        return label
+    }()
+    
+    private lazy var tag2: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .kerdySub
+        label.font = .nanumSquare(to: .regular, size: 12)
+        return label
+    }()
+    
+    private lazy var tag3: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .kerdySub
+        label.font = .nanumSquare(to: .regular, size: 12)
+        return label
+    }()
+    
+    private lazy var tag4: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .kerdySub
+        label.font = .nanumSquare(to: .regular, size: 12)
+        return label
+    }()
+    
+    private let disposeBag = DisposeBag()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setLayout()
@@ -66,12 +95,26 @@ final class EventTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setTagLayer()
+    }
 
-    private func setUpTag() {
-        contentView.addSubview(tagStackView)
-        for index in 0...2 {
-            tagStackView.addArrangedSubview(TagView())
-            tagStackView.arrangedSubviews[index].isHidden = true
+    private func setUpTag(tags: [String]) {
+        let tagLabels = [tag1, tag2, tag3, tag4]
+        
+        for (index, tagLabel) in tagLabels.enumerated() {
+            let hiddenState = index >= tags.count
+            tagLabel.isHidden = hiddenState
+            var title: String?
+            title = !hiddenState ? tags[index] : nil
+            if index == 3 {
+                title = "외 +\(tags.count - 3)"
+            }
+            if let title = title {
+                tagLabel.text = "   \(title)   "
+            }
         }
     }
     
@@ -80,6 +123,11 @@ final class EventTableViewCell: UITableViewCell {
         dDayLabel.text = getDdayString(event.startDate)
         priceLabel.text = event.paymentType
         eventMode.text = event.eventMode
+
+        if let thumbnailUrl = event.thumbnailUrl {
+            setImage(url: thumbnailUrl)
+        }
+        setUpTag(tags: event.tags)
     }
     
     private func convertStringToDate(_ dateString: String) -> Date {
@@ -121,6 +169,13 @@ extension EventTableViewCell {
         contentView.addSubview(eventMode)
         contentView.addSubview(tagStackView)
 
+        tagStackView.addArrangedSubviews(
+            tag1,
+            tag2,
+            tag3,
+            tag4
+        )
+        
         eventImage.snp.makeConstraints {
             $0.height.equalTo(180)
             $0.width.equalTo(326).priority(250)
@@ -167,10 +222,38 @@ extension EventTableViewCell {
 
         tagStackView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(17)
-            $0.top.equalTo(priceLabel.snp.bottom).offset(21)
+            $0.bottom.equalToSuperview().offset(-5)
             $0.height.equalTo(22)
             $0.width.equalTo(20).priority(250)
         }
     }
+    
+    func setTagLayer() {
+        let tagLabels = [tag1, tag2, tag3, tag4]
+        
+        tagLabels.forEach {
+            if !$0.isHidden {
+                $0.roundCorners(
+                    topLeft: 8,
+                    topRight: 15,
+                    bottomLeft: 15,
+                    bottomRight: 8,
+                    borderColor: .kerdySub
+                )
+            }
+        }
+    }
+}
 
+// MARK: - 이미지 처리
+extension EventTableViewCell {
+    private func setImage(url: String) {
+        ImageManager.shared.getImage(url: url)
+            .subscribe { [weak self] image in
+                self?.eventImage.image = image
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
+    }
 }
