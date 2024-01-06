@@ -8,6 +8,8 @@
 import UIKit
 
 import SnapKit
+import RxCocoa
+import RxSwift
 
 final class SwitchNotificationView: UIView {
     
@@ -19,7 +21,7 @@ final class SwitchNotificationView: UIView {
         return label
     }()
     
-    private lazy var switchButton: UISwitch = {
+    fileprivate lazy var switchButton: UISwitch = {
         let button = UISwitch()
         button.onTintColor = .kerdyMain
         button.tintColor = .kerdyGray01
@@ -71,5 +73,19 @@ extension SwitchNotificationView {
     func configureUI(title: String) {
         
         titleLabel.text = title
+    }
+    
+    func setSwitchState(isOn: Bool) {
+        
+        switchButton.isOn = isOn
+    }
+}
+
+// MARK: - Reactive extension
+
+extension Reactive where Base: SwitchNotificationView {
+    
+    var isSelected: ControlProperty<Bool> {
+        base.switchButton.rx.isOn
     }
 }
