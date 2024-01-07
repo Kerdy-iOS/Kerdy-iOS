@@ -18,7 +18,7 @@ public extension UIImage {
     static let logoIcon = UIImage(named: "ic_logo")!.withRenderingMode(.alwaysOriginal)
     static let emptyIcon = UIImage(named: "ic_emptyLogo")!.withRenderingMode(.alwaysOriginal)
     static let commentsArrowIcon = UIImage(named: "ic_commentsArrow")!.withRenderingMode(.alwaysOriginal)
-
+    static let archiveCancelIcon = UIImage(named: "ic_archiveCancel")!.withRenderingMode(.alwaysOriginal)
     
     /// tabbar
     static let chatOn = UIImage(named: "chat_on")!.withRenderingMode(.alwaysOriginal)

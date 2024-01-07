@@ -25,7 +25,7 @@ extension EventAPI: KerdyAPI {
         }
     }
     
-    var error: [Int : NetworkError]? {
+    var error: [Int: NetworkError]? {
         switch self {
         case .getEvents:
             return nil
