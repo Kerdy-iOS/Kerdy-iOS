@@ -23,7 +23,7 @@ final class SettingCommentsVC: BaseVC {
     
     private let navigationBar: NavigationBarView = {
         let view = NavigationBarView()
-        view.configureUI(to: "작성한 댓글")
+        view.configureUI(to: Strings.comments)
         return view
     }()
     

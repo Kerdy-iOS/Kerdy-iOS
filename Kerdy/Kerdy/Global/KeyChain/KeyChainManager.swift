@@ -147,4 +147,12 @@ extension KeyChainManager {
     static func loadMemberID() -> String {
         Self.read(forkey: .memberId) ?? ""
     }
+    
+    static func loadDeviceToken() -> String {
+        Self.read(forkey: .deviceToken) ?? ""
+    }
+    
+    static func addDeviceToken(_ value: String) {
+        Self.save(forKey: .deviceToken, value: value)
+    }
 }

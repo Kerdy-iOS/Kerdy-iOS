@@ -13,6 +13,7 @@ enum EventAPI {
 }
     
 extension EventAPI: KerdyAPI {
+    
     var domain: KerdyDomain {
         return .event
     }

@@ -18,7 +18,7 @@ final class AuthViewModel {
     private var disposeBag = DisposeBag()
     private let loginManager: LoginManager
     
-    private let didLoginTapped = PublishRelay<Void>()
+    private let token = KeyChainManager.loadDeviceToken()
     
     // MARK: - Init
     
@@ -33,6 +33,8 @@ final class AuthViewModel {
     struct Output {
         let didLoginTapped: Signal<Void>
     }
+    
+    private let didLoginTapped = PublishRelay<Void>()
     
     func transform(input: Input) -> Output {
         
@@ -71,6 +73,18 @@ extension AuthViewModel {
                 KeyChainManager.save(forKey: .accessToken, value: response.accessToken)
                 KeyChainManager.save(forKey: .memberId, value: "\(response.id)")
                 self.didLoginTapped.accept(())
+                let request = AuthRequestDTO(token: self.token, memberId: response.id)
+                self.postFCM(request: request)
+            }, onFailure: { error in
+                HandleNetworkError.handleNetworkError(error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func postFCM(request: AuthRequestDTO) {
+        loginManager.postFCM(request: request)
+            .subscribe(onSuccess: { response in
+                dump(response)
             }, onFailure: { error in
                 HandleNetworkError.handleNetworkError(error)
             })

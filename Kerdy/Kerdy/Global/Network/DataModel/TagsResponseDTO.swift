@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - TagsResponseDTO
 
-struct TagsResponseDTO: Decodable, Equatable {
+struct TagsResponseDTO: Decodable, Equatable, Hashable {
     
     let id: Int
     let name: String

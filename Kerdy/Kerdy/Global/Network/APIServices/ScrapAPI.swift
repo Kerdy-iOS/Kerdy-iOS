@@ -27,7 +27,7 @@ extension ScrapAPI: KerdyAPI {
         }
     }
     
-    var error: [Int : NetworkError]? {
+    var error: [Int: NetworkError]? {
         switch self {
         case .getScraps, .addScrap, .deleteScrap:
             return nil

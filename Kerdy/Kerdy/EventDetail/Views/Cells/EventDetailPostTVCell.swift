@@ -190,7 +190,6 @@ extension EventDetailPostTVCell {
     }
 }
 
-
 extension EventDetailPostTVCell: ConfigurableCell {
     typealias CellType = PostListModel
     
