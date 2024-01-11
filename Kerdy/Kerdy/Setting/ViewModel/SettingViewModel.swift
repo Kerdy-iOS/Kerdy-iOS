@@ -100,10 +100,10 @@ extension SettingViewModel {
         KeyChainManager.delete(forKey: .accessToken)
     }
     
-    func authMember(type: AuthType) {
+    func authMember(type: AlertType) {
         if type == .logout {
             self.logoutMember()
-        } else {
+        } else if type == .withdrawal {
             self.withdrawalMember()
         }
     }

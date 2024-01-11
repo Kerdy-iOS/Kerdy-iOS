@@ -18,7 +18,7 @@ final class SettingVC: BaseVC {
     
     private var dataSource: DataSource!
     private let viewModel: SettingViewModel
-    private var authType: AuthType?
+    private var authType: AlertType?
     
     // MARK: - UI Components
     
@@ -47,7 +47,7 @@ final class SettingVC: BaseVC {
         setLayout()
         setDataSource()
         setDelegate()
-        bind()
+        setBindings()
     }
     
     required init?(coder: NSCoder) {
@@ -78,7 +78,7 @@ extension SettingVC {
         authView.delegate = self
     }
     
-    private func bind() {
+    private func setBindings() {
         
         let input = SettingViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver())
         let output = viewModel.transform(input: input)
@@ -177,7 +177,7 @@ extension SettingVC {
 
 extension SettingVC {
     
-    private func showPopupView(alert: PopUpView, type: AuthType) {
+    private func showPopupView(alert: PopUpView, type: AlertType) {
         alert.configureTitle(title: type.title, subTitle: type.subTitle, unlock: type.button)
         
         view.addSubview(alert)
@@ -198,7 +198,7 @@ extension SettingVC {
     }
 }
 
-// MARk: = PopUp Delegate
+// MARk: - PopUp Delegate
 
 extension SettingVC: PopUptoBlockDelegate {
     

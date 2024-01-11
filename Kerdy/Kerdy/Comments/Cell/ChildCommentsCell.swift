@@ -127,9 +127,21 @@ extension ChildCommentsCell {
         guard let url = URL(string: data.memberImageURL ) else { return }
         profile.kf.setImage(with: url, placeholder: UIImage.emptyIcon)
         
-        userLabel.text = data.memberName ?? "KERDY"
+        userLabel.text = data.deleted ? "삭제" : data.memberName ?? "KERDY"
         dateLabel.text = data.timeAgoSinceDate()
         commentsLabel.text = data.content
+    
+        deleteComments(isDeleted: data.deleted)
+    }
+    
+    func deleteComments(isDeleted: Bool) {
+        dotButton.isHidden = isDeleted
+        dateLabel.isHidden = isDeleted
+        
+        if isDeleted {
+            profile.image = .emptyIcon
+            profile.makeBorder(width: 0, color: .clear)
+        }
     }
 }
 
