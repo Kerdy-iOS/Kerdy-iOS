@@ -51,7 +51,7 @@ final class CommentsVC: BaseVC {
         setLayout()
         setDelegate()
         setDataSource()
-        bind()
+        setBindings()
     }
     
     required init?(coder: NSCoder) {
@@ -75,7 +75,7 @@ extension CommentsVC {
         navigationBar.snp.makeConstraints {
             $0.top.horizontalEdges.equalTo(safeArea)
         }
-       
+        
         view.addSubview(textFieldView)
         textFieldView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
@@ -95,7 +95,7 @@ extension CommentsVC {
         navigationBar.delegate = self
     }
     
-    private func bind() {
+    private func setBindings() {
         
         let input = CommentsViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver(),
                                             textField: textFieldView.commentsText(),
@@ -107,10 +107,10 @@ extension CommentsVC {
         output.commentsList
             .drive(collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-    
+        
         RxKeyboard.instance.visibleHeight
             .drive(onNext: { [unowned self] keyboardHeight in
-               
+                
                 let height = keyboardHeight > 0 ? -keyboardHeight + view.safeAreaInsets.bottom : 18
                 
                 UIView.animate(withDuration: 0.23) {
@@ -130,7 +130,7 @@ extension CommentsVC {
         config.headerTopPadding = 0
         config.backgroundColor = .clear
         config.separatorConfiguration.color = .kerdyGray01
-                
+        
         let layout = UICollectionViewCompositionalLayout.list(using: config)
         
         return layout
@@ -151,7 +151,7 @@ extension CommentsVC {
             ) as? ChildCommentsCell else { return UICollectionViewCell() }
             
             cell.configureCell(with: item)
-            self.configure(cell: cell)
+            self.configure(cell: cell, index: indexPath)
             
             return cell
             
@@ -166,7 +166,7 @@ extension CommentsVC {
             let item = dataSource.sectionModels[indexPath.section].header
             let count = dataSource.sectionModels[indexPath.section].items.count
             header.configureHeader(with: item, count: count)
-            self.configure(header: header)
+            self.configure(header: header, index: indexPath)
             
             return header
         })
@@ -175,20 +175,34 @@ extension CommentsVC {
 
 extension CommentsVC {
     
-    func configure(cell: ChildCommentsCell) {
+    func configure(cell: ChildCommentsCell, index: IndexPath) {
+        // 댓글 삭제 : comments id
+        // 댓글 신고 : 신고 댕상자 memberId, 신고 유형 comment, comments id
+        guard let commetID = dataSource.sectionModels[index.section].items[index.item].commentID else { return }
+        let memberID = dataSource.sectionModels[index.section].items[index.item].memberID
+        
         cell.rx.dot
             .asDriver()
             .drive(with: self) { owner, _ in
-                print("cell tap")
+            
+                let vc = ModalVC(viewModel: CommonModalViewModel(memberID: memberID, commentID: commetID))
+                vc.modalPresentationStyle = .overFullScreen
+                owner.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }
     
-    func configure(header: CommentsHeaderView) {
+    func configure(header: CommentsHeaderView, index: IndexPath) {
+        
+        guard let commentID = dataSource.sectionModels[index.section].header.commentID else { return }
+        let memberID = dataSource.sectionModels[index.section].header.memberID
+        
         header.rx.dot
             .asDriver()
             .drive(with: self) { owner, _ in
-                print("header tap")
+                let vc = ModalVC(viewModel: CommonModalViewModel(memberID: memberID, commentID: commentID))
+                vc.modalPresentationStyle = .overFullScreen
+                owner.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }

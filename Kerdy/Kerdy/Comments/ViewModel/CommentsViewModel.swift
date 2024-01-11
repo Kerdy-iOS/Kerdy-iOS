@@ -79,6 +79,7 @@ extension CommentsViewModel {
                 self.commentsList.accept(commentsList)
                 self.feedID.accept(response.parentComment.feedID)
                 self.parentID.accept(response.parentComment.commentID)
+                
             }, onFailure: { error in
                 HandleNetworkError.handleNetworkError(error)
             })

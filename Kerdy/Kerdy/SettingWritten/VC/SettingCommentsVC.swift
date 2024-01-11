@@ -43,7 +43,7 @@ final class SettingCommentsVC: BaseVC {
         
         setLayout()
         setUI()
-        bind()
+        setBindings()
     }
 }
 
@@ -72,7 +72,7 @@ extension SettingCommentsVC {
         collectionView.dataSource = commentDataSource.dataSource
     }
     
-    private func bind() {
+    private func setBindings() {
         
         let input = SettingCommenetViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver())
         
