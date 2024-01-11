@@ -126,5 +126,4 @@ extension CommentsContainerView {
         
         comments.text = ""
     }
-
 }

@@ -75,17 +75,18 @@ extension CommentsVC {
         navigationBar.snp.makeConstraints {
             $0.top.horizontalEdges.equalTo(safeArea)
         }
-        
-        view.addSubview(collectionView)
-        collectionView.snp.makeConstraints {
-            $0.top.equalTo(navigationBar.snp.bottom)
-            $0.horizontalEdges.bottom.equalTo(safeArea)
-        }
-        
+       
         view.addSubview(textFieldView)
         textFieldView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalTo(safeArea)
+        }
+        
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(navigationBar.snp.bottom)
+            $0.horizontalEdges.equalTo(safeArea)
+            $0.bottom.equalTo(textFieldView.snp.top)
         }
     }
     
@@ -109,6 +110,7 @@ extension CommentsVC {
     
         RxKeyboard.instance.visibleHeight
             .drive(onNext: { [unowned self] keyboardHeight in
+               
                 let height = keyboardHeight > 0 ? -keyboardHeight + view.safeAreaInsets.bottom : 18
                 
                 UIView.animate(withDuration: 0.23) {
@@ -128,8 +130,9 @@ extension CommentsVC {
         config.headerTopPadding = 0
         config.backgroundColor = .clear
         config.separatorConfiguration.color = .kerdyGray01
-        config.separatorConfiguration.bottomSeparatorInsets = .zero
+                
         let layout = UICollectionViewCompositionalLayout.list(using: config)
+        
         return layout
     }
 }
