@@ -31,6 +31,11 @@
 		09472C362B13762000B4A84E /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09472C352B13762000B4A84E /* LoginManager.swift */; };
 		09472C382B13762900B4A84E /* LoginAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09472C372B13762900B4A84E /* LoginAPI.swift */; };
 		09472C3B2B138B5C00B4A84E /* KeyChainValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09472C3A2B138B5C00B4A84E /* KeyChainValue.swift */; };
+		095A88FD2B4FD3C300DE7DDD /* ModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095A88FC2B4FD3C300DE7DDD /* ModalVC.swift */; };
+		095A88FF2B4FD9F800DE7DDD /* CommonModalItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095A88FE2B4FD9F800DE7DDD /* CommonModalItem.swift */; };
+		095A89012B4FDAE100DE7DDD /* CommonModalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095A89002B4FDAE100DE7DDD /* CommonModalCell.swift */; };
+		095A890C2B4FEF0E00DE7DDD /* ReportAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095A890B2B4FEF0E00DE7DDD /* ReportAPI.swift */; };
+		095A890E2B4FF0A800DE7DDD /* ReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095A890D2B4FF0A800DE7DDD /* ReportManager.swift */; };
 		095D390C2AEE7BC50083CC65 /* NanumSquareB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */; };
 		095D390E2AEE7BE00083CC65 /* NanumSquareEB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */; };
 		095D39102AEE7BE60083CC65 /* NanumSquareR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095D390F2AEE7BE60083CC65 /* NanumSquareR.ttf */; };
@@ -42,7 +47,7 @@
 		095EBE862AFF6B2700629F06 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095EBE852AFF6B2700629F06 /* ViewModelType.swift */; };
 		095EBE882AFF705900629F06 /* RxViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095EBE872AFF705900629F06 /* RxViewController+.swift */; };
 		0964F9452B2EEFE10031D574 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0964F9442B2EEFE10031D574 /* Colors.xcassets */; };
-		0964F94B2B2F05520031D574 /* AuthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964F94A2B2F05520031D574 /* AuthType.swift */; };
+		0964F94B2B2F05520031D574 /* AlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964F94A2B2F05520031D574 /* AlertType.swift */; };
 		0964F9502B2F283F0031D574 /* CommentsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964F94F2B2F283F0031D574 /* CommentsVC.swift */; };
 		0964F9522B2F28580031D574 /* CommentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964F9512B2F28580031D574 /* CommentsViewModel.swift */; };
 		0964F9542B2F2C990031D574 /* ChildCommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964F9532B2F2C990031D574 /* ChildCommentsCell.swift */; };
@@ -225,6 +230,11 @@
 		09472C352B13762000B4A84E /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		09472C372B13762900B4A84E /* LoginAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAPI.swift; sourceTree = "<group>"; };
 		09472C3A2B138B5C00B4A84E /* KeyChainValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainValue.swift; sourceTree = "<group>"; };
+		095A88FC2B4FD3C300DE7DDD /* ModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalVC.swift; sourceTree = "<group>"; };
+		095A88FE2B4FD9F800DE7DDD /* CommonModalItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModalItem.swift; sourceTree = "<group>"; };
+		095A89002B4FDAE100DE7DDD /* CommonModalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModalCell.swift; sourceTree = "<group>"; };
+		095A890B2B4FEF0E00DE7DDD /* ReportAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportAPI.swift; sourceTree = "<group>"; };
+		095A890D2B4FF0A800DE7DDD /* ReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportManager.swift; sourceTree = "<group>"; };
 		095D390B2AEE7BC50083CC65 /* NanumSquareB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareB.ttf; sourceTree = "<group>"; };
 		095D390D2AEE7BE00083CC65 /* NanumSquareEB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareEB.ttf; sourceTree = "<group>"; };
 		095D390F2AEE7BE60083CC65 /* NanumSquareR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareR.ttf; sourceTree = "<group>"; };
@@ -236,7 +246,7 @@
 		095EBE852AFF6B2700629F06 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		095EBE872AFF705900629F06 /* RxViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxViewController+.swift"; sourceTree = "<group>"; };
 		0964F9442B2EEFE10031D574 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
-		0964F94A2B2F05520031D574 /* AuthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthType.swift; sourceTree = "<group>"; };
+		0964F94A2B2F05520031D574 /* AlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertType.swift; sourceTree = "<group>"; };
 		0964F94F2B2F283F0031D574 /* CommentsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsVC.swift; sourceTree = "<group>"; };
 		0964F9512B2F28580031D574 /* CommentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewModel.swift; sourceTree = "<group>"; };
 		0964F9532B2F2C990031D574 /* ChildCommentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildCommentsCell.swift; sourceTree = "<group>"; };
@@ -505,7 +515,9 @@
 				090978FB2AF27364006BD8DE /* ModalTopView.swift */,
 				3109B30B2AF7F49A00B2EAD2 /* PrortudingBtn.swift */,
 				09ED94202B2C31B9001864EF /* PopUpView.swift */,
-				31747CC22B343DEC00559716 /* DateTransferDelegate.swift */,
+				095A88FC2B4FD3C300DE7DDD /* ModalVC.swift */,
+				095A88FE2B4FD9F800DE7DDD /* CommonModalItem.swift */,
+				095A89002B4FDAE100DE7DDD /* CommonModalCell.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -641,6 +653,7 @@
 			children = (
 				09ED94352B2C325C001864EF /* BlockAPI.swift */,
 				09ED94342B2C325C001864EF /* CommentAPI.swift */,
+				095A890B2B4FEF0E00DE7DDD /* ReportAPI.swift */,
 				09EEFF622B35B8DB0010754C /* EventAPI.swift */,
 				09ED94362B2C325C001864EF /* FeedAPI.swift */,
 				316B4E812B41917900E9F781 /* ScrapAPI.swift */,
@@ -667,6 +680,7 @@
 				316B4E7D2B41909A00E9F781 /* ImageManager.swift */,
 				09A3E17E2B18E500004BD432 /* SettingManager.swift */,
 				099756BC2B222FBA009961B5 /* TagManager.swift */,
+				095A890D2B4FF0A800DE7DDD /* ReportManager.swift */,
 			);
 			path = APIManagers;
 			sourceTree = "<group>";
@@ -739,6 +753,7 @@
 			isa = PBXGroup;
 			children = (
 				095EBE852AFF6B2700629F06 /* ViewModelType.swift */,
+				31747CC22B343DEC00559716 /* DateTransferDelegate.swift */,
 				095EBE7E2AFF668200629F06 /* SettingWrittenProtocol.swift */,
 			);
 			path = Protocol;
@@ -772,7 +787,7 @@
 		0964F9492B2F05490031D574 /* Enum */ = {
 			isa = PBXGroup;
 			children = (
-				0964F94A2B2F05520031D574 /* AuthType.swift */,
+				0964F94A2B2F05520031D574 /* AlertType.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -1051,9 +1066,9 @@
 			children = (
 				098D801F2B30016000706897 /* Kerdy.entitlements */,
 				095D39062AEE7B3C0083CC65 /* Application */,
-				5BE9BA9C2B25D68F00D5971F /* MyProfile */,
 				095EBE7B2AFF663B00629F06 /* Global */,
 				092414362B0C911700CF5CF4 /* Auth */,
+				5BE9BA9C2B25D68F00D5971F /* MyProfile */,
 				5B370F3A2AF53DD800D0D3DE /* InitialSetting */,
 				31571C142AF3CB9F0037A2F2 /* Event */,
 				31FBEC762B0FA1D000DE68F3 /* EventDetail */,
@@ -1500,11 +1515,12 @@
 				09ECB3352AFE15E7000F3008 /* CommentsResponseDTO.swift in Sources */,
 				31747CC92B34403500559716 /* FilterType.swift in Sources */,
 				31FBEC8F2B11C09100DE68F3 /* EventDetailPhotoCVCell.swift in Sources */,
-				0964F94B2B2F05520031D574 /* AuthType.swift in Sources */,
+				0964F94B2B2F05520031D574 /* AlertType.swift in Sources */,
 				09A3E1832B18EA28004BD432 /* MemberProfileResponseDTO.swift in Sources */,
 				09472C3B2B138B5C00B4A84E /* KeyChainValue.swift in Sources */,
 				099756B82B222D8D009961B5 /* TagAPI.swift in Sources */,
 				09EEFF5F2B35B86F0010754C /* EventViewModel.swift in Sources */,
+				095A89012B4FDAE100DE7DDD /* CommonModalCell.swift in Sources */,
 				09BB55192AF0158C00A54B1B /* SettingVC.swift in Sources */,
 				090978FC2AF27364006BD8DE /* ModalTopView.swift in Sources */,
 				316B4E842B41918900E9F781 /* ScrapManager.swift in Sources */,
@@ -1527,6 +1543,7 @@
 				095DA0CA2B485391000128DB /* UserDefaultsManager.swift in Sources */,
 				3109B30C2AF7F49A00B2EAD2 /* PrortudingBtn.swift in Sources */,
 				311E983A2AFB89E5009BEB3F /* DateFilterViewController.swift in Sources */,
+				095A890C2B4FEF0E00DE7DDD /* ReportAPI.swift in Sources */,
 				5BE9BA9E2B25D6FD00D5971F /* MyBusinessCardVC.swift in Sources */,
 				3109B30E2AF7F4ED00B2EAD2 /* FilterBtn.swift in Sources */,
 				098D801D2B2FF8A600706897 /* CommentsContainerView.swift in Sources */,
@@ -1557,6 +1574,7 @@
 				09EEFF6A2B3788C40010754C /* HeaderNotificationCell.swift in Sources */,
 				099756BF2B223002009961B5 /* TagsResponseDTO.swift in Sources */,
 				095EBE882AFF705900629F06 /* RxViewController+.swift in Sources */,
+				095A88FF2B4FD9F800DE7DDD /* CommonModalItem.swift in Sources */,
 				31747CD52B344DEE00559716 /* EventViewModel.swift in Sources */,
 				099756C12B223078009961B5 /* TagViewModel.swift in Sources */,
 				5B8F6FE12B3DC3B100F2E44A /* ProfileEditHalfVC.swift in Sources */,
@@ -1566,6 +1584,7 @@
 				090978FE2AF28778006BD8DE /* TagVC.swift in Sources */,
 				5B20BA482B00FF8700A80781 /* EducationViewModel.swift in Sources */,
 				31747CC32B343DEC00559716 /* DateTransferDelegate.swift in Sources */,
+				095A890E2B4FF0A800DE7DDD /* ReportManager.swift in Sources */,
 				31FBEC892B10F15300DE68F3 /* EventSummaryInfoView.swift in Sources */,
 				5B8F6FE32B3DC3CE00F2E44A /* ActivityEditHalfVC.swift in Sources */,
 				5B8F6FD92B3DC32700F2E44A /* ProfileTagCell.swift in Sources */,
@@ -1598,6 +1617,7 @@
 				0964F9542B2F2C990031D574 /* ChildCommentsCell.swift in Sources */,
 				31FBEC7F2B109D4500DE68F3 /* PostListModel.swift in Sources */,
 				31571C1F2AF3CBC00037A2F2 /* FilterSettingBtn.swift in Sources */,
+				095A88FD2B4FD3C300DE7DDD /* ModalVC.swift in Sources */,
 				0982941E2AF35E660011773A /* BlockSectionModel.swift in Sources */,
 				090978FA2AF272D2006BD8DE /* NotificationVC.swift in Sources */,
 				5B32AC192B0F7DCC00512DC5 /* ActivityAPI.swift in Sources */,
