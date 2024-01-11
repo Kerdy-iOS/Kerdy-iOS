@@ -10,46 +10,58 @@ import Foundation
 import Moya
 
 enum NotificationAPI {
-    case profile(id: Int)
+    case notificationList(id: Int)
+    case readState(id: Int)
+    case deleteNotification(ids: [Int])
 }
 
 extension NotificationAPI: KerdyAPI {
-
+    
     var domain: KerdyDomain {
-        return .member
+        return .notification
     }
     
     var urlPath: String {
         switch self {
-        case .profile(id: let id):
-            return "/\(id)"
+        case .notificationList, .deleteNotification:
+            return ""
+        case .readState(id: let id):
+            return "/\(id)/read"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .profile:
+        case .notificationList:
             return .get
+        case .readState:
+            return .patch
+        case .deleteNotification:
+            return .delete
         }
     }
     
     var task: Task {
         switch self {
-        case .profile:
+        case .notificationList(id: let id):
+            let parameters: [String: Any] = ["member_id": id]
+            return .requestParameters(parameters: parameters,
+                                      encoding: URLEncoding.default)
+        case .readState, .deleteNotification:
             return .requestPlain
         }
     }
     
     var headerType: HTTPHeaderFields {
         switch self {
-        case .profile:
-            return .plain
+        case .notificationList, .readState, .deleteNotification:
+            return .hasAccessToken
         }
     }
-
+    
     var error: [Int: NetworkError]? {
         switch self {
-        case .profile:
+        case .notificationList, .readState, .deleteNotification:
             return nil
         }
     }
