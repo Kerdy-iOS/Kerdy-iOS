@@ -15,6 +15,8 @@ protocol CommentManagerType {
     func getUserComments(id: Int) -> Single<[CommentsResponseDTO]>
     func getDetailComments(commentID: Int) -> Single<CommentsResponseDTO>
     func postComments(request: CommentsRequestDTO) -> Single<Comment>
+    func patchComments(request: CommentsRequestDTO) -> Single<Comment>
+    func deleteComments(commentID: Int) -> Single<Void>
 }
 
 final class CommentManager: Networking, CommentManagerType {
@@ -45,5 +47,17 @@ final class CommentManager: Networking, CommentManagerType {
         return provider
             .request(.postComments(request: request))
             .map(Comment.self)
+    }
+    
+    func patchComments(request: CommentsRequestDTO) -> Single<Comment> {
+        return provider
+            .request(.patchcomments(request: request))
+            .map(Comment.self)
+    }
+    
+    func deleteComments(commentID: Int) -> RxSwift.Single<Void> {
+        return provider
+            .request(.deleteComment(commentID: commentID))
+            .map { _ in }
     }
 }
