@@ -12,6 +12,11 @@ import Core
 import RxSwift
 import RxDataSources
 
+protocol ModalProtocol: AnyObject {
+    
+    func dismiss(type: AlertType, indexPath: IndexPath)
+}
+
 final class ModalVC: UIViewController {
     
     // MARK: - Property
@@ -22,6 +27,7 @@ final class ModalVC: UIViewController {
     private let viewModel: CommonModalViewModel
     private let disposeBag = DisposeBag()
     private var type: AlertType?
+    weak var delegate: ModalProtocol?
     
     // MARK: - UI Components
     
@@ -86,7 +92,7 @@ extension ModalVC {
         
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints {
-            $0.height.equalTo(120)
+            $0.height.equalTo(300)
             $0.bottom.horizontalEdges.equalToSuperview()
         }
     }
@@ -115,6 +121,12 @@ extension ModalVC {
             .drive(collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
+        output.modalHeight
+            .drive(with: self) { owner, height in
+                owner.updateCollectionViewHeight(height)
+            }
+            .disposed(by: disposeBag)
+        
         collectionView.rx.modelSelected(CommonModalSectionItem.Item.self)
             .asDriver()
             .drive(with: self) { owner, item in
@@ -126,6 +138,8 @@ extension ModalVC {
                 case .basic(let basicItem):
                     if basicItem.type == .modify {
                         owner.dissmissVC()
+                        guard let index = basicItem.index else { return }
+                        owner.delegate?.dismiss(type: .modify, indexPath: index)
                     } else {
                         owner.type = .delete
                         owner.showPopupView(alert: owner.popupView, type: .delete)
@@ -136,9 +150,10 @@ extension ModalVC {
             .disposed(by: disposeBag)
     }
     
-    private func updateCollectionViewHeight(_ height: CGFloat) {
+    private func updateCollectionViewHeight(_ height: Int) {
+        dump(height)
         collectionView.snp.updateConstraints {
-            $0.height.equalTo(height)
+            $0.height.equalTo(height*60)
         }
     }
 }

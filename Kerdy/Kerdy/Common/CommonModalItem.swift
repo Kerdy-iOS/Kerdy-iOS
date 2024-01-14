@@ -12,25 +12,24 @@ import RxSwift
 import RxCocoa
 import RxRelay
 
-enum ModalType: String {
-    case report, modify, delete
-    
-    var title: String {
-        switch self {
-        case .report: return "신고하기"
-        case .modify: return "수정"
-        case .delete: return "삭제"
-        }
-    }
-}
-
 struct CommonModalItem: Equatable {
     
-    let type: ModalType
+    let type: AlertType
     var titleColor: UIColor? = .kerdyBlack
+    var index: IndexPath? = IndexPath(item: 0, section: 0)
+    
+    init(type: AlertType, titleColor: UIColor? = .kerdyBlack, index: IndexPath? = IndexPath(item: 0, section: 0)) {
+        self.type = type
+        self.titleColor = titleColor
+        self.index = index
+    }
     
     static let reportModal: [CommonModalItem]  = [CommonModalItem(type: .report, titleColor: .kerdyRed)]
-    static let basicModal: [CommonModalItem] = [CommonModalItem(type: .modify), CommonModalItem(type: .delete)]
+    
+    static func basicModal(with index: IndexPath) -> [CommonModalItem] {
+        return [CommonModalItem(type: .modify, index: index),
+                CommonModalItem(type: .delete)]
+    }
 }
 
 struct CommonModalSectionItem {
@@ -50,18 +49,18 @@ final class CommonModalViewModel: ViewModelType {
     
     // MARK: - Property
     
-    var commentsManager = CommentManager.shared
-    var reportManager = ReportManager.shared
+    private let commentsManager = CommentManager.shared
+    private let reportManager = ReportManager.shared
     var disposeBag =  DisposeBag()
     let userID = Int(KeyChainManager.loadMemberID())
-    var memberID: Int? = 0
-    var commentID: Int? = 0
+    let comments: [Comment]
+    let index: IndexPath
     
     // MARK: - init
     
-    init(memberID: Int, commentID: Int) {
-        self.memberID = memberID
-        self.commentID = commentID
+    init(comments: [Comment], index: IndexPath) {
+        self.comments = comments
+        self.index = index
     }
     
     struct Input {
@@ -72,39 +71,40 @@ final class CommonModalViewModel: ViewModelType {
     struct Output {
         
         let modalList: Driver<[CommonModalSectionItem.Model]>
+        let modalHeight: Driver<Int>
     }
     
     private let modalList = BehaviorRelay<[CommonModalSectionItem.Model]>(value: [])
+    private let height = BehaviorRelay<Int>(value: 0)
     
     func transform(input: Input) -> Output {
-        let output = Output(modalList: modalList.asDriver())
+        let output = Output(modalList: modalList.asDriver(), modalHeight: height.asDriver())
         
         input.viewWillAppear
             .flatMap { _ -> Driver<Int> in
-                guard let memberID = self.memberID else { return Driver.just(0) }
+                let memberID = self.comments[self.index.item].memberID
                 return Driver.just(memberID)
             }
             .drive(with: self) { owner, memberID in
-                print("🐻‍❄️🐻‍❄️🐻‍❄️🐻‍❄️🐻‍❄️ memberID : \(memberID)")
-                print("🔴🔴🔴🔴🔴🔴 userID :\(self.userID)")
+                
                 let items: [CommonModalSectionItem.Item] = (memberID == self.userID) ?
-                CommonModalItem.basicModal.map { CommonModalSectionItem.Item.basic($0) } :
+                CommonModalItem.basicModal(with: self.index).map { CommonModalSectionItem.Item.basic($0) } :
                 CommonModalItem.reportModal.map { CommonModalSectionItem.Item.report($0) }
                 let sectionModel = CommonModalSectionItem.Model(model: .main, items: items)
                 owner.modalList.accept([sectionModel])
+                owner.height.accept(sectionModel.items.count)
             }
             .disposed(by: disposeBag)
         
         return output
     }
-    
 }
 
 extension CommonModalViewModel {
     
     func deleteComments() {
-        guard let commentsID = self.commentID else { return }
-        commentsManager.deleteComments(commentID: commentsID)
+        guard let commentID = self.comments[self.index.item].commentID else { return }
+        commentsManager.deleteComments(commentID: commentID)
             .subscribe(onSuccess: { data in
                 dump(data)
             }, onFailure: { error in
@@ -128,8 +128,8 @@ extension CommonModalViewModel {
             self.deleteComments()
         } else if type == .report {
             guard let reporterId = self.userID else { return }
-            guard let reportedID = self.memberID else { return }
-            guard let commentID = self.commentID else { return }
+            let reportedID = self.comments[self.index.item].memberID
+            guard let commentID = self.comments[self.index.item].commentID else { return }
             let request = ReportRequestDTO(reporterId: reporterId,
                                            reportedId: reportedID,
                                            type: .COMMENT,

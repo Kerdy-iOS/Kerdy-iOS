@@ -8,7 +8,7 @@
 import Foundation
 
 enum AlertType: Int, CaseIterable {
-    case logout, withdrawal, report, delete
+    case logout, withdrawal, report, delete, modify, plain
     
     var title: String {
         switch self {
@@ -20,6 +20,8 @@ enum AlertType: Int, CaseIterable {
             return "신고 하기"
         case .delete:
             return "댓글 삭제"
+        case .modify, .plain:
+            return ""
         }
     }
     
@@ -33,6 +35,8 @@ enum AlertType: Int, CaseIterable {
             return "해당 댓글을 신고 하시겠습니까?"
         case .delete:
             return "해당 댓글을 삭제 하시겠습니까?"
+        case .modify, .plain:
+             return ""
         }
     }
     
@@ -44,6 +48,10 @@ enum AlertType: Int, CaseIterable {
             return "삭제"
         case .report:
             return "신고"
+        case .modify:
+            return "수정"
+        case .plain:
+            return ""
         }
     }
 }
