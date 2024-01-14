@@ -175,6 +175,7 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate, Profil
         setLayout()
         setTableView()
         setTagCorners()
+        setTextField()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -224,6 +225,10 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate, Profil
         } else {
             descTextView.text = profileViewModel.memberInfo.value?.description
         }
+    }
+    
+    private func setTextField() {
+        descTextView.delegate = self
     }
 
     private func setTableView() {
@@ -440,22 +445,19 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate, Profil
     }
     
     @objc func doneBtnTapped(_ sender: UIButton) {
-        doneBtn.rx.tap
-            .subscribe(onNext: { [weak self] in
-                if let description = self?.descTextView.text {
-                    self?.profileViewModel.putMemberDescription(description: description)
-                        .subscribe(
-                            onCompleted: { [weak self] in
-                                self?.dismiss(animated: true, completion: nil)
-                            },
-                            onError: { error in
-                                print("Error updating description: \(error)")
-                            }
-                        )
-                        .disposed(by: self!.disposeBag)
-                }
-            })
-            .disposed(by: disposeBag)
+        if let description = descTextView.text {
+            self.profileViewModel.putMemberDescription(description: description)
+                .subscribe(
+                    onCompleted: { [weak self] in
+                        self?.dismiss(animated: true, completion: nil)
+                        
+                    },
+                    onError: { error in
+                        print(error)
+                    }
+                )
+                .disposed(by: disposeBag)
+        }
     }
     
     func deleteBtnTapped(btn: ProfileTagBtn) {
@@ -621,6 +623,10 @@ extension ProfileEditVC: UITableViewDataSource, UITableViewDelegate {
 
 extension ProfileEditVC: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+           textView.resignFirstResponder()
+           return false
+       }
         let currentText = textView.text ?? ""
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
