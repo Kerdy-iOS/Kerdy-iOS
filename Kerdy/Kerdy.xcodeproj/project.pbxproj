@@ -117,6 +117,8 @@
 		311E98402AFB9720009BEB3F /* PeriodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311E983F2AFB9720009BEB3F /* PeriodView.swift */; };
 		3127EE002B538861005CE78F /* ChatDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127EDFF2B538861005CE78F /* ChatDetailViewController.swift */; };
 		3127EE022B53899A005CE78F /* ChatListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127EE012B53899A005CE78F /* ChatListCollectionViewCell.swift */; };
+		3127EE052B539060005CE78F /* IncomingChatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127EE042B539060005CE78F /* IncomingChatCollectionViewCell.swift */; };
+		3127EE072B539071005CE78F /* MyChatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127EE062B539071005CE78F /* MyChatCollectionViewCell.swift */; };
 		31571C1E2AF3CBC00037A2F2 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C172AF3CBC00037A2F2 /* EventTableViewCell.swift */; };
 		31571C1F2AF3CBC00037A2F2 /* FilterSettingBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C182AF3CBC00037A2F2 /* FilterSettingBtn.swift */; };
 		31571C202AF3CBC00037A2F2 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C192AF3CBC00037A2F2 /* CategoryView.swift */; };
@@ -308,6 +310,8 @@
 		3127EDFB2B538742005CE78F /* Base-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Base-Info.plist"; sourceTree = "<group>"; };
 		3127EDFF2B538861005CE78F /* ChatDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailViewController.swift; sourceTree = "<group>"; };
 		3127EE012B53899A005CE78F /* ChatListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListCollectionViewCell.swift; sourceTree = "<group>"; };
+		3127EE042B539060005CE78F /* IncomingChatCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingChatCollectionViewCell.swift; sourceTree = "<group>"; };
+		3127EE062B539071005CE78F /* MyChatCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatCollectionViewCell.swift; sourceTree = "<group>"; };
 		31571C172AF3CBC00037A2F2 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		31571C182AF3CBC00037A2F2 /* FilterSettingBtn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSettingBtn.swift; sourceTree = "<group>"; };
 		31571C192AF3CBC00037A2F2 /* CategoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
@@ -1000,6 +1004,8 @@
 			isa = PBXGroup;
 			children = (
 				3127EDFF2B538861005CE78F /* ChatDetailViewController.swift */,
+				3127EE042B539060005CE78F /* IncomingChatCollectionViewCell.swift */,
+				3127EE062B539071005CE78F /* MyChatCollectionViewCell.swift */,
 			);
 			path = ChatDetail;
 			sourceTree = "<group>";
@@ -1490,6 +1496,7 @@
 				5B8F6FDC2B3DC34400F2E44A /* ProfileViewModel.swift in Sources */,
 				311E98302AF8C24A009BEB3F /* DateSelectBtn.swift in Sources */,
 				3127EE002B538861005CE78F /* ChatDetailViewController.swift in Sources */,
+				3127EE052B539060005CE78F /* IncomingChatCollectionViewCell.swift in Sources */,
 				5B370F402AF53F1E00D0D3DE /* SecondInitialSettingVC.swift in Sources */,
 				09ED94212B2C31B9001864EF /* PopUpView.swift in Sources */,
 				09A3E1812B18E525004BD432 /* SettingAPI.swift in Sources */,
@@ -1613,6 +1620,7 @@
 				31FBEC8D2B10F5B100DE68F3 /* EventSummaryModel.swift in Sources */,
 				09BB552A2AF0545400A54B1B /* SettingBasicModel.swift in Sources */,
 				31747CC52B343E0E00559716 /* FilterStatus.swift in Sources */,
+				3127EE072B539071005CE78F /* MyChatCollectionViewCell.swift in Sources */,
 				0964F9542B2F2C990031D574 /* ChildCommentsCell.swift in Sources */,
 				31FBEC7F2B109D4500DE68F3 /* PostListModel.swift in Sources */,
 				31571C1F2AF3CBC00037A2F2 /* FilterSettingBtn.swift in Sources */,
