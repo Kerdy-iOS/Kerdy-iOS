@@ -14,7 +14,7 @@ import RxDataSources
 
 protocol ModalProtocol: AnyObject {
     
-    func dismiss(type: AlertType, indexPath: IndexPath)
+    func dismiss(type: AlertType)
 }
 
 final class ModalVC: UIViewController {
@@ -133,13 +133,13 @@ extension ModalVC {
                 switch item {
                 case .report:
                     owner.type = .report
-                    owner.showPopupView(alert: owner.popupView, type: .report )
+                    owner.showPopupView(alert: owner.popupView, type: .report)
                     owner.updateCollectionViewHeight(0)
                 case .basic(let basicItem):
                     if basicItem.type == .modify {
                         owner.dissmissVC()
                         guard let index = basicItem.index else { return }
-                        owner.delegate?.dismiss(type: .modify, indexPath: index)
+                        owner.delegate?.dismiss(type: .modify)
                     } else {
                         owner.type = .delete
                         owner.showPopupView(alert: owner.popupView, type: .delete)
@@ -151,7 +151,7 @@ extension ModalVC {
     }
     
     private func updateCollectionViewHeight(_ height: Int) {
-        dump(height)
+        
         collectionView.snp.updateConstraints {
             $0.height.equalTo(height*60)
         }

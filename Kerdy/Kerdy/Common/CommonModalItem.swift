@@ -90,7 +90,9 @@ final class CommonModalViewModel: ViewModelType {
                 let items: [CommonModalSectionItem.Item] = (memberID == self.userID) ?
                 CommonModalItem.basicModal(with: self.index).map { CommonModalSectionItem.Item.basic($0) } :
                 CommonModalItem.reportModal.map { CommonModalSectionItem.Item.report($0) }
+                
                 let sectionModel = CommonModalSectionItem.Model(model: .main, items: items)
+                
                 owner.modalList.accept([sectionModel])
                 owner.height.accept(sectionModel.items.count)
             }

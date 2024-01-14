@@ -54,7 +54,9 @@ final class CommentsViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
-        Observable.combineLatest(input.tapEnterButton.asObservable(), input.textField.asObservable())
+        input.tapEnterButton
+            .withLatestFrom(input.textField) { ($0, $1) }
+            .asObservable()
             .subscribe(with: self, onNext: { owner, data in
                 let (alertType, text) = data
                 switch alertType {
@@ -63,10 +65,10 @@ final class CommentsViewModel: ViewModelType {
                     let parentID = self.parentID.value
                     let request = CommentsRequestDTO(content: text, feedId: feedID, parentId: parentID)
                     owner.postComments(request: request)
-                    
                 case .modify:
                     owner.patchComments(commentID: self.commentID, content: text)
-                default: break
+                default:
+                    break
                 }
             })
             .disposed(by: disposeBag)
@@ -104,22 +106,36 @@ extension CommentsViewModel {
     
     func patchComments(commentID: Int, content: String) {
         commentsManager.patchComments(commentID: commentID, content: content)
-            .subscribe(onSuccess: { response in
-                dump(response)
+            .subscribe(onSuccess: { [weak self] response in
+                guard let self = self else { return }
+                self.updateCommentContent(commentID: commentID, newContent: response.content)
+                
             }, onFailure: { error in
                 HandleNetworkError.handleNetworkError(error)
             })
             .disposed(by: disposeBag)
     }
-    
-    func updateComments(index: IndexPath, isHeader: Bool) -> String {
+
+    func updateComments(index: Int, isHeader: Bool) -> String {
+        guard let section = commentsList.value.first else { return "" }
         
-        if isHeader {
-            self.commentID = self.commentsList.value[index.section].header.commentID ?? 0
-            return self.commentsList.value[index.section].header.content
-        } else {
-            self.commentID = self.commentsList.value[index.section].items[index.item].commentID ?? 0
-            return self.commentsList.value[index.section].items[index.item].content
+        self.commentID = isHeader ? section.header.commentID ?? 0 : section.items[index].commentID ?? 0
+        return isHeader ? section.header.content : section.items[index].content
+    }
+    
+    func updateCommentContent(commentID: Int, newContent: String) {
+        
+        var updatedSections = commentsList.value
+        
+        if let sectionIndex = updatedSections.firstIndex(where: { $0.header.commentID == commentID }) {
+            updatedSections[sectionIndex].header.content = newContent
         }
+        
+        for (sectionIndex, section) in updatedSections.enumerated() {
+            if let commentIndex = section.items.firstIndex(where: { $0.commentID == commentID }) {
+                updatedSections[sectionIndex].items[commentIndex].content = newContent
+            }
+        }
+        commentsList.accept(updatedSections)
     }
 }

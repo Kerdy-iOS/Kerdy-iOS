@@ -20,12 +20,12 @@ struct CommentsResponseDTO: Codable, Hashable, Equatable {
 struct Comment: Codable, Hashable, SettingWrittenProtocol, Equatable {
 
     var uuid = UUID()
-    let content: String
+    var content: String
     let commentID: Int?
     let parentID: Int?
     let feedID: Int
     let title: String
-    let createdAt, updatedAt: String
+    var createdAt, updatedAt: String
     let memberID: Int
     let memberImageURL: String
     let memberName: String?

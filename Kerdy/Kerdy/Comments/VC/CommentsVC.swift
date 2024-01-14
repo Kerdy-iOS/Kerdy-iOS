@@ -11,6 +11,7 @@ import Core
 import SnapKit
 
 import RxSwift
+import RxRelay
 import RxDataSources
 import RxKeyboard
 
@@ -22,7 +23,9 @@ final class CommentsVC: BaseVC {
     
     private var dataSource: DataSource!
     private let viewModel: CommentsViewModel
-    private var isHeader: Bool = false
+    
+    private var isHeader = BehaviorRelay<Bool>(value: false)
+    private var index = BehaviorRelay<Int>(value: 0)
     
     // MARK: - UI Components
     
@@ -182,7 +185,9 @@ extension CommentsVC {
         cell.rx.dot
             .asDriver()
             .drive(with: self) { owner, _ in
-                owner.isHeader = false
+                print("💽index: \(index.item)")
+                owner.index.accept(index.item)
+                owner.isHeader.accept(false)
                 let vc = ModalVC(viewModel: CommonModalViewModel(comments: childComments, index: index))
                 vc.modalPresentationStyle = .overFullScreen
                 vc.delegate = self
@@ -198,7 +203,8 @@ extension CommentsVC {
         header.rx.dot
             .asDriver()
             .drive(with: self) { owner, _ in
-                owner.isHeader = true
+                owner.index.accept(index.section)
+                owner.isHeader.accept(true)
                 let vc = ModalVC(viewModel: CommonModalViewModel(comments: [parentComments], index: index))
                 vc.modalPresentationStyle = .overFullScreen
                 vc.delegate = self
@@ -220,9 +226,12 @@ extension CommentsVC: BackButtonActionProtocol {
 
 extension CommentsVC: ModalProtocol {
     
-    func dismiss(type: AlertType, indexPath: IndexPath) {
+    func dismiss(type: AlertType) {
         
-        let initialValue = self.viewModel.updateComments(index: indexPath, isHeader: self.isHeader)
+        let index = self.index.value
+        let isHeader = self.isHeader.value
+        let initialValue = self.viewModel.updateComments(index: index, isHeader: isHeader)
+        
         self.textFieldView.initialComments(text: initialValue, alertType: .modify)
     }
 }
