@@ -119,6 +119,7 @@
 		3127EE022B53899A005CE78F /* ChatListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127EE012B53899A005CE78F /* ChatListCollectionViewCell.swift */; };
 		3127EE052B539060005CE78F /* IncomingChatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127EE042B539060005CE78F /* IncomingChatCollectionViewCell.swift */; };
 		3127EE072B539071005CE78F /* MyChatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127EE062B539071005CE78F /* MyChatCollectionViewCell.swift */; };
+		3127EE0B2B53CFB9005CE78F /* ChatDateSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127EE0A2B53CFB9005CE78F /* ChatDateSupplementaryView.swift */; };
 		31571C1E2AF3CBC00037A2F2 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C172AF3CBC00037A2F2 /* EventTableViewCell.swift */; };
 		31571C1F2AF3CBC00037A2F2 /* FilterSettingBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C182AF3CBC00037A2F2 /* FilterSettingBtn.swift */; };
 		31571C202AF3CBC00037A2F2 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C192AF3CBC00037A2F2 /* CategoryView.swift */; };
@@ -312,6 +313,7 @@
 		3127EE012B53899A005CE78F /* ChatListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListCollectionViewCell.swift; sourceTree = "<group>"; };
 		3127EE042B539060005CE78F /* IncomingChatCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingChatCollectionViewCell.swift; sourceTree = "<group>"; };
 		3127EE062B539071005CE78F /* MyChatCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatCollectionViewCell.swift; sourceTree = "<group>"; };
+		3127EE0A2B53CFB9005CE78F /* ChatDateSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDateSupplementaryView.swift; sourceTree = "<group>"; };
 		31571C172AF3CBC00037A2F2 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		31571C182AF3CBC00037A2F2 /* FilterSettingBtn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSettingBtn.swift; sourceTree = "<group>"; };
 		31571C192AF3CBC00037A2F2 /* CategoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
@@ -1013,6 +1015,7 @@
 				3127EDFF2B538861005CE78F /* ChatDetailViewController.swift */,
 				3127EE042B539060005CE78F /* IncomingChatCollectionViewCell.swift */,
 				3127EE062B539071005CE78F /* MyChatCollectionViewCell.swift */,
+				3127EE0A2B53CFB9005CE78F /* ChatDateSupplementaryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1499,6 +1502,7 @@
 				096CD8E82B49AC570041F621 /* InitialSettingCell.swift in Sources */,
 				5B5D084A2B35D7B800490678 /* UserImageVC.swift in Sources */,
 				0964F95A2B2F60F00031D574 /* CommentsHeaderView.swift in Sources */,
+				3127EE0B2B53CFB9005CE78F /* ChatDateSupplementaryView.swift in Sources */,
 				09BB551E2AF0169700A54B1B /* SettingBasicCell.swift in Sources */,
 				09ED94332B2C3249001864EF /* BlockManager.swift in Sources */,
 				095EBE842AFF6AE900629F06 /* SettingViewModel.swift in Sources */,
