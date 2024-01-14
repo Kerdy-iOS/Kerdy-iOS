@@ -32,7 +32,7 @@ final class CommentsViewModel: ViewModelType {
         
         let viewWillAppear: Driver<Bool>
         let textField: Driver<String>
-        let tapEnterButton: Signal<Void>
+        let tapEnterButton: Driver<AlertType>
     }
     
     struct Output {
@@ -54,20 +54,25 @@ final class CommentsViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
-        input.tapEnterButton
-            .withLatestFrom(input.textField)
-            .asDriver(onErrorDriveWith: .never())
-            .drive(with: self) { owner, text in
-                let feedID = self.feedID.value
-                let parentID = self.parentID.value
-                let request = CommentsRequestDTO(content: text, feedId: feedID, parentId: parentID)
-                owner.postComments(request: request)
-            }
+        Observable.combineLatest(input.tapEnterButton.asObservable(), input.textField.asObservable())
+            .subscribe(with: self, onNext: { owner, data in
+                let (alertType, text) = data
+                switch alertType {
+                case .plain:
+                    let feedID = self.feedID.value
+                    let parentID = self.parentID.value
+                    let request = CommentsRequestDTO(content: text, feedId: feedID, parentId: parentID)
+                    owner.postComments(request: request)
+                    
+                case .modify:
+                    owner.patchComments(commentID: self.commentID, content: text)
+                default: break
+                }
+            })
             .disposed(by: disposeBag)
         
         return output
     }
-    
 }
 
 extension CommentsViewModel {
@@ -95,5 +100,26 @@ extension CommentsViewModel {
                 HandleNetworkError.handleNetworkError(error)
             })
             .disposed(by: disposeBag)
+    }
+    
+    func patchComments(commentID: Int, content: String) {
+        commentsManager.patchComments(commentID: commentID, content: content)
+            .subscribe(onSuccess: { response in
+                dump(response)
+            }, onFailure: { error in
+                HandleNetworkError.handleNetworkError(error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func updateComments(index: IndexPath, isHeader: Bool) -> String {
+        
+        if isHeader {
+            self.commentID = self.commentsList.value[index.section].header.commentID ?? 0
+            return self.commentsList.value[index.section].header.content
+        } else {
+            self.commentID = self.commentsList.value[index.section].items[index.item].commentID ?? 0
+            return self.commentsList.value[index.section].items[index.item].content
+        }
     }
 }

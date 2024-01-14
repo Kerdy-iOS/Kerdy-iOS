@@ -15,7 +15,7 @@ protocol CommentManagerType {
     func getUserComments(id: Int) -> Single<[CommentsResponseDTO]>
     func getDetailComments(commentID: Int) -> Single<CommentsResponseDTO>
     func postComments(request: CommentsRequestDTO) -> Single<Comment>
-    func patchComments(request: CommentsRequestDTO) -> Single<Comment>
+    func patchComments(commentID: Int, content: String) -> Single<Comment>
     func deleteComments(commentID: Int) -> Single<Void>
 }
 
@@ -49,9 +49,9 @@ final class CommentManager: Networking, CommentManagerType {
             .map(Comment.self)
     }
     
-    func patchComments(request: CommentsRequestDTO) -> Single<Comment> {
+    func patchComments(commentID: Int, content: String) -> Single<Comment> {
         return provider
-            .request(.patchcomments(request: request))
+            .request(.patchcomments(commentID: commentID, content: content))
             .map(Comment.self)
     }
     

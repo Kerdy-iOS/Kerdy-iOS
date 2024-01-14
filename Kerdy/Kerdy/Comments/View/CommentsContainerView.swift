@@ -18,6 +18,7 @@ final class CommentsContainerView: UIView {
     // MARK: - Property
     
     private var disposeBag = DisposeBag()
+    private var alertType: AlertType = .plain
     
     // MARK: - UI Components
     
@@ -91,7 +92,7 @@ extension CommentsContainerView {
             .disposed(by: disposeBag)
 
         tapEnterButton()
-            .emit(with: self, onNext: { owner, _ in
+            .drive(with: self, onNext: { owner, _ in
                 owner.handleEnterButtonTap()
             })
             .disposed(by: disposeBag)
@@ -101,14 +102,14 @@ extension CommentsContainerView {
         return comments.rx.text.orEmpty.asDriver()
     }
 
-    func tapEnterButton() -> Signal<Void> {
+    func tapEnterButton() -> Driver<AlertType> {
         return enterbutton.rx.tap
             .do(onNext: { [weak self] in
-                guard let self else { return }
+                guard let self = self else { return }
                 self.clearComments()
             })
-            .map { () }
-            .asSignal(onErrorJustReturn: ())
+            .map { _ in self.alertType }
+            .asDriver(onErrorJustReturn: .plain)
     }
 
     private func updateEnterButtonUI(isEmpty: Bool) {
@@ -125,5 +126,10 @@ extension CommentsContainerView {
     private func clearComments() {
         
         comments.text = ""
+    }
+    
+    func initialComments(text: String, alertType: AlertType ) {
+        comments.text = text
+        self.alertType = alertType
     }
 }

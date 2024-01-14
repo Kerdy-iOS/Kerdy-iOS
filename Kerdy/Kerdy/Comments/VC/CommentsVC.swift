@@ -22,6 +22,7 @@ final class CommentsVC: BaseVC {
     
     private var dataSource: DataSource!
     private let viewModel: CommentsViewModel
+    private var isHeader: Bool = false
     
     // MARK: - UI Components
     
@@ -176,17 +177,15 @@ extension CommentsVC {
 extension CommentsVC {
     
     func configure(cell: ChildCommentsCell, index: IndexPath) {
-        // 댓글 삭제 : comments id
-        // 댓글 신고 : 신고 댕상자 memberId, 신고 유형 comment, comments id
-        guard let commetID = dataSource.sectionModels[index.section].items[index.item].commentID else { return }
-        let memberID = dataSource.sectionModels[index.section].items[index.item].memberID
         
+        let childComments = dataSource.sectionModels[index.section].items
         cell.rx.dot
             .asDriver()
             .drive(with: self) { owner, _ in
-            
-                let vc = ModalVC(viewModel: CommonModalViewModel(memberID: memberID, commentID: commetID))
+                owner.isHeader = false
+                let vc = ModalVC(viewModel: CommonModalViewModel(comments: childComments, index: index))
                 vc.modalPresentationStyle = .overFullScreen
+                vc.delegate = self
                 owner.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
@@ -194,14 +193,15 @@ extension CommentsVC {
     
     func configure(header: CommentsHeaderView, index: IndexPath) {
         
-        guard let commentID = dataSource.sectionModels[index.section].header.commentID else { return }
-        let memberID = dataSource.sectionModels[index.section].header.memberID
+        let parentComments = dataSource.sectionModels[index.section].header
         
         header.rx.dot
             .asDriver()
             .drive(with: self) { owner, _ in
-                let vc = ModalVC(viewModel: CommonModalViewModel(memberID: memberID, commentID: commentID))
+                owner.isHeader = true
+                let vc = ModalVC(viewModel: CommonModalViewModel(comments: [parentComments], index: index))
                 vc.modalPresentationStyle = .overFullScreen
+                vc.delegate = self
                 owner.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
@@ -215,5 +215,14 @@ extension CommentsVC: BackButtonActionProtocol {
     func backButtonTapped() {
         
         self.navigationController?.popViewController(animated: true)
+    }
+}
+
+extension CommentsVC: ModalProtocol {
+    
+    func dismiss(type: AlertType, indexPath: IndexPath) {
+        
+        let initialValue = self.viewModel.updateComments(index: indexPath, isHeader: self.isHeader)
+        self.textFieldView.initialComments(text: initialValue, alertType: .modify)
     }
 }

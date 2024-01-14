@@ -11,8 +11,8 @@ import Moya
 
 struct CommentsRequestDTO: Codable {
     let content: String
-    let feedId: Int?
-    let parentId: Int?
+    var feedId: Int?
+    var parentId: Int?
 }
 
 enum CommentAPI {
@@ -20,7 +20,7 @@ enum CommentAPI {
     case getDetailComments(commentID: Int)
     case postComments(request: CommentsRequestDTO)
     case deleteComment(commentID: Int)
-    case patchcomments(request: CommentsRequestDTO)
+    case patchcomments(commentID: Int, content: String)
 }
 
 extension CommentAPI: KerdyAPI {
@@ -31,9 +31,9 @@ extension CommentAPI: KerdyAPI {
     
     var urlPath: String {
         switch self {
-        case .getUserComments, .postComments, .patchcomments:
+        case .getUserComments, .postComments:
             return ""
-        case .getDetailComments(commentID: let commentID), .deleteComment(commentID: let commentID):
+        case .getDetailComments(commentID: let commentID), .deleteComment(commentID: let commentID), .patchcomments(commentID: let commentID, _):
             return "/\(commentID)"
         }
     }
@@ -58,8 +58,11 @@ extension CommentAPI: KerdyAPI {
             return .requestParameters(parameters: parameter, encoding: URLEncoding.default)
         case .getDetailComments, .deleteComment:
             return .requestPlain
-        case .postComments(request: let data), .patchcomments(request: let data):
+        case .postComments(request: let data):
             return .requestJSONEncodable(data)
+        case .patchcomments(_, content: let data):
+            let parameter = ["content": data]
+            return .requestParameters(parameters: parameter, encoding: JSONEncoding.default)
         }
     }
     

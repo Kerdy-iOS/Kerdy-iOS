@@ -48,7 +48,7 @@ extension CommonModalCell {
     }
     
     func configureData(to data: CommonModalItem) {
-        titleLabel.text = data.type.title
+        titleLabel.text = data.type.button
         titleLabel.textColor = data.titleColor
     }
 }

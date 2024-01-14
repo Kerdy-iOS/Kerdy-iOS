@@ -13,7 +13,7 @@ struct BlockReponseDTO: Decodable, Equatable {
     let id: Int
     let memberID: Int
     let imageURL: String?
-    let name: String
+    let name: String?
     var isSelected: Bool
     
     enum CodingKeys: String, CodingKey {
@@ -29,7 +29,9 @@ struct BlockReponseDTO: Decodable, Equatable {
         self.isSelected = (try? container.decode(Bool.self, forKey: .isSelected)) ?? true
         self.memberID = try container.decode(Int.self, forKey: .memberID)
         self.imageURL = try container.decodeIfPresent(String.self, forKey: .imageURL)
-        self.name = try container.decode(String.self, forKey: .name)
+        dump(self.imageURL)
+        self.name = (try? container.decode(String.self, forKey: .name)) ?? ""
+        dump(name)
     }
     
     static func == (lhs: BlockReponseDTO, rhs: BlockReponseDTO) -> Bool {
