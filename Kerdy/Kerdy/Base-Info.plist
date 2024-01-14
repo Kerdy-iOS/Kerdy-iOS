@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ImageBaseURL</key>
+	<string>https://kerdy-dev.s3.ap-northeast-2.amazonaws.com/dev/</string>
+	<key>ClientID</key>
+	<string>Iv1.a2069db983e37d95</string>
+	<key>BaseURL</key>
+	<string>https://dev.kerdy.kro.kr</string>
+	<key>CallbackURLScheme</key>
+	<string>Kerdy</string>
+</dict>
+</plist>

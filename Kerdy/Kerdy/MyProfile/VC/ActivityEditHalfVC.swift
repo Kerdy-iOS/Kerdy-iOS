@@ -195,27 +195,20 @@ final class ActivityEditHalfVC: UIViewController {
         containerViewBottomConstraint?.isActive = true
 
     }
-    
     @objc func clubBtnTapped(_ sender: UIButton) {
-        if clubBtn.isSelected {
-            clubBtn.isSelected = false
-            clubBtn.layer.borderColor = UIColor.kerdyGray01.cgColor
-        } else {
-            clubBtn.isSelected = true
-            clubBtn.layer.borderColor = UIColor.kerdyGray01.cgColor
-        }
+        clubBtn.isSelected = true
+        clubBtn.layer.borderColor = UIColor.kerdyMain.cgColor
+        educationBtn.isSelected = false
+        educationBtn.layer.borderColor = UIColor.kerdyGray01.cgColor
     }
-    
+
     @objc func educationBtnTapped(_ sender: UIButton) {
-        if educationBtn.isSelected {
-            educationBtn.isSelected = false
-            educationBtn.layer.borderColor = UIColor.kerdyGray01.cgColor
-        } else {
-            educationBtn.isSelected = true
-            educationBtn.layer.borderColor = UIColor.kerdyGray01.cgColor
-        }
+        clubBtn.isSelected = false
+        clubBtn.layer.borderColor = UIColor.kerdyGray01.cgColor
+        educationBtn.isSelected = true
+        educationBtn.layer.borderColor = UIColor.kerdyMain.cgColor
     }
-    
+
     private func setupPanGesture() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanGesture(gesture:)))
         panGesture.delaysTouchesBegan = false
@@ -286,6 +279,15 @@ final class ActivityEditHalfVC: UIViewController {
     
     @objc func nextBtnTapped(_ sender: UIButton) {
         let nextVC = ProfileEditHalfVC()
+        nextVC.interestingLabel.text = "상세 활동 선택"
+        nextVC.selectLabel.text = "활동했던 이력들을 선택하고 추가하세요."
+        
+        if clubBtn.isSelected {
+            nextVC.isClub = true
+        } else {
+            nextVC.isEdu = true
+        }
+        
         if let sheet = nextVC.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
             sheet.prefersGrabberVisible = true

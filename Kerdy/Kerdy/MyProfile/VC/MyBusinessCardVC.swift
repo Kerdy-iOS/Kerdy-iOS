@@ -8,12 +8,21 @@
 import UIKit
 import SnapKit
 import Core
+import RxSwift
+import RxCocoa
+import Kingfisher
 
 final class MyBusinessCardVC: UIViewController {
     
-    let clubDummy = ["DDD5 기5", "KEEPER 12기6"]
-    let educationDummy = ["DDD 5기", "KEEPER 12기", "멋쟁이 사자들 5기"]
-    let dummyTitle = ["교육 활동", "동아리 활동"]
+    let cellTitle = ["교육 활동", "동아리 활동"]
+    
+    private var memberInfo: MemberProfileResponseDTO?
+    
+    private let profileViewModel = ProfileViewModel.shared
+    
+    private let disposeBag = DisposeBag()
+    
+    private var activities: [Activity] = []
     
     private lazy var editBtn: UIButton = {
         let btn = UIButton()
@@ -46,7 +55,6 @@ final class MyBusinessCardVC: UIViewController {
     
     private lazy var userImgBtn: UIButton = {
         let btn = UIButton()
-        btn.setImage(.imgUser, for: .normal)
         return btn
     }()
     
@@ -57,19 +65,37 @@ final class MyBusinessCardVC: UIViewController {
     
     private lazy var categoryLabel1: UILabel = {
         let label = UILabel()
-        label.text = "iOS"
         label.font = .nanumSquare(to: .regular, size: 10)
         label.textAlignment = .center
         label.backgroundColor = .kerdy_sub
+        label.isHidden = true
         return label
     }()
     
     private lazy var categoryLabel2: UILabel = {
         let label = UILabel()
-        label.text = "안드로이드"
         label.font = .nanumSquare(to: .regular, size: 10)
         label.textAlignment = .center
         label.backgroundColor = .kerdy_sub
+        label.isHidden = true
+        return label
+    }()
+    
+    private lazy var categoryLabel3: UILabel = {
+        let label = UILabel()
+        label.font = .nanumSquare(to: .regular, size: 10)
+        label.textAlignment = .center
+        label.backgroundColor = .kerdy_sub
+        label.isHidden = true
+        return label
+    }()
+    
+    private lazy var categoryLabel4: UILabel = {
+        let label = UILabel()
+        label.font = .nanumSquare(to: .regular, size: 10)
+        label.textAlignment = .center
+        label.backgroundColor = .kerdy_sub
+        label.isHidden = true
         return label
     }()
     
@@ -79,6 +105,22 @@ final class MyBusinessCardVC: UIViewController {
         let tableView = UITableView()
         return tableView
     }()
+    
+    private let scrollView: UIScrollView = {
+        let sv = UIScrollView()
+        sv.showsHorizontalScrollIndicator = false
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        return sv
+    }()
+    
+    private let categoryStackView: UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .horizontal
+        sv.distribution = .fill
+        sv.spacing = 8.0
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        return sv
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,36 +129,84 @@ final class MyBusinessCardVC: UIViewController {
         setTableView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        bindViewModel()
+        hideLabels()
+    }
+    
     override func viewWillLayoutSubviews() {
+        bindViewModel()
         setUserImg()
         setGreenRing()
-        setMainCategory()
+    }
+    
+    private func setActivities() {
+        guard let activity = memberInfo?.activities else { return }
+        activities = activity
+    }
+    
+    private func bindViewModel() {
+        
+        profileViewModel.memberProfile
+            .compactMap { $0 }
+            .subscribe(onNext: { [weak self] member in
+                self?.memberInfo = member
+                self?.setActivities()
+                self?.nameLabel.text = member.name
+                self?.userImgBtn.kf.setImage(with: URL(string: member.imageURL), for: .normal)
+                self?.tableView.reloadData()
+                if member.description.isEmpty {
+                    self?.introduceLabel.text = "소개말이 없습니다."
+                } else {
+                    self?.introduceLabel.text = member.description
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        profileViewModel.myActivities
+            .subscribe(onNext: { [weak self] _ in
+                self?.tableView.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
+        profileViewModel.myTags
+            .subscribe(onNext: { [weak self] _ in
+                self?.setMainCategory()
+            })
+            .disposed(by: disposeBag)
+        
+    }
+    
+    private func hideLabels() {
+        let labels: [UILabel] = [categoryLabel1, categoryLabel2, categoryLabel3, categoryLabel4]
+        for label in labels {
+            label.isHidden = true
+        }
     }
     
     private func setMainCategory() {
-        categoryLabel1.roundCorners(topLeft: 8, topRight: 16, bottomLeft: 16, bottomRight: 8)
-        let borderLayer = CAShapeLayer()
-        guard let buttonMaskLayer = categoryLabel1.layer.mask as? CAShapeLayer else {
-            return
-        }
-        borderLayer.path = buttonMaskLayer.path
-        borderLayer.strokeColor = UIColor(named: "kerdy_sub")?.cgColor
-        borderLayer.fillColor = UIColor.clear.cgColor
-        borderLayer.lineWidth = 3
-        borderLayer.frame = categoryLabel1.bounds
-        categoryLabel1.layer.addSublayer(borderLayer)
+        let labels: [UILabel] = [categoryLabel1, categoryLabel2, categoryLabel3, categoryLabel4]
         
-        categoryLabel2.roundCorners(topLeft: 8, topRight: 16, bottomLeft: 16, bottomRight: 8)
-        let borderLayer2 = CAShapeLayer()
-        guard let buttonMaskLayer = categoryLabel2.layer.mask as? CAShapeLayer else {
-            return
+        DispatchQueue.main.async {
+            for i in 0..<self.profileViewModel.myTags.value.count {
+                labels[i].isHidden = false
+                labels[i].text = self.profileViewModel.myTags.value[i].name
+                labels[i].snp.remakeConstraints {
+                    $0.width.equalTo(labels[i].text!.count * 16)
+                }
+                labels[i].roundCorners(topLeft: 8, topRight: 16, bottomLeft: 16, bottomRight: 8)
+                let borderLayer = CAShapeLayer()
+                guard let buttonMaskLayer = labels[i].layer.mask as? CAShapeLayer else {
+                    return
+                }
+                borderLayer.path = buttonMaskLayer.path
+                borderLayer.strokeColor = UIColor.kerdySub.cgColor
+                borderLayer.fillColor = UIColor.clear.cgColor
+                borderLayer.lineWidth = 3
+                borderLayer.frame = labels[i].bounds
+                labels[i].layer.addSublayer(borderLayer)
+            }
         }
-        borderLayer2.path = buttonMaskLayer.path
-        borderLayer2.strokeColor = UIColor(named: "kerdy_sub")?.cgColor
-        borderLayer2.fillColor = UIColor.clear.cgColor
-        borderLayer2.lineWidth = 3
-        borderLayer2.frame = categoryLabel2.bounds
-        categoryLabel2.layer.addSublayer(borderLayer2)
     }
     
     private func setUserImg() {
@@ -137,6 +227,7 @@ final class MyBusinessCardVC: UIViewController {
     
     private func setTableView() {
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 300
         tableView.register(ProfileActivityCell.self, forCellReuseIdentifier: "ProfileActivityCell")
         tableView.delegate = self
         tableView.dataSource = self
@@ -145,8 +236,27 @@ final class MyBusinessCardVC: UIViewController {
     }
     
     private func setLayout() {
-        view.addSubviews(editBtn, helloLabel, nameLabel, introduceLabel, userImgBtn, greenRing, tableView, categoryLabel1, categoryLabel2, divideLine)
+        view.addSubviews(
+            editBtn,
+            helloLabel,
+            nameLabel,
+            introduceLabel,
+            userImgBtn,
+            greenRing,
+            tableView,
+            divideLine,
+            scrollView
+        )
+        
         userImgBtn.superview?.bringSubviewToFront(userImgBtn)
+        scrollView.addSubview(categoryStackView)
+        
+        categoryStackView.addArrangedSubviews(
+            categoryLabel1,
+            categoryLabel2,
+            categoryLabel3,
+            categoryLabel4
+        )
         
         editBtn.snp.makeConstraints {
             $0.width.equalTo(22)
@@ -190,18 +300,18 @@ final class MyBusinessCardVC: UIViewController {
             $0.height.equalTo(userImgBtn.snp.height).offset(4)
         }
         
-        categoryLabel1.snp.makeConstraints {
-            $0.width.equalTo(60)
+        scrollView.snp.makeConstraints {
             $0.height.equalTo(26)
             $0.top.equalToSuperview().offset(251)
-            $0.leading.equalToSuperview().offset(17)
+            $0.horizontalEdges.equalToSuperview().inset(17)
         }
         
-        categoryLabel2.snp.makeConstraints {
-            $0.width.equalTo(100)
-            $0.height.equalTo(26)
-            $0.top.equalToSuperview().offset(251)
-            $0.leading.equalTo(categoryLabel1.snp.trailingMargin).offset(15)
+        categoryStackView.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.top.equalToSuperview()
+            $0.bottom.equalToSuperview()
+            $0.height.equalToSuperview()
         }
         
         divideLine.snp.makeConstraints {
@@ -237,6 +347,10 @@ final class MyBusinessCardVC: UIViewController {
 }
 
 extension MyBusinessCardVC: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableView.rowHeight
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
@@ -244,65 +358,45 @@ extension MyBusinessCardVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileActivityCell", for: indexPath) as! ProfileActivityCell
         cell.selectionStyle = .none
-        cell.titleLabel.text = dummyTitle[indexPath.row]
+        cell.titleLabel.text = cellTitle[indexPath.row]
         cell.addBtn.isHidden = true
         
-        let clearView: UIView = {
-            let view = UIView()
-            view.backgroundColor = .clear
-            return view
-        }()
-        
+        for btn in cell.activitySV.arrangedSubviews {
+            cell.activitySV.removeArrangedSubview(btn)
+            btn.removeFromSuperview()
+        }
+    
+        let educationData = profileViewModel.myActivities.value.filter { $0.activityType == "교육" }
+
+        let clubData = profileViewModel.myActivities.value.filter { $0.activityType == "동아리" }
+
         if indexPath.row == 0 {
-            for data in educationDummy {
-                let activitySV = ProfileTagBtn()
-                activitySV.img.isHidden = true
+            for data in educationData {
+                let activitySV = ActivityBtn()
+                activitySV.closeBtn.isHidden = true
                 activitySV.closeBtn.isEnabled = false
-                activitySV.setTitle(title: data)
-                cell.labels.append(activitySV)
+                activitySV.setTitle(title: data.name)
+                cell.activitySV.addArrangedSubview(activitySV)
+                activitySV.snp.makeConstraints {
+                    $0.height.equalTo(26)
+                    $0.width.equalTo(200)
+                }
             }
         } else {
-            for data in clubDummy {
-                let activitySV = ProfileTagBtn()
-                activitySV.img.isHidden = true
+            for data in clubData {
+                let activitySV = ActivityBtn()
+                activitySV.closeBtn.isHidden = true
                 activitySV.closeBtn.isEnabled = false
-                activitySV.setTitle(title: data)
-                cell.labels.append(activitySV)
+                activitySV.setTitle(title: data.name)
+                cell.activitySV.addArrangedSubview(activitySV)
+                activitySV.snp.makeConstraints {
+                    $0.height.equalTo(26)
+                    $0.width.equalTo(200)
+                }
             }
         }
-
-        for label in cell.labels {
-            let dotImg: UIImageView = {
-                let img = UIImageView()
-                img.image = .icDot
-                return img
-            }()
-            cell.contentView.addSubview(label)
-            cell.contentView.addSubview(dotImg)
-            
-            dotImg.snp.makeConstraints {
-                $0.top.equalToSuperview().offset(cell.labelOffset + 5)
-                $0.leading.equalToSuperview().offset(46)
-            }
-            
-            label.snp.makeConstraints {
-                $0.top.equalToSuperview().offset(cell.labelOffset - 5)
-                $0.height.equalTo(26)
-                $0.leading.equalToSuperview().offset(45)
-            }
-            cell.labelOffset += 25
-        }
-        
-        cell.contentView.addSubview(clearView)
-        
-        clearView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(cell.labelOffset)
-            $0.leading.equalToSuperview().offset(46)
-            $0.bottom.equalToSuperview()
-            $0.height.equalTo(25)
-        }
-        
-        if indexPath.row == 1 {
+                
+        if indexPath.row == cellTitle.count - 1 {
             cell.divideLine.isHidden = true
         }
         

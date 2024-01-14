@@ -1,18 +1,18 @@
 //
-//  ProfileEditHalfVC.swift
+//  CategoryEditHalfVC.swift
 //  Kerdy
 //
-//  Created by 최다경 on 12/23/23.
+//  Created by 최다경 on 1/11/24.
 //
 
 import UIKit
 import RxSwift
 import RxCocoa
 
-final class ProfileEditHalfVC: UIViewController {
+final class CategoryEditHalfVC: UIViewController {
     
-    typealias DataSource = UICollectionViewDiffableDataSource<Int, ActivityResponse>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, ActivityResponse>
+    typealias DataSource = UICollectionViewDiffableDataSource<Int, TagsResponseDTO>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, TagsResponseDTO>
     
     private lazy var scrollView: UIScrollView = {
         let sv = UIScrollView()
@@ -133,35 +133,34 @@ final class ProfileEditHalfVC: UIViewController {
     }
     
     @objc func addBtnTapped(_ sender: UIButton) {
-        viewModel.postMyActivities(ids: viewModel.selectedActivities.value)
-            .subscribe(
-                onCompleted: { [weak self] in
+        viewModel.postTag(ids: viewModel.selectedActivities.value)
+            .subscribe { [weak self] success in
+                if success {
                     self?.dismiss(animated: true)
                 }
-            )
+            } onFailure: { error in
+                print(error)
+            }
             .disposed(by: disposeBag)
     }
-
 }
 
-extension ProfileEditHalfVC {
+extension CategoryEditHalfVC {
     private func configureDataSource() {
-        let cellRegistration = UICollectionView.CellRegistration<ProfileTagCell, ActivityResponse> { cell, indexPath, itemIdentifier in
-            let activity: ActivityResponse
+        let cellRegistration = UICollectionView.CellRegistration<ProfileTagCell, TagsResponseDTO> { cell, indexPath, itemIdentifier in
+            let activity: TagsResponseDTO
             
-            if self.isEdu {
-                activity = self.viewModel.eduActivities.value[indexPath.row]
-            } else {
-                activity = self.viewModel.clubActivities.value[indexPath.row]
-            }
+        
+            activity = self.viewModel.allTags.value[indexPath.row]
             
             let isSelected = self.viewModel.selectedActivities.value.contains(activity.id)
             cell.confiure(tag: activity.name)
+            
             cell.setBackgroundColor(isSelected: isSelected)
         }
         
         dataSource = DataSource(collectionView: collectionView) {
-            (collectionView: UICollectionView, indexPath: IndexPath, identifier: ActivityResponse) -> UICollectionViewCell? in
+            (collectionView: UICollectionView, indexPath: IndexPath, identifier: TagsResponseDTO) -> UICollectionViewCell? in
             return collectionView.dequeueConfiguredReusableCell(
                 using: cellRegistration,
                 for: indexPath,
@@ -171,12 +170,7 @@ extension ProfileEditHalfVC {
         
         var snapshot = Snapshot()
         snapshot.appendSections([0])
-        if self.isEdu {
-            snapshot.appendItems(viewModel.eduActivities.value, toSection: 0)
-        } else if self.isClub {
-            snapshot.appendItems(viewModel.clubActivities.value, toSection: 0)
-        } 
-
+        snapshot.appendItems(viewModel.allTags.value, toSection: 0)
         dataSource?.apply(snapshot, animatingDifferences: false)
     }
     
@@ -212,8 +206,8 @@ extension ProfileEditHalfVC {
         return layout
     }
     
-    private func updateCollectionView(with activities: [ActivityResponse]) {
-        print("update")
+    private func updateCollectionView(with activities: [TagsResponseDTO]) {
+        
         var snapshot = Snapshot()
         snapshot.appendSections([0])
         snapshot.appendItems(activities, toSection: 0)
@@ -222,45 +216,37 @@ extension ProfileEditHalfVC {
 }
 
 // MARK: - collectionView delegate
-extension ProfileEditHalfVC: UICollectionViewDelegate {
+extension CategoryEditHalfVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? ProfileTagCell else { return }
-        let selectedActivity: ActivityResponse
-        if self.isEdu {
-            selectedActivity = viewModel.eduActivities.value[indexPath.row]
-
-        } else {
-            selectedActivity = viewModel.clubActivities.value[indexPath.row]
-        } 
+        let selectedActivity: TagsResponseDTO
+        selectedActivity = viewModel.allTags.value[indexPath.row]
 
         let isSelected = viewModel.toggleSelectedTag(id: selectedActivity.id)
         cell.setBackgroundColor(isSelected: isSelected)
-    }
-}
-
-// MARK: - binding
-
-extension ProfileEditHalfVC {
-    private func bindViewModel() {
-        if self.isEdu {
-            viewModel.eduActivities
-                .observe(on: MainScheduler.instance)
-                .subscribe(onNext: { [weak self] activities in
-                    self?.updateCollectionView(with: activities)
-                })
-                .disposed(by: disposeBag)
-        } else {
-            viewModel.clubActivities
-                .observe(on: MainScheduler.instance)
-                .subscribe(onNext: { [weak self] activities in
-                    self?.updateCollectionView(with: activities)
-                })
-                .disposed(by: disposeBag)
+        
+        if viewModel.selectedActivities.value.count + viewModel.myTags.value.count > 4 {
+            viewModel.toggleSelectedTag(id: selectedActivity.id)
+            cell.setBackgroundColor(isSelected: !isSelected)
         }
     }
 }
 
+// MARK: - binding
+extension CategoryEditHalfVC {
+    private func bindViewModel() {
+
+        viewModel.allTags
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] activities in
+                self?.updateCollectionView(with: activities)
+            })
+            .disposed(by: disposeBag)
+
+    }
+}
+
 // MARK: - scrollView delegate
-extension ProfileEditHalfVC: UIScrollViewDelegate {
+extension CategoryEditHalfVC: UIScrollViewDelegate {
     
 }

@@ -1,26 +1,32 @@
 //
-//  ProfileTagBtn.swift
+//  ActivityBtn.swift
 //  Kerdy
 //
-//  Created by 최다경 on 12/27/23.
+//  Created by 최다경 on 1/6/24.
 //
 
 import UIKit
 
-protocol ProfileTagBtnDelegate: AnyObject {
-    func deleteBtnTapped(btn: ProfileTagBtn)
+protocol ActivityBtnDelegate: AnyObject {
+    func deleteBtnTapped(btn: ActivityBtn)
 }
 
-final class ProfileTagBtn: UIStackView, ProfileTagBtnDelegate {
+final class ActivityBtn: UIStackView, ActivityBtnDelegate {
     
-    weak var delegate: ProfileTagBtnDelegate?
+    weak var delegate: ActivityBtnDelegate?
     
-    var tagId: Int?
+    var tagId: Int = -1
     
     var label: UILabel = {
         let label = UILabel()
         label.font = .nanumSquare(to: .regular, size: 13)
         return label
+    }()
+    
+    let dotImg: UIImageView = {
+        let img = UIImageView()
+        img.image = .icDot
+        return img
     }()
     
     var closeBtn = UIButton()
@@ -31,45 +37,62 @@ final class ProfileTagBtn: UIStackView, ProfileTagBtnDelegate {
         return img
     }()
     
+    let baseView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
+    let emptyView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
     init() {
         super.init(frame: .zero)
-        
         self.axis = .horizontal
-        self.alignment = .fill
-        self.distribution = .equalSpacing
         self.spacing = 0
-        self.tagId = -1
         self.delegate = self
         closeBtn.addTarget(self, action: #selector(deleteBtnTapped), for: .touchUpInside)
         setLayout()
     }
     
     private func setLayout() {
-        self.addArrangedSubviews(label, closeBtn)
-        closeBtn.addSubview(img)
         
-        label.snp.makeConstraints {
-            $0.leading.equalTo(self.snp.leading).offset(15)
-            $0.trailing.equalTo(self.snp.trailing).offset(-25)
-            $0.bottom.equalTo(self.snp.bottom).offset(-10)
+        baseView.addSubview(dotImg)
+        
+        baseView.snp.makeConstraints {
+            $0.width.equalTo(26)
+            $0.height.equalTo(26)
+        }
+        
+        dotImg.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(10)
         }
         
         closeBtn.snp.makeConstraints {
-            $0.top.equalTo(self.snp.top)
-            $0.leading.equalTo(label.snp.trailing)
+            $0.width.equalTo(26)
+            $0.height.equalTo(26)
         }
         
+        self.addArrangedSubviews(
+            baseView,
+            label,
+            closeBtn,
+            emptyView
+        )
+        closeBtn.addSubview(img)
+             
         img.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(5)
-            $0.verticalEdges.equalToSuperview().inset(5)
+            $0.edges.equalToSuperview().inset(5)
         }
+        
     }
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func deleteBtnTapped(btn: ProfileTagBtn) {
+    @objc func deleteBtnTapped(btn: ActivityBtn) {
         delegate?.deleteBtnTapped(btn: self)
     }
     
