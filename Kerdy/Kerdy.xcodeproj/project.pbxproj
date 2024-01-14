@@ -116,6 +116,7 @@
 		311E983D2AFB8A91009BEB3F /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 311E983C2AFB8A91009BEB3F /* FSCalendar */; };
 		311E98402AFB9720009BEB3F /* PeriodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311E983F2AFB9720009BEB3F /* PeriodView.swift */; };
 		3127EE002B538861005CE78F /* ChatDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127EDFF2B538861005CE78F /* ChatDetailViewController.swift */; };
+		3127EE022B53899A005CE78F /* ChatListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127EE012B53899A005CE78F /* ChatListCollectionViewCell.swift */; };
 		31571C1E2AF3CBC00037A2F2 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C172AF3CBC00037A2F2 /* EventTableViewCell.swift */; };
 		31571C1F2AF3CBC00037A2F2 /* FilterSettingBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C182AF3CBC00037A2F2 /* FilterSettingBtn.swift */; };
 		31571C202AF3CBC00037A2F2 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C192AF3CBC00037A2F2 /* CategoryView.swift */; };
@@ -306,6 +307,7 @@
 		311E983F2AFB9720009BEB3F /* PeriodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodView.swift; sourceTree = "<group>"; };
 		3127EDFB2B538742005CE78F /* Base-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Base-Info.plist"; sourceTree = "<group>"; };
 		3127EDFF2B538861005CE78F /* ChatDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailViewController.swift; sourceTree = "<group>"; };
+		3127EE012B53899A005CE78F /* ChatListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListCollectionViewCell.swift; sourceTree = "<group>"; };
 		31571C172AF3CBC00037A2F2 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		31571C182AF3CBC00037A2F2 /* FilterSettingBtn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSettingBtn.swift; sourceTree = "<group>"; };
 		31571C192AF3CBC00037A2F2 /* CategoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
@@ -432,6 +434,7 @@
 			isa = PBXGroup;
 			children = (
 				090978F02AF0E7B5006BD8DE /* ChatVC.swift */,
+				3127EE012B53899A005CE78F /* ChatListCollectionViewCell.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1497,6 +1500,7 @@
 				5B216AFA2AF671CF00C028A0 /* FourthInitialSettingVC.swift in Sources */,
 				31747CD92B344E3300559716 /* EventAPI.swift in Sources */,
 				316B4E822B41917900E9F781 /* ScrapAPI.swift in Sources */,
+				3127EE022B53899A005CE78F /* ChatListCollectionViewCell.swift in Sources */,
 				090978E82AF0E6C0006BD8DE /* TabBarVC.swift in Sources */,
 				5BF17B3A2AF7D17600A03CEA /* CategoryViewModel.swift in Sources */,
 				31571C1E2AF3CBC00037A2F2 /* EventTableViewCell.swift in Sources */,
