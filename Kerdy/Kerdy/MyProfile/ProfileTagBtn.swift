@@ -44,6 +44,10 @@ final class ProfileTagBtn: UIStackView, ProfileTagBtnDelegate {
         setLayout()
     }
     
+    override func layoutSubviews() {
+        setCorner()
+    }
+    
     private func setLayout() {
         self.addArrangedSubviews(label, closeBtn)
         closeBtn.addSubview(img)
