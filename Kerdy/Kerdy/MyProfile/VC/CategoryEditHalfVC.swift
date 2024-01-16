@@ -11,8 +11,8 @@ import RxCocoa
 
 final class CategoryEditHalfVC: UIViewController {
     
-    typealias DataSource = UICollectionViewDiffableDataSource<Int, TagsResponseDTO>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, TagsResponseDTO>
+    typealias DataSource = UICollectionViewDiffableDataSource<Int, ActivityResponse>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, ActivityResponse>
     
     private lazy var scrollView: UIScrollView = {
         let sv = UIScrollView()
@@ -133,25 +133,26 @@ final class CategoryEditHalfVC: UIViewController {
     }
     
     @objc func addBtnTapped(_ sender: UIButton) {
-        viewModel.postTag(ids: viewModel.selectedActivities.value)
-            .subscribe { [weak self] success in
-                if success {
-                    self?.dismiss(animated: true)
+        viewModel.postMyActivities(ids: viewModel.selectedActivities.value)
+            .subscribe(
+                onCompleted: { [weak self] in
+                    self?.dismiss(animated: true, completion: nil)
+                    
+                },
+                onError: { error in
+                    print(error)
                 }
-            } onFailure: { error in
-                print(error)
-            }
+            )
             .disposed(by: disposeBag)
     }
 }
 
 extension CategoryEditHalfVC {
     private func configureDataSource() {
-        let cellRegistration = UICollectionView.CellRegistration<ProfileTagCell, TagsResponseDTO> { cell, indexPath, itemIdentifier in
-            let activity: TagsResponseDTO
-            
+        let cellRegistration = UICollectionView.CellRegistration<ProfileTagCell, ActivityResponse> { cell, indexPath, itemIdentifier in
+            let activity: ActivityResponse
         
-            activity = self.viewModel.allTags.value[indexPath.row]
+            activity = self.viewModel.jobActivities.value[indexPath.row]
             
             let isSelected = self.viewModel.selectedActivities.value.contains(activity.id)
             cell.confiure(tag: activity.name)
@@ -160,7 +161,7 @@ extension CategoryEditHalfVC {
         }
         
         dataSource = DataSource(collectionView: collectionView) {
-            (collectionView: UICollectionView, indexPath: IndexPath, identifier: TagsResponseDTO) -> UICollectionViewCell? in
+            (collectionView: UICollectionView, indexPath: IndexPath, identifier: ActivityResponse) -> UICollectionViewCell? in
             return collectionView.dequeueConfiguredReusableCell(
                 using: cellRegistration,
                 for: indexPath,
@@ -170,7 +171,7 @@ extension CategoryEditHalfVC {
         
         var snapshot = Snapshot()
         snapshot.appendSections([0])
-        snapshot.appendItems(viewModel.allTags.value, toSection: 0)
+        snapshot.appendItems(viewModel.jobActivities.value, toSection: 0)
         dataSource?.apply(snapshot, animatingDifferences: false)
     }
     
@@ -206,7 +207,7 @@ extension CategoryEditHalfVC {
         return layout
     }
     
-    private func updateCollectionView(with activities: [TagsResponseDTO]) {
+    private func updateCollectionView(with activities: [ActivityResponse]) {
         
         var snapshot = Snapshot()
         snapshot.appendSections([0])
@@ -219,8 +220,8 @@ extension CategoryEditHalfVC {
 extension CategoryEditHalfVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? ProfileTagCell else { return }
-        let selectedActivity: TagsResponseDTO
-        selectedActivity = viewModel.allTags.value[indexPath.row]
+        let selectedActivity: ActivityResponse
+        selectedActivity = viewModel.jobActivities.value[indexPath.row]
 
         let isSelected = viewModel.toggleSelectedTag(id: selectedActivity.id)
         cell.setBackgroundColor(isSelected: isSelected)
@@ -236,7 +237,7 @@ extension CategoryEditHalfVC: UICollectionViewDelegate {
 extension CategoryEditHalfVC {
     private func bindViewModel() {
 
-        viewModel.allTags
+        viewModel.jobActivities
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] activities in
                 self?.updateCollectionView(with: activities)

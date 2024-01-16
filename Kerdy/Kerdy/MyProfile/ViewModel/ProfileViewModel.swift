@@ -33,6 +33,8 @@ final class ProfileViewModel {
     
     let eduActivities = BehaviorRelay<[ActivityResponse]>(value: [])
     
+    let jobActivities = BehaviorRelay<[ActivityResponse]>(value: [])
+    
     private let description = BehaviorRelay<String>(value: "")
     
     let selectedActivities = BehaviorRelay<[Int]>(value: [])
@@ -119,9 +121,12 @@ final class ProfileViewModel {
                 
                 let clubActivities = filteredActivities.filter { $0.activityType == "동아리"}
                 let eduActivities = filteredActivities.filter { $0.activityType == "교육"}
+                let jobActivities = filteredActivities.filter { $0.activityType == "직무"}
                 
                 self?.clubActivities.accept(clubActivities)
                 self?.eduActivities.accept(eduActivities)
+                self?.jobActivities.accept(jobActivities)
+
             }, onFailure: { error in
                 print(error)
             })

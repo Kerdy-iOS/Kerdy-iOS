@@ -166,15 +166,9 @@ final class MyBusinessCardVC: UIViewController {
         profileViewModel.myActivities
             .subscribe(onNext: { [weak self] _ in
                 self?.tableView.reloadData()
-            })
-            .disposed(by: disposeBag)
-        
-        profileViewModel.myTags
-            .subscribe(onNext: { [weak self] _ in
                 self?.setMainCategory()
             })
             .disposed(by: disposeBag)
-        
     }
     
     private func hideLabels() {
@@ -188,9 +182,11 @@ final class MyBusinessCardVC: UIViewController {
         let labels: [UILabel] = [categoryLabel1, categoryLabel2, categoryLabel3, categoryLabel4]
         
         DispatchQueue.main.async {
-            for i in 0..<self.profileViewModel.myTags.value.count {
+            let myJobActivities = self.profileViewModel.myActivities.value.filter { $0.activityType == "직무" }
+            
+            for i in 0..<myJobActivities.count {
                 labels[i].isHidden = false
-                labels[i].text = self.profileViewModel.myTags.value[i].name
+                labels[i].text = myJobActivities[i].name
                 labels[i].snp.remakeConstraints {
                     $0.width.equalTo(labels[i].text!.count * 16)
                 }

@@ -205,14 +205,15 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate, Profil
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
                 self?.tableView.reloadData()
-            })
-            .disposed(by: disposeBag)
-        
-        profileViewModel.myTags
-            .subscribe(onNext: { [weak self] _ in
                 self?.setTags()
             })
             .disposed(by: disposeBag)
+        
+//        profileViewModel.myTags
+//            .subscribe(onNext: { [weak self] _ in
+//                self?.setTags()
+//            })
+//            .disposed(by: disposeBag)
     }
 
     private func updateUI(member: MemberProfileResponseDTO) {
@@ -397,10 +398,12 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate, Profil
             btn.removeFromSuperview()
         }
         
-        for i in 0..<self.profileViewModel.myTags.value.count {
-            btns[i].setTitle(title: self.profileViewModel.myTags.value[i].name)
+        let myJobActivities = profileViewModel.myActivities.value.filter { $0.activityType == "직무" }
+        
+        for i in 0..<myJobActivities.count {
+            btns[i].setTitle(title: myJobActivities[i].name)
             categoryStackView.addArrangedSubview(btns[i])
-            btns[i].tagId = profileViewModel.myTags.value[i].id
+            btns[i].tagId = myJobActivities[i].id
             btns[i].delegate = self
         }
         setTagCorners()
@@ -461,12 +464,11 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate, Profil
     }
     
     func deleteBtnTapped(btn: ProfileTagBtn) {
-        profileViewModel.deleteTag(id: btn.tagId!)
-            .subscribe(onSuccess: { [weak self] isSuccess in
-                if isSuccess {
-                    btn.removeFromSuperview()
-                    self?.categoryStackView.layoutIfNeeded()
-                }
+        
+        profileViewModel.deleteActivityTag(id: btn.tagId!)
+            .subscribe(onCompleted: { [weak self] in
+                btn.removeFromSuperview()
+                self?.categoryStackView.layoutIfNeeded()
             })
             .disposed(by: disposeBag)
     }
