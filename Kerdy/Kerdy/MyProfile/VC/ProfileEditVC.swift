@@ -492,7 +492,8 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate, Profil
     
     @objc func categoryAddBtnTapped(_ sender: UIButton) {
         let nextVC = CategoryEditHalfVC()
-        let categoryCnt = ProfileViewModel.shared.myTags.value.count
+        
+        let categoryCnt = profileViewModel.myActivities.value.filter { $0.activityType == "직무" }.count
         nextVC.selectLabel.text = "최대 \(4 - categoryCnt)개까지 선택 가능합니다."
         if let sheet = nextVC.sheetPresentationController {
             sheet.detents = [.medium(), .large()]

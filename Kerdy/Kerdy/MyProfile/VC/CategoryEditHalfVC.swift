@@ -226,7 +226,9 @@ extension CategoryEditHalfVC: UICollectionViewDelegate {
         let isSelected = viewModel.toggleSelectedTag(id: selectedActivity.id)
         cell.setBackgroundColor(isSelected: isSelected)
         
-        if viewModel.selectedActivities.value.count + viewModel.myTags.value.count > 4 {
+        let myJobActivities = viewModel.myActivities.value.filter { $0.activityType == "직무" }
+        
+        if viewModel.selectedActivities.value.count + myJobActivities.count > 4 {
             viewModel.toggleSelectedTag(id: selectedActivity.id)
             cell.setBackgroundColor(isSelected: !isSelected)
         }
