@@ -31,7 +31,7 @@ final class ChatListCollectionViewCell: UICollectionViewCell {
     private lazy var timeLabel: UILabel = {
         let label = UILabel()
         label.font = .nanumSquare(to: .regular, size: 10)
-        label.textColor = .kerdyGray01
+        label.textColor = .kerdyGray02
         return label
     }()
     
@@ -45,7 +45,10 @@ final class ChatListCollectionViewCell: UICollectionViewCell {
     }
     
     func configure() {
-        
+        profileImageView.image = .imgUser
+        nameLabel.text = "ssddd"
+        contentLabel.text = "ssddd"
+        timeLabel.text = "ssddd"
     }
 }
 
@@ -67,13 +70,13 @@ extension ChatListCollectionViewCell {
         
         nameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(11)
-            $0.leading.equalTo(profileImageView.snp.trailing).inset(8)
+            $0.leading.equalTo(profileImageView.snp.trailing).offset(8)
             $0.height.equalTo(18)
         }
         
         contentLabel.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom).inset(5)
-            $0.leading.equalTo(profileImageView.snp.trailing).inset(8)
+            $0.top.equalTo(nameLabel.snp.bottom).offset(5)
+            $0.leading.equalTo(profileImageView.snp.trailing).offset(8)
             $0.height.equalTo(16)
         }
         
