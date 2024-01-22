@@ -16,20 +16,15 @@ struct CommonModalItem: Equatable {
     
     let type: AlertType
     var titleColor: UIColor? = .kerdyBlack
-    var index: IndexPath? = IndexPath(item: 0, section: 0)
     
-    init(type: AlertType, titleColor: UIColor? = .kerdyBlack, index: IndexPath? = IndexPath(item: 0, section: 0)) {
+    init(type: AlertType, titleColor: UIColor? = .kerdyBlack) {
         self.type = type
         self.titleColor = titleColor
-        self.index = index
     }
     
     static let reportModal: [CommonModalItem]  = [CommonModalItem(type: .report, titleColor: .kerdyRed)]
-    
-    static func basicModal(with index: IndexPath) -> [CommonModalItem] {
-        return [CommonModalItem(type: .modify, index: index),
-                CommonModalItem(type: .delete)]
-    }
+    static let basicModal: [CommonModalItem] = [CommonModalItem(type: .modify), 
+                                                CommonModalItem(type: .delete)]
 }
 
 struct CommonModalSectionItem {
@@ -52,15 +47,13 @@ final class CommonModalViewModel: ViewModelType {
     private let commentsManager = CommentManager.shared
     private let reportManager = ReportManager.shared
     var disposeBag =  DisposeBag()
-    let userID = Int(KeyChainManager.loadMemberID())
-    let comments: [Comment]
-    let index: IndexPath
+    private let userID = Int(KeyChainManager.loadMemberID())
+    private let comments: [Comment]
     
     // MARK: - init
     
-    init(comments: [Comment], index: IndexPath) {
+    init(comments: [Comment]) {
         self.comments = comments
-        self.index = index
     }
     
     struct Input {
@@ -72,23 +65,28 @@ final class CommonModalViewModel: ViewModelType {
         
         let modalList: Driver<[CommonModalSectionItem.Model]>
         let modalHeight: Driver<Int>
+        let reportResult: Signal<Void>
     }
     
     private let modalList = BehaviorRelay<[CommonModalSectionItem.Model]>(value: [])
+    let deleteComment = BehaviorRelay<Int>(value: 0)
     private let height = BehaviorRelay<Int>(value: 0)
+    private let reportResult = PublishRelay<Void>()
     
     func transform(input: Input) -> Output {
-        let output = Output(modalList: modalList.asDriver(), modalHeight: height.asDriver())
+        let output = Output(modalList: modalList.asDriver(),
+                            modalHeight: height.asDriver(),
+                            reportResult: reportResult.asSignal())
         
         input.viewWillAppear
             .flatMap { _ -> Driver<Int> in
-                let memberID = self.comments[self.index.item].memberID
+                let memberID = self.comments[0].memberID
                 return Driver.just(memberID)
             }
             .drive(with: self) { owner, memberID in
-                
+
                 let items: [CommonModalSectionItem.Item] = (memberID == self.userID) ?
-                CommonModalItem.basicModal(with: self.index).map { CommonModalSectionItem.Item.basic($0) } :
+                CommonModalItem.basicModal.map { CommonModalSectionItem.Item.basic($0) } :
                 CommonModalItem.reportModal.map { CommonModalSectionItem.Item.report($0) }
                 
                 let sectionModel = CommonModalSectionItem.Model(model: .main, items: items)
@@ -105,10 +103,12 @@ final class CommonModalViewModel: ViewModelType {
 extension CommonModalViewModel {
     
     func deleteComments() {
-        guard let commentID = self.comments[self.index.item].commentID else { return }
+       
+        guard let commentID = self.comments.first?.commentID else { return }
         commentsManager.deleteComments(commentID: commentID)
             .subscribe(onSuccess: { data in
                 dump(data)
+                self.deleteComment.accept(commentID)
             }, onFailure: { error in
                 HandleNetworkError.handleNetworkError(error)
             })
@@ -119,6 +119,7 @@ extension CommonModalViewModel {
         reportManager.postReport(request: request)
             .subscribe(onSuccess: { data in
                 dump(data)
+                self.reportResult.accept(())
             }, onFailure: { error in
                 HandleNetworkError.handleNetworkError(error)
             })
@@ -130,8 +131,8 @@ extension CommonModalViewModel {
             self.deleteComments()
         } else if type == .report {
             guard let reporterId = self.userID else { return }
-            let reportedID = self.comments[self.index.item].memberID
-            guard let commentID = self.comments[self.index.item].commentID else { return }
+            guard let reportedID = self.comments.first?.memberID else { return }
+            guard let commentID = self.comments.first?.commentID else { return }
             let request = ReportRequestDTO(reporterId: reporterId,
                                            reportedId: reportedID,
                                            type: .COMMENT,

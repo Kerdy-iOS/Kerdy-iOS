@@ -15,6 +15,10 @@ import RxCocoa
 
 final class ChildCommentsCell: UICollectionViewCell {
     
+    // MARK: = Property
+    
+    var disposeBag = DisposeBag()
+    
     // MARK: = UI Components
     
     private let arrowIcon: UIImageView = {
@@ -59,6 +63,11 @@ final class ChildCommentsCell: UICollectionViewCell {
         button.setImage(.dotButton, for: .normal)
         return button
     }()
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.disposeBag = DisposeBag()
+    }
     
     // MARK: = Init
     

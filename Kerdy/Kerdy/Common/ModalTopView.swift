@@ -91,5 +91,4 @@ extension ModalTopView {
         titleLabel.text = title
     
     }
-    
 }

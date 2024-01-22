@@ -57,7 +57,7 @@ final class CommentsVC: BaseVC {
         setDataSource()
         setBindings()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -181,19 +181,15 @@ extension CommentsVC {
     
     func configure(cell: ChildCommentsCell, index: IndexPath) {
         
-        let childComments = dataSource.sectionModels[index.section].items
+        let childComments = dataSource.sectionModels[index.section].items[index.item]
         cell.rx.dot
             .asDriver()
             .drive(with: self) { owner, _ in
-                print("💽index: \(index.item)")
                 owner.index.accept(index.item)
                 owner.isHeader.accept(false)
-                let vc = ModalVC(viewModel: CommonModalViewModel(comments: childComments, index: index))
-                vc.modalPresentationStyle = .overFullScreen
-                vc.delegate = self
-                owner.present(vc, animated: true)
+                owner.configureViewModel(to: CommonModalViewModel(comments: [childComments]))
             }
-            .disposed(by: disposeBag)
+            .disposed(by: cell.disposeBag)
     }
     
     func configure(header: CommentsHeaderView, index: IndexPath) {
@@ -205,12 +201,16 @@ extension CommentsVC {
             .drive(with: self) { owner, _ in
                 owner.index.accept(index.section)
                 owner.isHeader.accept(true)
-                let vc = ModalVC(viewModel: CommonModalViewModel(comments: [parentComments], index: index))
-                vc.modalPresentationStyle = .overFullScreen
-                vc.delegate = self
-                owner.present(vc, animated: true)
+                owner.configureViewModel(to: CommonModalViewModel(comments: [parentComments]))
             }
             .disposed(by: disposeBag)
+    }
+    
+    func configureViewModel(to viewModel: CommonModalViewModel) {
+        let vc = ModalVC(viewModel: viewModel)
+        vc.modalPresentationStyle = .overFullScreen
+        vc.delegate = self
+        self.present(vc, animated: true)
     }
 }
 
@@ -225,13 +225,14 @@ extension CommentsVC: BackButtonActionProtocol {
 }
 
 extension CommentsVC: ModalProtocol {
-    
-    func dismiss(type: AlertType) {
-        
+    func deleteDismiss(commentID: Int) {
+        self.viewModel.getDetailComments(commentID: commentID)
+    }
+
+    func modifyDismiss() {
         let index = self.index.value
         let isHeader = self.isHeader.value
         let initialValue = self.viewModel.updateComments(index: index, isHeader: isHeader)
-        
         self.textFieldView.initialComments(text: initialValue, alertType: .modify)
     }
 }
