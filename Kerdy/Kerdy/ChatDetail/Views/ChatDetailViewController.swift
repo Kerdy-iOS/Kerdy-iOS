@@ -9,10 +9,16 @@ import UIKit
 import SnapKit
 
 final class ChatDetailVC: UIViewController {
+    
+    typealias IncomingCell = IncomingChatCollectionViewCell
+    typealias MyCell = MyChatCollectionViewCell
+    typealias SectionHeader = ChatDateSupplementaryView
+    
     private lazy var navigationBar = NavigationBarView()
-    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private lazy var textInputView: UIView = {
         let view = UIView()
+        view.backgroundColor = .white
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.kerdyGray01.cgColor
         view.layer.masksToBounds = true
@@ -35,6 +41,8 @@ final class ChatDetailVC: UIViewController {
         return button
     }()
     
+    private var viewModel = ChatDetailViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -43,6 +51,17 @@ final class ChatDetailVC: UIViewController {
     
     private func setUI() {
         navigationBar.delegate = self
+        view.backgroundColor = .white
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.register(IncomingCell.self, forCellWithReuseIdentifier: IncomingCell.identifier)
+        collectionView.register(MyCell.self, forCellWithReuseIdentifier: MyCell.identifier)
+        collectionView.register(
+            SectionHeader.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: SectionHeader.identifier
+        )
     }
 }
 
@@ -64,14 +83,14 @@ extension ChatDetailVC {
         
         textInputView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(17)
-            $0.bottom.equalToSuperview().inset(16)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(16)
             $0.height.equalTo(50)
         }
         
         collectionView.snp.makeConstraints {
             $0.top.equalTo(navigationBar.snp.bottom)
-            $0.bottom.equalTo(textInputView.snp.top).inset(16)
-            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(textInputView.snp.top).offset(-16)
+            $0.horizontalEdges.equalToSuperview().inset(17)
         }
         
         inputButton.snp.makeConstraints {
@@ -86,6 +105,116 @@ extension ChatDetailVC {
             $0.trailing.equalTo(inputButton.snp.leading).inset(16)
         }
         
+    }
+}
+
+// MARK: - collectionView DataSource
+extension ChatDetailVC: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return viewModel.processedData.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let sectionData = viewModel.processedData[section]
+        let messages = sectionData.messages
+        return messages.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let sectionData = viewModel.processedData[indexPath.section].messages
+        let curData = sectionData[indexPath.row]
+        var isContinuous = false
+        
+        if indexPath.row > 0 {
+            let prevData = sectionData[indexPath.row - 1]
+            isContinuous = curData.sender.name == prevData.sender.name
+        }
+        
+        if curData.sender.name == viewModel.interlocutor {
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: MyCell.identifier,
+                for: indexPath
+            ) as? MyCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(isContinuous: isContinuous, data: curData)
+            
+            return cell
+            
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: IncomingCell.identifier,
+                for: indexPath
+            ) as? IncomingCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(isContinuous: isContinuous, data: curData)
+            
+            return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let section = indexPath.section
+        let sectionData = viewModel.processedData[section]
+        let date = sectionData.date
+        
+        guard kind == UICollectionView.elementKindSectionHeader else {
+            return UICollectionReusableView()
+        }
+
+        guard let headerView = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: SectionHeader.identifier,
+            for: indexPath
+        ) as? SectionHeader else {
+            return UICollectionReusableView()
+        }
+        
+        headerView.configure(date: date)
+        return headerView
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.bounds.width, height: 47)
+    }
+}
+
+// MARK: - collectionView Delegate
+extension ChatDetailVC: UICollectionViewDelegate {
+    
+}
+
+extension ChatDetailVC: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let curSectionData = viewModel
+            .processedData[indexPath.section]
+            .messages
+        let curData = curSectionData[indexPath.row]
+        let content = curData.content
+        let collectionViewWidth = collectionView.bounds.width
+        var isContinuous = false
+        
+        if indexPath.row > 0 {
+            let prevData = curSectionData[indexPath.row - 1]
+            isContinuous = curData.sender.name == prevData.sender.name
+        }
+
+        let boundingRect = (content as NSString).boundingRect(
+            with: CGSize(width: collectionViewWidth - 109, height: CGFloat.greatestFiniteMagnitude),
+            options: .usesLineFragmentOrigin,
+            attributes: [
+                NSAttributedString.Key.font: UIFont.nanumSquare(to: .regular, size: 12)
+            ],
+            context: nil
+        )
+
+        let textHeight = ceil(boundingRect.height)
+        if isContinuous {
+            return CGSize(width: collectionViewWidth, height: textHeight + 18)
+        } else {
+            return CGSize(width: collectionViewWidth, height: textHeight + 34)
+        }
     }
 }
 
