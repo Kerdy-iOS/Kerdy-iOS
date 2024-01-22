@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class ChatDateSupplementaryView: UICollectionReusableView {
+final class ChatDateSupplementaryView: UICollectionReusableView {    
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.font = .nanumSquare(to: .regular, size: 10)
@@ -26,8 +26,8 @@ final class ChatDateSupplementaryView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure() {
-        
+    func configure(date: String) {
+        dateLabel.text = date
     }
 }
 
@@ -36,7 +36,9 @@ extension ChatDateSupplementaryView {
         addSubview(dateLabel)
         
         dateLabel.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalToSuperview().offset(20)
+            $0.bottom.equalToSuperview().offset(-14)
+            $0.centerX.equalToSuperview()
         }
     }
 }
