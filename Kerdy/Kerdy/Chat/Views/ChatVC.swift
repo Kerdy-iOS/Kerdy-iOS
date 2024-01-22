@@ -84,7 +84,7 @@ extension ChatVC {
         }
         
         collectionView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview().inset(17)
             $0.top.equalTo(navigationView.snp.bottom)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
@@ -111,6 +111,8 @@ extension ChatVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) {
             cell.contentView.backgroundColor = .kerdyGray01
+            let nextVC = ChatDetailVC()
+            navigationController?.pushViewController(nextVC, animated: true)
         }
     }
 
