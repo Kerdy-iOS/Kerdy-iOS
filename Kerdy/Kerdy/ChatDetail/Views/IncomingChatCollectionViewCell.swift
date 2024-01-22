@@ -13,6 +13,7 @@ final class IncomingChatCollectionViewCell: UICollectionViewCell {
         let view = UIImageView()
         view.layer.cornerRadius = 15
         view.layer.masksToBounds = true
+        view.image = .imgUser
         return view
     }()
     
@@ -22,25 +23,35 @@ final class IncomingChatCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var contentLabel: UILabel = {
+    lazy var contentLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1000
         label.font = .nanumSquare(to: .regular, size: 12)
         return label
     }()
     
+    private lazy var cornerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .kerdyGray01
+        return view
+    }()
+    
     private lazy var messageView: UIView = {
         let view = UIView()
         view.backgroundColor = .kerdyGray01
+        view.layer.cornerRadius = 15
         return view
     }()
     
     private lazy var timeLabel: UILabel = {
         let label = UILabel()
         label.textColor = .kerdyGray02
+        label.textAlignment = .left
         label.font = .nanumSquare(to: .regular, size: 9)
         return label
     }()
+    
+    private var viewModel = ChatDetailCellViewModel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -51,16 +62,33 @@ final class IncomingChatCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure() {
-        // TODO: - profile이미지 없으면 이미지 nil값 설정
+    func configure(isContinuous: Bool, data: MessageRoomResponseDTO) {
+        if isContinuous {
+            messageView.snp.remakeConstraints {
+                $0.top.equalToSuperview().inset(4)
+                $0.leading.equalToSuperview().offset(36)
+                $0.height.equalTo(30).priority(500)
+                $0.width.lessThanOrEqualToSuperview().offset(-89)
+            }
+            profileImageView.isHidden = isContinuous
+            nameLabel.isHidden = isContinuous
+        } else {
+            // TODO: - 이미지 다운로드
+            nameLabel.text = data.sender.name
+        }
+        contentLabel.text = data.content
+        timeLabel.text = viewModel.convertDateString(data.createdAt)
+        layoutIfNeeded()
     }
+    
 }
 
 extension IncomingChatCollectionViewCell {
     private func setLayout() {
-        contentLabel.addSubviews(
+        contentView.addSubviews(
             profileImageView,
             nameLabel,
+            cornerView,
             messageView,
             timeLabel
         )
@@ -75,20 +103,26 @@ extension IncomingChatCollectionViewCell {
         
         nameLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalTo(profileImageView.snp.trailing).inset(6)
+            $0.leading.equalToSuperview().offset(36)
             $0.height.equalTo(14)
         }
         
         messageView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(20)
-            $0.leading.equalTo(profileImageView.snp.trailing).inset(6)
+            $0.leading.equalToSuperview().offset(36)
             $0.height.equalTo(30).priority(500)
-            $0.width.lessThanOrEqualToSuperview().inset(53)
+            $0.width.lessThanOrEqualToSuperview().offset(-89)
+        }
+        
+        cornerView.snp.makeConstraints {
+            $0.top.equalTo(messageView.snp.top)
+            $0.leading.equalToSuperview().offset(36)
+            $0.size.equalTo(15)
         }
         
         timeLabel.snp.makeConstraints {
-            $0.leading.equalTo(messageView.snp.trailing).inset(5)
-            $0.bottom.equalToSuperview()
+            $0.leading.equalTo(messageView.snp.trailing).offset(5)
+            $0.bottom.equalTo(messageView.snp.bottom)
             $0.width.equalTo(48)
             $0.height.equalTo(13)
         }
@@ -96,25 +130,8 @@ extension IncomingChatCollectionViewCell {
         contentLabel.snp.makeConstraints {
             $0.verticalEdges.equalToSuperview().inset(7)
             $0.horizontalEdges.equalToSuperview().inset(10)
-            $0.height.equalTo(16).priority(750)
+            $0.width.greaterThanOrEqualTo(10)
         }
-    }
-    
-    private func setLayoutWithoutName() {
-        profileImageView.isHidden = true
-        nameLabel.isHidden = true
-        
-        messageView.snp.updateConstraints {
-            $0.top.equalToSuperview()
-        }
-    }
-    
-    func setLayer() {
-        self.roundCorners(
-            topLeft: 0,
-            topRight: 15,
-            bottomLeft: 15,
-            bottomRight: 15
-        )
     }
 }
+
