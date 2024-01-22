@@ -14,7 +14,7 @@ import RxDataSources
 
 protocol ModalProtocol: AnyObject {
     
-    func dismiss(type: AlertType)
+    func modifyDismiss()
 }
 
 final class ModalVC: UIViewController {
@@ -42,6 +42,7 @@ final class ModalVC: UIViewController {
     }()
     
     private let popupView =  PopUpView()
+    private let reportView =  ReportCompletedView()
     
     // MARK: - init
     
@@ -69,8 +70,7 @@ final class ModalVC: UIViewController {
         let location = touch.location(in: self.view)
         
         if !collectionView.frame.contains(location) {
-            view.backgroundColor = .clear
-            dismiss(animated: true)
+            self.dissmissVC()
         }
     }
     
@@ -127,6 +127,12 @@ extension ModalVC {
             }
             .disposed(by: disposeBag)
         
+        output.reportResult
+            .emit(with: self, onNext: { owner, _ in
+                owner.showReportView()
+            })
+            .disposed(by: disposeBag)
+        
         collectionView.rx.modelSelected(CommonModalSectionItem.Item.self)
             .asDriver()
             .drive(with: self) { owner, item in
@@ -138,8 +144,7 @@ extension ModalVC {
                 case .basic(let basicItem):
                     if basicItem.type == .modify {
                         owner.dissmissVC()
-                        guard let index = basicItem.index else { return }
-                        owner.delegate?.dismiss(type: .modify)
+                        owner.delegate?.modifyDismiss()
                     } else {
                         owner.type = .delete
                         owner.showPopupView(alert: owner.popupView, type: .delete)
@@ -202,8 +207,24 @@ extension ModalVC {
         }
     }
     
+    private func showReportView() {
+        
+        view.addSubview(reportView)
+        reportView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview().inset(40)
+            $0.height.equalTo(182)
+        }
+        
+        reportView.rx.confirmButtonDidTap
+            .subscribe(with: self) { owner, _ in
+                owner.dissmissVC()
+            }
+            .disposed(by: disposeBag)
+    }
+    
     private func dissmissVC() {
-        self.view.backgroundColor = .clear
+        self.view.alpha = 0
         self.dismiss(animated: true)
     }
 }
@@ -216,7 +237,7 @@ extension ModalVC: PopUptoBlockDelegate {
         
         guard let alertType = self.type else { return }
         self.viewModel.modalType(type: alertType )
-        self.dissmissVC()
+        if alertType == .delete { self.dissmissVC() }
     }
     
     func cancel() {
