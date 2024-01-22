@@ -120,6 +120,7 @@
 		3127EE052B539060005CE78F /* IncomingChatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127EE042B539060005CE78F /* IncomingChatCollectionViewCell.swift */; };
 		3127EE072B539071005CE78F /* MyChatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127EE062B539071005CE78F /* MyChatCollectionViewCell.swift */; };
 		3127EE0B2B53CFB9005CE78F /* ChatDateSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127EE0A2B53CFB9005CE78F /* ChatDateSupplementaryView.swift */; };
+		313AAF9E2B5E8C3000254938 /* ChatDetailCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313AAF9D2B5E8C3000254938 /* ChatDetailCellViewModel.swift */; };
 		31571C1E2AF3CBC00037A2F2 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C172AF3CBC00037A2F2 /* EventTableViewCell.swift */; };
 		31571C1F2AF3CBC00037A2F2 /* FilterSettingBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C182AF3CBC00037A2F2 /* FilterSettingBtn.swift */; };
 		31571C202AF3CBC00037A2F2 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C192AF3CBC00037A2F2 /* CategoryView.swift */; };
@@ -157,6 +158,8 @@
 		31747CD72B344E2100559716 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31747CD62B344E2100559716 /* EventManager.swift */; };
 		31747CD92B344E3300559716 /* EventAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31747CD82B344E3300559716 /* EventAPI.swift */; };
 		31AD5DA32B5C21F70050C8D8 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD5DA22B5C21F70050C8D8 /* ChatViewModel.swift */; };
+		31AD5DB12B5D662B0050C8D8 /* ChatDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD5DB02B5D662B0050C8D8 /* ChatDetailViewModel.swift */; };
+		31AD5DB32B5D677F0050C8D8 /* MessageRoomResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD5DB22B5D677F0050C8D8 /* MessageRoomResponseDTO.swift */; };
 		31FBEC792B107DCD00DE68F3 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC782B107DCD00DE68F3 /* EventDetailViewController.swift */; };
 		31FBEC7B2B109A1C00DE68F3 /* EventDetailPostCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC7A2B109A1C00DE68F3 /* EventDetailPostCVCell.swift */; };
 		31FBEC7F2B109D4500DE68F3 /* PostListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC7E2B109D4500DE68F3 /* PostListModel.swift */; };
@@ -315,6 +318,7 @@
 		3127EE042B539060005CE78F /* IncomingChatCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingChatCollectionViewCell.swift; sourceTree = "<group>"; };
 		3127EE062B539071005CE78F /* MyChatCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatCollectionViewCell.swift; sourceTree = "<group>"; };
 		3127EE0A2B53CFB9005CE78F /* ChatDateSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDateSupplementaryView.swift; sourceTree = "<group>"; };
+		313AAF9D2B5E8C3000254938 /* ChatDetailCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailCellViewModel.swift; sourceTree = "<group>"; };
 		31571C172AF3CBC00037A2F2 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		31571C182AF3CBC00037A2F2 /* FilterSettingBtn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSettingBtn.swift; sourceTree = "<group>"; };
 		31571C192AF3CBC00037A2F2 /* CategoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
@@ -352,6 +356,8 @@
 		31747CD62B344E2100559716 /* EventManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
 		31747CD82B344E3300559716 /* EventAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventAPI.swift; sourceTree = "<group>"; };
 		31AD5DA22B5C21F70050C8D8 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		31AD5DB02B5D662B0050C8D8 /* ChatDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailViewModel.swift; sourceTree = "<group>"; };
+		31AD5DB22B5D677F0050C8D8 /* MessageRoomResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRoomResponseDTO.swift; sourceTree = "<group>"; };
 		31FBEC782B107DCD00DE68F3 /* EventDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		31FBEC7A2B109A1C00DE68F3 /* EventDetailPostCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailPostCVCell.swift; sourceTree = "<group>"; };
 		31FBEC7E2B109D4500DE68F3 /* PostListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListModel.swift; sourceTree = "<group>"; };
@@ -646,6 +652,7 @@
 				09ED941C2B2C316E001864EF /* BlockReponseDTO.swift */,
 				099756BE2B223002009961B5 /* TagsResponseDTO.swift */,
 				09ECB3342AFE15E7000F3008 /* CommentsResponseDTO.swift */,
+				31AD5DB22B5D677F0050C8D8 /* MessageRoomResponseDTO.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -1007,6 +1014,7 @@
 		3127EDFE2B53884E005CE78F /* ChatDetail */ = {
 			isa = PBXGroup;
 			children = (
+				31AD5DAF2B5D661A0050C8D8 /* ViewModel */,
 				3127EE082B53CF4C005CE78F /* Views */,
 			);
 			path = ChatDetail;
@@ -1172,6 +1180,15 @@
 			isa = PBXGroup;
 			children = (
 				31AD5DA22B5C21F70050C8D8 /* ChatViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		31AD5DAF2B5D661A0050C8D8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				31AD5DB02B5D662B0050C8D8 /* ChatDetailViewModel.swift */,
+				313AAF9D2B5E8C3000254938 /* ChatDetailCellViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1533,6 +1550,7 @@
 				09A3E1812B18E525004BD432 /* SettingAPI.swift in Sources */,
 				5B370F422AF546CE00D0D3DE /* ThirdInitialSettingVC.swift in Sources */,
 				5B32AC1B2B0F7DD900512DC5 /* ActivityModel.swift in Sources */,
+				313AAF9E2B5E8C3000254938 /* ChatDetailCellViewModel.swift in Sources */,
 				09ED94252B2C31D3001864EF /* SettingWrittenDataSource.swift in Sources */,
 				09ED94392B2C325C001864EF /* FeedAPI.swift in Sources */,
 				5B216AFA2AF671CF00C028A0 /* FourthInitialSettingVC.swift in Sources */,
@@ -1607,6 +1625,7 @@
 				090978F12AF0E7B5006BD8DE /* ChatVC.swift in Sources */,
 				31571C232AF3CBC00037A2F2 /* EventCollectionViewCell.swift in Sources */,
 				0986666C2B3495940066E394 /* NotificationCell.swift in Sources */,
+				31AD5DB32B5D677F0050C8D8 /* MessageRoomResponseDTO.swift in Sources */,
 				090979022AF29086006BD8DE /* TagCollectionViewFlowLayout.swift in Sources */,
 				31FBEC872B10DF9600DE68F3 /* EventDetailBottomView.swift in Sources */,
 				31571C262AF3CBC80037A2F2 /* Event.swift in Sources */,
@@ -1643,6 +1662,7 @@
 				090979002AF287E0006BD8DE /* NavigationBarView.swift in Sources */,
 				5B81F9B92B1B90C400DF1F25 /* RegisterMemberAPI.swift in Sources */,
 				09ED941D2B2C316E001864EF /* BlockReponseDTO.swift in Sources */,
+				31AD5DB12B5D662B0050C8D8 /* ChatDetailViewModel.swift in Sources */,
 				5B8F6FDF2B3DC39100F2E44A /* ProfileEditVC.swift in Sources */,
 				31FBEC942B11CB3600DE68F3 /* CellProtocol.swift in Sources */,
 				3164D4812AE21F810054F440 /* SceneDelegate.swift in Sources */,
