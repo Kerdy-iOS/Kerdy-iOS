@@ -49,9 +49,9 @@ struct Comment: Codable, Hashable, SettingWrittenProtocol, Equatable {
     
     var updateDate: String {
         if createdAt == updatedAt {
-            return convertDate(date: createdAt)
+            return Convert.convertDate(date: createdAt, format: "yy.MM.dd")
         } else {
-            return convertDate(date: updatedAt) + " 수정됨"
+            return Convert.convertDate(date: updatedAt, format: "yy.MM.dd") + " 수정됨"
         }
     }
     
