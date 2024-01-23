@@ -9,19 +9,19 @@ import RxDataSources
 import Foundation
 
 enum ArchiveSectionModel {
-    case new(title: String = "새로운 알림", items: [SectionItem])
-    case old(title: String = "지난 알림", items: [SectionItem])
+    case new(title: String = "새로운 알림", items: [ArchiveSectionItem])
+    case old(title: String = "지난 알림", items: [ArchiveSectionItem])
 }
 
-enum SectionItem {
-    case new(UUID)
-    case old(UUID)
+enum ArchiveSectionItem {
+    case new(ArchiveResponseDTO)
+    case old(ArchiveResponseDTO)
 }
 
 extension ArchiveSectionModel: SectionModelType {
-    typealias Item = SectionItem
+    typealias Item = ArchiveSectionItem
     
-    var items: [SectionItem] {
+    var items: [ArchiveSectionItem] {
         switch self {
         case .new(_, let items), .old(_, let items):
             return items

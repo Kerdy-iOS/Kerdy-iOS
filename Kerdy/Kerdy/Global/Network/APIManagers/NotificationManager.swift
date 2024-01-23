@@ -12,7 +12,7 @@ import RxSwift
 
 protocol NotificationManagerType {
     
-    func getList(id: Int) -> Single<Void>
+    func getList(id: Int) -> Single<[ArchiveResponseDTO]>
     func patchList(id: Int) -> Single<Void>
     func deleteList(ids: [Int]) -> Single<Void>
 }
@@ -29,10 +29,10 @@ final class NotificationManager: Networking, NotificationManagerType {
     
     private init () {}
     
-    func getList(id: Int) -> Single<Void> {
+    func getList(id: Int) -> Single<[ArchiveResponseDTO]> {
         return provider
             .request(.notificationList(id: id))
-            .map { _ in }
+            .map([ArchiveResponseDTO].self)
     }
     
     func patchList(id: Int) -> Single<Void> {

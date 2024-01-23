@@ -44,7 +44,7 @@ extension NotificationAPI: KerdyAPI {
     var task: Task {
         switch self {
         case .notificationList(id: let id):
-            let parameters: [String: Any] = ["member_id": id]
+            let parameters: [String: Any] = ["member-id": id]
             return .requestParameters(parameters: parameters,
                                       encoding: URLEncoding.default)
         case .readState, .deleteNotification:

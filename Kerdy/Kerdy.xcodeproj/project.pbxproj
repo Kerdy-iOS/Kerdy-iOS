@@ -88,6 +88,8 @@
 		09C5A6F92B4ADE93004586CE /* ArchiveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C5A6F82B4ADE93004586CE /* ArchiveCell.swift */; };
 		09C5A6FB2B4ADEAD004586CE /* ArchiveHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C5A6FA2B4ADEAD004586CE /* ArchiveHeaderView.swift */; };
 		09C5A6FF2B4AED35004586CE /* ArchiveSectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C5A6FE2B4AED35004586CE /* ArchiveSectionItem.swift */; };
+		09D637A32B5EB940001CD013 /* ArchiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D637A22B5EB940001CD013 /* ArchiveViewModel.swift */; };
+		09D637A52B60066F001CD013 /* ArchiveResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D637A42B60066F001CD013 /* ArchiveResponseDTO.swift */; };
 		09ECB32F2AFE0AB2000F3008 /* SettingWriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ECB32E2AFE0AB2000F3008 /* SettingWriteCell.swift */; };
 		09ECB3352AFE15E7000F3008 /* CommentsResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ECB3342AFE15E7000F3008 /* CommentsResponseDTO.swift */; };
 		09ED941D2B2C316E001864EF /* BlockReponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ED941C2B2C316E001864EF /* BlockReponseDTO.swift */; };
@@ -282,6 +284,8 @@
 		09C5A6F82B4ADE93004586CE /* ArchiveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveCell.swift; sourceTree = "<group>"; };
 		09C5A6FA2B4ADEAD004586CE /* ArchiveHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveHeaderView.swift; sourceTree = "<group>"; };
 		09C5A6FE2B4AED35004586CE /* ArchiveSectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveSectionItem.swift; sourceTree = "<group>"; };
+		09D637A22B5EB940001CD013 /* ArchiveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveViewModel.swift; sourceTree = "<group>"; };
+		09D637A42B60066F001CD013 /* ArchiveResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveResponseDTO.swift; sourceTree = "<group>"; };
 		09ECB32E2AFE0AB2000F3008 /* SettingWriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingWriteCell.swift; sourceTree = "<group>"; };
 		09ECB3342AFE15E7000F3008 /* CommentsResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsResponseDTO.swift; sourceTree = "<group>"; };
 		09ED941C2B2C316E001864EF /* BlockReponseDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockReponseDTO.swift; sourceTree = "<group>"; };
@@ -642,6 +646,7 @@
 				09ED941C2B2C316E001864EF /* BlockReponseDTO.swift */,
 				099756BE2B223002009961B5 /* TagsResponseDTO.swift */,
 				09ECB3342AFE15E7000F3008 /* CommentsResponseDTO.swift */,
+				09D637A42B60066F001CD013 /* ArchiveResponseDTO.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -901,6 +906,7 @@
 		09C5A6F32B4ADD23004586CE /* NotificationArchive */ = {
 			isa = PBXGroup;
 			children = (
+				09D637A12B5EB931001CD013 /* ViewModel */,
 				09C5A6FD2B4AED27004586CE /* Model */,
 				09C5A6FC2B4ADEB1004586CE /* View */,
 				09C5A6F52B4ADD51004586CE /* Cell */,
@@ -939,6 +945,14 @@
 				09C5A6FE2B4AED35004586CE /* ArchiveSectionItem.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		09D637A12B5EB931001CD013 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				09D637A22B5EB940001CD013 /* ArchiveViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		09ED940C2B26B51F001864EF /* VC */ = {
@@ -1583,6 +1597,7 @@
 				3109B3082AF7C21500B2EAD2 /* Tag.swift in Sources */,
 				095DA0CA2B485391000128DB /* UserDefaultsManager.swift in Sources */,
 				3109B30C2AF7F49A00B2EAD2 /* PrortudingBtn.swift in Sources */,
+				09D637A52B60066F001CD013 /* ArchiveResponseDTO.swift in Sources */,
 				311E983A2AFB89E5009BEB3F /* DateFilterViewController.swift in Sources */,
 				5BE9BA9E2B25D6FD00D5971F /* MyBusinessCardVC.swift in Sources */,
 				3109B30E2AF7F4ED00B2EAD2 /* FilterBtn.swift in Sources */,
@@ -1646,6 +1661,7 @@
 				5B81F9B92B1B90C400DF1F25 /* RegisterMemberAPI.swift in Sources */,
 				09ED941D2B2C316E001864EF /* BlockReponseDTO.swift in Sources */,
 				5B8F6FDF2B3DC39100F2E44A /* ProfileEditVC.swift in Sources */,
+				09D637A32B5EB940001CD013 /* ArchiveViewModel.swift in Sources */,
 				31FBEC942B11CB3600DE68F3 /* CellProtocol.swift in Sources */,
 				3164D4812AE21F810054F440 /* SceneDelegate.swift in Sources */,
 				31FBEC7B2B109A1C00DE68F3 /* EventDetailPostCVCell.swift in Sources */,
