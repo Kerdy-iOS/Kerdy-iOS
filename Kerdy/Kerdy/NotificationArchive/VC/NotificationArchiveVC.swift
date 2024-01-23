@@ -21,6 +21,7 @@ final class NotificationArchiveVC: BaseVC {
     typealias DataSource = RxCollectionViewSectionedReloadDataSource<ArchiveSectionModel>
     
     private var dataSource: DataSource!
+    private let viewModel: ArchiveViewModel
     
     // MARK: - UI Components
     
@@ -37,6 +38,15 @@ final class NotificationArchiveVC: BaseVC {
         return collectionView
     }()
     
+    // MARK: - Init
+    
+    init(viewModel: ArchiveViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    // MAKR: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,7 +54,11 @@ final class NotificationArchiveVC: BaseVC {
         setLayout()
         setDelegate()
         setDataSource()
-        
+        setBindings()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -73,22 +87,30 @@ extension NotificationArchiveVC {
         }
     }
     
+    private func setBindings() {
+        let input = ArchiveViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver())
+        
+        let output = viewModel.transform(input: input)
+        
+        output.archiveList
+            .drive(collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+    }
+    
     func setDataSource() {
         
-        dataSource = DataSource(configureCell: { [weak self] _, tableView, indexPath, item in
+        dataSource = DataSource(configureCell: { [weak self] dataSource, tableView, indexPath, item in
             guard let self = self else { return UICollectionViewCell() }
             switch item {
-            case .new, .old:
+            case .new(let data), .old(let data):
                 guard let cell = tableView.dequeueReusableCell(
                     withReuseIdentifier: ArchiveCell.identifier,
                     for: indexPath
                 ) as? ArchiveCell else { return UICollectionViewCell() }
+                cell.configure(data: data)
                 return cell
             }
-        })
-        
-        dataSource.configureSupplementaryView = {(dataSource, collectionView, _, indexPath) -> UICollectionReusableView in
-            
+        }, configureSupplementaryView: { dataSource, collectionView, _, indexPath in
             guard let header = collectionView.dequeueReusableSupplementaryView(
                 ofKind: UICollectionView.elementKindSectionHeader,
                 withReuseIdentifier: ArchiveHeaderView.identifier,
@@ -97,7 +119,7 @@ extension NotificationArchiveVC {
             
             header.configureHeader(title: dataSource[indexPath.section].title)
             return header
-        }
+        })
     }
     
     private func setDelegate() {
@@ -114,6 +136,7 @@ extension NotificationArchiveVC {
         
         var config = UICollectionLayoutListConfiguration(appearance: .plain)
         config.showsSeparators = false
+        config.headerMode = .supplementary
         let layout = UICollectionViewCompositionalLayout.list(using: config)
         
         return layout

@@ -39,7 +39,7 @@ final class ArchiveCell: UICollectionViewCell {
     }()
     
     private let timeLabel: UILabel = {
-      let label = UILabel()
+        let label = UILabel()
         label.font = .nanumSquare(to: .regular, size: 12)
         label.textColor = .kerdyGray04
         return label
@@ -52,7 +52,7 @@ final class ArchiveCell: UICollectionViewCell {
     }()
     
     // MARK: - init
-
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
@@ -86,13 +86,13 @@ extension ArchiveCell {
         contentView.addSubview(content)
         content.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(8)
-            $0.leading.equalTo(titleLabel.snp.trailing)
+            $0.leading.equalTo(profile.snp.trailing).offset(15)
         }
         
         contentView.addSubview(timeLabel)
         timeLabel.snp.makeConstraints {
             $0.top.equalTo(content.snp.bottom).offset(8)
-            $0.leading.equalTo(titleLabel.snp.trailing)
+            $0.leading.equalTo(profile.snp.trailing).offset(15)
             $0.bottom.equalToSuperview().inset(20)
         }
         
@@ -105,8 +105,21 @@ extension ArchiveCell {
     }
 }
 
-
 extension ArchiveCell {
     
-    //func configure(data: )
+    func configure(data: ArchiveResponseDTO) {
+        timeLabel.text = data.convertDate
+        
+        switch data.notificationInformation {
+        case .comment(let commentInfo):
+            titleLabel.text = commentInfo.title
+            content.text = commentInfo.content
+            profile.kf.setImage(with: URL(string: commentInfo.profile ?? ""), placeholder: UIImage.emptyIcon)
+            
+        case .event(let eventInfo):
+            titleLabel.text = eventInfo.title ?? "관심 태그 행사가 업데이트 되었어요."
+            profile.image = .emptyIcon
+            content.text = eventInfo.title
+        }
+    }
 }
