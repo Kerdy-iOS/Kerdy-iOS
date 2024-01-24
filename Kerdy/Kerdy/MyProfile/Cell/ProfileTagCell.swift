@@ -29,10 +29,6 @@ final class ProfileTagCell: UICollectionViewCell {
         super.init(coder: coder)
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         setLayer()
