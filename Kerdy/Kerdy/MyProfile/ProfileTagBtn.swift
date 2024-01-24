@@ -84,7 +84,6 @@ final class ProfileTagBtn: UIStackView, ProfileTagBtnDelegate {
             return
         }
         borderLayer.path = buttonMaskLayer.path
-        borderLayer.strokeColor = UIColor(named: "kerdy_main")?.cgColor
         borderLayer.strokeColor = UIColor.kerdyMain.cgColor
         borderLayer.fillColor = UIColor.clear.cgColor
         borderLayer.lineWidth = 2

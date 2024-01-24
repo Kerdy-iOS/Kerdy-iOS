@@ -65,25 +65,32 @@ extension MyProfileAPI: KerdyAPI {
         switch self {
         case let .description(description):
             let parameters: [String: Any] = ["description": description]
-            return .requestParameters(parameters: parameters,
-                                      encoding: JSONEncoding.default)
+            return .requestParameters(
+                parameters: parameters,
+                encoding: JSONEncoding.default
+            )
         case .deleteInterestTag(ids: let ids):
             let parameters: [String: [Any]] = ["tagIds": ids]
-            return .requestParameters(parameters: parameters,
-                                      encoding: JSONEncoding.default)
+            return .requestParameters(
+                parameters: parameters,
+                encoding: JSONEncoding.default
+            )
         case .deleteActivityTag(id: let id):
             let parameters: [String: Any] = ["activity-ids": "\(id)"]
-           return .requestParameters(parameters: parameters,
-                                     encoding: URLEncoding.queryString)
+           return .requestParameters(
+            parameters: parameters,
+            encoding: URLEncoding.queryString
+           )
         case .getMyActivities, .getAllActivities:
             return .requestPlain
         case .postMyActivities(ids: let ids):
             let parameters = ["activityIds": ids]
-            return .requestParameters(parameters: parameters,
-                                      encoding: JSONEncoding.default)
+            return .requestParameters(
+                parameters: parameters,
+                encoding: JSONEncoding.default
+            )
         case .updateProfileImage(image: let image):
             return .uploadMultipart([image])
-            
         }
     }
 

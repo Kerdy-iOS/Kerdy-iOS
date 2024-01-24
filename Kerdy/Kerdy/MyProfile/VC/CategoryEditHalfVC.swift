@@ -137,7 +137,6 @@ final class CategoryEditHalfVC: UIViewController {
             .subscribe(
                 onCompleted: { [weak self] in
                     self?.dismiss(animated: true, completion: nil)
-                    
                 },
                 onError: { error in
                     print(error)
