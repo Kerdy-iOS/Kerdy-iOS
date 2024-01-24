@@ -34,7 +34,7 @@ final class FilterViewModel {
     
     let selectedProgress = BehaviorRelay<[String]>(value: [])
     let selectedTechs = BehaviorRelay<[String]>(value: [])
-    let progressSectionData = BehaviorRelay<[String]>(value: ["진행중", "진행 예정", "마감"])
+    let progressSectionData = BehaviorRelay<[String]>(value: ["진행중", "진행예정", "마감"])
     let techSectionData = BehaviorRelay<[String]>(value: [])
     let startDate = BehaviorRelay<String?>(value: nil)
     let endDate = BehaviorRelay<String?>(value: nil)

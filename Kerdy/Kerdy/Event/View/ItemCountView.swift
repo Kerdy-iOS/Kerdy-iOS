@@ -55,7 +55,7 @@ final class ItemCountView: UIView {
         }
 
         endLabel.snp.makeConstraints {
-            $0.leading.equalTo(countLabel.snp.trailing)
+            $0.leading.equalTo(countLabel.snp.trailing).offset(1)
             $0.height.equalTo(14)
             $0.verticalEdges.trailing.equalToSuperview()
             $0.centerY.equalToSuperview()

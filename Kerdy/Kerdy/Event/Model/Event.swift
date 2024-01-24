@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Event: Codable {
+struct Event: Codable, Equatable {
     let id: Int
     let name: String
     let informationUrl: String
@@ -23,9 +23,4 @@ struct Event: Codable {
     let organization: String
     let paymentType: String
     let eventMode: String
-}
-
-func parseEvents(data: Data) throws -> [Event] {
-    let decoder = JSONDecoder()
-    return try decoder.decode([Event].self, from: data)
 }

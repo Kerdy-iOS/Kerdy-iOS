@@ -170,7 +170,6 @@ extension SettingVC {
                 let section = NSCollectionLayoutSection.list(using: config,
                                                              layoutEnvironment: layoutEnvironment)
                 return section
-                
             }
         }
     }

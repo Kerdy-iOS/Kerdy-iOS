@@ -13,6 +13,9 @@ import RxCocoa
 
 final class EventVC: BaseVC {
     typealias EventCell = EventCollectionViewCell
+    typealias FilterCell = FilterCollectionViewCell
+    typealias DataSource = UICollectionViewDiffableDataSource<Int, FilterItem>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, FilterItem>
     
     private lazy var searchContainerView = UIView()
 
@@ -70,7 +73,14 @@ final class EventVC: BaseVC {
     }()
 
     private lazy var filterContainerView = UIView()
-
+    
+    private lazy var filterCollectionView: UICollectionView = {
+        let layout = createCollectionViewLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
+        return collectionView
+    }()
+    
     private lazy var eventCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -84,20 +94,23 @@ final class EventVC: BaseVC {
 
     private lazy var divideLine = DivideLine(frame: .zero, backgroundColor: .kerdyGray01)
     
+    private var dataSource: DataSource?
     private let viewModel = EventViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setLayout()
         setUI()
-        setupCollectionViewBindings()
-    }
-
-    private func setUI() {
-        view.backgroundColor = .systemBackground
     }
     
-    private func updateCategoryColor(index: Int) {
+    private func setUI() {
+        view.backgroundColor = .systemBackground
+        filterCollectionView.delegate = self
+        configureDataSource()
+        setupCollectionViewBindings()
+    }
+    
+    private func updateCategory(index: Int) {
         for categoryIndex in 0...2 {
             guard
                 let categoryView = categoryContainerView.arrangedSubviews[categoryIndex] as? CategoryView
@@ -109,17 +122,21 @@ final class EventVC: BaseVC {
                 categoryView.setUnselected()
             }
         }
+        
+        viewModel.setEventCVIndex(index: index)
     }
 
     @objc func categoryBtnTapped(_ sender: UIButton) {
         let tag = sender.tag
         let indexPath = IndexPath(item: tag, section: 0)
         eventCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        updateCategoryColor(index: tag)
+        updateCategory(index: tag)
     }
 
     @objc func filterBtnTapped(_ sender: UIButton) {
         let nextVC = FilterVC()
+        nextVC.delegate = self
+        nextVC.setViewModel(filter: viewModel.getCurrentFilter())
         navigationController?.pushViewController(nextVC, animated: true)
     }
 }
@@ -127,10 +144,12 @@ final class EventVC: BaseVC {
 // MARK: - 레이아웃 설정
 extension EventVC {
     private func setLayout() {
-        view.addSubview(searchContainerView)
-        view.addSubview(categoryContainerView)
-        view.addSubview(filterContainerView)
-        view.addSubview(divideLine)
+        view.addSubviews(
+            searchContainerView,
+            categoryContainerView,
+            filterContainerView,
+            divideLine
+        )
 
         setUpSearchContainerViewLayout()
         setUpCategoryContainerViewLayout()
@@ -144,7 +163,7 @@ extension EventVC {
         }
 
         filterContainerView.snp.makeConstraints {
-            $0.height.equalTo(42).priority(250)
+            $0.height.equalTo(46).priority(250)
             $0.top.equalTo(categoryContainerView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
         }
@@ -204,13 +223,16 @@ extension EventVC {
     }
 
     private func setUpfilterContainerViewLayout() {
-        filterContainerView.addSubview(itemCountContainerView)
-        filterContainerView.addSubview(filterBtn)
+        filterContainerView.addSubviews(
+            itemCountContainerView,
+            filterBtn,
+            filterCollectionView
+        )
 
         itemCountContainerView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(16)
             $0.leading.equalToSuperview().offset(17)
-            $0.width.equalTo(38)
+            $0.width.equalTo(50)
             $0.height.equalTo(14)
         }
 
@@ -219,6 +241,13 @@ extension EventVC {
             $0.height.equalTo(14)
             $0.top.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().offset(-17)
+        }
+        
+        filterCollectionView.snp.makeConstraints {
+            $0.top.equalTo(itemCountContainerView.snp.bottom).offset(15)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(22)
+            $0.bottom.equalToSuperview().offset(-6)
         }
     }
 
@@ -239,13 +268,87 @@ extension EventVC {
     }
 }
 
+// MARK: - FilterCOllectionView datasource설정
+extension EventVC {
+    private func configureDataSource() {
+        let cellRegistration = UICollectionView.CellRegistration<FilterCell, FilterItem> { cell, _, item in
+            cell.configure(tag: item.name, type: item.type)
+        }
+        
+        dataSource = DataSource(collectionView: filterCollectionView) { (
+            collectionView: UICollectionView,
+            indexPath: IndexPath,
+            identifier: FilterItem
+        ) -> UICollectionViewCell? in return collectionView.dequeueConfiguredReusableCell(
+                using: cellRegistration,
+                for: indexPath,
+                item: identifier
+            )
+        }
+        
+        var snapshot = Snapshot()
+        let currentFilter = viewModel.getCurrentFilter()
+        let selectedFilters = currentFilter.combinedStrings
+        snapshot.appendSections([0])
+        snapshot.appendItems(selectedFilters, toSection: 0)
+        dataSource?.apply(snapshot, animatingDifferences: false)
+        
+        let isFilterCollectionViewHidden = selectedFilters.isEmpty
+        filterCollectionView.isHidden = isFilterCollectionViewHidden
+        
+        divideLine.snp.updateConstraints {
+            $0.top.equalTo(filterContainerView.snp.bottom)
+                .offset(isFilterCollectionViewHidden ? -22 : 0)
+        }
+    }
+    
+    private func createCollectionViewLayout() -> UICollectionViewLayout {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .estimated(100
+),
+            heightDimension: .absolute(22)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.edgeSpacing = NSCollectionLayoutEdgeSpacing(
+            leading: .fixed(5),
+            top: .fixed(0),
+            trailing: .fixed(5),
+            bottom: .fixed(0)
+        )
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .estimated(1000),
+            heightDimension: .fractionalHeight(1.0)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 0
+        section.contentInsets = NSDirectionalEdgeInsets(
+            top: 0,
+            leading: 17,
+            bottom: 0,
+            trailing: 17
+        )
+        
+        let layout = UICollectionViewCompositionalLayout(section: section, configuration: createLayoutConfiguration())
+        return layout
+    }
+    
+    private func createLayoutConfiguration() -> UICollectionViewCompositionalLayoutConfiguration {
+        let configuration = UICollectionViewCompositionalLayoutConfiguration()
+        configuration.scrollDirection = .horizontal
+        return configuration
+    }
+}
+
 // MARK: - collectionView delegate
 extension EventVC: UICollectionViewDelegate, UICollectionViewDataSource {
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 3
     }
-
+    
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
@@ -254,8 +357,23 @@ extension EventVC: UICollectionViewDelegate, UICollectionViewDataSource {
             withReuseIdentifier: EventCell.identifier,
             for: indexPath
         ) as? EventCell ?? EventCollectionViewCell()
-        
         return cell
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        if collectionView == filterCollectionView {
+            guard
+                let cell = filterCollectionView.cellForItem(at: indexPath) as? FilterCollectionViewCell,
+                let type = cell.type,
+                let tagName = cell.tagLabel.text
+            else { return }
+            print(type)
+            print(tagName)
+            viewModel.deleteFilter(type: type, name: tagName)
+        }
     }
 }
 
@@ -275,7 +393,7 @@ extension EventVC: UIScrollViewDelegate {
         let visibleIndexPaths = eventCollectionView.indexPathsForVisibleItems
         if let indexPath = visibleIndexPaths.first {
             let row = indexPath.row
-            updateCategoryColor(index: row)
+            updateCategory(index: row)
         }
     }
 }
@@ -292,7 +410,29 @@ extension EventVC {
                     cellType: EventCell.self
                 )) {_, events, cell in
                     cell.configure(with: events)
+                    cell.tableView.reloadData()
                 }
                 .disposed(by: disposeBag)
+        
+        viewModel.filterObservable
+            .subscribe(onNext: { [weak self] newFilter in
+                let combinedStrings = newFilter.combinedStrings
+                self?.configureDataSource()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.curEventObservable
+            .subscribe(onNext: { [weak self] events in
+                self?.itemCountContainerView.setCount(count: events.count)
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
+// MARK: - filterVC에서 data 전달 위한 Delegate
+extension EventVC: DataTransferDelegate {
+    func dataTransfered(data: Any) {
+        guard let data = data as? EventFilter else { return }
+        viewModel.updateFilter(data)
     }
 }
