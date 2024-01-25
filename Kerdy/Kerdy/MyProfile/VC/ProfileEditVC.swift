@@ -7,12 +7,18 @@
 
 import UIKit
 import Core
+import RxSwift
+import RxCocoa
 
-final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate {
+final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate, ProfileTagBtnDelegate, ActivityBtnDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    let clubDummy = ["DDD5 기5", "KEEPER 12기6"]
-    let educationDummy = ["DDD 5기", "KEEPER 12기", "멋쟁이 사자들 5기"]
-    let dummyTitle = ["교육 활동", "동아리 활동"]
+    let cellTitle = ["교육 활동", "동아리 활동"]
+    
+    private var activities: [Activity] = []
+    
+    private let profileViewModel = ProfileViewModel.shared
+    
+    private let disposeBag = DisposeBag()
     
     private lazy var closeBtn: UIButton = {
         let btn = UIButton()
@@ -33,6 +39,7 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate {
         btn.setTitle("완료", for: .normal)
         btn.setTitleColor(.kerdyMain, for: .normal)
         btn.titleLabel?.font = .nanumSquare(to: .regular, size: 14)
+        btn.addTarget(self, action: #selector(doneBtnTapped), for: .touchUpInside)
         return btn
     }()
     
@@ -54,9 +61,20 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate {
     private lazy var writeBtn: UIButton = {
         let btn = UIButton()
         btn.setImage(.icPencil, for: .normal)
+        btn.addTarget(self, action: #selector(writeBtnTapped), for: .touchUpInside)
         return btn
     }()
     
+    private lazy var descTextView: UITextView = {
+        let textView = UITextView()
+        textView.delegate = self
+        textView.textContainer.maximumNumberOfLines = 2
+        textView.textContainer.lineBreakMode = .byTruncatingTail
+        textView.font = .nanumSquare(to: .regular, size: 13)
+        textView.textColor = .kerdyGray04
+        return textView
+    }()
+
     private lazy var userImgBtn: UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(named: "img_user"), for: .normal)
@@ -73,6 +91,7 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate {
     private lazy var cameraBtn: UIButton = {
         let btn = UIButton()
         btn.setImage(.icCamera, for: .normal)
+        btn.addTarget(self, action: #selector(cameraBtnTapped), for: .touchUpInside)
         return btn
     }()
     
@@ -137,23 +156,82 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate {
     
     private lazy var interestTag2: ProfileTagBtn = ProfileTagBtn()
     
+    private lazy var interestTag3: ProfileTagBtn = ProfileTagBtn()
+    
+    private lazy var interestTag4: ProfileTagBtn = ProfileTagBtn()
+    
     private lazy var tableView: UITableView = UITableView()
+    
+    private let scrollView: UIScrollView = {
+        let sv = UIScrollView()
+        sv.showsHorizontalScrollIndicator = false
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        return sv
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
         setLayout()
-        setTags()
         setTableView()
+        setTagCorners()
+        setTextField()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        bindViewModel()
     }
     
     override func viewWillLayoutSubviews() {
         setUserImg()
         setGreenRing()
-        interestTag1.setCorner()
-        interestTag2.setCorner()
+    }
+
+    private func setActivities() {
+        guard let activity = profileViewModel.memberInfo.value?.activities else { return }
+        activities = activity
     }
     
+    private func bindViewModel() {
+        profileViewModel.memberInfo
+            .subscribe(onNext: { [weak self] member in
+                guard let member = member else { return }
+                self?.updateUI(member: member)
+                self?.tableView.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
+        profileViewModel.myActivities
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.tableView.reloadData()
+                self?.setTags()
+            })
+            .disposed(by: disposeBag)
+        
+//        profileViewModel.myTags
+//            .subscribe(onNext: { [weak self] _ in
+//                self?.setTags()
+//            })
+//            .disposed(by: disposeBag)
+    }
+
+    private func updateUI(member: MemberProfileResponseDTO) {
+
+        nameLabel.text = member.name
+        userImgBtn.kf.setImage(with: URL(string: member.imageURL), for: .normal)
+        
+        if member.description.isEmpty {
+            descTextView.text = "소개말이 없습니다."
+        } else {
+            descTextView.text = profileViewModel.memberInfo.value?.description
+        }
+    }
+    
+    private func setTextField() {
+        descTextView.delegate = self
+    }
+
     private func setTableView() {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(ProfileActivityCell.self, forCellReuseIdentifier: "ProfileActivityCell")
@@ -170,8 +248,7 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate {
             titleLabel,
             doneBtn,
             nameLabel,
-            introduceLabel,
-            writeBtn,
+            descTextView,
             greenRing,
             userImgBtn,
             cameraBtn,
@@ -183,11 +260,11 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate {
             activityLabel,
             addLabel,
             activityAddBtn,
-            categoryStackView,
+            scrollView,
             tableView
         )
         
-        categoryStackView.addArrangedSubviews(interestTag1, interestTag2)
+        scrollView.addSubview(categoryStackView)
         
         closeBtn.snp.makeConstraints {
             $0.width.equalTo(24)
@@ -214,17 +291,11 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate {
             $0.leading.equalToSuperview().offset(17)
         }
         
-        introduceLabel.snp.makeConstraints {
-            $0.height.equalTo(15)
+        descTextView.snp.makeConstraints {
+            $0.height.equalTo(50)
             $0.top.equalTo(nameLabel.snp.bottom).offset(9)
             $0.leading.equalToSuperview().offset(17)
-        }
-        
-        writeBtn.snp.makeConstraints {
-            $0.width.equalTo(13)
-            $0.height.equalTo(13)
-            $0.top.equalTo(nameLabel.snp.bottom).offset(9)
-            $0.leading.equalTo(introduceLabel.snp.trailing).offset(5)
+            $0.trailing.equalToSuperview().offset(-200)
         }
         
         userImgBtn.snp.makeConstraints {
@@ -251,7 +322,7 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate {
         upperDivideLine.snp.makeConstraints {
             $0.height.equalTo(0.3)
             $0.horizontalEdges.equalToSuperview()
-            $0.top.equalTo(introduceLabel.snp.bottom).offset(30)
+            $0.top.equalTo(descTextView.snp.bottom).offset(5)
         }
         
         interestingLabel.snp.makeConstraints {
@@ -298,19 +369,18 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate {
             $0.trailing.equalToSuperview().offset(-17)
         }
         
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(selectLabel.snp.bottom).offset(23)
+            $0.height.equalTo(26)
+            $0.horizontalEdges.equalToSuperview().inset(17)
+        }
+        
         categoryStackView.snp.makeConstraints {
-            $0.top.equalTo(selectLabel.snp.bottom).offset(23)
-            $0.leading.equalToSuperview().offset(17)
-        }
-        
-        interestTag1.snp.makeConstraints {
-            $0.top.equalTo(selectLabel.snp.bottom).offset(23)
-            $0.height.equalTo(26)
-        }
-        
-        interestTag2.snp.makeConstraints {
-            $0.top.equalTo(selectLabel.snp.bottom).offset(23)
-            $0.height.equalTo(26)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.top.equalToSuperview()
+            $0.bottom.equalToSuperview()
+            $0.height.equalToSuperview()
         }
         
         tableView.snp.makeConstraints {
@@ -321,8 +391,37 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate {
     }
     
     private func setTags() {
-        interestTag1.setTitle(title: "iOS")
-        interestTag2.setTitle(title: "안드로이드")
+        let btns = [interestTag1, interestTag2, interestTag3, interestTag4]
+        
+        for btn in categoryStackView.arrangedSubviews {
+            categoryStackView.removeArrangedSubview(btn)
+            btn.removeFromSuperview()
+        }
+        
+        let myJobActivities = profileViewModel.myActivities.value.filter { $0.activityType == "직무" }
+        
+        for i in 0..<myJobActivities.count {
+            btns[i].setTitle(title: myJobActivities[i].name)
+            categoryStackView.addArrangedSubview(btns[i])
+            btns[i].tagId = myJobActivities[i].id
+            btns[i].delegate = self
+        }
+        setTagCorners()
+    }
+    
+    private func setTagCorners() {
+        DispatchQueue.main.async {
+            for btn in self.categoryStackView.arrangedSubviews {
+                btn.roundCorners(topLeft: 8, topRight: 16, bottomLeft: 16, bottomRight: 8)
+            }
+        }
+    }
+    
+    private func openAlbum() {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.sourceType = .photoLibrary
+        present(picker, animated: true, completion: nil)
     }
     
     private func setUserImg() {
@@ -348,12 +447,54 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate {
         dismiss(animated: false)
     }
     
-    @objc func cameraBtnTapped(_ sender: UIButton) {
+    @objc func doneBtnTapped(_ sender: UIButton) {
+        if let description = descTextView.text {
+            self.profileViewModel.putMemberDescription(description: description)
+                .subscribe(
+                    onCompleted: { [weak self] in
+                        self?.dismiss(animated: true, completion: nil)
+                        
+                    },
+                    onError: { error in
+                        print(error)
+                    }
+                )
+                .disposed(by: disposeBag)
+        }
+    }
+    
+    func deleteBtnTapped(btn: ProfileTagBtn) {
         
+        profileViewModel.deleteActivityTag(id: btn.tagId!)
+            .subscribe(onCompleted: { [weak self] in
+                btn.removeFromSuperview()
+                self?.categoryStackView.layoutIfNeeded()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            profileViewModel.updateProfileImage(image: image)
+                .subscribe(
+                    onCompleted: { [weak self] in
+                        self?.userImgBtn.setImage(image, for: .normal)
+                        self?.dismiss(animated: true, completion: nil)
+                    }
+                )
+                .disposed(by: disposeBag)
+        }
+    }
+
+    @objc func cameraBtnTapped(_ sender: UIButton) {
+        openAlbum()
     }
     
     @objc func categoryAddBtnTapped(_ sender: UIButton) {
-        let nextVC = ProfileEditHalfVC()
+        let nextVC = CategoryEditHalfVC()
+        
+        let categoryCnt = profileViewModel.myActivities.value.filter { $0.activityType == "직무" }.count
+        nextVC.selectLabel.text = "최대 \(4 - categoryCnt)개까지 선택 가능합니다."
         if let sheet = nextVC.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
             sheet.prefersGrabberVisible = true
@@ -374,9 +515,22 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate {
         self.present(imgVC, animated: false, completion: nil)
     }
     
+    @objc func writeBtnTapped(_ sender: UIButton) {
+        writeBtn.rx.tap
+            .subscribe(onNext: { [weak self] in
+                if let description = self?.nameLabel.text {
+                    self?.profileViewModel.putMemberDescription(description: description)
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
     func addBtnTapped(cell: ProfileActivityCell) {
         if cell.titleLabel.text == "동아리 활동" {
             let nextVC = ProfileEditHalfVC()
+            nextVC.isClub = true
+            nextVC.interestingLabel.text = "상세 활동 선택"
+            nextVC.selectLabel.text = "활동했던 이력들을 선택하고 추가하세요."
             if let sheet = nextVC.sheetPresentationController {
                 sheet.detents = [.medium(), .large()]
                 sheet.prefersGrabberVisible = true
@@ -384,81 +538,101 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate {
             self.present(nextVC, animated: true)
         } else {
             let nextVC = ProfileEditHalfVC()
+            nextVC.isEdu = true
+            nextVC.interestingLabel.text = "상세 활동 선택"
+            nextVC.selectLabel.text = "활동했던 이력들을 선택하고 추가하세요."
             if let sheet = nextVC.sheetPresentationController {
                 sheet.detents = [.medium(), .large()]
                 sheet.prefersGrabberVisible = true
             }
             self.present(nextVC, animated: true)
         }
+    }
+    
+    func deleteBtnTapped(btn: ActivityBtn) {
+        profileViewModel.deleteActivityTag(id: btn.tagId)
+            .subscribe(
+                onCompleted: { [weak self] in
+                    btn.removeFromSuperview()
+                }
+            )
+            .disposed(by: disposeBag)
     }
 }
 
 extension ProfileEditVC: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableView.rowHeight
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dummyTitle.count
+        return cellTitle.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileActivityCell", for: indexPath) as! ProfileActivityCell
-        cell.delegate = self
         cell.selectionStyle = .none
-        cell.titleLabel.text = dummyTitle[indexPath.row]
+        cell.titleLabel.text = cellTitle[indexPath.row]
+        cell.delegate = self
         
-        let clearView: UIView = {
-            let view = UIView()
-            view.backgroundColor = .clear
-            return view
-        }()
+        for btn in cell.activitySV.arrangedSubviews {
+            cell.activitySV.removeArrangedSubview(btn)
+            btn.removeFromSuperview()
+        }
+        
+        let educationData = profileViewModel.myActivities.value.filter { $0.activityType == "교육" }
+
+        let clubData = profileViewModel.myActivities.value.filter { $0.activityType == "동아리" }
+        
+        cell.activitySV.isUserInteractionEnabled = true
         
         if indexPath.row == 0 {
-            for data in educationDummy {
-                let activitySV = ProfileTagBtn()
-                activitySV.setTitle(title: data)
-                cell.labels.append(activitySV)
+            for data in educationData {
+                let activitySV = ActivityBtn()
+                activitySV.setTitle(title: data.name)
+                cell.activitySV.addArrangedSubview(activitySV)
+                activitySV.closeBtn.isEnabled = true
+                activitySV.tagId = data.id
+                activitySV.delegate = self
+                activitySV.snp.makeConstraints {
+                    $0.height.equalTo(26)
+                    $0.width.equalTo(200)
+                }
             }
         } else {
-            for data in clubDummy {
-                let activitySV = ProfileTagBtn()
-                activitySV.setTitle(title: data)
-                cell.labels.append(activitySV)
+            for data in clubData {
+                let activitySV = ActivityBtn()
+                activitySV.setTitle(title: data.name)
+                activitySV.closeBtn.isEnabled = true
+                activitySV.tagId = data.id
+                cell.activitySV.addArrangedSubview(activitySV)
+                activitySV.closeBtn.isEnabled = true
+                activitySV.delegate = self
+                activitySV.snp.makeConstraints {
+                    $0.height.equalTo(26)
+                    $0.width.equalTo(200)
+                }
             }
         }
-
-        for label in cell.labels {
-            let dotImg: UIImageView = {
-                let img = UIImageView()
-                img.image = .icDot
-                return img
-            }()
-            cell.contentView.addSubview(label)
-            cell.contentView.addSubview(dotImg)
-            
-            dotImg.snp.makeConstraints {
-                $0.top.equalToSuperview().offset(cell.labelOffset + 5)
-                $0.leading.equalToSuperview().offset(46)
-            }
-            
-            label.snp.makeConstraints {
-                $0.top.equalToSuperview().offset(cell.labelOffset - 5)
-                $0.height.equalTo(26)
-                $0.leading.equalToSuperview().offset(45)
-            }
-            cell.labelOffset += 25
-        }
         
-        cell.contentView.addSubview(clearView)
-        
-        clearView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(cell.labelOffset)
-            $0.leading.equalToSuperview().offset(46)
-            $0.bottom.equalToSuperview()
-            $0.height.equalTo(25)
-        }
-        
-        if indexPath.row == 1 {
+        if indexPath.row == cellTitle.count - 1 {
             cell.divideLine.isHidden = true
         }
         
         return cell
+    }
+}
+
+extension ProfileEditVC: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+           textView.resignFirstResponder()
+           return false
+       }
+        let currentText = textView.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
+        return updatedText.count <= 38
     }
 }

@@ -44,6 +44,7 @@ final class EventVC: BaseVC {
         let button = UIButton()
         button.setTitle(nil, for: .normal)
         button.setImage(UIImage(named: "ic_alert"), for: .normal)
+        button.addTarget(self, action: #selector(tapNotificationBtn), for: .touchUpInside)
         return button
     }()
 
@@ -434,5 +435,15 @@ extension EventVC: DataTransferDelegate {
     func dataTransfered(data: Any) {
         guard let data = data as? EventFilter else { return }
         viewModel.updateFilter(data)
+    }
+}
+
+extension EventVC {
+    
+    @objc
+    func tapNotificationBtn() {
+        
+        let nextVC = NotificationArchiveVC(viewModel: ArchiveViewModel())
+        self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }
