@@ -15,4 +15,3 @@ struct MemberInfo: Codable {
         self.activityIds = []
     }
 }
-
