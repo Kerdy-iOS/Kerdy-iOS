@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class UserImageVC: UIViewController {
     
@@ -26,6 +27,7 @@ final class UserImageVC: UIViewController {
         super.viewDidLoad()
         setUI()
         setLayout()
+        setImg()
     }
     
     private func setLayout() {
@@ -48,6 +50,14 @@ final class UserImageVC: UIViewController {
         }
     }
     
+    private func setImg() {
+        if let urlString = ProfileViewModel.shared.memberProfile.value?.imageURL, let url = URL(string: urlString) {
+            userImg.kf.setImage(with: url)
+        } else {
+            userImg.image = nil
+        }
+    }
+
     private func setUI() {
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
     }

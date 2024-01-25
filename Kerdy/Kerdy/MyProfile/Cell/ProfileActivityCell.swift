@@ -16,7 +16,7 @@ protocol ProfileActivityCellDelegate: AnyObject {
 final class ProfileActivityCell: UITableViewCell {
     
     weak var delegate: ProfileActivityCellDelegate?
-    var labels: [ProfileTagBtn] = []
+    var labels: Set<ProfileTagBtn> = []
     var labelOffset = 50
     
     let titleLabel: UILabel = {
@@ -39,6 +39,14 @@ final class ProfileActivityCell: UITableViewCell {
         return img
     }()
     
+    let activitySV: UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .vertical
+        sv.spacing = 8
+        sv.alignment = .leading
+        return sv
+    }()
+    
     let divideLine = DivideLine(frame: .zero, backgroundColor: .kerdyGray01)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -51,6 +59,7 @@ final class ProfileActivityCell: UITableViewCell {
         contentView.addSubview(activityImg)
         contentView.addSubview(titleLabel)
         contentView.addSubview(addBtn)
+        contentView.addSubview(activitySV)
         
         divideLine.snp.makeConstraints {
             $0.verticalEdges.equalToSuperview()
@@ -76,6 +85,14 @@ final class ProfileActivityCell: UITableViewCell {
             $0.top.equalToSuperview().offset(5)
             $0.leading.equalTo(titleLabel.snp.trailing).offset(7)
         }
+        
+        activitySV.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(37)
+            $0.trailing.equalToSuperview()
+            $0.top.equalToSuperview().offset(30)
+            $0.bottom.equalToSuperview().offset(-10).priority(999)
+        }
+
     }
 
     required init?(coder: NSCoder) {

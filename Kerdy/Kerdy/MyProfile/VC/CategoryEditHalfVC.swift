@@ -1,15 +1,15 @@
 //
-//  ProfileEditHalfVC.swift
+//  CategoryEditHalfVC.swift
 //  Kerdy
 //
-//  Created by 최다경 on 12/23/23.
+//  Created by 최다경 on 1/11/24.
 //
 
 import UIKit
 import RxSwift
 import RxCocoa
 
-final class ProfileEditHalfVC: UIViewController {
+final class CategoryEditHalfVC: UIViewController {
     
     typealias DataSource = UICollectionViewDiffableDataSource<Int, ActivityResponse>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Int, ActivityResponse>
@@ -136,27 +136,26 @@ final class ProfileEditHalfVC: UIViewController {
         viewModel.postMyActivities(ids: viewModel.selectedActivities.value)
             .subscribe(
                 onCompleted: { [weak self] in
-                    self?.dismiss(animated: true)
+                    self?.dismiss(animated: true, completion: nil)
+                },
+                onError: { error in
+                    print(error)
                 }
             )
             .disposed(by: disposeBag)
     }
-
 }
 
-extension ProfileEditHalfVC {
+extension CategoryEditHalfVC {
     private func configureDataSource() {
         let cellRegistration = UICollectionView.CellRegistration<ProfileTagCell, ActivityResponse> { cell, indexPath, itemIdentifier in
             let activity: ActivityResponse
-            
-            if self.isEdu {
-                activity = self.viewModel.eduActivities.value[indexPath.row]
-            } else {
-                activity = self.viewModel.clubActivities.value[indexPath.row]
-            }
+        
+            activity = self.viewModel.jobActivities.value[indexPath.row]
             
             let isSelected = self.viewModel.selectedActivities.value.contains(activity.id)
             cell.confiure(tag: activity.name)
+            
             cell.setBackgroundColor(isSelected: isSelected)
         }
         
@@ -171,12 +170,7 @@ extension ProfileEditHalfVC {
         
         var snapshot = Snapshot()
         snapshot.appendSections([0])
-        if self.isEdu {
-            snapshot.appendItems(viewModel.eduActivities.value, toSection: 0)
-        } else if self.isClub {
-            snapshot.appendItems(viewModel.clubActivities.value, toSection: 0)
-        } 
-
+        snapshot.appendItems(viewModel.jobActivities.value, toSection: 0)
         dataSource?.apply(snapshot, animatingDifferences: false)
     }
     
@@ -213,7 +207,7 @@ extension ProfileEditHalfVC {
     }
     
     private func updateCollectionView(with activities: [ActivityResponse]) {
-        print("update")
+        
         var snapshot = Snapshot()
         snapshot.appendSections([0])
         snapshot.appendItems(activities, toSection: 0)
@@ -222,45 +216,39 @@ extension ProfileEditHalfVC {
 }
 
 // MARK: - collectionView delegate
-extension ProfileEditHalfVC: UICollectionViewDelegate {
+extension CategoryEditHalfVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? ProfileTagCell else { return }
         let selectedActivity: ActivityResponse
-        if self.isEdu {
-            selectedActivity = viewModel.eduActivities.value[indexPath.row]
-
-        } else {
-            selectedActivity = viewModel.clubActivities.value[indexPath.row]
-        } 
+        selectedActivity = viewModel.jobActivities.value[indexPath.row]
 
         let isSelected = viewModel.toggleSelectedTag(id: selectedActivity.id)
         cell.setBackgroundColor(isSelected: isSelected)
-    }
-}
-
-// MARK: - binding
-
-extension ProfileEditHalfVC {
-    private func bindViewModel() {
-        if self.isEdu {
-            viewModel.eduActivities
-                .observe(on: MainScheduler.instance)
-                .subscribe(onNext: { [weak self] activities in
-                    self?.updateCollectionView(with: activities)
-                })
-                .disposed(by: disposeBag)
-        } else {
-            viewModel.clubActivities
-                .observe(on: MainScheduler.instance)
-                .subscribe(onNext: { [weak self] activities in
-                    self?.updateCollectionView(with: activities)
-                })
-                .disposed(by: disposeBag)
+        
+        let myJobActivities = viewModel.myActivities.value.filter { $0.activityType == "직무" }
+        
+        if viewModel.selectedActivities.value.count + myJobActivities.count > 4 {
+            viewModel.toggleSelectedTag(id: selectedActivity.id)
+            cell.setBackgroundColor(isSelected: !isSelected)
         }
     }
 }
 
+// MARK: - binding
+extension CategoryEditHalfVC {
+    private func bindViewModel() {
+
+        viewModel.jobActivities
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] activities in
+                self?.updateCollectionView(with: activities)
+            })
+            .disposed(by: disposeBag)
+
+    }
+}
+
 // MARK: - scrollView delegate
-extension ProfileEditHalfVC: UIScrollViewDelegate {
+extension CategoryEditHalfVC: UIScrollViewDelegate {
     
 }
