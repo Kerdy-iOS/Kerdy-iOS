@@ -18,16 +18,10 @@ final class SettingViewModel: ViewModelType {
     // MARK: - Property
     
     var disposeBag = DisposeBag()
-    private let settingManager: SettingManager
+    private let settingManager =  SettingManager.shared
     private let id = Int(KeyChainManager.loadMemberID())
     private let basicItems = SettingBasicModel.basicWithIcon + SettingBasicModel.basic
     private let settingList = BehaviorRelay<([SettingSectionItem.Model])>(value: [])
-    
-    // MARK: - Init
-    
-    init(settingManager: SettingManager) {
-        self.settingManager = settingManager
-    }
     
     struct Input {
         

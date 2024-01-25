@@ -18,13 +18,12 @@ final class CommentsViewModel: ViewModelType {
     // MARK: - Property
     
     var disposeBag = DisposeBag()
-    private let commentsManager: CommentManager
+    private let commentsManager = CommentManager.shared
     private var commentID: Int
     
     // MARK: - Init
     
-    init(commentID: Int, commentsManager: CommentManager) {
-        self.commentsManager = commentsManager
+    init(commentID: Int) {
         self.commentID = commentID
     }
     

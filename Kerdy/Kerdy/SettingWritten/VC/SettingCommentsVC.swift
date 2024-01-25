@@ -87,7 +87,7 @@ extension SettingCommentsVC {
         commentDataSource.itemSelectedSubject
             .bind(with: self) { owner, commentID in
                 
-                let commentsVC = CommentsVC(viewModel: CommentsViewModel(commentID: commentID, commentsManager: CommentManager.shared))
+                let commentsVC = CommentsVC(viewModel: CommentsViewModel(commentID: commentID))
                 owner.navigationController?.pushViewController(commentsVC, animated: true)
             }
             .disposed(by: disposeBag)

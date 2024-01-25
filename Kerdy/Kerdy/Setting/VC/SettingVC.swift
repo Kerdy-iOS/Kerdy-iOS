@@ -94,9 +94,9 @@ extension SettingVC {
 
                 switch indexPath.item {
                 case 0:
-                    vc = NotificationVC(viewModel: NotificationViewModel(tagManager: TagManager.shared))
+                    vc = NotificationVC(viewModel: NotificationViewModel())
                 case 1:
-                    vc = BlockListVC(viewModel: BlockListViewModel(blockManager: BlockManager.shared))
+                    vc = BlockListVC(viewModel: BlockListViewModel())
                 case 2:
                     vc = TermsOfUseVC()
                 case 4:
@@ -191,7 +191,7 @@ extension SettingVC {
         cell.rx.comment
             .asDriver()
             .drive(with: self) { owner, _ in
-                let nextVC = SettingCommentsVC(viewModel: SettingCommenetViewModel(commentManager: CommentManager.shared))
+                let nextVC = SettingCommentsVC(viewModel: SettingCommenetViewModel())
                 owner.navigationController?.pushViewController(nextVC, animated: true)
             }
             .disposed(by: cell.disposeBag)
@@ -207,7 +207,7 @@ extension SettingVC: PopUptoBlockDelegate {
         guard let authType = self.authType else { return }
         self.viewModel.authMember(type: authType)
         
-        SceneDelegate.shared?.changeRootViewControllerTo(AuthVC(viewModel: AuthViewModel(loginManager: LoginManager.shared)))
+        SceneDelegate.shared?.changeRootViewControllerTo(AuthVC(viewModel: AuthViewModel()))
     }
     
     func cancel() {

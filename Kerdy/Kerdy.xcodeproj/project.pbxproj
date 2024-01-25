@@ -89,13 +89,13 @@
 		09BB55202AF016B200A54B1B /* SettingProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB551F2AF016B200A54B1B /* SettingProfileCell.swift */; };
 		09BB55262AF0430200A54B1B /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB55252AF0430200A54B1B /* StringLiterals.swift */; };
 		09BB552A2AF0545400A54B1B /* SettingBasicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BB55292AF0545400A54B1B /* SettingBasicModel.swift */; };
-		09D6379D2B5E499A001CD013 /* ReportCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D6379C2B5E499A001CD013 /* ReportCompletedView.swift */; };
 		09C5A6F72B4ADD61004586CE /* NotificationArchiveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C5A6F62B4ADD61004586CE /* NotificationArchiveVC.swift */; };
 		09C5A6F92B4ADE93004586CE /* ArchiveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C5A6F82B4ADE93004586CE /* ArchiveCell.swift */; };
 		09C5A6FB2B4ADEAD004586CE /* ArchiveHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C5A6FA2B4ADEAD004586CE /* ArchiveHeaderView.swift */; };
 		09C5A6FF2B4AED35004586CE /* ArchiveSectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C5A6FE2B4AED35004586CE /* ArchiveSectionItem.swift */; };
 		09D637A32B5EB940001CD013 /* ArchiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D637A22B5EB940001CD013 /* ArchiveViewModel.swift */; };
 		09D637A52B60066F001CD013 /* ArchiveResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D637A42B60066F001CD013 /* ArchiveResponseDTO.swift */; };
+		09D6379D2B5E499A001CD013 /* ReportCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D6379C2B5E499A001CD013 /* ReportCompletedView.swift */; };
 		09ECB32F2AFE0AB2000F3008 /* SettingWriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ECB32E2AFE0AB2000F3008 /* SettingWriteCell.swift */; };
 		09ECB3352AFE15E7000F3008 /* CommentsResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ECB3342AFE15E7000F3008 /* CommentsResponseDTO.swift */; };
 		09ED941D2B2C316E001864EF /* BlockReponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ED941C2B2C316E001864EF /* BlockReponseDTO.swift */; };
