@@ -445,7 +445,5 @@ extension EventVC {
         
         let nextVC = NotificationArchiveVC(viewModel: ArchiveViewModel())
         self.navigationController?.pushViewController(nextVC, animated: true)
-
-        print("tapped")
     }
 }

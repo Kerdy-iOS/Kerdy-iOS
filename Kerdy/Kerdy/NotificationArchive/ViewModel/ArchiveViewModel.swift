@@ -94,8 +94,8 @@ extension ArchiveViewModel {
     }
     
     func updateList(index: IndexPath, action: ((Int) -> Void)? = nil) {
-        var patchList = archiveList.value
-        var patchData = patchList[index.section].items[index.item]
+        let patchList = archiveList.value
+        let patchData = patchList[index.section].items[index.item]
         switch patchData {
         case .new(let data), .old(let data):
             let notificationID = data.notificationID
@@ -104,8 +104,8 @@ extension ArchiveViewModel {
     }
     
     func deleteAllNotification(index: IndexPath) {
-        var patchList = archiveList.value
-        var sectionItems = patchList[index.section].items
+        let patchList = archiveList.value
+        let sectionItems = patchList[index.section].items
         
         let notificationIDs = sectionItems.compactMap { item -> Int? in
             if case let .old(data) = item {
