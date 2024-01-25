@@ -185,7 +185,6 @@
 		5B8F6FDF2B3DC39100F2E44A /* ProfileEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8F6FDE2B3DC39100F2E44A /* ProfileEditVC.swift */; };
 		5B8F6FE12B3DC3B100F2E44A /* ProfileEditHalfVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8F6FE02B3DC3B100F2E44A /* ProfileEditHalfVC.swift */; };
 		5B8F6FE32B3DC3CE00F2E44A /* ActivityEditHalfVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8F6FE22B3DC3CE00F2E44A /* ActivityEditHalfVC.swift */; };
-		5B8F6FE92B46C0FB00F2E44A /* Base-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B8F6FE82B46C0FB00F2E44A /* Base-Info.plist */; };
 		5B8F6FEB2B46C46600F2E44A /* MyProfileAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8F6FEA2B46C46600F2E44A /* MyProfileAPI.swift */; };
 		5B8F6FED2B46C4CC00F2E44A /* MyProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8F6FEC2B46C4CC00F2E44A /* MyProfileManager.swift */; };
 		5BA8E79B2B488E7800C9ED11 /* ActivityBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8E79A2B488E7800C9ED11 /* ActivityBtn.swift */; };
@@ -374,7 +373,6 @@
 		5B216AF92AF671CF00C028A0 /* FourthInitialSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthInitialSettingVC.swift; sourceTree = "<group>"; };
 		5B32AC182B0F7DCC00512DC5 /* ActivityAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityAPI.swift; sourceTree = "<group>"; };
 		5B32AC1A2B0F7DD900512DC5 /* ActivityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityModel.swift; sourceTree = "<group>"; };
-		5B32AC1D2B0F7F8100512DC5 /* InitialSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InitialSettingCell.swift; path = "/Users/choedagyeong/Desktop/Kerdy-iOS/Kerdy/Kerdy/InitialSetting/Cell/InitialSettingCell.swift"; sourceTree = "<absolute>"; };
 		5B370F3B2AF53E1300D0D3DE /* FirstInitialSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstInitialSettingVC.swift; sourceTree = "<group>"; };
 		5B370F3F2AF53F1E00D0D3DE /* SecondInitialSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondInitialSettingVC.swift; sourceTree = "<group>"; };
 		5B370F412AF546CE00D0D3DE /* ThirdInitialSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdInitialSettingVC.swift; sourceTree = "<group>"; };
@@ -387,8 +385,6 @@
 		5B8F6FDE2B3DC39100F2E44A /* ProfileEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditVC.swift; sourceTree = "<group>"; };
 		5B8F6FE02B3DC3B100F2E44A /* ProfileEditHalfVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditHalfVC.swift; sourceTree = "<group>"; };
 		5B8F6FE22B3DC3CE00F2E44A /* ActivityEditHalfVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityEditHalfVC.swift; sourceTree = "<group>"; };
-		5B8F6FE42B3DC4EF00F2E44A /* Base-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Base-Info.plist"; sourceTree = "<group>"; };
-		5B8F6FE82B46C0FB00F2E44A /* Base-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Base-Info.plist"; sourceTree = "<group>"; };
 		5B8F6FEA2B46C46600F2E44A /* MyProfileAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileAPI.swift; sourceTree = "<group>"; };
 		5B8F6FEC2B46C4CC00F2E44A /* MyProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileManager.swift; sourceTree = "<group>"; };
 		5BA8E79A2B488E7800C9ED11 /* ActivityBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityBtn.swift; sourceTree = "<group>"; };
@@ -1133,7 +1129,6 @@
 		3164D47D2AE21F810054F440 /* Kerdy */ = {
 			isa = PBXGroup;
 			children = (
-				5B8F6FE82B46C0FB00F2E44A /* Base-Info.plist */,
 				098D801F2B30016000706897 /* Kerdy.entitlements */,
 				095D39062AEE7B3C0083CC65 /* Application */,
 				5BE9BA9C2B25D68F00D5971F /* MyProfile */,
@@ -1502,7 +1497,6 @@
 				3164D48B2AE21F820054F440 /* LaunchScreen.storyboard in Resources */,
 				0986664B2B309FFD0066E394 /* GoogleService-Info.plist in Resources */,
 				095D390C2AEE7BC50083CC65 /* NanumSquareB.ttf in Resources */,
-				5B8F6FE92B46C0FB00F2E44A /* Base-Info.plist in Resources */,
 				31571C292AF3E1540037A2F2 /* .swiftlint.yml in Resources */,
 				095D390E2AEE7BE00083CC65 /* NanumSquareEB.ttf in Resources */,
 				095D39102AEE7BE60083CC65 /* NanumSquareR.ttf in Resources */,
