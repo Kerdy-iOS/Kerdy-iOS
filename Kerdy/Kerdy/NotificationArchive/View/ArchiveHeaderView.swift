@@ -10,7 +10,14 @@ import UIKit
 import Core
 import SnapKit
 
+import RxSwift
+import RxCocoa
+
 final class ArchiveHeaderView: UICollectionReusableView {
+    
+    // MARK: - Property
+    
+    var disposeBag = DisposeBag()
     
     // MARK: - UI Components
     
@@ -20,7 +27,7 @@ final class ArchiveHeaderView: UICollectionReusableView {
         return label
     }()
     
-    private let allDelete: UIButton = {
+    fileprivate let allDelete: UIButton = {
         let button = UIButton()
         button.setTitle(Strings.allDelete, for: .normal)
         button.setTitleColor(.kerdyGray02, for: .normal)
@@ -71,7 +78,18 @@ extension ArchiveHeaderView {
         }
     }
     
-    func configureHeader(title: String) {
+    func configureHeader(title: String, sectionIndex: Int) {
+        
         titleLabel.text = title
+        allDelete.isHidden = sectionIndex == 0
+    }
+}
+
+// MARK: - Reactive extension
+
+extension Reactive where Base: ArchiveHeaderView {
+
+    var delete: ControlEvent<Void> {
+        base.allDelete.rx.tap
     }
 }

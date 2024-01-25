@@ -10,9 +10,14 @@ import UIKit
 import Core
 import SnapKit
 
+import RxSwift
+import RxCocoa
+
 final class ArchiveCell: UICollectionViewCell {
     
     // MARK: - Property
+    
+    var disposeBag = DisposeBag()
     
     // MARK: - UI Components
     
@@ -45,7 +50,7 @@ final class ArchiveCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var deleteButton: UIButton = {
+    fileprivate lazy var deleteButton: UIButton = {
         let button = UIButton()
         button.setImage(.archiveCancelIcon, for: .normal)
         return button
@@ -121,5 +126,14 @@ extension ArchiveCell {
             profile.image = .emptyIcon
             content.text = eventInfo.title
         }
+    }
+}
+
+// MARK: - Reactive extension
+
+extension Reactive where Base: ArchiveCell {
+
+    var delete: ControlEvent<Void> {
+        base.deleteButton.rx.tap
     }
 }

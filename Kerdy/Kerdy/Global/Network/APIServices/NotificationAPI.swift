@@ -47,7 +47,10 @@ extension NotificationAPI: KerdyAPI {
             let parameters: [String: Any] = ["member-id": id]
             return .requestParameters(parameters: parameters,
                                       encoding: URLEncoding.default)
-        case .readState, .deleteNotification:
+        case .deleteNotification(ids: let ids):
+            let parameters: [String: [Int]] = ["deleteIds": ids]
+            return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
+        case .readState:
             return .requestPlain
         }
     }

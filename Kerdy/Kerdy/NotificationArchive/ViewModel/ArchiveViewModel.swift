@@ -53,12 +53,14 @@ extension ArchiveViewModel {
     func getNotifications(id: Int) {
         notificationManager.getList(id: id)
             .map { notifications in
-                return notifications.map { notification in
-                    let sectionItem: ArchiveSectionModel = notification.isRead
-                    ? .old(items: [.old(notification)])
-                    : .new(items: [.new(notification)])
-                    return sectionItem
-                }
+                
+                let newNotifications = notifications.filter { !$0.isRead }
+                let oldNotifications = notifications.filter { $0.isRead }
+                
+                let newSection = ArchiveSectionModel.new(items: newNotifications.map { .new($0) })
+                let oldSection = ArchiveSectionModel.old(items: oldNotifications.map { .old($0) })
+                
+                return [newSection, oldSection]
             }
             .subscribe(onSuccess: { [weak self] list in
                 guard let self = self else { return }
@@ -67,5 +69,50 @@ extension ArchiveViewModel {
                 HandleNetworkError.handleNetworkError(error)
             })
             .disposed(by: disposeBag)
+    }
+    
+    func patchNotification(id: Int) {
+        notificationManager.patchList(id: id)
+            .subscribe(onSuccess: { [weak self] data in
+                dump(data)
+            }, onFailure: { error in
+                HandleNetworkError.handleNetworkError(error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func deleteNotification(ids: [Int]) {
+        notificationManager.deleteList(ids: ids)
+            .subscribe(onSuccess: { [weak self] _ in
+                guard let self else { return }
+                guard let id = self.id else { return }
+                self.getNotifications(id: id)
+            }, onFailure: { error in
+                HandleNetworkError.handleNetworkError(error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func updateList(index: IndexPath, action: ((Int) -> Void)? = nil) {
+        var patchList = archiveList.value
+        var patchData = patchList[index.section].items[index.item]
+        switch patchData {
+        case .new(let data), .old(let data):
+            let notificationID = data.notificationID
+            action?(notificationID)
+        }
+    }
+    
+    func deleteAllNotification(index: IndexPath) {
+        var patchList = archiveList.value
+        var sectionItems = patchList[index.section].items
+        
+        let notificationIDs = sectionItems.compactMap { item -> Int? in
+            if case let .old(data) = item {
+                return data.notificationID
+            }
+            return nil
+        }
+        self.deleteNotification(ids: notificationIDs)
     }
 }

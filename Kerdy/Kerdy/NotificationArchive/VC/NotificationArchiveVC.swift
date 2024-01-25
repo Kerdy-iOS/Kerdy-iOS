@@ -87,6 +87,11 @@ extension NotificationArchiveVC {
         }
     }
     
+    private func setDelegate() {
+        
+        navigationBar.delegate = self
+    }
+    
     private func setBindings() {
         let input = ArchiveViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver())
         
@@ -95,11 +100,19 @@ extension NotificationArchiveVC {
         output.archiveList
             .drive(collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+        
+        collectionView.rx.itemSelected
+            .bind(with: self) { owner, index in
+                owner.viewModel.updateList(index: index) {
+                    owner.viewModel.patchNotification(id: $0)
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     func setDataSource() {
         
-        dataSource = DataSource(configureCell: { [weak self] dataSource, tableView, indexPath, item in
+        dataSource = DataSource(configureCell: { [weak self] _, tableView, indexPath, item in
             guard let self = self else { return UICollectionViewCell() }
             switch item {
             case .new(let data), .old(let data):
@@ -108,23 +121,46 @@ extension NotificationArchiveVC {
                     for: indexPath
                 ) as? ArchiveCell else { return UICollectionViewCell() }
                 cell.configure(data: data)
+                self.configure(cell: cell, index: indexPath)
                 return cell
             }
         }, configureSupplementaryView: { dataSource, collectionView, _, indexPath in
+            
             guard let header = collectionView.dequeueReusableSupplementaryView(
                 ofKind: UICollectionView.elementKindSectionHeader,
                 withReuseIdentifier: ArchiveHeaderView.identifier,
                 for: indexPath
             ) as? ArchiveHeaderView else { return UICollectionReusableView() }
             
-            header.configureHeader(title: dataSource[indexPath.section].title)
+            let title = dataSource[indexPath.section].title
+            header.configureHeader(title: title, sectionIndex: indexPath.section)
+            self.configure(header: header, index: indexPath)
             return header
         })
     }
+}
+
+extension NotificationArchiveVC {
     
-    private func setDelegate() {
+    func configure(cell: ArchiveCell, index: IndexPath) {
         
-        navigationBar.delegate = self
+        cell.rx.delete
+            .asDriver()
+            .drive(with: self) { owner, _ in
+                owner.viewModel.updateList(index: index) {
+                    owner.viewModel.deleteNotification(ids: [$0])
+                }
+            }
+            .disposed(by: cell.disposeBag)
+    }
+    
+    func configure(header: ArchiveHeaderView, index: IndexPath) {
+        header.rx.delete
+            .asDriver()
+            .drive(with: self) { owner, _ in
+                owner.viewModel.deleteAllNotification(index: index)
+            }
+            .disposed(by: header.disposeBag)
     }
 }
 
@@ -134,9 +170,10 @@ extension NotificationArchiveVC {
     
     private func layout() -> UICollectionViewCompositionalLayout {
         
-        var config = UICollectionLayoutListConfiguration(appearance: .plain)
+        var config = UICollectionLayoutListConfiguration(appearance: .grouped)
         config.showsSeparators = false
         config.headerMode = .supplementary
+        config.backgroundColor = .clear
         let layout = UICollectionViewCompositionalLayout.list(using: config)
         
         return layout
