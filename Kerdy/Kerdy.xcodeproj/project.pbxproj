@@ -34,7 +34,7 @@
 		09472C3B2B138B5C00B4A84E /* KeyChainValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09472C3A2B138B5C00B4A84E /* KeyChainValue.swift */; };
 		095A88FB2B4FCD1100DE7DDD /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095A88FA2B4FCD1100DE7DDD /* NotificationManager.swift */; };
 		095A88FD2B4FD3C300DE7DDD /* ModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095A88FC2B4FD3C300DE7DDD /* ModalVC.swift */; };
-		095A88FF2B4FD9F800DE7DDD /* CommonModalItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095A88FE2B4FD9F800DE7DDD /* CommonModalItem.swift */; };
+		095A88FF2B4FD9F800DE7DDD /* CommonModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095A88FE2B4FD9F800DE7DDD /* CommonModalViewModel.swift */; };
 		095A89012B4FDAE100DE7DDD /* CommonModalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095A89002B4FDAE100DE7DDD /* CommonModalCell.swift */; };
 		095A890C2B4FEF0E00DE7DDD /* ReportAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095A890B2B4FEF0E00DE7DDD /* ReportAPI.swift */; };
 		095A890E2B4FF0A800DE7DDD /* ReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095A890D2B4FF0A800DE7DDD /* ReportManager.swift */; };
@@ -247,7 +247,7 @@
 		09472C3A2B138B5C00B4A84E /* KeyChainValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainValue.swift; sourceTree = "<group>"; };
 		095A88FA2B4FCD1100DE7DDD /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		095A88FC2B4FD3C300DE7DDD /* ModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalVC.swift; sourceTree = "<group>"; };
-		095A88FE2B4FD9F800DE7DDD /* CommonModalItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModalItem.swift; sourceTree = "<group>"; };
+		095A88FE2B4FD9F800DE7DDD /* CommonModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModalViewModel.swift; sourceTree = "<group>"; };
 		095A89002B4FDAE100DE7DDD /* CommonModalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModalCell.swift; sourceTree = "<group>"; };
 		095A890B2B4FEF0E00DE7DDD /* ReportAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportAPI.swift; sourceTree = "<group>"; };
 		095A890D2B4FF0A800DE7DDD /* ReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportManager.swift; sourceTree = "<group>"; };
@@ -640,7 +640,7 @@
 		091E4EE12B63B99E00B35643 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				095A88FE2B4FD9F800DE7DDD /* CommonModalItem.swift */,
+				095A88FE2B4FD9F800DE7DDD /* CommonModalViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1720,7 +1720,7 @@
 				09EEFF6A2B3788C40010754C /* HeaderNotificationCell.swift in Sources */,
 				099756BF2B223002009961B5 /* TagsResponseDTO.swift in Sources */,
 				095EBE882AFF705900629F06 /* RxViewController+.swift in Sources */,
-				095A88FF2B4FD9F800DE7DDD /* CommonModalItem.swift in Sources */,
+				095A88FF2B4FD9F800DE7DDD /* CommonModalViewModel.swift in Sources */,
 				31747CD52B344DEE00559716 /* EventViewModel.swift in Sources */,
 				099756C12B223078009961B5 /* TagViewModel.swift in Sources */,
 				5B8F6FE12B3DC3B100F2E44A /* ProfileEditHalfVC.swift in Sources */,

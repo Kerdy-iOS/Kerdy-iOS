@@ -14,6 +14,7 @@ import RxDataSources
 
 protocol ModalProtocol: AnyObject {
     
+    func deleteDismiss()
     func modifyDismiss()
 }
 
@@ -99,10 +100,8 @@ extension ModalVC {
     
     private func setUI() {
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25) {
-            UIView.animate(withDuration: 0.5) {
-                self.view.backgroundColor = .kerdyBlack.withAlphaComponent(0.6)
-            }
+        UIView.animate(withDuration: 0.5, delay: 0.25) {
+            self.view.backgroundColor = .kerdyBlack.withAlphaComponent(0.6)
         }
     }
     
@@ -131,6 +130,13 @@ extension ModalVC {
             .emit(with: self, onNext: { owner, _ in
                 owner.showReportView()
             })
+            .disposed(by: disposeBag)
+        
+        output.deleteCommentID
+            .emit(with: self) { owner, _ in
+                owner.delegate?.deleteDismiss()
+                owner.dissmissVC()
+            }
             .disposed(by: disposeBag)
         
         collectionView.rx.modelSelected(CommonModalSectionItem.Item.self)
@@ -237,7 +243,6 @@ extension ModalVC: PopUptoBlockDelegate {
         
         guard let alertType = self.type else { return }
         self.viewModel.modalType(type: alertType )
-        if alertType == .delete { self.dissmissVC() }
     }
     
     func cancel() {

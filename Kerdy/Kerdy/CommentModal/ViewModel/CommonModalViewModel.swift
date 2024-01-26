@@ -1,5 +1,5 @@
 //
-//  CommonModalItem.swift
+//  CommonModalViewModel.swift
 //  Kerdy
 //
 //  Created by JEONGEUN KIM on 1/11/24.
@@ -7,38 +7,9 @@
 
 import UIKit
 
-import RxDataSources
 import RxSwift
 import RxCocoa
 import RxRelay
-
-struct CommonModalItem: Equatable {
-    
-    let type: AlertType
-    var titleColor: UIColor? = .kerdyBlack
-    
-    init(type: AlertType, titleColor: UIColor? = .kerdyBlack) {
-        self.type = type
-        self.titleColor = titleColor
-    }
-    
-    static let reportModal: [CommonModalItem]  = [CommonModalItem(type: .report, titleColor: .kerdyRed)]
-    static let basicModal: [CommonModalItem] = [CommonModalItem(type: .modify), 
-                                                CommonModalItem(type: .delete)]
-}
-
-struct CommonModalSectionItem {
-    typealias Model = SectionModel<Section, Item>
-    
-    enum Section: Int, Equatable {
-        case main
-    }
-    
-    enum Item: Equatable {
-        case report(CommonModalItem)
-        case basic(CommonModalItem)
-    }
-}
 
 final class CommonModalViewModel: ViewModelType {
     
@@ -66,17 +37,19 @@ final class CommonModalViewModel: ViewModelType {
         let modalList: Driver<[CommonModalSectionItem.Model]>
         let modalHeight: Driver<Int>
         let reportResult: Signal<Void>
+        let deleteCommentID: Signal<Void>
     }
     
     private let modalList = BehaviorRelay<[CommonModalSectionItem.Model]>(value: [])
-    let deleteComment = BehaviorRelay<Int>(value: 0)
+    private let deleteComment = PublishRelay<Void>()
     private let height = BehaviorRelay<Int>(value: 0)
     private let reportResult = PublishRelay<Void>()
     
     func transform(input: Input) -> Output {
         let output = Output(modalList: modalList.asDriver(),
                             modalHeight: height.asDriver(),
-                            reportResult: reportResult.asSignal())
+                            reportResult: reportResult.asSignal(),
+                            deleteCommentID: deleteComment.asSignal())
         
         input.viewWillAppear
             .flatMap { _ -> Driver<Int> in
@@ -84,7 +57,6 @@ final class CommonModalViewModel: ViewModelType {
                 return Driver.just(memberID)
             }
             .drive(with: self) { owner, memberID in
-
                 let items: [CommonModalSectionItem.Item] = (memberID == self.userID) ?
                 CommonModalItem.basicModal.map { CommonModalSectionItem.Item.basic($0) } :
                 CommonModalItem.reportModal.map { CommonModalSectionItem.Item.report($0) }
@@ -106,9 +78,8 @@ extension CommonModalViewModel {
        
         guard let commentID = self.comments.first?.commentID else { return }
         commentsManager.deleteComments(commentID: commentID)
-            .subscribe(onSuccess: { data in
-                dump(data)
-                self.deleteComment.accept(commentID)
+            .subscribe(onSuccess: { _ in
+                self.deleteComment.accept(())
             }, onFailure: { error in
                 HandleNetworkError.handleNetworkError(error)
             })
@@ -117,8 +88,7 @@ extension CommonModalViewModel {
     
     func postReport(request: ReportRequestDTO) {
         reportManager.postReport(request: request)
-            .subscribe(onSuccess: { data in
-                dump(data)
+            .subscribe(onSuccess: { _ in
                 self.reportResult.accept(())
             }, onFailure: { error in
                 HandleNetworkError.handleNetworkError(error)

@@ -49,7 +49,7 @@ final class CommentsViewModel: ViewModelType {
         input.viewWillAppear
             .asDriver(onErrorDriveWith: .never())
             .drive(with: self) { owner, _ in
-                owner.getDetailComments(commentID: self.commentID)
+                owner.getDetailComments()
             }
             .disposed(by: disposeBag)
         
@@ -78,8 +78,8 @@ final class CommentsViewModel: ViewModelType {
 
 extension CommentsViewModel {
     
-    func getDetailComments(commentID: Int) {
-        commentsManager.getDetailComments(commentID: commentID)
+    func getDetailComments() {
+        commentsManager.getDetailComments(commentID: self.commentID)
             .subscribe(onSuccess: { response in
                 let commentsList = [CommentsSection(header: response.parentComment, items: response.childComments)]
                 self.commentsList.accept(commentsList)
@@ -96,7 +96,7 @@ extension CommentsViewModel {
         commentsManager.postComments(request: request)
             .subscribe(onSuccess: { response in
                 guard let commentID = response.commentID else { return }
-                self.getDetailComments(commentID: commentID)
+                self.getDetailComments()
             }, onFailure: { error in
                 HandleNetworkError.handleNetworkError(error)
             })
@@ -114,7 +114,7 @@ extension CommentsViewModel {
             })
             .disposed(by: disposeBag)
     }
-
+    
     func updateComments(index: Int, isHeader: Bool) -> String {
         guard let section = commentsList.value.first else { return "" }
         

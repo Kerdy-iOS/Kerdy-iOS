@@ -57,7 +57,7 @@ final class CommentsVC: BaseVC {
         setDataSource()
         setBindings()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -134,6 +134,7 @@ extension CommentsVC {
         config.headerTopPadding = 0
         config.backgroundColor = .clear
         config.separatorConfiguration.color = .kerdyGray01
+        config.separatorConfiguration.bottomSeparatorInsets = .zero
         
         let layout = UICollectionViewCompositionalLayout.list(using: config)
         
@@ -225,10 +226,11 @@ extension CommentsVC: BackButtonActionProtocol {
 }
 
 extension CommentsVC: ModalProtocol {
-    func deleteDismiss(commentID: Int) {
-        self.viewModel.getDetailComments(commentID: commentID)
+    
+    func deleteDismiss() {
+        self.viewModel.getDetailComments()
     }
-
+    
     func modifyDismiss() {
         let index = self.index.value
         let isHeader = self.isHeader.value
