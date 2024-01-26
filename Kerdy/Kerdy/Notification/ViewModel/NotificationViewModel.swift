@@ -19,14 +19,8 @@ final class NotificationViewModel: ViewModelType {
     
     var disposeBag = DisposeBag()
     
-    private let tagManager: TagManager
+    private let tagManager = TagManager.shared
     private let id = Int(KeyChainManager.loadMemberID())
-    
-    // MARK: - Init
-    
-    init(tagManager: TagManager) {
-        self.tagManager = tagManager
-    }
     
     struct Input {
         let viewWillAppear: Driver<Bool>

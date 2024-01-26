@@ -17,14 +17,8 @@ final class SettingCommenetViewModel {
     // MARK: - Property
     
     private var disposeBag = DisposeBag()
-    private let commentManager: CommentManager
+    private let commentManager = CommentManager.shared
     private let id = Int(KeyChainManager.loadMemberID())
-    
-    // MARK: - Init
-    
-    init(commentManager: CommentManager) {
-        self.commentManager = commentManager
-    }
     
     struct Input {
         let viewWillAppear: Driver<Bool>

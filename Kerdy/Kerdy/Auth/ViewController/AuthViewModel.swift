@@ -16,16 +16,10 @@ final class AuthViewModel {
     // MARK: - Property
     
     private var disposeBag = DisposeBag()
-    private let loginManager: LoginManager
+    private let loginManager = LoginManager.shared
     
     private let token = KeyChainManager.loadDeviceToken()
-    
-    // MARK: - Init
-    
-    init(loginManager: LoginManager) {
-        self.loginManager = loginManager
-    }
-    
+
     struct Input {
         let authButtonDidTap: Observable<Void>
     }

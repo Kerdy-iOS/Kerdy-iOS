@@ -129,6 +129,7 @@ extension CommentsHeaderView {
         timeLabel.text = data.timeAgoSinceDate()
         parentComments.text = data.content
         commentsCount.text = "답글" + "\(count)"
+        dotButton.isHidden = data.deleted
     }
 }
 

@@ -65,7 +65,7 @@ final class BlockListVC: BaseVC {
         setLayout()
         setDelegate()
         setDataSource()
-        bind()
+        setBindings()
     }
 }
 
@@ -100,7 +100,7 @@ private extension BlockListVC {
         popupView.delegate = self
     }
     
-    func bind() {
+    func setBindings() {
         
         let input = BlockListViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver())
         

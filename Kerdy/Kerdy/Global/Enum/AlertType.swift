@@ -7,8 +7,8 @@
 
 import Foundation
 
-enum AuthType: Int, CaseIterable {
-    case logout, withdrawal
+enum AlertType: Int, CaseIterable {
+    case logout, withdrawal, report, delete, modify, plain
     
     var title: String {
         switch self {
@@ -16,6 +16,12 @@ enum AuthType: Int, CaseIterable {
             return "로그아웃"
         case .withdrawal:
             return "계정 삭제"
+        case .report:
+            return "신고 하기"
+        case .delete:
+            return "댓글 삭제"
+        case .modify, .plain:
+            return ""
         }
     }
     
@@ -25,6 +31,12 @@ enum AuthType: Int, CaseIterable {
             return "정말로 로그아웃 하시겠습니까?"
         case .withdrawal:
             return "정말로 계정을 삭제 하시겠습니까?\n계정 삭제 시 복구가 불가합니다."
+        case .report:
+            return "해당 댓글을 신고 하시겠습니까?"
+        case .delete:
+            return "해당 댓글을 삭제 하시겠습니까?"
+        case .modify, .plain:
+             return ""
         }
     }
     
@@ -32,8 +44,14 @@ enum AuthType: Int, CaseIterable {
         switch self {
         case .logout:
             return "로그아웃"
-        case .withdrawal:
+        case .withdrawal, .delete:
             return "삭제"
+        case .report:
+            return "신고"
+        case .modify:
+            return "수정"
+        case .plain:
+            return ""
         }
     }
 }
