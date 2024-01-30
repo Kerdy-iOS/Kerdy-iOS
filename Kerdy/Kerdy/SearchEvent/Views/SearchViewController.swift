@@ -11,7 +11,8 @@ import Core
 import RxSwift
 import RxCocoa
 
-class SearchEventViewController: BaseVC {
+final class SearchEventViewController: BaseVC {
+    // MARK: - UI Property
     private lazy var navigationBar: NavigationBarView  = {
         let view = NavigationBarView()
         view.configureUI(to: "검색하기")
@@ -71,8 +72,10 @@ class SearchEventViewController: BaseVC {
     
     private lazy var divideLine = DivideLine(frame: .zero, backgroundColor: .kerdyGray01)
     
+    // MARK: - Property
     private var viewModel = SearchEventViewModel()
     
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -80,6 +83,7 @@ class SearchEventViewController: BaseVC {
         bindViewModel()
     }
     
+    // MARK: - UI Setting
     private func setUI() {
         view.backgroundColor = .systemBackground
         searchTF.becomeFirstResponder()
@@ -97,6 +101,7 @@ class SearchEventViewController: BaseVC {
         )
     }
     
+    // MARK: - Method
     private func configureHidden(isSearching: Bool) {
         itemCountContainerView.isHidden = isSearching
         recentDiscriptionView.isHidden = !isSearching
@@ -340,6 +345,7 @@ extension SearchEventViewController: UITextFieldDelegate {
     }
 }
 
+// MARK: - data 전송 delegate
 extension SearchEventViewController: DataTransferDelegate {
     func dataTransfered(data: Any) {
         guard let keyword = data as? String else { return }

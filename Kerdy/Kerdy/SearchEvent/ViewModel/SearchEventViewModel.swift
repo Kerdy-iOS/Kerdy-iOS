@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class SearchEventViewModel {
+    // MARK: - Property
     private let eventManager = EventManager.shared
     
     let isSearching: BehaviorRelay<Bool> = BehaviorRelay(value: true)
@@ -19,11 +20,13 @@ final class SearchEventViewModel {
     private let disposeBag = DisposeBag()
     private var filter = EventFilter()
     
+    // MARK: - Initialize
     init() {
         loadRecentSearched()
         binding()
     }
     
+    // MARK: - Binding
     private func binding() {
         recentSearches
             .subscribe { [weak self] _ in
@@ -32,6 +35,7 @@ final class SearchEventViewModel {
             .disposed(by: disposeBag)
     }
     
+    // MARK: - Method
     private func loadRecentSearched() {
         if let recentSearches = UserDefaults.standard.value(forKey: "recentSearch") as? [String] {
             self.recentSearches.accept(recentSearches)
@@ -69,7 +73,9 @@ final class SearchEventViewModel {
     func removeRecentAll() {
         recentSearches.accept([])
     }
-    
+}
+
+extension SearchEventViewModel {
     func getEvents(keyword: String) {
         filter.keyword = keyword
         eventManager.getEvents(category: nil, eventFilter: filter)

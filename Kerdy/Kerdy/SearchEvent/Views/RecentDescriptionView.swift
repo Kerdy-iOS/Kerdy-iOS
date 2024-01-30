@@ -8,6 +8,7 @@
 import UIKit
 
 final class RecentKeywordTableViewCell: UITableViewCell {
+    // MARK: - UI Property
     private lazy var keywordLabel: UILabel = {
         let label = UILabel()
         label.font = .nanumSquare(to: .regular, size: 13)
@@ -21,8 +22,10 @@ final class RecentKeywordTableViewCell: UITableViewCell {
         return button
     }()
     
+    // MARK: - Property
     weak var delegate: DataTransferDelegate?
     
+    // MARK: - Initialize
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setLayout()
@@ -36,15 +39,18 @@ final class RecentKeywordTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UI Setting
     private func setUI() {
         deleteButton.addTarget(self, action: #selector(deleteBtnTapped), for: .touchUpInside
         )
     }
     
+    // MARK: - Configure Cell
     func configure(keyword: String) {
         keywordLabel.text = keyword
     }
     
+    // MARK: - Method
     func getText() -> String? {
         return keywordLabel.text
     }

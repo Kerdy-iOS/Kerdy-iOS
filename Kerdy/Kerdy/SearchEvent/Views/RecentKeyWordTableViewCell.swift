@@ -8,6 +8,7 @@
 import UIKit
 
 final class RecentDescriptionView: UIView {
+    // MARK: - UI Property
     private lazy var recentLabel: UILabel = {
         let label = UILabel()
         label.text = "최근 검색어"
@@ -29,6 +30,7 @@ final class RecentDescriptionView: UIView {
         return label
     }()
     
+    // MARK: - Initialize
     init() {
         super.init(frame: .zero)
         setLayout()
