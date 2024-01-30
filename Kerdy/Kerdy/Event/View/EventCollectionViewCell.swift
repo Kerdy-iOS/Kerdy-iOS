@@ -17,7 +17,7 @@ final class EventCollectionViewCell: UICollectionViewCell {
         return tableView
     }()
 
-    private var tableViewItems: [Event] = []
+    private var tableViewItems: [EventResponseDTO] = []
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -43,7 +43,7 @@ final class EventCollectionViewCell: UICollectionViewCell {
         tableView.register(EventTableViewCell.self, forCellReuseIdentifier: EventTableViewCell.identifier)
     }
 
-    func configure(with events: [Event]) {
+    func configure(with events: [EventResponseDTO]) {
         tableViewItems = events
     }
 }

@@ -15,17 +15,17 @@ final class EventViewModel {
     private let scrapManager = ScrapManager.shared
     private let disposeBag = DisposeBag()
     private let filterRelay = BehaviorRelay<EventFilter>(value: EventFilter())
-    private let curEventRelay = BehaviorRelay<[Event]>(value: [])
+    private let curEventRelay = BehaviorRelay<[EventResponseDTO]>(value: [])
     private var eventCVIndex: BehaviorRelay<Int> = BehaviorRelay(value: 0)
-    private let scrapEvents: BehaviorRelay<[Event]> = BehaviorRelay(value: [])
-    private let conferenceEvents: BehaviorRelay<[Event]> = BehaviorRelay(value: [])
-    private let competitionEvents: BehaviorRelay<[Event]> = BehaviorRelay(value: [])
+    private let scrapEvents: BehaviorRelay<[EventResponseDTO]> = BehaviorRelay(value: [])
+    private let conferenceEvents: BehaviorRelay<[EventResponseDTO]> = BehaviorRelay(value: [])
+    private let competitionEvents: BehaviorRelay<[EventResponseDTO]> = BehaviorRelay(value: [])
 
     var filterObservable: Observable<EventFilter> {
         return filterRelay.asObservable().distinctUntilChanged()
     }
     
-    var curEventObservable: Observable<[Event]> {
+    var curEventObservable: Observable<[EventResponseDTO]> {
         return curEventRelay.asObservable()
     }
     
@@ -33,7 +33,7 @@ final class EventViewModel {
         return eventCVIndex.asObservable()
     }
     
-    var combinedEvents: Observable<[[Event]]> {
+    var combinedEvents: Observable<[[EventResponseDTO]]> {
         return Observable.zip(scrapEvents, conferenceEvents, competitionEvents) {
             [$0, $1, $2]
         }

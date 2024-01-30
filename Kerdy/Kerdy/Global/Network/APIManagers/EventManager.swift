@@ -16,8 +16,8 @@ final class EventManager {
     
     private init() {}
     
-    func getEvents(category: String?, eventFilter: EventFilter) -> Single<[Event]> {
+    func getEvents(category: String?, eventFilter: EventFilter) -> Single<[EventResponseDTO]> {
         return provider.request(.getEvents(category: category, filter: eventFilter))
-            .map([Event].self)
+            .map([EventResponseDTO].self)
     }
 }

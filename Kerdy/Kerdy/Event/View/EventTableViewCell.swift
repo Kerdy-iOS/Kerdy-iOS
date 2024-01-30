@@ -118,7 +118,7 @@ final class EventTableViewCell: UITableViewCell {
         }
     }
     
-    func configure(_ event: Event) {
+    func configure(_ event: EventResponseDTO) {
         titleLabel.text = event.name
         dDayLabel.text = getDdayString(event.startDate)
         priceLabel.text = event.paymentType
