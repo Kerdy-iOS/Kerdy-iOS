@@ -9,16 +9,29 @@ import UIKit
 import SnapKit
 import Core
 
-final class EventCollectionViewCell: UICollectionViewCell {
+protocol EventCollectionViewDelegate: AnyObject {
+    func showEvent(event: EventResponseDTO)
+}
 
+final class EventCollectionViewCell: UICollectionViewCell {
+    // MARK: - UI Property
+    typealias DataSource = UITableViewDiffableDataSource<Int, EventResponseDTO>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, EventResponseDTO>
+    typealias EventCell = EventTableViewCell
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
 
+    // MARK: - Property
     private var tableViewItems: [EventResponseDTO] = []
-
+    private var dataSource: DataSource?
+    
+    weak var delegate: EventCollectionViewDelegate?
+    
+    // MARK: - Initialize
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
@@ -29,6 +42,21 @@ final class EventCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - UI Setting, Configure Cell
+    private func setUI() {
+        tableView.delegate = self
+        tableView.register(EventCell.self, forCellReuseIdentifier: EventCell.identifier)
+        configureDataSource()
+    }
+
+    func configure(with events: [EventResponseDTO]) {
+        tableViewItems = events
+        applySnapshot()
+    }
+}
+
+// MARK: - layout 설정
+extension EventCollectionViewCell {
     private func setLayout() {
         contentView.addSubview(tableView)
 
@@ -36,40 +64,33 @@ final class EventCollectionViewCell: UICollectionViewCell {
             $0.edges.equalToSuperview()
         }
     }
+}
 
-    private func setUI() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(EventTableViewCell.self, forCellReuseIdentifier: EventTableViewCell.identifier)
+// MARK: - CollectionView 설정
+extension EventCollectionViewCell {
+    private func configureDataSource() {
+        dataSource = DataSource(tableView: tableView, cellProvider: { tableView, indexPath, itemIdentifier in
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: EventCell.identifier, for: indexPath) as? EventCell else {
+                fatalError("Could not dequeue cell of type EventCell")
+            }
+            cell.configure(itemIdentifier)
+            cell.selectionStyle = .none
+            return cell
+        })
     }
-
-    func configure(with events: [EventResponseDTO]) {
-        tableViewItems = events
+    
+    private func applySnapshot() {
+        var snapshot = Snapshot()
+        snapshot.appendSections([0])
+        snapshot.appendItems(tableViewItems, toSection: 0)
+        dataSource?.apply(snapshot, animatingDifferences: false)
     }
 }
 
-extension EventCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableViewItems.count
-    }
-
-    func tableView(
-        _ tableView: UITableView,
-        cellForRowAt indexPath: IndexPath
-    ) -> UITableViewCell {
-        guard
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: EventTableViewCell.identifier,
-                for: indexPath
-            ) as? EventTableViewCell
-        else { return UITableViewCell() }
-        cell.selectionStyle = .none
-        cell.configure(tableViewItems[indexPath.row])
-        return cell
-    }
-
+// MARK: - TableView Delegate
+extension EventCollectionViewCell: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //이동하는 code 작성
+        delegate?.showEvent(event: tableViewItems[indexPath.row])
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

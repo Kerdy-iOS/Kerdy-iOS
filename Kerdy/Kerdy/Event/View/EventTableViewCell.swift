@@ -11,7 +11,7 @@ import Core
 import RxSwift
 
 final class EventTableViewCell: UITableViewCell {
-
+// MARK: - UI Property
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .nanumSquare(to: .bold, size: 19)
@@ -85,8 +85,10 @@ final class EventTableViewCell: UITableViewCell {
         return label
     }()
     
+    // MARK: - Property
     private let disposeBag = DisposeBag()
     
+    // MARK: - Initialize
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setLayout()
@@ -95,32 +97,24 @@ final class EventTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - 재사용
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        eventImage.image = nil
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         setTagLayer()
     }
-
-    private func setUpTag(tags: [String]) {
-        let tagLabels = [tag1, tag2, tag3, tag4]
-        
-        for (index, tagLabel) in tagLabels.enumerated() {
-            let hiddenState = index >= tags.count
-            tagLabel.isHidden = hiddenState
-            var title: String?
-            title = !hiddenState ? tags[index] : nil
-            if index == 3 {
-                title = "외 +\(tags.count - 3)"
-            }
-            if let title = title {
-                tagLabel.text = "   \(title)   "
-            }
-        }
-    }
     
+    // MARK: - Configure Cell
     func configure(_ event: EventResponseDTO) {
         titleLabel.text = event.name
-        dDayLabel.text = getDdayString(event.startDate)
+        dDayLabel.text = DateManager
+            .shared
+            .getDdayString(event.startDate)
         priceLabel.text = event.paymentType
         eventMode.text = event.eventMode
 
@@ -129,31 +123,22 @@ final class EventTableViewCell: UITableViewCell {
         }
         setUpTag(tags: event.tags)
     }
-    
-    private func convertStringToDate(_ dateString: String) -> Date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.date(from: dateString) ?? Date()
-    }
-    
-    private func calculateDaysDifference(_ from: Date) -> Int {
-        let todayDate = Date()
+
+    // MARK: - Method
+    private func setUpTag(tags: [Tag]) {
+        let tagLabels = [tag1, tag2, tag3, tag4]
         
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.day], from: todayDate, to: from)
-        return components.day ?? 0
-    }
-    
-    private func getDdayString(_ from: String) -> String {
-        let targetDate = convertStringToDate(from)
-        let dateDifference = calculateDaysDifference(targetDate)
-        
-        if dateDifference < 0 {
-            return "D\(dateDifference)"
-        } else if dateDifference > 0{
-            return "D+\(dateDifference)"
-        } else {
-            return "D-day"
+        for (index, tagLabel) in tagLabels.enumerated() {
+            let hiddenState = index >= tags.count
+            tagLabel.isHidden = hiddenState
+            var title: String?
+            title = !hiddenState ? tags[index].name : nil
+            if index == 3 {
+                title = "외 +\(tags.count - 3)"
+            }
+            if let title = title {
+                tagLabel.text = "   \(title)   "
+            }
         }
     }
 }
