@@ -44,7 +44,7 @@ final class SettingFeedVC: BaseVC {
         
         setLayout()
         setUI()
-        bind()
+        setBindings()
     }
 }
 
@@ -73,7 +73,7 @@ extension SettingFeedVC {
         collectionView.dataSource = articleDataSource.dataSource
     }
     
-    private func bind() {
+    private func setBindings() {
         
         let input = SettingFeedViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver())
         

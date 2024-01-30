@@ -11,8 +11,8 @@ import RxCocoa
 
 final class ProfileEditHalfVC: UIViewController {
     
-    typealias DataSource = UICollectionViewDiffableDataSource<Int, String>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, String>
+    typealias DataSource = UICollectionViewDiffableDataSource<Int, ActivityResponse>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, ActivityResponse>
     
     private lazy var scrollView: UIScrollView = {
         let sv = UIScrollView()
@@ -27,18 +27,24 @@ final class ProfileEditHalfVC: UIViewController {
     
     private var dataSource: DataSource?
     
-    private var viewModel = ProfileViewModel()
+    private var viewModel = ProfileViewModel.shared
     
     var disposeBag = DisposeBag()
     
-    private lazy var interestingLabel: UILabel = {
+    var isEdu = false
+    
+    var isClub = false
+    
+    var isCategory = false
+    
+    lazy var interestingLabel: UILabel = {
         let label = UILabel()
         label.text = "관심 가테고리"
         label.font = .nanumSquare(to: .bold, size: 16)
         return label
     }()
     
-    private lazy var selectLabel: UILabel = {
+    lazy var selectLabel: UILabel = {
         let label = UILabel()
         label.text = "최대 2개까지 선택 가능합니다."
         label.font = .nanumSquare(to: .regular, size: 12)
@@ -62,6 +68,7 @@ final class ProfileEditHalfVC: UIViewController {
         setLayout()
         configureDataSource()
         bindViewModel()
+        clearTags()
     }
     
     private func setUI() {
@@ -69,6 +76,10 @@ final class ProfileEditHalfVC: UIViewController {
         scrollView.delegate = self
         collectionView.isScrollEnabled = false
         collectionView.delegate = self
+    }
+    
+    private func clearTags() {
+        ProfileViewModel.shared.selectedActivities.accept([])
     }
     
     private func setLayout() {
@@ -122,23 +133,35 @@ final class ProfileEditHalfVC: UIViewController {
     }
     
     @objc func addBtnTapped(_ sender: UIButton) {
-        dismiss(animated: true)
+        viewModel.postMyActivities(ids: viewModel.selectedActivities.value)
+            .subscribe(
+                onCompleted: { [weak self] in
+                    self?.dismiss(animated: true)
+                }
+            )
+            .disposed(by: disposeBag)
     }
 
 }
 
 extension ProfileEditHalfVC {
     private func configureDataSource() {
-        let cellRegistration = UICollectionView.CellRegistration<ProfileTagCell, String> {
-            cell, indexPath, itemIdentifier in
-            let tag = self.viewModel.dummy[indexPath.row]
-            let isSelected = self.viewModel.selectedTechs.value.contains(tag)
-            cell.confiure(tag: tag)
+        let cellRegistration = UICollectionView.CellRegistration<ProfileTagCell, ActivityResponse> { cell, indexPath, itemIdentifier in
+            let activity: ActivityResponse
+            
+            if self.isEdu {
+                activity = self.viewModel.eduActivities.value[indexPath.row]
+            } else {
+                activity = self.viewModel.clubActivities.value[indexPath.row]
+            }
+            
+            let isSelected = self.viewModel.selectedActivities.value.contains(activity.id)
+            cell.confiure(tag: activity.name)
             cell.setBackgroundColor(isSelected: isSelected)
         }
         
         dataSource = DataSource(collectionView: collectionView) {
-            (collectionView: UICollectionView, indexPath: IndexPath, identifier: String) -> UICollectionViewCell? in
+            (collectionView: UICollectionView, indexPath: IndexPath, identifier: ActivityResponse) -> UICollectionViewCell? in
             return collectionView.dequeueConfiguredReusableCell(
                 using: cellRegistration,
                 for: indexPath,
@@ -148,7 +171,12 @@ extension ProfileEditHalfVC {
         
         var snapshot = Snapshot()
         snapshot.appendSections([0])
-        snapshot.appendItems(viewModel.dummy, toSection: 0)
+        if self.isEdu {
+            snapshot.appendItems(viewModel.eduActivities.value, toSection: 0)
+        } else if self.isClub {
+            snapshot.appendItems(viewModel.clubActivities.value, toSection: 0)
+        } 
+
         dataSource?.apply(snapshot, animatingDifferences: false)
     }
     
@@ -184,11 +212,11 @@ extension ProfileEditHalfVC {
         return layout
     }
     
-    private func updateCollectionView(with tags: [String]) {
-        
+    private func updateCollectionView(with activities: [ActivityResponse]) {
+        print("update")
         var snapshot = Snapshot()
         snapshot.appendSections([0])
-        snapshot.appendItems(viewModel.dummy, toSection: 0)
+        snapshot.appendItems(activities, toSection: 0)
         dataSource?.apply(snapshot, animatingDifferences: false)
     }
 }
@@ -197,8 +225,15 @@ extension ProfileEditHalfVC {
 extension ProfileEditHalfVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? ProfileTagCell else { return }
-        let selectedTag = viewModel.dummy[indexPath.row]
-        let isSelected = viewModel.toggleSelectedTag(tag: selectedTag)
+        let selectedActivity: ActivityResponse
+        if self.isEdu {
+            selectedActivity = viewModel.eduActivities.value[indexPath.row]
+
+        } else {
+            selectedActivity = viewModel.clubActivities.value[indexPath.row]
+        } 
+
+        let isSelected = viewModel.toggleSelectedTag(id: selectedActivity.id)
         cell.setBackgroundColor(isSelected: isSelected)
     }
 }
@@ -207,12 +242,21 @@ extension ProfileEditHalfVC: UICollectionViewDelegate {
 
 extension ProfileEditHalfVC {
     private func bindViewModel() {
-        viewModel.techSectionData
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] tags in
-                self?.updateCollectionView(with: tags)
-            })
-            .disposed(by: disposeBag)
+        if self.isEdu {
+            viewModel.eduActivities
+                .observe(on: MainScheduler.instance)
+                .subscribe(onNext: { [weak self] activities in
+                    self?.updateCollectionView(with: activities)
+                })
+                .disposed(by: disposeBag)
+        } else {
+            viewModel.clubActivities
+                .observe(on: MainScheduler.instance)
+                .subscribe(onNext: { [weak self] activities in
+                    self?.updateCollectionView(with: activities)
+                })
+                .disposed(by: disposeBag)
+        }
     }
 }
 

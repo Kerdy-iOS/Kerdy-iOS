@@ -7,7 +7,15 @@
 
 import UIKit
 
-final class ProfileTagBtn: UIStackView {
+protocol ProfileTagBtnDelegate: AnyObject {
+    func deleteBtnTapped(btn: ProfileTagBtn)
+}
+
+final class ProfileTagBtn: UIStackView, ProfileTagBtnDelegate {
+    
+    weak var delegate: ProfileTagBtnDelegate?
+    
+    var tagId: Int?
     
     var label: UILabel = {
         let label = UILabel()
@@ -30,9 +38,14 @@ final class ProfileTagBtn: UIStackView {
         self.alignment = .fill
         self.distribution = .equalSpacing
         self.spacing = 0
-        
-        closeBtn.addTarget(self, action: #selector(closeBtnTapped), for: .touchUpInside)
+        self.tagId = -1
+        self.delegate = self
+        closeBtn.addTarget(self, action: #selector(deleteBtnTapped), for: .touchUpInside)
         setLayout()
+    }
+    
+    override func layoutSubviews() {
+        setCorner()
     }
     
     private func setLayout() {
@@ -60,8 +73,8 @@ final class ProfileTagBtn: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func closeBtnTapped() {
-        
+    @objc func deleteBtnTapped(btn: ProfileTagBtn) {
+        delegate?.deleteBtnTapped(btn: self)
     }
     
     func setCorner() {
@@ -71,10 +84,9 @@ final class ProfileTagBtn: UIStackView {
             return
         }
         borderLayer.path = buttonMaskLayer.path
-        borderLayer.strokeColor = UIColor(named: "kerdy_main")?.cgColor
         borderLayer.strokeColor = UIColor.kerdyMain.cgColor
         borderLayer.fillColor = UIColor.clear.cgColor
-        borderLayer.lineWidth = 3
+        borderLayer.lineWidth = 2
         borderLayer.frame = self.bounds
         self.layer.addSublayer(borderLayer)
     }

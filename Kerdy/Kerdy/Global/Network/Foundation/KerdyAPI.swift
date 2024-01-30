@@ -15,7 +15,7 @@ enum KerdyDomain {
     case member
     case event
     case comment
-    case login
+    case auth
     case block
     case tag
     case report
@@ -23,7 +23,6 @@ enum KerdyDomain {
     case messages
     case feed
     case notification
-    
 }
 
 extension KerdyDomain {
@@ -38,11 +37,9 @@ extension KerdyDomain {
             return "/events"
         case .comment:
             return "/comments"
-        case .login:
-            return "/login"
         case .block:
             return "/blocks"
-        case .tag:
+        case .tag, .auth:
             return ""
         case .report:
             return "/reports"

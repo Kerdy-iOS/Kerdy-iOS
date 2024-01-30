@@ -13,4 +13,5 @@ enum KeyChainValue: String {
     case refreshToken = "refreshToken"
     case githubCode = "code"
     case memberId = "id"
+    case deviceToken = "deviceToken"
 }

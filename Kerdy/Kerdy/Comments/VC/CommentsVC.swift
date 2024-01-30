@@ -11,6 +11,7 @@ import Core
 import SnapKit
 
 import RxSwift
+import RxRelay
 import RxDataSources
 import RxKeyboard
 
@@ -22,6 +23,9 @@ final class CommentsVC: BaseVC {
     
     private var dataSource: DataSource!
     private let viewModel: CommentsViewModel
+    
+    private var isHeader = BehaviorRelay<Bool>(value: false)
+    private var index = BehaviorRelay<Int>(value: 0)
     
     // MARK: - UI Components
     
@@ -51,7 +55,7 @@ final class CommentsVC: BaseVC {
         setLayout()
         setDelegate()
         setDataSource()
-        bind()
+        setBindings()
     }
     
     required init?(coder: NSCoder) {
@@ -76,16 +80,17 @@ extension CommentsVC {
             $0.top.horizontalEdges.equalTo(safeArea)
         }
         
-        view.addSubview(collectionView)
-        collectionView.snp.makeConstraints {
-            $0.top.equalTo(navigationBar.snp.bottom)
-            $0.horizontalEdges.bottom.equalTo(safeArea)
-        }
-        
         view.addSubview(textFieldView)
         textFieldView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalTo(safeArea)
+        }
+        
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(navigationBar.snp.bottom)
+            $0.horizontalEdges.equalTo(safeArea)
+            $0.bottom.equalTo(textFieldView.snp.top)
         }
     }
     
@@ -94,7 +99,7 @@ extension CommentsVC {
         navigationBar.delegate = self
     }
     
-    private func bind() {
+    private func setBindings() {
         
         let input = CommentsViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver(),
                                             textField: textFieldView.commentsText(),
@@ -106,9 +111,10 @@ extension CommentsVC {
         output.commentsList
             .drive(collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-    
+        
         RxKeyboard.instance.visibleHeight
             .drive(onNext: { [unowned self] keyboardHeight in
+                
                 let height = keyboardHeight > 0 ? -keyboardHeight + view.safeAreaInsets.bottom : 18
                 
                 UIView.animate(withDuration: 0.23) {
@@ -129,7 +135,9 @@ extension CommentsVC {
         config.backgroundColor = .clear
         config.separatorConfiguration.color = .kerdyGray01
         config.separatorConfiguration.bottomSeparatorInsets = .zero
+        
         let layout = UICollectionViewCompositionalLayout.list(using: config)
+        
         return layout
     }
 }
@@ -148,7 +156,7 @@ extension CommentsVC {
             ) as? ChildCommentsCell else { return UICollectionViewCell() }
             
             cell.configureCell(with: item)
-            self.configure(cell: cell)
+            self.configure(cell: cell, index: indexPath)
             
             return cell
             
@@ -163,7 +171,7 @@ extension CommentsVC {
             let item = dataSource.sectionModels[indexPath.section].header
             let count = dataSource.sectionModels[indexPath.section].items.count
             header.configureHeader(with: item, count: count)
-            self.configure(header: header)
+            self.configure(header: header, index: indexPath)
             
             return header
         })
@@ -172,22 +180,38 @@ extension CommentsVC {
 
 extension CommentsVC {
     
-    func configure(cell: ChildCommentsCell) {
+    func configure(cell: ChildCommentsCell, index: IndexPath) {
+        
+        let childComments = dataSource.sectionModels[index.section].items[index.item]
         cell.rx.dot
             .asDriver()
             .drive(with: self) { owner, _ in
-                print("cell tap")
+                owner.index.accept(index.item)
+                owner.isHeader.accept(false)
+                owner.configureViewModel(to: CommonModalViewModel(comments: [childComments]))
+            }
+            .disposed(by: cell.disposeBag)
+    }
+    
+    func configure(header: CommentsHeaderView, index: IndexPath) {
+        
+        let parentComments = dataSource.sectionModels[index.section].header
+        
+        header.rx.dot
+            .asDriver()
+            .drive(with: self) { owner, _ in
+                owner.index.accept(index.section)
+                owner.isHeader.accept(true)
+                owner.configureViewModel(to: CommonModalViewModel(comments: [parentComments]))
             }
             .disposed(by: disposeBag)
     }
     
-    func configure(header: CommentsHeaderView) {
-        header.rx.dot
-            .asDriver()
-            .drive(with: self) { owner, _ in
-                print("header tap")
-            }
-            .disposed(by: disposeBag)
+    func configureViewModel(to viewModel: CommonModalViewModel) {
+        let vc = ModalVC(viewModel: viewModel)
+        vc.modalPresentationStyle = .overFullScreen
+        vc.delegate = self
+        self.present(vc, animated: true)
     }
 }
 
@@ -198,5 +222,19 @@ extension CommentsVC: BackButtonActionProtocol {
     func backButtonTapped() {
         
         self.navigationController?.popViewController(animated: true)
+    }
+}
+
+extension CommentsVC: ModalProtocol {
+    
+    func deleteDismiss() {
+        self.viewModel.getDetailComments()
+    }
+    
+    func modifyDismiss() {
+        let index = self.index.value
+        let isHeader = self.isHeader.value
+        let initialValue = self.viewModel.updateComments(index: index, isHeader: isHeader)
+        self.textFieldView.initialComments(text: initialValue, alertType: .modify)
     }
 }

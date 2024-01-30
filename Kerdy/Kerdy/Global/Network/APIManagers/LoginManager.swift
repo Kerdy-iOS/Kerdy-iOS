@@ -13,6 +13,7 @@ import RxSwift
 protocol LoginManagerType {
     
     func postLogin(code: String) -> Single<SignInResponseDTO>
+    func postFCM(request: AuthRequestDTO) -> Single<Void>
     func getAuthorizationCode(callback: @escaping (String) -> Void)
     func handleAuthorizationCode(_ code: String)
 }
@@ -35,6 +36,12 @@ final class LoginManager: Networking, LoginManagerType {
         return provider
             .request(.signIn(code: code))
             .map(SignInResponseDTO.self)
+    }
+    
+    func postFCM(request: AuthRequestDTO) -> Single<Void> {
+        return provider
+            .request(.fcm(request: request))
+            .map {_ in}
     }
     
     func getAuthorizationCode(callback: @escaping (String) -> Void) {

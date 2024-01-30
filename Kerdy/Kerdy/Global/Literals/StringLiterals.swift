@@ -16,10 +16,17 @@ struct Strings {
     static let article = "작성한 글"
     static let comments = "작성한 댓글"
     
+    /// notification Archive
+    static let archive = "알림 보관함"
+    static let allDelete = "전체삭제"
+    
     /// notification
+    static let receiveAllNotification = "알림 전체 수신"
     static let notificationTitle = "알림 설정"
     static let notification = "알림 수신"
     static let notificationTag = "태그 알림"
+    static let notificationComments = "댓글 알림"
+    static let notificationNote = "쪽지 알림"
     static let subTag = "태그 알림 설정 시 태그 관련 게시물 업로드 알림을 보내드립니다."
     
     /// TagNotification
@@ -35,7 +42,7 @@ struct Strings {
     /// termsofuse
     static let termsOfUseTitle = "이용 약관"
     
-    ///Alert
+    /// Alert
     static let alertUnlock = "해제"
     static let alertUnlockTitle = "해당 유저를 차단 해제 하시겠습니까?"
     

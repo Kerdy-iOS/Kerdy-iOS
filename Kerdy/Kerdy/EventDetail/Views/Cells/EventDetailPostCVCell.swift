@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-protocol PostCellDelegate {
+protocol PostCellDelegate: AnyObject {
     func showPostVC()
 }
 

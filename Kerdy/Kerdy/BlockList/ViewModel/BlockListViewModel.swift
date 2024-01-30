@@ -18,14 +18,8 @@ final class BlockListViewModel: ViewModelType {
     // MARK: - Property
     
     var disposeBag = DisposeBag()
-    private let blockManager: BlockManager
-    
-    // MARK: - Init
-    
-    init(blockManager: BlockManager) {
-        self.blockManager = blockManager
-    }
-    
+    private let blockManager = BlockManager.shared
+
     struct Input {
         
         let viewWillAppear: Driver<Bool>
