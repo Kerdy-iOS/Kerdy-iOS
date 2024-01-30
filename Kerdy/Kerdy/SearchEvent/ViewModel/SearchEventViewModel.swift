@@ -21,6 +21,10 @@ final class SearchEventViewModel {
     
     init() {
         loadRecentSearched()
+        binding()
+    }
+    
+    private func binding() {
         recentSearches
             .subscribe { [weak self] _ in
                 self?.saveRecentSearched()

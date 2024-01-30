@@ -77,11 +77,11 @@ class SearchEventViewController: BaseVC {
         super.viewDidLoad()
         setUI()
         setLayout()
+        bindViewModel()
     }
     
     private func setUI() {
         view.backgroundColor = .systemBackground
-        bindViewModel()
         searchTF.becomeFirstResponder()
         
         recentDiscriptionView.clearButton.addTarget(
