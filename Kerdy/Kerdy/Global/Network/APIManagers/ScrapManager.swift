@@ -22,12 +22,13 @@ final class ScrapManager {
     }
     
     func addScrap(id: Int) -> Single<EventResponseDTO> {
-        return provider.request(.getScraps)
+        return provider.request(.addScrap(id: id))
             .map(EventResponseDTO.self)
     }
     
     func deleteScrap(id: Int) -> Single<EventResponseDTO> {
-        return provider.request(.getScraps)
+        return provider.request(.deleteScrap(id: id))
             .map(EventResponseDTO.self)
     }
+
 }

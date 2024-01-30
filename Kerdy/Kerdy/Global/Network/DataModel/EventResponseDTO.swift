@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct EventResponseDTO: Codable, Equatable {
+struct EventResponseDTO: Codable, Equatable, Hashable {
     
     let id: Int
     let name: String
@@ -37,7 +37,7 @@ struct EventResponseDTO: Codable, Equatable {
     }
 }
 
-struct Tag: Codable {
+struct Tag: Codable, Hashable {
     let id: Int
     let name: String
     
