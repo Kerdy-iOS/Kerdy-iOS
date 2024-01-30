@@ -11,6 +11,7 @@ import RxCocoa
 import RxSwift
 
 final class EventViewModel {
+    // MARK: - Property
     private let eventManager = EventManager.shared
     private let scrapManager = ScrapManager.shared
     private let disposeBag = DisposeBag()
@@ -39,28 +40,18 @@ final class EventViewModel {
         }
     }
     
+    // MARK: - Initialize
     init() {
         setupBindings()
     }
     
+    // MARK: - Binding
     private func setupBindings() {
         filterObservable
-            .flatMapLatest { [weak self] filter -> Observable<Void> in
+            .flatMapLatest { [weak self] _ -> Observable<Void> in
                 guard let self = self else { return Observable.just(()) }
-                return Observable.combineLatest(
-                    self.scrapManager.getScraps().asObservable(),
-                    self.eventManager.getEvents(category: "CONFERENCE", eventFilter: filter).asObservable(),
-                    self.eventManager.getEvents(category: "COMPETITION", eventFilter: filter).asObservable()
-                )
-                .map { scrapEvents, conferenceEvents, competitionEvents in
-                    self.scrapEvents.accept(scrapEvents)
-                    self.conferenceEvents.accept(conferenceEvents)
-                    self.competitionEvents.accept(competitionEvents)
-                    
-                    let eventsArray = [scrapEvents, conferenceEvents, competitionEvents]
-                    self.curEventRelay.accept(eventsArray[self.eventCVIndex.value])
-                }
-                .catchAndReturn(())
+                self.updateEvents()
+                return Observable.just(())
             }
             .subscribe()
             .disposed(by: disposeBag)
@@ -74,6 +65,7 @@ final class EventViewModel {
             .disposed(by: disposeBag)
     }
 
+    // MARK: - Method
     func updateFilter(_ newFilter: EventFilter) {
         filterRelay.accept(newFilter)
     }
@@ -102,5 +94,33 @@ final class EventViewModel {
     
     func setEventCVIndex(index: Int) {
         eventCVIndex.accept(index)
+    }
+    
+    func isScrapped(eventId: Int) -> Bool {
+        let scraps = scrapEvents.value
+        return scraps.contains { $0.id == eventId }
+    }
+}
+
+// MARK: - 데이터 요청
+extension EventViewModel {
+    func updateEvents() {
+        Observable.combineLatest(
+            scrapManager.getScraps().asObservable(),
+            eventManager.getEvents(category: "CONFERENCE", eventFilter: filterRelay.value).asObservable(),
+            eventManager.getEvents(category: "COMPETITION", eventFilter: filterRelay.value).asObservable()
+        )
+        .map { [weak self] scrapEvents, conferenceEvents, competitionEvents in
+            guard let self = self else { return }
+            self.scrapEvents.accept(scrapEvents)
+            self.conferenceEvents.accept(conferenceEvents)
+            self.competitionEvents.accept(competitionEvents)
+            
+            let eventsArray = [scrapEvents, conferenceEvents, competitionEvents]
+            self.curEventRelay.accept(eventsArray[self.eventCVIndex.value])
+        }
+        .catchAndReturn(())
+        .subscribe()
+        .disposed(by: disposeBag)
     }
 }
