@@ -82,12 +82,14 @@ extension NotificationVC {
     
     private func setBindings() {
         
-        let input = NotificationViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver())
+        let input = NotificationViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver(),
+                                                willEnterForegroundNotification: NotificationCenter.default.rx.notification(UIApplication.willEnterForegroundNotification))
         let output = viewModel.transform(input: input)
         
         output.tagList
-            .drive(with: self) { owner, tagList in
-                owner.updateCollectionView(tagList: tagList)
+            .drive(with: self) { owner, data in
+                let (tagList, isSwitch) = data
+                owner.updateCollectionView(tagList: tagList, isSwitch: isSwitch)
             }
             .disposed(by: disposeBag)
     }
@@ -106,18 +108,19 @@ extension NotificationVC {
             self.configureBackgroundView(cell: cell)
         }
         
-        let headerCellRegistration = UICollectionView.CellRegistration<HeaderNotificationCell, UUID> { cell, _, _ in
+        let headerCellRegistration = UICollectionView.CellRegistration<HeaderNotificationCell, Bool> { cell, _, item in
             
+            cell.configure(to: item)
             self.configureSwitch(cell: cell)
             self.configureBackgroundView(cell: cell)
         }
         
         dataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, item -> UICollectionViewCell in
             switch item {
-            case .header(let uuid):
+            case .header(let data):
                 return collectionView.dequeueConfiguredReusableCell(using: headerCellRegistration,
                                                                     for: indexPath,
-                                                                    item: uuid)
+                                                                    item: data)
             case .cellItem(let data):
                 return collectionView.dequeueConfiguredReusableCell(using: cellRegistration,
                                                                     for: indexPath,
@@ -126,10 +129,10 @@ extension NotificationVC {
         }
     }
     
-    private func updateCollectionView(tagList: [NotificationCellItem]) {
+    private func updateCollectionView(tagList: [NotificationCellItem], isSwitch: Bool) {
         var sectionSnapshot = SectionSnapshot()
         
-        let headerItem = NotificationItem.header(UUID())
+        let headerItem = NotificationItem.header(isSwitch)
         sectionSnapshot.append([headerItem])
         
         let cellItems = tagList.map { NotificationItem.cellItem($0) }
@@ -160,9 +163,14 @@ extension NotificationVC {
     private func configureSwitch(cell: HeaderNotificationCell) {
         
         cell.rx.valueChanged
-            .bind(with: self, onNext: { owner, isOn in
+            .skip(1)
+            .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, isOn in
+                if isOn && !UserDefaultStore.isFirstNotification {
+                    UIApplication.shared.openAppNotificationSettings()
+                }
                 owner.viewModel.updateIsSelected(isOn)
-            })
+            }
             .disposed(by: cell.disposeBag)
     }
 }

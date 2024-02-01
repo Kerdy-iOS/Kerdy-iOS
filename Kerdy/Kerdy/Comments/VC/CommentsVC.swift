@@ -154,7 +154,7 @@ extension CommentsVC {
                 withReuseIdentifier: ChildCommentsCell.identifier,
                 for: indexPath
             ) as? ChildCommentsCell else { return UICollectionViewCell() }
-            
+            cell.backgroundColor = .kerdyGray01
             cell.configureCell(with: item)
             self.configure(cell: cell, index: indexPath)
             
