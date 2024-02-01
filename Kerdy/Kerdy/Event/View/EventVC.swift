@@ -19,11 +19,12 @@ final class EventVC: BaseVC {
     
     private lazy var searchContainerView = UIView()
 
-    private lazy var searchView: UIView = {
-        let view = UIView()
+    private lazy var searchButton: UIButton = {
+        let view = UIButton()
         view.layer.cornerRadius = 18
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.kerdyGray01.cgColor
+        view.addTarget(self, action: #selector(searchBtnTapped), for: .touchUpInside)
         return view
     }()
 
@@ -32,12 +33,6 @@ final class EventVC: BaseVC {
         imageView.image = UIImage(systemName: "magnifyingglass")
         imageView.tintColor = .kerdyGray01
         return imageView
-    }()
-
-    private lazy var searchTF: UITextField = {
-        let textField = UITextField()
-        textField.borderStyle = .none
-        return textField
     }()
 
     private lazy var notificationBtn: UIButton = {
@@ -140,6 +135,11 @@ final class EventVC: BaseVC {
         nextVC.setViewModel(filter: viewModel.getCurrentFilter())
         navigationController?.pushViewController(nextVC, animated: true)
     }
+    
+    @objc func searchBtnTapped(_ sender: UIButton) {
+        let nextVC = SearchEventViewController()
+        navigationController?.pushViewController(nextVC, animated: true)
+    }
 }
 
 // MARK: - 레이아웃 설정
@@ -177,30 +177,22 @@ extension EventVC {
     }
 
     private func setUpsearchViewLayout() {
-        searchView.addSubview(searchImage)
-        searchView.addSubview(searchTF)
-
+        searchButton.addSubview(searchImage)
+    
         searchImage.snp.makeConstraints {
             $0.width.equalTo(24)
             $0.height.equalTo(24)
             $0.leading.equalToSuperview().offset(10)
             $0.centerY.equalToSuperview()
         }
-
-        searchTF.snp.makeConstraints {
-            $0.height.equalTo(24)
-            $0.centerY.equalToSuperview()
-            $0.leading.equalTo(searchImage.snp.trailing).offset(10)
-            $0.trailing.equalToSuperview()
-        }
     }
 
     private func setUpSearchContainerViewLayout() {
         setUpsearchViewLayout()
-        searchContainerView.addSubview(searchView)
+        searchContainerView.addSubview(searchButton)
         searchContainerView.addSubview(notificationBtn)
 
-        searchView.snp.makeConstraints {
+        searchButton.snp.makeConstraints {
             $0.width.equalTo(242)
             $0.height.equalTo(36)
             $0.leading.equalToSuperview().offset(17)
@@ -371,8 +363,6 @@ extension EventVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 let type = cell.type,
                 let tagName = cell.tagLabel.text
             else { return }
-            print(type)
-            print(tagName)
             viewModel.deleteFilter(type: type, name: tagName)
         }
     }
