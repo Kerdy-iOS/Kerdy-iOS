@@ -74,6 +74,7 @@ extension AppDelegate: MessagingDelegate {
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
+    
     private func setUserNotification(_ application: UIApplication) {
         
         // 앱 실행 시 사용자에게 알림 허용 권한을 받음
@@ -82,7 +83,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         // 필요한 알림 권한을 설정
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
         UNUserNotificationCenter.current().requestAuthorization(
-            options: authOptions, completionHandler: { _, _ in }
+            options: authOptions, completionHandler: { status, _ in
+                UserDefaultStore.isFirstNotification = status
+            }
         )
         //앱이 시작될 때마다 푸시 알림 등록
         application.registerForRemoteNotifications()
