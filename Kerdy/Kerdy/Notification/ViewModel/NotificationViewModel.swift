@@ -31,11 +31,13 @@ final class NotificationViewModel: ViewModelType {
     
     struct Output {
         let tagList: Driver<([NotificationCellItem], Bool)>
+        let openNotificationSettings: Driver<Void>
     }
     
     private let isSelectedRelay = BehaviorRelay<Bool>(value: UserDefaultStore.isNotification)
     private let tagList = BehaviorRelay<[NotificationCellItem]>(value: [])
     private var defaultList: [NotificationCellItem] = []
+    private let openNotificationSettingsSubject = PublishSubject<Void>()
     
     func transform(input: Input) -> Output {
         
@@ -43,14 +45,14 @@ final class NotificationViewModel: ViewModelType {
             return (tagList, isSelected)
         }
         
-        let output = Output(tagList: tagListDriver)
+        let output = Output(tagList: tagListDriver, openNotificationSettings: openNotificationSettingsSubject.asDriver(onErrorJustReturn: ()))
         
         input.viewWillAppear
             .flatMapLatest { _ in
                 return self.getAuthorizationStatus().asDriver(onErrorJustReturn: false)
             }
             .drive(with: self) { owner, status in
-                self.getTagList(status: status)
+                owner.getTagList(status: status)
             }
             .disposed(by: disposeBag)
         
@@ -61,7 +63,6 @@ final class NotificationViewModel: ViewModelType {
             .bind(with: self, onNext: { owner, status in
                 owner.isSelectedRelay.accept(status)
                 UserDefaultStore.isFirstNotification = status
-                UserDefaultStore.isNotification = status
             })
             .disposed(by: disposeBag)
         
@@ -96,7 +97,7 @@ extension NotificationViewModel {
             .subscribe(onSuccess: { [weak self] updatedList in
                 guard let self else { return }
                 self.defaultList = updatedList
-                self.tagList.accept(status && UserDefaultStore.isNotification ? updatedList: [])
+                self.tagList.accept(status && isSelectedRelay.value ? updatedList: [])
             }, onFailure: { error in
                 HandleNetworkError.handleNetworkError(error)
             })
@@ -112,6 +113,22 @@ extension NotificationViewModel {
                 self.tagList.accept(updatedList)
             }, onFailure: { error in
                 HandleNetworkError.handleNetworkError(error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func handleSwitchValueChange(_ isOn: Bool) {
+        guard isOn, !UserDefaultStore.isFirstNotification else {
+            updateIsSelected(isOn)
+            return
+        }
+        
+        openNotificationSettingsSubject.onNext(())
+        
+        Observable.just(isOn)
+            .delay(.milliseconds(500), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.updateIsSelected(isOn)
             })
             .disposed(by: disposeBag)
     }

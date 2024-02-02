@@ -92,6 +92,12 @@ extension NotificationVC {
                 owner.updateCollectionView(tagList: tagList, isSwitch: isSwitch)
             }
             .disposed(by: disposeBag)
+        
+        output.openNotificationSettings
+            .drive(with: self) { _, _ in
+                UIApplication.shared.openAppNotificationSettings()
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -166,10 +172,7 @@ extension NotificationVC {
             .skip(1)
             .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
             .bind(with: self) { owner, isOn in
-                if isOn && !UserDefaultStore.isFirstNotification {
-                    UIApplication.shared.openAppNotificationSettings()
-                }
-                owner.viewModel.updateIsSelected(isOn)
+                owner.viewModel.handleSwitchValueChange(isOn)
             }
             .disposed(by: cell.disposeBag)
     }
