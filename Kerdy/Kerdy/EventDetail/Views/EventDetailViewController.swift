@@ -6,16 +6,19 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
-enum EventDetailCVType {
+enum EventDetailCategoryType: Int, CaseIterable {
     case photo
-    case post
+    case feed
+    case recruitment
 
     var className: AnyClass {
         switch self {
         case .photo:
             return EventDetailPhotoCVCell.self
-        case .post:
+        case .feed, .recruitment:
             return EventDetailPostCVCell.self
         }
     }
@@ -24,15 +27,22 @@ enum EventDetailCVType {
         switch self {
         case .photo:
             return EventDetailPhotoCVCell.identifier
-        case .post:
+        case .feed, .recruitment:
             return EventDetailPostCVCell.identifier
         }
     }
 }
+protocol EventDetailShowFeedDelegate: AnyObject {
+    func showFeed(feedId: Int)
+}
 
-final class EventDetailViewController: UIViewController {
+final class EventDetailViewController: BaseVC {
     private var navigationBar = NavigationBarView()
-    private var scrollView = UIScrollView()
+    private var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
     private var scrollContentView = UIView()
     private var titleImage: UIImageView = {
         let image = UIImageView()
@@ -50,11 +60,9 @@ final class EventDetailViewController: UIViewController {
         view.addArrangedSubview(CategoryView(title: "함께해요", tag: 2))
 
         for subview in view.arrangedSubviews {
-            if let categoryView = subview as? CategoryView {
-                categoryView.button.addTarget(self, action: #selector(categoryBtnTapped), for: .touchUpInside)
-            }
+            guard let categoryView = subview as? CategoryView else { continue }
+            categoryView.button.addTarget(self, action: #selector(categoryBtnTapped), for: .touchUpInside)
         }
-
         return view
     }()
     private lazy var collectionView: UICollectionView = {
@@ -65,10 +73,27 @@ final class EventDetailViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.isPagingEnabled = true
+        collectionView.dataSource = self
+        collectionView.delegate = self
         return collectionView
     }()
+    private var addButton: UIButton = {
+        let button = UIButton()
+        button.setTitle(nil, for: .normal)
+        button.backgroundColor = .kerdyMain
+        button.layer.cornerRadius = 30
+        button.layer.masksToBounds = true
+        return button
+    }()
+    private var addButtonImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "pencil")
+        imageView.tintColor = .white
+        return imageView
+    }()
     private var bottomView = EventDetailBottomView()
-    
+    private var viewModel = EventDetailViewModel()
+    weak var delegate: EventScrapDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
         setLayout()
@@ -77,12 +102,14 @@ final class EventDetailViewController: UIViewController {
     
     private func setUI() {
         view.backgroundColor = .systemBackground
-        navigationController?.navigationBar.isHidden = true
-        scrollView.showsVerticalScrollIndicator = false
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        navigationBar.delegate = self
+        scrollView.delegate = self
         collectionView.register(EventDetailPhotoCVCell.self, forCellWithReuseIdentifier: EventDetailPhotoCVCell.identifier)
         collectionView.register(EventDetailPostCVCell.self, forCellWithReuseIdentifier: EventDetailPostCVCell.identifier)
+        bottomView.moveWebsiteBtn.addTarget(self, action: #selector(moveWebBtnTapped), for: .touchUpInside)
+        bottomView.bookmarkBtn.addTarget(self, action: #selector(bookMarkBtnTapped), for: .touchUpInside)
+        addButton.isHidden = true
+        bindViewModel()
     }
     
     private func updateCategoryColor(index: Int) {
@@ -96,10 +123,39 @@ final class EventDetailViewController: UIViewController {
             } else {
                 categoryView.setUnselected()
             }
+            
+            guard let cell = collectionView.visibleCells.first as? EventDetailCVCell else { return }
+            cell.scrollTableViewToTop()
+            cell.tableView.isScrollEnabled = false
+            scrollView.isScrollEnabled = true
+        }
+     
+        if index == EventDetailCategoryType.photo.rawValue {
+            bottomView.isHidden = false
+            addButton.isHidden = true
+            
+            scrollView.snp.remakeConstraints {
+                $0.top.equalTo(navigationBar.snp.bottom)
+                $0.horizontalEdges.equalToSuperview()
+                $0.bottom.equalTo(bottomView.snp.top)
+            }
+        } else {
+            scrollView.snp.remakeConstraints {
+                $0.top.equalTo(navigationBar.snp.bottom)
+                $0.horizontalEdges.equalToSuperview()
+                $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            }
+            bottomView.isHidden = true
+            addButton.isHidden = false
         }
     }
+    
+    func setViewModel(event: EventResponseDTO, isScrapped: Bool) {
+        viewModel.setEvent(event)
+        viewModel.setScrapState(isScrapped)
+    }
 
-    @objc func categoryBtnTapped(_ sender: UIButton) {
+    @objc private func categoryBtnTapped(_ sender: UIButton) {
         let tag = sender.tag
         let indexPath = IndexPath(item: tag, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
@@ -135,9 +191,11 @@ extension EventDetailViewController {
         view.addSubviews(
             navigationBar,
             scrollView,
-            bottomView
+            bottomView,
+            addButton
         )
         scrollView.addSubview(scrollContentView)
+        setAddButtonLayout()
         setScrollContentViewLayout()
         
         navigationBar.snp.makeConstraints {
@@ -154,8 +212,8 @@ extension EventDetailViewController {
         
         scrollView.snp.makeConstraints {
             $0.top.equalTo(navigationBar.snp.bottom)
-            $0.bottom.equalTo(bottomView.snp.top)
             $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(bottomView.snp.top)
         }
         
         scrollContentView.snp.makeConstraints {
@@ -200,7 +258,7 @@ extension EventDetailViewController {
         summaryInfoView.snp.makeConstraints {
             $0.top.equalTo(titleImage.snp.bottom).offset(14)
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(110)
+            $0.height.equalTo(110).priority(500)
         }
         
         categoryContainerView.snp.makeConstraints {
@@ -215,6 +273,46 @@ extension EventDetailViewController {
             $0.height.equalTo(409).priority(500)
         }
         
+    }
+}
+
+// MARK: - binding
+extension EventDetailViewController {
+    private func bindViewModel() {
+        viewModel.event.subscribe(onNext: { [weak self] event in
+            guard
+                let self = self,
+                let event = event
+            else { return }
+            
+            if let thumbnailUrl = event.thumbnailUrl {
+                setImage(url: thumbnailUrl)
+            }
+    
+            summaryInfoView.configure(
+                date: event.startDate,
+                title: event.name,
+                organization: event.organization,
+                tags: event.tags
+            )
+        })
+        .disposed(by: disposeBag)
+        
+        viewModel.feeds.subscribe(onNext: { [weak self] _ in
+            self?.collectionView.reloadData()
+        })
+        .disposed(by: disposeBag)
+        
+        viewModel.recruitments.subscribe(onNext: { [weak self] _ in
+            self?.collectionView.reloadData()
+        })
+        .disposed(by: disposeBag)
+        
+        viewModel.scrapState.subscribe(onNext: { [weak self] state in
+            self?.bottomView.setBookMarkImage(isScrapped: state)
+            self?.delegate?.scrapStateChanged()
+        })
+        .disposed(by: disposeBag)
     }
 }
 
@@ -240,50 +338,122 @@ extension EventDetailViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cellType: EventDetailCVType = (indexPath.row == 0) ? .photo : .post
+        let row = indexPath.row
+        var cellType: EventDetailCategoryType
+        
+        switch row {
+        case EventDetailCategoryType.photo.rawValue:
+            cellType = .photo
+        case EventDetailCategoryType.feed.rawValue:
+            cellType = .feed
+        default:
+            cellType = .recruitment
+        }
+        
         let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: cellType.identifier,
-                    for: indexPath
-                    )
+            withReuseIdentifier: cellType.identifier,
+            for: indexPath
+        )
         
         switch cellType {
         case .photo:
             if let cell = cell as? EventDetailPhotoCVCell {
-                let data = EventDetailModel(
-                    applyInfo: "이날부터 저날까지 접수",
-                    dateInfo: "언제 언제부터 언제 언제까지",
-                    locationInfo: "어디어디에서 할거임",
-                    costInfo: "무료",
-                    images: [UIImage(systemName: "pencil")!]
-                )
-                cell.configure(with: data)
+                guard let event = viewModel.getEvent() else { return cell }
+                cell.delegate = self
+                cell.configure(with: event, cellType: .photo)
             }
             
-        case .post:
+        case .feed:
             if let cell = cell as? EventDetailPostCVCell {
-                let data = PostListModel(
-                    title: "제목",
-                    content: "내용내용내용내용내용내용내용내용내용",
-                    image: nil,
-                    date: Date(),
-                    isModified: false,
-                    commentCnt: 1,
-                    likeCnt: 10
-                )
-                cell.configure(with: [data])
+                let feeds = viewModel.getFeeds()
+                cell.delegate = self
+                cell.configure(data: feeds, cellType: .feed)
+            }
+            
+        case .recruitment:
+            if let cell = cell as? EventDetailPostCVCell {
+                let recruitments = viewModel.getRecruitments()
+                cell.delegate = self
+                cell.configure(data: recruitments, cellType: .recruitment)
             }
         }
-        
         return cell
     }
 }
-// MARK: - 캐러셀 메뉴를 위한 scrollView delegate
+// MARK: - scrollView delegate
 extension EventDetailViewController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard scrollView == collectionView else { return }
         let visibleIndexPaths = collectionView.indexPathsForVisibleItems
         if let indexPath = visibleIndexPaths.first {
             let row = indexPath.row
             updateCategoryColor(index: row)
         }
+    }
+    
+    func  scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard scrollView == self.scrollView else { return }
+        
+        guard let cell = collectionView.visibleCells.first as? EventDetailCVCell else { return }
+        
+        guard let postType = cell.postType else { return }
+
+        switch postType {
+        case .photo:
+            if let event = viewModel.getEvent() {
+                if event.imageUrls.isEmpty { return }
+            }
+        case .feed:
+            if viewModel.getFeeds().isEmpty { return }
+        case .recruitment:
+            if viewModel.getRecruitments().isEmpty { return }
+        }
+        
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let scrollViewHeight = scrollView.frame.size.height
+        
+        if offsetY + scrollViewHeight >= contentHeight {
+            cell.tableView.isScrollEnabled = true
+            self.scrollView.isScrollEnabled = false
+        }
+    }
+}
+
+// MARK: - navigationBar 뒤로 가기
+extension EventDetailViewController: BackButtonActionProtocol {
+    func backButtonTapped() {
+        self.navigationController?.popViewController(animated: true)
+    }
+}
+
+// MARK: - title Image 처리
+extension EventDetailViewController {
+    private func setImage(url: String) {
+        ImageManager.shared.getImage(url: url)
+            .subscribe { [weak self] image in
+                self?.titleImage.image = image
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
+// MARK: - CommentVC로 이동하기 위한 delegate
+extension EventDetailViewController: EventDetailShowFeedDelegate {
+    func showFeed(feedId: Int) {
+//        let commentVC = CommentsVC(viewModel: CommentsViewModel(commentID: feedId, commentsManager: CommentManager.shared))
+//        self.navigationController?.pushViewController(commentVC, animated: true)
+    }
+}
+
+// MARK: - tableView로부터 스크롤 정보를 받아오기 위한 delegate
+extension EventDetailViewController: DataTransferDelegate {
+    func dataTransfered(data: Any) {
+        guard let isScrollViewScrollEnabled = data as? Bool else { return }
+        guard let cell = collectionView.visibleCells.first as? EventDetailCVCell else { return }
+        cell.tableView.isScrollEnabled = !isScrollViewScrollEnabled
+        scrollView.isScrollEnabled = isScrollViewScrollEnabled
     }
 }

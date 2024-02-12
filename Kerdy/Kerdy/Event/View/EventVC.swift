@@ -458,6 +458,8 @@ extension EventVC: EventScrapDelegate {
 extension EventVC: EventCollectionViewDelegate {
     func showEvent(event: EventResponseDTO) {
         let nextVC = EventDetailViewController()
+        nextVC.delegate = self
+        nextVC.setViewModel(event: event, isScrapped: viewModel.isScrapped(eventId: event.id))
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }
