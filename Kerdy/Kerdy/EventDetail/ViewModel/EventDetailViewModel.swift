@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class EventDetailViewModel {
+    // MARK: - Property
     private let feedManager = FeedManager.shared
     private let eventManager = EventManager.shared
     private let scrapManager = ScrapManager.shared
@@ -37,10 +38,12 @@ final class EventDetailViewModel {
     
     private var disposeBag = DisposeBag()
     
+    // MARK: - Init
     init() {
         setupBinding()
     }
     
+    // MARK: - Biding
     private func setupBinding() {
         event
             .compactMap { $0 }
@@ -61,6 +64,7 @@ final class EventDetailViewModel {
             .disposed(by: disposeBag)
     }
     
+    // MARK: - Method
     func setEvent(_ event: EventResponseDTO) {
         eventRelay.accept(event)
     }

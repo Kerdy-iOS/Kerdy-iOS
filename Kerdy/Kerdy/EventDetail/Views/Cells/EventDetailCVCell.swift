@@ -8,8 +8,7 @@
 import UIKit
 
 class EventDetailCVCell: UICollectionViewCell {
-    private(set) var postType: EventDetailCategoryType?
-    
+    // MARK: - UI Property
     lazy var tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .grouped)
         view.showsVerticalScrollIndicator = false
@@ -18,8 +17,11 @@ class EventDetailCVCell: UICollectionViewCell {
         return view
     }()
     
+    // MARK: - Property
+    private(set) var postType: EventDetailCategoryType?
     weak var delegate: EventDetailViewController?
     
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
@@ -29,10 +31,12 @@ class EventDetailCVCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UI Setting
     private func setUI() {
         tableView.delegate = self
     }
     
+    // MARK: - Method
     func scrollTableViewToTop() {
         tableView.setContentOffset(.zero, animated: true)
     }

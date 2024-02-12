@@ -8,7 +8,7 @@
 import UIKit
 
 final class EventDetailRecruitTVCell: UITableViewCell {
-    
+    // MARK: - UI Property
     private lazy var memberNameLabel: UILabel = {
         let label = UILabel()
         label.font = .nanumSquare(to: .bold, size: 13)
@@ -30,6 +30,8 @@ final class EventDetailRecruitTVCell: UITableViewCell {
         return label
     }()
     
+    
+    // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setLayout()
@@ -39,6 +41,7 @@ final class EventDetailRecruitTVCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Cell configuration
     func configure(with recruitment: RecruitmentResponseDTO) {
         memberNameLabel.text = recruitment.member.name
         contentLabel.text = recruitment.content

@@ -8,7 +8,7 @@
 import UIKit
 
 final class EventDetailPhotoCVCell: EventDetailCVCell {
-
+// MARK: - UI Property
     private lazy var tableViewHeaderView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
@@ -89,8 +89,10 @@ final class EventDetailPhotoCVCell: EventDetailCVCell {
         return label
     }()
     
+    // MARK: - Property
     private var imageURLs: [String]?
 
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
@@ -102,12 +104,14 @@ final class EventDetailPhotoCVCell: EventDetailCVCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UI Setting
     private func setUI() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(EventDetailPhotoTVCell.self, forCellReuseIdentifier: EventDetailPhotoTVCell.identifier)
     }
     
+    // MARK: - Cell configuration
     func configure(with event: EventResponseDTO, cellType: EventDetailCategoryType) {
         configurePostType(cellType)
         applyInfo.text = DateManager

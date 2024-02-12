@@ -32,11 +32,13 @@ enum EventDetailCategoryType: Int, CaseIterable {
         }
     }
 }
+
 protocol EventDetailShowFeedDelegate: AnyObject {
     func showFeed(feedId: Int)
 }
 
 final class EventDetailViewController: BaseVC {
+    // MARK: - UI Property
     private var navigationBar = NavigationBarView()
     private var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -92,14 +94,19 @@ final class EventDetailViewController: BaseVC {
         return imageView
     }()
     private var bottomView = EventDetailBottomView()
+    
+    // MARK: - Property
     private var viewModel = EventDetailViewModel()
     weak var delegate: EventScrapDelegate?
+    
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setLayout()
         setUI()
     }
     
+    // MARK: - UI setting
     private func setUI() {
         view.backgroundColor = .systemBackground
         navigationBar.delegate = self
@@ -112,6 +119,7 @@ final class EventDetailViewController: BaseVC {
         bindViewModel()
     }
     
+    // MARK: - Method
     private func updateCategoryColor(index: Int) {
         for categoryIndex in 0...2 {
             guard
@@ -321,6 +329,7 @@ extension EventDetailViewController: UICollectionViewDelegate {
     
 }
 
+// MARK: - collectionView Layout delegate
 extension EventDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,

@@ -9,9 +9,7 @@ import UIKit
 import SnapKit
 
 final class EventDetailPostCVCell: EventDetailCVCell {
-
-    private var feeds: [FeedResponseDTO] = []
-    private var recruitmemts: [RecruitmentResponseDTO] = []
+    // MARK: - UI Property
     private lazy var informationLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -20,6 +18,12 @@ final class EventDetailPostCVCell: EventDetailCVCell {
         label.numberOfLines = 2
         return label
     }()
+    
+    // MARK: - Property
+    private var feeds: [FeedResponseDTO] = []
+    private var recruitmemts: [RecruitmentResponseDTO] = []
+    
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
@@ -29,18 +33,8 @@ final class EventDetailPostCVCell: EventDetailCVCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    private func setLayout() {
-        contentView.addSubviews(tableView, informationLabel)
-        tableView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        informationLabel.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-    }
-
+    
+    // MARK: - UI Setting
     private func setUI() {
         tableView.delegate = self
         tableView.dataSource = self
@@ -55,6 +49,7 @@ final class EventDetailPostCVCell: EventDetailCVCell {
         }
     }
     
+    // MARK: - Cell configuration
     func configure<T>(data: [T], cellType: EventDetailCategoryType) {
         configurePostType(cellType)
         if cellType == .feed {
@@ -71,6 +66,20 @@ final class EventDetailPostCVCell: EventDetailCVCell {
             setHidden(isDataEmpty: recruitmemts.isEmpty)
         }
         tableView.reloadData()
+    }
+}
+
+// MARK: - layout 설정
+extension EventDetailPostCVCell {
+    private func setLayout() {
+        contentView.addSubviews(tableView, informationLabel)
+        tableView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        informationLabel.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
     
     private func setHidden(isDataEmpty: Bool) {
@@ -102,18 +111,17 @@ extension EventDetailPostCVCell {
 }
 
 // MARK: - TableView Datasource
-
 extension EventDetailPostCVCell: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let postType = postType else { return 0 }
-    
+        
         if postType == .feed {
             return feeds.count
         } else {
             return recruitmemts.count
         }
     }
-
+    
     func tableView(
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath

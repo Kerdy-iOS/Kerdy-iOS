@@ -10,10 +10,12 @@ import SnapKit
 import RxSwift
 
 final class EventDetailPhotoTVCell: UITableViewCell {
-    
+    // MARK: - UI Property
     private lazy var infoImageView = UIImageView()
+    // MARK: - Property
     private var disposeBag = DisposeBag()
     
+    // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUI()
@@ -23,6 +25,13 @@ final class EventDetailPhotoTVCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UI Setting
+    private func setUI() {
+        infoImageView.contentMode = .scaleAspectFit
+        infoImageView.backgroundColor = .kerdyGray01
+    }
+    
+    // MARK: - Cell configuration
     func configure(with url: String) {
         setImage(url: url)
     }
@@ -37,11 +46,6 @@ extension EventDetailPhotoTVCell {
             $0.width.equalToSuperview()
             $0.height.equalTo(contentView.snp.width).multipliedBy(ratio).priority(750)
         }
-    }
-    
-    private func setUI() {
-        infoImageView.contentMode = .scaleAspectFit
-        infoImageView.backgroundColor = .kerdyGray01
     }
 }
 

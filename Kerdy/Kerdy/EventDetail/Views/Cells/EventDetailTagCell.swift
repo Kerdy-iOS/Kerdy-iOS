@@ -8,6 +8,7 @@
 import UIKit
 
 final class EventDetailTagCell: UICollectionViewCell {
+    // MARK: - UI Property
     private lazy var tagBackground: UIView = {
         let view = UIView()
         view.backgroundColor = .kerdySub
@@ -21,6 +22,7 @@ final class EventDetailTagCell: UICollectionViewCell {
         return label
     }()
     
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
@@ -39,6 +41,7 @@ final class EventDetailTagCell: UICollectionViewCell {
         setLayer()
     }
     
+    // MARK: - Cell configuration
     func configure(tag: String) {
         tagLabel.text = tag
     }

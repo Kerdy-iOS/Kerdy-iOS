@@ -11,7 +11,7 @@ import Core
 import RxSwift
 
 final class EventDetailFeedTVCell: UITableViewCell {
-    
+    // MARK: - UI Property
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .nanumSquare(to: .bold, size: 13)
@@ -70,9 +70,12 @@ final class EventDetailFeedTVCell: UITableViewCell {
         label.font = .nanumSquare(to: .regular, size: 11)
         return label
     }()
+    
+    // MARK: - Property
     private(set) var feedId: Int?
     private var disposeBag = DisposeBag()
-    
+
+    // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setLayout()
@@ -82,6 +85,7 @@ final class EventDetailFeedTVCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Cell configuration
     func configure(with feed: FeedResponseDTO) {
         titleLabel.text = feed.title
         contentLabel.text = feed.content

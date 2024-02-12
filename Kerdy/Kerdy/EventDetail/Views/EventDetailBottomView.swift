@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 
 final class EventDetailBottomView: UIView {
+    // MARK: - UI Property
     lazy var moveWebsiteBtn: UIButton = {
         let button = UIButton()
         button.backgroundColor = .kerdyMain
@@ -33,11 +34,12 @@ final class EventDetailBottomView: UIView {
         return label
     }()
     
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -49,7 +51,10 @@ final class EventDetailBottomView: UIView {
             bookemarkImage.image = .icBookmarkOff
         }
     }
-    
+}
+
+// MARK: - Layout 설정
+extension EventDetailBottomView {
     private func setLayout() {
         addSubviews(
             moveWebsiteBtn,

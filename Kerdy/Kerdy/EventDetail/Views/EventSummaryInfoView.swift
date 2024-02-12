@@ -9,10 +9,12 @@ import UIKit
 import SnapKit
 
 final class EventSummaryInfoView: UIView {
+    // MARK: - Typealias
     typealias TagCell = EventDetailTagCell
     typealias DataSource = UICollectionViewDiffableDataSource<Int, Tag>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Int, Tag>
     
+    // MARK: - UI Property
     private lazy var dDayLabel: UILabel = {
         let label = UILabel()
         label.textColor = .kerdyMain
@@ -42,13 +44,30 @@ final class EventSummaryInfoView: UIView {
         return collectionView
     }()
     
+    // MARK: - Property
     private var dataSource: DataSource?
     
+    // MARK: - Init
     init() {
         super.init(frame: .zero)
         setLayout()
     }
     
+    required init?(coder decoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Configure
+    func configure(date: String, title: String, organization: String, tags: [Tag]) {
+        dDayLabel.text = DateManager.shared.getDdayString(date)
+        titleLabel.text = title
+        organizerLabel.text = organization
+        configureDataSource(tags: tags)
+    }
+}
+
+// MARK: - Layout 설정
+extension EventSummaryInfoView {
     private func setLayout() {
         addSubviews(
             dDayLabel,
@@ -79,19 +98,9 @@ final class EventSummaryInfoView: UIView {
             $0.height.equalTo(22)
         }
     }
-    
-    func configure(date: String, title: String, organization: String, tags: [Tag]) {
-        dDayLabel.text = DateManager.shared.getDdayString(date)
-        titleLabel.text = title
-        organizerLabel.text = organization
-        configureDataSource(tags: tags)
-    }
-    
-    required init?(coder decoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }
 
+// MARK: - CollectionView 설정
 extension EventSummaryInfoView {
     private func configureDataSource(tags: [Tag]) {
         let cellRegistration = UICollectionView.CellRegistration<TagCell, Tag> { cell, _, item in
