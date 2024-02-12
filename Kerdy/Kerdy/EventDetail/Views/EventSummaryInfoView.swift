@@ -9,9 +9,12 @@ import UIKit
 import SnapKit
 
 final class EventSummaryInfoView: UIView {
+    typealias TagCell = EventDetailTagCell
+    typealias DataSource = UICollectionViewDiffableDataSource<Int, Tag>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, Tag>
+    
     private lazy var dDayLabel: UILabel = {
         let label = UILabel()
-        label.text = "D-day"
         label.textColor = .kerdyMain
         label.font = .nanumSquare(to: .extraBold, size: 13)
         return label
@@ -19,7 +22,6 @@ final class EventSummaryInfoView: UIView {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "AWS 부산 클라우드데이 2023 AWS"
         label.font = .nanumSquare(to: .bold, size: 15)
         label.numberOfLines = 2
         return label
@@ -27,20 +29,20 @@ final class EventSummaryInfoView: UIView {
     
     private lazy var organizerLabel: UILabel = {
         let label = UILabel()
-        label.text = "부산정보산업진흥원"
         label.textColor = .kerdyGray03
         label.font = .nanumSquare(to: .regular, size: 12)
         return label
     }()
     
-    private lazy var filterStackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .horizontal
-        view.spacing = 3
-        view.alignment = .leading
-        view.distribution = .equalSpacing
-        return view
+    private lazy var tagCollectionView: UICollectionView = {
+        let layout = createCollectionViewLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isScrollEnabled = false
+        return collectionView
     }()
+    
+    private var dataSource: DataSource?
     
     init() {
         super.init(frame: .zero)
@@ -52,9 +54,8 @@ final class EventSummaryInfoView: UIView {
             dDayLabel,
             titleLabel,
             organizerLabel,
-            filterStackView
+            tagCollectionView
         )
-        setFilterLayout()
         
         dDayLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
@@ -71,19 +72,83 @@ final class EventSummaryInfoView: UIView {
             $0.leading.equalTo(dDayLabel.snp.leading)
         }
         
-        filterStackView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(17)
-            $0.trailing.equalToSuperview().offset(-17)
+        tagCollectionView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(17)
             $0.top.equalTo(organizerLabel.snp.bottom).offset(23)
+            $0.bottom.equalToSuperview()
             $0.height.equalTo(22)
         }
     }
     
-    private func setFilterLayout() {
-        //필터 관련 레이아웃
+    func configure(date: String, title: String, organization: String, tags: [Tag]) {
+        dDayLabel.text = DateManager.shared.getDdayString(date)
+        titleLabel.text = title
+        organizerLabel.text = organization
+        configureDataSource(tags: tags)
     }
     
     required init?(coder decoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension EventSummaryInfoView {
+    private func configureDataSource(tags: [Tag]) {
+        let cellRegistration = UICollectionView.CellRegistration<TagCell, Tag> { cell, _, item in
+            cell.configure(tag: item.name)
+        }
+        
+        dataSource = DataSource(collectionView: tagCollectionView) { (
+            collectionView: UICollectionView,
+            indexPath: IndexPath,
+            identifier: Tag
+        ) -> UICollectionViewCell? in return collectionView.dequeueConfiguredReusableCell(
+                using: cellRegistration,
+                for: indexPath,
+                item: identifier
+            )
+        }
+        
+        var snapshot = Snapshot()
+        snapshot.appendSections([0])
+        snapshot.appendItems(tags, toSection: 0)
+        dataSource?.apply(snapshot, animatingDifferences: false)
+        
+        let itemCount = tagCollectionView.numberOfItems(inSection: 0)
+        tagCollectionView.snp.updateConstraints {
+            $0.height.equalTo(22 + 25 * (itemCount / 5))
+        }
+    }
+    
+    private func createCollectionViewLayout() -> UICollectionViewLayout {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .estimated(50),
+            heightDimension: .absolute(22)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.edgeSpacing = NSCollectionLayoutEdgeSpacing(
+            leading: .fixed(0),
+            top: .fixed(0),
+            trailing: .fixed(3),
+            bottom: .fixed(0)
+        )
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .estimated(22)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 3
+        section.contentInsets = NSDirectionalEdgeInsets(
+            top: 0,
+            leading: 0,
+            bottom: 0,
+            trailing: 0
+        )
+        
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        return layout
     }
 }
