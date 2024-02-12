@@ -8,8 +8,8 @@
 import UIKit
 import SnapKit
 
-final class EventDetailBottomView: UIView {   
-    private lazy var moveWebsiteBtn: UIButton = {
+final class EventDetailBottomView: UIView {
+    lazy var moveWebsiteBtn: UIButton = {
         let button = UIButton()
         button.backgroundColor = .kerdyMain
         button.setTitle("웹사이트로 이동", for: .normal)
@@ -17,11 +17,11 @@ final class EventDetailBottomView: UIView {
         button.layer.cornerRadius = 15
         return button
     }()
-    private lazy var bookmarkBtn = UIButton()
+    lazy var bookmarkBtn = UIButton()
     
     private lazy var bookemarkImage: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "ic_bookmark_off")
+        image.image = .icBookmarkOn
         return image
     }()
     
@@ -40,6 +40,14 @@ final class EventDetailBottomView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setBookMarkImage(isScrapped: Bool) {
+        if isScrapped {
+            bookemarkImage.image = .icBookmarkOn
+        } else {
+            bookemarkImage.image = .icBookmarkOff
+        }
     }
     
     private func setLayout() {
