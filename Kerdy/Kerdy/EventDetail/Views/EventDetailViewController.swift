@@ -105,6 +105,28 @@ final class EventDetailViewController: UIViewController {
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         updateCategoryColor(index: tag)
     }
+    
+    @objc private func moveWebBtnTapped() {
+        guard let event = viewModel.getEvent() else { return }
+        let urlString = event.informationUrl
+        
+        guard
+            let url = URL(string: urlString),
+            UIApplication.shared.canOpenURL(url)
+        else {
+            let alert = UIAlertController(title: "알림", message: "등록된 URL이 없습니다.", preferredStyle: .alert)
+            let cancel = UIAlertAction(title: "확인", style: .cancel)
+            alert.addAction(cancel)
+            self.present(alert, animated: true)
+            return
+        }
+        
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    
+    @objc private func bookMarkBtnTapped() {
+        viewModel.scrapButtonTapped()
+    }
 }
 
 // MARK: - layout 설정
@@ -142,6 +164,21 @@ extension EventDetailViewController {
             $0.edges.equalTo(contentLayout.edges)
             $0.width.equalTo(frameLayout.width)
             $0.height.equalTo(100).priority(250)
+        }
+        
+        addButton.snp.makeConstraints {
+            $0.size.equalTo(60)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom ).offset(-25)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
+                .offset(-25)
+        }
+    }
+    
+    private func setAddButtonLayout() {
+        addButton.addSubview(addButtonImage)
+        
+        addButtonImage.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(15)
         }
     }
     
