@@ -11,20 +11,25 @@ import Core
 import RxSwift
 import RxCocoa
 
+protocol EventScrapDelegate: AnyObject {
+    func scrapStateChanged()
+}
+
 final class EventVC: BaseVC {
+    // MARK: - TypeAlias
     typealias EventCell = EventCollectionViewCell
     typealias FilterCell = FilterCollectionViewCell
     typealias DataSource = UICollectionViewDiffableDataSource<Int, FilterItem>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Int, FilterItem>
     
+    // MARK: - UI Property
     private lazy var searchContainerView = UIView()
 
-    private lazy var searchButton: UIButton = {
-        let view = UIButton()
+    private lazy var searchView: UIView = {
+        let view = UIView()
         view.layer.cornerRadius = 18
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.kerdyGray01.cgColor
-        view.addTarget(self, action: #selector(searchBtnTapped), for: .touchUpInside)
         return view
     }()
 
@@ -35,11 +40,16 @@ final class EventVC: BaseVC {
         return imageView
     }()
 
+    private lazy var searchTF: UITextField = {
+        let textField = UITextField()
+        textField.borderStyle = .none
+        return textField
+    }()
+
     private lazy var notificationBtn: UIButton = {
         let button = UIButton()
         button.setTitle(nil, for: .normal)
         button.setImage(UIImage(named: "ic_alert"), for: .normal)
-        button.addTarget(self, action: #selector(tapNotificationBtn), for: .touchUpInside)
         return button
     }()
 
@@ -90,15 +100,18 @@ final class EventVC: BaseVC {
 
     private lazy var divideLine = DivideLine(frame: .zero, backgroundColor: .kerdyGray01)
     
+    // MARK: - Property
     private var dataSource: DataSource?
     private let viewModel = EventViewModel()
 
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setLayout()
         setUI()
     }
     
+    // MARK: - UI Setting
     private func setUI() {
         view.backgroundColor = .systemBackground
         filterCollectionView.delegate = self
@@ -106,6 +119,7 @@ final class EventVC: BaseVC {
         setupCollectionViewBindings()
     }
     
+    // MARK: - Method
     private func updateCategory(index: Int) {
         for categoryIndex in 0...2 {
             guard
@@ -133,11 +147,6 @@ final class EventVC: BaseVC {
         let nextVC = FilterVC()
         nextVC.delegate = self
         nextVC.setViewModel(filter: viewModel.getCurrentFilter())
-        navigationController?.pushViewController(nextVC, animated: true)
-    }
-    
-    @objc func searchBtnTapped(_ sender: UIButton) {
-        let nextVC = SearchEventViewController()
         navigationController?.pushViewController(nextVC, animated: true)
     }
 }
@@ -177,22 +186,30 @@ extension EventVC {
     }
 
     private func setUpsearchViewLayout() {
-        searchButton.addSubview(searchImage)
-    
+        searchView.addSubview(searchImage)
+        searchView.addSubview(searchTF)
+
         searchImage.snp.makeConstraints {
             $0.width.equalTo(24)
             $0.height.equalTo(24)
             $0.leading.equalToSuperview().offset(10)
             $0.centerY.equalToSuperview()
         }
+
+        searchTF.snp.makeConstraints {
+            $0.height.equalTo(24)
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(searchImage.snp.trailing).offset(10)
+            $0.trailing.equalToSuperview()
+        }
     }
 
     private func setUpSearchContainerViewLayout() {
         setUpsearchViewLayout()
-        searchContainerView.addSubview(searchButton)
+        searchContainerView.addSubview(searchView)
         searchContainerView.addSubview(notificationBtn)
 
-        searchButton.snp.makeConstraints {
+        searchView.snp.makeConstraints {
             $0.width.equalTo(242)
             $0.height.equalTo(36)
             $0.leading.equalToSuperview().offset(17)
@@ -364,6 +381,8 @@ extension EventVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 let tagName = cell.tagLabel.text
             else { return }
             viewModel.deleteFilter(type: type, name: tagName)
+        } else {
+            
         }
     }
 }
@@ -401,6 +420,7 @@ extension EventVC {
                     cellType: EventCell.self
                 )) {_, events, cell in
                     cell.configure(with: events)
+                    cell.delegate = self
                     cell.tableView.reloadData()
                 }
                 .disposed(by: disposeBag)
@@ -428,12 +448,16 @@ extension EventVC: DataTransferDelegate {
     }
 }
 
-extension EventVC {
-    
-    @objc
-    func tapNotificationBtn() {
-        
-        let nextVC = NotificationArchiveVC(viewModel: ArchiveViewModel())
+// MARK: - 이벤트 상세에서 bookMark 상태 변경
+extension EventVC: EventScrapDelegate {
+    func scrapStateChanged() {
+        viewModel.updateEvents()
+    }
+}
+
+extension EventVC: EventCollectionViewDelegate {
+    func showEvent(event: EventResponseDTO) {
+        let nextVC = EventDetailViewController()
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }

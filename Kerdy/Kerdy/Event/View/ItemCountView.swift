@@ -8,20 +8,21 @@
 import UIKit
 
 final class ItemCountView: UIView {
+    // MARK: - UI Property
     private lazy var startLabel: UILabel = {
         let label = UILabel()
         label.text = "총"
         label.font = .nanumSquare(to: .bold, size: 12)
         return label
     }()
-
+    
     private lazy var endLabel: UILabel = {
         let label = UILabel()
         label.text = "개"
         label.font = .nanumSquare(to: .bold, size: 12)
         return label
     }()
-
+    
     private lazy var countLabel: UILabel = {
         let label = UILabel()
         label.text = "0"
@@ -29,12 +30,24 @@ final class ItemCountView: UIView {
         label.textColor = .kerdyMain
         return label
     }()
-
+    
+    // MARK: - Initialize
     init() {
         super.init(frame: .zero)
         setLayout()
     }
+    required init?(coder decoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Method
+    func setCount(count: Int) {
+        countLabel.text = String(count)
+    }
+}
 
+// MARK: - layout 설정
+extension ItemCountView {
     private func setLayout() {
         addSubview(startLabel)
         addSubview(countLabel)
@@ -57,13 +70,5 @@ final class ItemCountView: UIView {
             $0.verticalEdges.trailing.equalToSuperview()
             $0.centerY.equalToSuperview()
         }
-    }
-
-    func setCount(count: Int) {
-        countLabel.text = String(count)
-    }
-
-    required init?(coder decoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

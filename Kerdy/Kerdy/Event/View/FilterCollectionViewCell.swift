@@ -8,6 +8,7 @@
 import UIKit
 
 class FilterCollectionViewCell: UICollectionViewCell {
+    // MARK: - UI Property
     private lazy var tagBackground: UIView = {
         let view = UIView()
         view.layer.masksToBounds = true
@@ -26,8 +27,10 @@ class FilterCollectionViewCell: UICollectionViewCell {
         return button
     }()
     
+    // MARK: - Propertu
     private(set) var type: FilterType?
     
+    // MARK: - Initialize
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
@@ -37,15 +40,12 @@ class FilterCollectionViewCell: UICollectionViewCell {
         super.init(coder: coder)
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         setLayer()
     }
     
+    // MARK: - <##>Configure Cell
     func configure(tag: String, type: FilterType) {
         tagLabel.text = tag
         self.type = type
