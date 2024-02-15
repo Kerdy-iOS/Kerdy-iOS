@@ -28,15 +28,19 @@ struct UserDefault<T> {
 }
 
 enum UserDefaultKey: String, CaseIterable {
-    case isSelected
+    case isFirstNotification
+    case isNotification
     case isTagSelected
     case isCommentsSelected
     case isNoteSelected
 }
 
 enum UserDefaultStore {
-    @UserDefault(key: UserDefaultKey.isSelected.rawValue, defaultValue: false)
-    static var isSelected: Bool
+    @UserDefault(key: UserDefaultKey.isFirstNotification.rawValue, defaultValue: false)
+    static var isFirstNotification: Bool
+    
+    @UserDefault(key: UserDefaultKey.isNotification.rawValue, defaultValue: false)
+    static var isNotification: Bool
     
     @UserDefault(key: UserDefaultKey.isTagSelected.rawValue, defaultValue: false)
     static var isTagSelected: Bool

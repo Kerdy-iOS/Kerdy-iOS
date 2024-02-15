@@ -7,6 +7,8 @@
 
 import Foundation
 
+import UserNotifications
+
 import RxSwift
 import RxRelay
 import RxCocoa
@@ -24,27 +26,52 @@ final class NotificationViewModel: ViewModelType {
     
     struct Input {
         let viewWillAppear: Driver<Bool>
+        let willEnterForegroundNotification: Observable<Notification>
     }
     
     struct Output {
-        let tagList: Driver<[NotificationCellItem]>
+        let tagList: Driver<([NotificationCellItem], Bool)>
+        let openNotificationSettings: Driver<Void>
     }
     
-    private let isSelectedRelay = BehaviorRelay<Bool>(value: UserDefaultStore.isSelected)
+    private let isSelectedRelay = BehaviorRelay<Bool>(value: UserDefaultStore.isNotification)
     private let tagList = BehaviorRelay<[NotificationCellItem]>(value: [])
+    private var defaultList: [NotificationCellItem] = []
+    private let openNotificationSettingsSubject = PublishSubject<Void>()
     
     func transform(input: Input) -> Output {
         
-        let output = Output(tagList: tagList.asDriver())
+        let tagListDriver = Driver.combineLatest(tagList.asDriver(), isSelectedRelay.asDriver()) { tagList, isSelected in
+            return (tagList, isSelected)
+        }
         
-        let combinedSwitchSignal = Observable.merge(input.viewWillAppear.asObservable(), isSelectedRelay.asObservable())
+        let output = Output(tagList: tagListDriver, openNotificationSettings: openNotificationSettingsSubject.asDriver(onErrorJustReturn: ()))
         
-        combinedSwitchSignal
-            .asDriver(onErrorJustReturn: Bool())
-            .drive(with: self) { owner, _ in
-                guard let id = self.id else { return }
-                owner.isSelectedRelay.value ? owner.getTags(id: id) : owner.tagList.accept([])
+        input.viewWillAppear
+            .flatMapLatest { _ in
+                return self.getAuthorizationStatus().asDriver(onErrorJustReturn: false)
             }
+            .drive(with: self) { owner, status in
+                owner.getTagList(status: status)
+            }
+            .disposed(by: disposeBag)
+        
+        input.willEnterForegroundNotification
+            .flatMapLatest { _ in
+                return self.getAuthorizationStatus().asDriver(onErrorJustReturn: false)
+            }
+            .bind(with: self, onNext: { owner, status in
+                owner.isSelectedRelay.accept(status)
+                UserDefaultStore.isFirstNotification = status
+            })
+            .disposed(by: disposeBag)
+        
+        isSelectedRelay
+            .asDriver(onErrorJustReturn: false)
+            .distinctUntilChanged()
+            .drive(with: self, onNext: { owner, status in
+                owner.tagList.accept(status ? owner.defaultList : [])
+            })
             .disposed(by: disposeBag)
         
         return output
@@ -53,17 +80,24 @@ final class NotificationViewModel: ViewModelType {
 
 extension NotificationViewModel {
     
-    private func updateTagList(with response: [TagsResponseDTO]) {
-        let tagList = [NotificationCellItem(tagList: response)]
-        self.tagList.accept(tagList)
+    private func getAuthorizationStatus() -> Observable<Bool> {
+        return Observable.create { observer in
+            UNUserNotificationCenter.current().getNotificationSettings { settings in
+                observer.onNext(settings.authorizationStatus == .authorized)
+                observer.onCompleted()
+            }
+            return Disposables.create()
+        }
     }
     
-    func getTags(id: Int) {
+    private func getTagList(status: Bool) {
+        guard let id = self.id else { return }
         tagManager.getUserTags(id: id)
             .map { [NotificationCellItem(tagList: $0)] }
             .subscribe(onSuccess: { [weak self] updatedList in
                 guard let self else { return }
-                self.tagList.accept(updatedList)
+                self.defaultList = updatedList
+                self.tagList.accept(status && isSelectedRelay.value ? updatedList: [])
             }, onFailure: { error in
                 HandleNetworkError.handleNetworkError(error)
             })
@@ -75,6 +109,7 @@ extension NotificationViewModel {
             .map { [NotificationCellItem(tagList: $0)] }
             .subscribe(onSuccess: { [weak self] updatedList in
                 guard let self else { return }
+                self.defaultList = updatedList
                 self.tagList.accept(updatedList)
             }, onFailure: { error in
                 HandleNetworkError.handleNetworkError(error)
@@ -82,10 +117,24 @@ extension NotificationViewModel {
             .disposed(by: disposeBag)
     }
     
-    func updateIsSelected(_ isSelected: Bool) {
-        if isSelectedRelay.value != isSelected {
-            isSelectedRelay.accept(isSelected)
-            UserDefaultStore.isSelected = isSelected
+    func handleSwitchValueChange(_ isOn: Bool) {
+        guard isOn, !UserDefaultStore.isFirstNotification else {
+            updateIsSelected(isOn)
+            return
         }
+        
+        openNotificationSettingsSubject.onNext(())
+        
+        Observable.just(isOn)
+            .delay(.milliseconds(500), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.updateIsSelected(isOn)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func updateIsSelected(_ isSelected: Bool) {
+        UserDefaultStore.isNotification = isSelected
+        isSelectedRelay.accept(isSelected)
     }
 }

@@ -869,7 +869,6 @@
 		0964F9432B2EEFD60031D574 /* Colors */ = {
 			isa = PBXGroup;
 			children = (
-				31530AEC2B47C69400F33317 /* Base-Info.plist */,
 				0964F9442B2EEFE10031D574 /* Colors.xcassets */,
 			);
 			path = Colors;

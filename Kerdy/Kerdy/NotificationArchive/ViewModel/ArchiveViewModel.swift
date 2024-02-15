@@ -52,10 +52,12 @@ extension ArchiveViewModel {
     
     func getNotifications(id: Int) {
         notificationManager.getList(id: id)
-            .map { notifications in
+            .map { notifications -> [ArchiveSectionModel] in
                 
-                let newNotifications = notifications.filter { !$0.isRead }
-                let oldNotifications = notifications.filter { $0.isRead }
+                let filteredNotifications = self.filterNotifications(notifications)
+                
+                let newNotifications = filteredNotifications.filter { !$0.isRead }
+                let oldNotifications = filteredNotifications.filter { $0.isRead }
                 
                 let newSection = ArchiveSectionModel.new(items: newNotifications.map { .new($0) })
                 let oldSection = ArchiveSectionModel.old(items: oldNotifications.map { .old($0) })
@@ -114,5 +116,20 @@ extension ArchiveViewModel {
             return nil
         }
         self.deleteNotification(ids: notificationIDs)
+    }
+    
+    func filterNotifications(_ notifications: [ArchiveResponseDTO]) -> [ArchiveResponseDTO] {
+        guard UserDefaultStore.isNotification else { return [] }
+        
+        switch (UserDefaultStore.isCommentsSelected, UserDefaultStore.isTagSelected) {
+        case (true, true):
+            return notifications
+        case (true, false):
+            return notifications.filter { $0.type == .comment }
+        case (false, true):
+            return notifications.filter { $0.type == .event }
+        default:
+            return []
+        }
     }
 }
