@@ -15,7 +15,7 @@ final class SearchEventViewModel {
     
     let isSearching: BehaviorRelay<Bool> = BehaviorRelay(value: true)
     let recentSearches: BehaviorRelay<[String]> = BehaviorRelay(value: [])
-    let eventsRelay: BehaviorRelay<[Event]> = BehaviorRelay(value: [])
+    let eventsRelay: BehaviorRelay<[EventResponseDTO]> = BehaviorRelay(value: [])
     
     private let disposeBag = DisposeBag()
     private var filter = EventFilter()

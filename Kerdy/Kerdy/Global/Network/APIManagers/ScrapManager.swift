@@ -16,18 +16,19 @@ final class ScrapManager {
     
     private init() {}
     
-    func getScraps() -> Single<[Event]> {
+    func getScraps() -> Single<[EventResponseDTO]> {
         return provider.request(.getScraps)
-            .map([Event].self)
+            .map([EventResponseDTO].self)
     }
     
-    func addScrap(id: Int) -> Single<Event> {
-        return provider.request(.getScraps)
-            .map(Event.self)
+    func addScrap(id: Int) -> Single<EventResponseDTO> {
+        return provider.request(.addScrap(id: id))
+            .map(EventResponseDTO.self)
     }
     
-    func deleteScrap(id: Int) -> Single<Event> {
-        return provider.request(.getScraps)
-            .map(Event.self)
+    func deleteScrap(id: Int) -> Single<EventResponseDTO> {
+        return provider.request(.deleteScrap(id: id))
+            .map(EventResponseDTO.self)
     }
+
 }

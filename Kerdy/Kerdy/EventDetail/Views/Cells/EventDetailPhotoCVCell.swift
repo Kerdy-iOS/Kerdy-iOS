@@ -97,7 +97,7 @@ final class EventDetailPhotoCVCell: UICollectionViewCell {
         return tableView
     }()
 
-    var tableViewItems: [Event]?
+    var tableViewItems: [EventResponseDTO]?
 
     override init(frame: CGRect) {
         super.init(frame: frame)

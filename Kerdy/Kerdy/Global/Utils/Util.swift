@@ -21,4 +21,10 @@ struct Convert {
         }
         return date
     }
+    
+    static func convertStringToDate(date: String, format: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.date(from: date) ?? Date()
+    }
 }

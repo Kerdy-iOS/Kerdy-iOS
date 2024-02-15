@@ -8,35 +8,40 @@
 import UIKit
 
 final class FilterSettingBtn: UIView {
+    // MARK: - UI Property
     lazy var filterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "ic_filter")
         return imageView
     }()
-
+    
     lazy var label: UILabel = {
         let label = UILabel()
         label.text = "필터설정"
         label.font = .nanumSquare(to: .regular, size: 12)
         return label
     }()
-
+    
     lazy var button: UIButton = {
         let button = UIButton()
         button.setTitle(nil, for: .normal)
         button.backgroundColor = .clear
         return button
     }()
-
+    
+    // MARK: - Initialize
     init() {
         super.init(frame: .zero)
         setLayout()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
 
+// MARK: - layout 설정
+extension FilterSettingBtn {
     private func setLayout() {
         addSubview(filterImageView)
         addSubview(label)
