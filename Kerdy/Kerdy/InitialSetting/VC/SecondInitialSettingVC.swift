@@ -79,8 +79,8 @@ final class SecondInitialSettingVC: UIViewController {
         setUI()
         setLayout()
         setNaviBar()
-        configureDataSource()
-        bindViewModel()
+        setDataSource()
+        setViewModel()
     }
     
     private func setLayout() {
@@ -169,11 +169,10 @@ final class SecondInitialSettingVC: UIViewController {
 }
 
 extension SecondInitialSettingVC {
-    private func configureDataSource() {
+    private func setDataSource() {
         let cellRegistration = UICollectionView.CellRegistration<ProfileTagCell, ActivityResponse> { cell, indexPath, itemIdentifier in
             let activity: ActivityResponse
             activity = self.viewModel.jobActivities.value[indexPath.row]
-            
             
             let isSelected = self.viewModel.selectedCategory.value.contains(activity.id)
             cell.confiure(tag: activity.name)
@@ -255,7 +254,7 @@ extension SecondInitialSettingVC: UICollectionViewDelegate {
 // MARK: - binding
 
 extension SecondInitialSettingVC {
-    private func bindViewModel() {
+    private func setViewModel() {
         viewModel.getAllActivities()
         viewModel.jobActivities
             .observe(on: MainScheduler.instance)

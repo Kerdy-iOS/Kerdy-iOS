@@ -92,8 +92,8 @@ final class FourthInitialSettingVC: UIViewController {
         setUI()
         setLayout()
         setNaviBar()
-        configureDataSource()
-        bindViewModel()
+        setDataSource()
+        setViewModel()
     }
     
     private func setLayout() {
@@ -224,11 +224,10 @@ final class FourthInitialSettingVC: UIViewController {
 }
 
 extension FourthInitialSettingVC {
-    private func configureDataSource() {
+    private func setDataSource() {
         let cellRegistration = UICollectionView.CellRegistration<ProfileTagCell, ActivityResponse> { cell, indexPath, itemIdentifier in
             let activity: ActivityResponse
             activity = self.viewModel.clubActivities.value[indexPath.row]
-            
             
             let isSelected = self.viewModel.selectedActivities.value.contains(activity.id)
             cell.confiure(tag: activity.name)
@@ -305,7 +304,7 @@ extension FourthInitialSettingVC: UICollectionViewDelegate {
 // MARK: - binding
 
 extension FourthInitialSettingVC {
-    private func bindViewModel() {
+    private func setViewModel() {
         viewModel.clubActivities
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] activities in
