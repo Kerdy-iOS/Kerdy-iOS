@@ -16,16 +16,10 @@ final class AuthViewModel {
     // MARK: - Property
     
     private var disposeBag = DisposeBag()
-    private let loginManager: LoginManager
+    private let loginManager = LoginManager.shared
     
     private let token = KeyChainManager.loadDeviceToken()
-    
-    // MARK: - Init
-    
-    init(loginManager: LoginManager) {
-        self.loginManager = loginManager
-    }
-    
+
     struct Input {
         let authButtonDidTap: Observable<Void>
     }
@@ -72,7 +66,6 @@ extension AuthViewModel {
             .subscribe(onSuccess: { response in
                 KeyChainManager.save(forKey: .accessToken, value: response.accessToken)
                 KeyChainManager.save(forKey: .memberId, value: "\(response.id)")
-                self.didLoginTapped.accept(())
                 let request = AuthRequestDTO(token: self.token, memberId: response.id)
                 self.postFCM(request: request)
             }, onFailure: { error in
@@ -84,7 +77,7 @@ extension AuthViewModel {
     func postFCM(request: AuthRequestDTO) {
         loginManager.postFCM(request: request)
             .subscribe(onSuccess: { response in
-                dump(response)
+                self.didLoginTapped.accept(())
             }, onFailure: { error in
                 HandleNetworkError.handleNetworkError(error)
             })

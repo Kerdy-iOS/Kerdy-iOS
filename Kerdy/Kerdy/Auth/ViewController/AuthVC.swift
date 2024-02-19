@@ -53,7 +53,7 @@ final class AuthVC: BaseVC {
         
         setUI()
         setLayout()
-        bind()
+        setBindings()
     }
     
     required init?(coder: NSCoder) {
@@ -96,7 +96,7 @@ extension AuthVC {
 
 extension AuthVC {
     
-    private func bind() {
+    private func setBindings() {
         let input = AuthViewModel.Input(authButtonDidTap: loginButton.rx.tap.asObservable())
         let output = viewModel.transform(input: input)
         
@@ -106,6 +106,5 @@ extension AuthVC {
                 SceneDelegate.shared?.changeRootViewControllerTo(initialSettingVC)
             })
             .disposed(by: disposeBag)
-        
     }
 }

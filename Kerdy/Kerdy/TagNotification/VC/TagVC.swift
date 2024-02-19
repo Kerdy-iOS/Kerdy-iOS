@@ -65,7 +65,7 @@ final class TagVC: BaseVC {
         setLayout()
         setUI()
         setDataSource()
-        bind()
+        setBindings()
     }
 }
 
@@ -111,7 +111,7 @@ extension TagVC {
         collectionView.allowsMultipleSelection = true
     }
     
-    private func bind() {
+    private func setBindings() {
         let input = TagViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver(),
                                        tapRegisterButton: registerButton.rx.tap.asSignal())
         

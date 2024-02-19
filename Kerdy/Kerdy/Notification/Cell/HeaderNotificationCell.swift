@@ -18,9 +18,8 @@ final class HeaderNotificationCell: UICollectionViewListCell {
     
     // MARK: - UI Components
     
-    fileprivate lazy var switchView: UISwitch = {
+    lazy var switchView: UISwitch = {
         let view = UISwitch()
-        view.isOn = UserDefaultStore.isSelected
         view.onTintColor = .kerdyMain
         
         return view
@@ -57,6 +56,10 @@ extension HeaderNotificationCell {
         accessories = [
             .customView(configuration: .init(customView: switchView, placement: .trailing()))
         ]
+    }
+    
+    func configure(to data: Bool) {
+        switchView.isOn = data
     }
 }
 

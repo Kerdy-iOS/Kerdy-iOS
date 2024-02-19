@@ -16,6 +16,10 @@ struct Strings {
     static let article = "작성한 글"
     static let comments = "작성한 댓글"
     
+    /// notification Archive
+    static let archive = "알림 보관함"
+    static let allDelete = "전체삭제"
+    
     /// notification
     static let receiveAllNotification = "알림 전체 수신"
     static let notificationTitle = "알림 설정"

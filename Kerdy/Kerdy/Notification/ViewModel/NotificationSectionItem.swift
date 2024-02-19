@@ -12,13 +12,13 @@ enum NotificationSection: Hashable {
     case main
 }
 
-enum NotificationItem: Hashable {
+enum NotificationItem: Hashable, Equatable {
     
-    case header(UUID)
+    case header(Bool)
     case cellItem(NotificationCellItem)
 }
 
-struct NotificationCellItem: Hashable {
+struct NotificationCellItem: Hashable, Equatable {
 
     let tagList: [TagsResponseDTO]
 }

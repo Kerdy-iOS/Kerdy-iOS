@@ -20,12 +20,12 @@ struct CommentsResponseDTO: Codable, Hashable, Equatable {
 struct Comment: Codable, Hashable, SettingWrittenProtocol, Equatable {
 
     var uuid = UUID()
-    let content: String
+    var content: String
     let commentID: Int?
     let parentID: Int?
     let feedID: Int
     let title: String
-    let createdAt, updatedAt: String
+    var createdAt, updatedAt: String
     let memberID: Int
     let memberImageURL: String
     let memberName: String?
@@ -49,9 +49,9 @@ struct Comment: Codable, Hashable, SettingWrittenProtocol, Equatable {
     
     var updateDate: String {
         if createdAt == updatedAt {
-            return convertDate(date: createdAt)
+            return Convert.convertDate(date: createdAt, format: "yy.MM.dd")
         } else {
-            return convertDate(date: updatedAt) + " 수정됨"
+            return Convert.convertDate(date: updatedAt, format: "yy.MM.dd") + " 수정됨"
         }
     }
     

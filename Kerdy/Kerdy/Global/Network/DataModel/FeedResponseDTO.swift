@@ -32,9 +32,9 @@ struct FeedResponseDTO: Codable, Hashable, SettingWrittenProtocol {
     
     var updateDate: String {
         if createdAt == updatedAt {
-            return convertDate(date: createdAt)
+            return Convert.convertDate(date: createdAt, format: "yyyy.MM.dd")
         } else {
-            return convertDate(date: updatedAt) + " 수정됨"
+            return Convert.convertDate(date: updatedAt, format: "yyyy.MM.dd") + " 수정됨"
         }
     }
 }

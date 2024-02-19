@@ -11,14 +11,16 @@ import Moya
 
 struct CommentsRequestDTO: Codable {
     let content: String
-    let feedId: Int
-    let parentId: Int?
+    var feedId: Int?
+    var parentId: Int?
 }
 
 enum CommentAPI {
     case getUserComments(memberID: Int)
     case getDetailComments(commentID: Int)
     case postComments(request: CommentsRequestDTO)
+    case deleteComment(commentID: Int)
+    case patchcomments(commentID: Int, content: String)
 }
 
 extension CommentAPI: KerdyAPI {
@@ -31,7 +33,7 @@ extension CommentAPI: KerdyAPI {
         switch self {
         case .getUserComments, .postComments:
             return ""
-        case .getDetailComments(commentID: let commentID):
+        case .getDetailComments(commentID: let commentID), .deleteComment(commentID: let commentID), .patchcomments(commentID: let commentID, _):
             return "/\(commentID)"
         }
     }
@@ -42,6 +44,10 @@ extension CommentAPI: KerdyAPI {
             return .get
         case .postComments:
             return .post
+        case .deleteComment:
+            return .delete
+        case .patchcomments:
+            return .patch
         }
     }
     
@@ -50,23 +56,26 @@ extension CommentAPI: KerdyAPI {
         case .getUserComments(memberID: let memberID):
             let parameter = ["memberId": memberID ]
             return .requestParameters(parameters: parameter, encoding: URLEncoding.default)
-        case .getDetailComments:
+        case .getDetailComments, .deleteComment:
             return .requestPlain
         case .postComments(request: let data):
             return .requestJSONEncodable(data)
+        case .patchcomments(_, content: let data):
+            let parameter = ["content": data]
+            return .requestParameters(parameters: parameter, encoding: JSONEncoding.default)
         }
     }
     
     var headerType: HTTPHeaderFields {
         switch self {
-        case .getUserComments, .getDetailComments, .postComments:
+        case .getUserComments, .getDetailComments, .postComments, .deleteComment, .patchcomments:
             return .hasAccessToken
         }
     }
 
     var error: [Int: NetworkError]? {
         switch self {
-        case .getUserComments, .getDetailComments, .postComments:
+        case .getUserComments, .getDetailComments, .postComments, .deleteComment, .patchcomments:
             return nil
         }
     }

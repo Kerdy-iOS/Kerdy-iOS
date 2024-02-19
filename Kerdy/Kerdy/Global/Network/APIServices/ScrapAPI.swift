@@ -59,7 +59,9 @@ extension ScrapAPI: KerdyAPI {
         case .addScrap(let id):
             return .requestParameters(parameters: ["eventId": id], encoding: JSONEncoding.default)
         case .deleteScrap(let id):
-            return .requestParameters(parameters: ["event-id": id], encoding: JSONEncoding.default)
+            var parameters: [String: Any] = [:]
+            parameters.updateValue(id, forKey: "event-id")
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
         }
     }
 }
