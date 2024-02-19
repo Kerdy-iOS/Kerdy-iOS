@@ -24,6 +24,8 @@ protocol MyProfileManagerType {
     func postMyActivities(ids: [Int]) -> Completable
     
     func updateProfileImage(image: UIImage) -> Completable
+    
+    func postInitialMember(ids: [Int], name: String) -> Completable
 }
 
 final class MyProfileManager: Networking, MyProfileManagerType {
@@ -88,5 +90,10 @@ final class MyProfileManager: Networking, MyProfileManagerType {
             .asCompletable()
     }
     
+    func postInitialMember(ids: [Int], name: String) -> Completable {
+        return provider
+            .request(.postInitialMember(ids: ids, name: name))
+            .asCompletable()
+    }
 }
 

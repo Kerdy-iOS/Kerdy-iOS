@@ -102,9 +102,8 @@ extension AuthVC {
         
         output.didLoginTapped
             .emit(onNext: { _ in
-                
-                let tabBarController = TabBarVC()
-                SceneDelegate.shared?.changeRootViewControllerTo(tabBarController)
+                let initialSettingVC = FirstInitialSettingVC()
+                SceneDelegate.shared?.changeRootViewControllerTo(initialSettingVC)
             })
             .disposed(by: disposeBag)
     }
