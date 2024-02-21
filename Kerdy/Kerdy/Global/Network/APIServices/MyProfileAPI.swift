@@ -16,6 +16,7 @@ enum MyProfileAPI {
     case getAllActivities
     case postMyActivities(ids: [Int])
     case updateProfileImage(image: MultipartFormData)
+    case postInitialMember(ids: [Int], name: String)
 }
 
 extension MyProfileAPI: KerdyAPI {
@@ -39,7 +40,7 @@ extension MyProfileAPI: KerdyAPI {
             return "/activities"
         case .getMyActivities:
             return "/\(KeyChainManager.loadMemberID())/activities"
-        case .getAllActivities:
+        case .getAllActivities, .postInitialMember:
             return ""
         case .updateProfileImage:
             return "/\(KeyChainManager.loadMemberID())/profile"
@@ -54,7 +55,7 @@ extension MyProfileAPI: KerdyAPI {
             return .delete
         case .getMyActivities, .getAllActivities:
             return .get
-        case .postMyActivities:
+        case .postMyActivities, .postInitialMember:
             return .post
         case .updateProfileImage:
             return .patch
@@ -91,12 +92,21 @@ extension MyProfileAPI: KerdyAPI {
             )
         case .updateProfileImage(image: let image):
             return .uploadMultipart([image])
+        case .postInitialMember(ids: let ids, name: let name):
+            let parameters: [String: Any] = [
+                "name": name,
+                "activityIds": ids as [Int]
+            ]
+            return .requestParameters(
+                parameters: parameters,
+                encoding: JSONEncoding.default
+            )
         }
     }
 
     var headerType: HTTPHeaderFields {
         switch self {
-        case .description, .deleteActivityTag, .deleteInterestTag, .postMyActivities, .updateProfileImage:
+        case .description, .deleteActivityTag, .deleteInterestTag, .postMyActivities, .updateProfileImage, .postInitialMember:
             return .hasAccessToken
         case .getMyActivities, .getAllActivities:
             return .plain

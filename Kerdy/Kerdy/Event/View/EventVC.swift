@@ -50,6 +50,7 @@ final class EventVC: BaseVC {
         let button = UIButton()
         button.setTitle(nil, for: .normal)
         button.setImage(UIImage(named: "ic_alert"), for: .normal)
+        button.addTarget(self, action: #selector(tapNotificationBtn), for: .touchUpInside)
         return button
     }()
 
@@ -135,15 +136,24 @@ final class EventVC: BaseVC {
         
         viewModel.setEventCVIndex(index: index)
     }
+    
+    @objc
+    func tapNotificationBtn() {
+        
+        let nextVC = NotificationArchiveVC(viewModel: ArchiveViewModel())
+        self.navigationController?.pushViewController(nextVC, animated: true)
+    }
 
-    @objc func categoryBtnTapped(_ sender: UIButton) {
+    @objc 
+    func categoryBtnTapped(_ sender: UIButton) {
         let tag = sender.tag
         let indexPath = IndexPath(item: tag, section: 0)
         eventCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         updateCategory(index: tag)
     }
 
-    @objc func filterBtnTapped(_ sender: UIButton) {
+    @objc 
+    func filterBtnTapped(_ sender: UIButton) {
         let nextVC = FilterVC()
         nextVC.delegate = self
         nextVC.setViewModel(filter: viewModel.getCurrentFilter())

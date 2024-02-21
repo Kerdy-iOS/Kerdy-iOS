@@ -10,6 +10,8 @@ import SnapKit
 
 final class FirstInitialSettingVC: UIViewController {
     
+    private let viewModel = InitialSettingViewModel.shared
+    
     private lazy var progressLabel: UILabel = {
         let label = UILabel()
         label.text = "1/4"
@@ -135,7 +137,7 @@ final class FirstInitialSettingVC: UIViewController {
     @objc private func nextButtonTapped() {
         let nextViewController = SecondInitialSettingVC()
         if let name = nameTextField.text, !name.isEmpty {
-            nextViewController.memberInfo.name = name
+            viewModel.userName = name
             navigationController?.pushViewController(nextViewController, animated: true)
         }
     }

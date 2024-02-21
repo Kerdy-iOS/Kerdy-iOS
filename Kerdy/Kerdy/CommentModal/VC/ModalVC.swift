@@ -99,9 +99,10 @@ extension ModalVC {
     }
     
     private func setUI() {
-        
-        UIView.animate(withDuration: 0.5, delay: 0.25) {
-            self.view.backgroundColor = .kerdyBlack.withAlphaComponent(0.6)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25) {
+            UIView.animate(withDuration: 0.5) {
+                self.view.backgroundColor = .kerdyBlack.withAlphaComponent(0.6)
+            }
         }
     }
     
