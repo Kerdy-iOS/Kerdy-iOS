@@ -7,15 +7,13 @@
 
 import UIKit
 
-final class EventDetailPhotoCVCell: UICollectionViewCell {
-    
-    private lazy var scrollView: UIScrollView = {
-        let view = UIScrollView()
-        view.showsVerticalScrollIndicator = false
+final class EventDetailPhotoCVCell: EventDetailCVCell {
+// MARK: - UI Property
+    private lazy var tableViewHeaderView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBackground
         return view
     }()
-    
-    private lazy var scrollContentView = UIView()
     
     private lazy var titleStackView: UIStackView = {
         let view = UIStackView()
@@ -91,17 +89,14 @@ final class EventDetailPhotoCVCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.showsVerticalScrollIndicator = false
-        return tableView
-    }()
+    // MARK: - Property
+    private var imageURLs: [String]?
 
-    var tableViewItems: [EventResponseDTO]?
-
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
+        setHeaderLayout()
         setUI()
     }
 
@@ -109,37 +104,45 @@ final class EventDetailPhotoCVCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UI Setting
     private func setUI() {
-        scrollView.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(EventDetailPhotoTVCell.self, forCellReuseIdentifier: EventDetailPhotoTVCell.identifier)
+    }
+    
+    // MARK: - Cell configuration
+    func configure(with event: EventResponseDTO, cellType: EventDetailCategoryType) {
+        configurePostType(cellType)
+        applyInfo.text = DateManager
+            .shared
+            .getApplyDateString(startDate: event.applyStartDate, endDate: event.applyEndDate)
+        dateInfo.text = DateManager
+            .shared
+            .getProgressDateString(startDate: event.startDate, endDate: event.endDate)
+        locationInfo.text = event.location
+        costInfo.text = event.paymentType
+        imageURLs = event.imageUrls
     }
 }
 // MARK: - layout 설정
 extension EventDetailPhotoCVCell {
     private func setLayout() {
-        addSubview(scrollView)
-        scrollView.addSubview(scrollContentView)
-        scrollContentView.addSubviews(
+        addSubview(tableView)
+        
+        tableView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.height.equalTo(400).priority(500)
+        }
+    }
+    
+    private func setHeaderLayout() {
+        tableViewHeaderView.addSubviews(
             titleStackView,
-            infoStackView,
-            tableView
+            infoStackView
         )
         setTitleLayout()
         setInfoLayout()
-        
-        scrollView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        scrollContentView.snp.makeConstraints {
-            let contentLayout = scrollView.contentLayoutGuide.snp
-            let frameLayout = scrollView.frameLayoutGuide.snp
-            $0.edges.equalTo(contentLayout.edges)
-            $0.width.equalTo(frameLayout.width)
-            $0.height.equalTo(1000).priority(250)
-        }
         
         titleStackView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(24)
@@ -151,11 +154,6 @@ extension EventDetailPhotoCVCell {
             $0.top.equalTo(titleStackView.snp.top)
             $0.leading.equalTo(titleStackView.snp.trailing).offset(20)
             $0.height.equalTo(94)
-        }
-        
-        tableView.snp.makeConstraints {
-            $0.top.equalTo(titleStackView.snp.bottom).offset(24)
-            $0.horizontalEdges.bottom.equalToSuperview()
         }
     }
     
@@ -179,16 +177,28 @@ extension EventDetailPhotoCVCell {
 }
 
 // MARK: - TableViewDelegate
-extension EventDetailPhotoCVCell: UITableViewDelegate {
+extension EventDetailPhotoCVCell {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 142
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return tableViewHeaderView
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 511
+        return UITableView.automaticDimension
     }
 }
 
 // MARK: - TableViewDataSource
 extension EventDetailPhotoCVCell: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableViewItems?.count ?? 5 // 임시 숫자
+        if let imageURLs = imageURLs {
+            return imageURLs.count
+        } else {
+            return 0
+        }
     }
 
     func tableView(
@@ -203,24 +213,11 @@ extension EventDetailPhotoCVCell: UITableViewDataSource {
         else {
             return UITableViewCell()
         }
-        let data = UIImage(systemName: "pencil") // 임시 이미지
-        cell.configure(with: data)
+        cell.selectionStyle = .blue
+        tableView.beginUpdates()
+        cell.configure(with: imageURLs![indexPath.row])
+        tableView.endUpdates()
         return cell
     }
 }
 
-extension EventDetailPhotoCVCell: ConfigurableCell {
-    typealias CellType = EventDetailModel
-    
-    func configure(with data: EventDetailModel) {
-        applyInfo.text = data.applyInfo
-        dateInfo.text = data.dateInfo
-        locationInfo.text = data.locationInfo
-        costInfo.text = data.costInfo
-        //이미지 설정
-        //이미지 갯수에 따라 tv 높이 바뀌도록 수정 예정
-        tableView.snp.makeConstraints {
-            $0.height.equalTo(511 * 5)
-        }
-    }
-}
