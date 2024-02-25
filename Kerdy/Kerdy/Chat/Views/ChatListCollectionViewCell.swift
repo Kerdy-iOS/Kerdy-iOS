@@ -58,7 +58,7 @@ final class ChatListCollectionViewCell: UICollectionViewCell {
         contentLabel.text = room.recentlyMessage.content
         timeLabel.text = convertDateToTime(date: time)
         
-        loadProfileImage(url: profileImageURL)
+        getProfileImage(url: profileImageURL)
     }
 }
 
@@ -99,7 +99,7 @@ extension ChatListCollectionViewCell {
 }
 
 extension ChatListCollectionViewCell {
-    func loadProfileImage(url: String) {
+    private func getProfileImage(url: String) {
         print(url)
         ImageManager.shared.getProfileImage(url: url)
             .subscribe { [weak self] image in
