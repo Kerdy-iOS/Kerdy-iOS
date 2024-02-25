@@ -9,8 +9,8 @@ import UIKit
 import SnapKit
 import Core
 
-final class ChatVC: UIViewController {
-    
+final class ChatVC: BaseVC {
+    // MARK: - UI Property
     private lazy var navigationView = UIView()
     
     private lazy var titleLabel: UILabel = {
@@ -38,12 +38,22 @@ final class ChatVC: UIViewController {
         return collectionView
     }()
     
+    // MARK: - Property
+    private let viewModel = ChatViewModel()
+    
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
         setLayout()
+        bindViewModel()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.action(.refresh)
+    }
+    // MARK: - set UI
     private func setUI() {
         view.backgroundColor = .white
         collectionView.delegate = self
@@ -91,16 +101,30 @@ extension ChatVC {
     }
 }
 
+// MARK: - binding
+extension ChatVC {
+    func bindViewModel() {
+        viewModel
+            .filterObservable
+            .subscribe { [weak self] _ in
+                self?.collectionView.reloadData()
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
 // MARK: - collectionView DataSource
 extension ChatVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        let count = viewModel.roomsRelay.value.count
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChatListCollectionViewCell.identifier, for: indexPath) as? ChatListCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.configure()
+        let rooms = viewModel.roomsRelay.value
+        cell.configure(room: rooms[indexPath.row])
         return cell
     }
     

@@ -24,7 +24,7 @@ struct MessageRoomResponseDTO: Codable {
 // MARK: - Sender
 struct Sender: Codable {
     let id: Int
-    let name: String
+    let name: String?
     let description: String
     let imageURL: String
     let githubURL: String
