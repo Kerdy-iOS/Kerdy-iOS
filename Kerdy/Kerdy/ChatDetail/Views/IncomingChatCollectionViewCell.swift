@@ -7,8 +7,10 @@
 
 import UIKit
 import SnapKit
+import RxSwift
 
 final class IncomingChatCollectionViewCell: UICollectionViewCell {
+    // MARK: - UI property
     private lazy var profileImageView: UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 15
@@ -51,8 +53,10 @@ final class IncomingChatCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private var viewModel = ChatDetailCellViewModel()
+    // MARK: - Property
+    private var disposeBag = DisposeBag()
     
+    // MARK: - initialize
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
@@ -62,6 +66,7 @@ final class IncomingChatCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - configure cell
     func configure(isContinuous: Bool, data: MessageRoomResponseDTO) {
         if isContinuous {
             messageView.snp.remakeConstraints {
@@ -73,7 +78,7 @@ final class IncomingChatCollectionViewCell: UICollectionViewCell {
             profileImageView.isHidden = isContinuous
             nameLabel.isHidden = isContinuous
         } else {
-            // TODO: - 이미지 다운로드
+            getProfileImage(url: data.sender.imageURL)
             nameLabel.text = data.sender.name
         }
         contentLabel.text = data.content
@@ -83,6 +88,7 @@ final class IncomingChatCollectionViewCell: UICollectionViewCell {
     
 }
 
+// MARK: - layout 설정
 extension IncomingChatCollectionViewCell {
     private func setLayout() {
         contentView.addSubviews(
@@ -135,3 +141,15 @@ extension IncomingChatCollectionViewCell {
     }
 }
 
+extension IncomingChatCollectionViewCell {
+    private func getProfileImage(url: String) {
+        print(url)
+        ImageManager.shared.getProfileImage(url: url)
+            .subscribe { [weak self] image in
+                self?.profileImageView.image = image
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
+    }
+}
