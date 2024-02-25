@@ -77,7 +77,7 @@ final class IncomingChatCollectionViewCell: UICollectionViewCell {
             nameLabel.text = data.sender.name
         }
         contentLabel.text = data.content
-        timeLabel.text = viewModel.convertDateString(data.createdAt)
+        timeLabel.text = convertDateToTime(date: data.createdAt)
         layoutIfNeeded()
     }
     

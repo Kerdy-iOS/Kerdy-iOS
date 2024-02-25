@@ -60,7 +60,7 @@ final class MyChatCollectionViewCell: UICollectionViewCell {
         }
         
         contentLabel.text = data.content
-        timeLabel.text = viewModel.convertDateString(data.createdAt)
+        timeLabel.text = convertDateToTime(date: data.createdAt)
         layoutIfNeeded()
     }
 }
