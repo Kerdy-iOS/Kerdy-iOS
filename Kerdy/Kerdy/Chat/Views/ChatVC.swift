@@ -105,7 +105,7 @@ extension ChatVC {
 extension ChatVC {
     func bindViewModel() {
         viewModel
-            .filterObservable
+            .roomsObservable
             .subscribe { [weak self] _ in
                 self?.collectionView.reloadData()
             }
@@ -135,7 +135,10 @@ extension ChatVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) {
             cell.contentView.backgroundColor = .kerdyGray01
+            let rooms = viewModel.roomsRelay.value
+            let roomId = rooms[indexPath.row].roomId
             let nextVC = ChatDetailVC()
+            nextVC.configure(roomId: roomId)
             navigationController?.pushViewController(nextVC, animated: true)
         }
     }

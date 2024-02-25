@@ -14,7 +14,7 @@ final class ChatViewModel {
     private let roomManager = RoomManager.shared
     private let disposeBag = DisposeBag()
     private(set) var roomsRelay = BehaviorRelay<[MessageRoomsResponseDTO]>(value: [])
-    var filterObservable: Observable<[MessageRoomsResponseDTO]> {
+    var roomsObservable: Observable<[MessageRoomsResponseDTO]> {
         return roomsRelay.asObservable().distinctUntilChanged()
     }
     
