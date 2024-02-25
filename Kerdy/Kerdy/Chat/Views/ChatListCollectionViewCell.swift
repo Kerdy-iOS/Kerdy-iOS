@@ -100,7 +100,8 @@ extension ChatListCollectionViewCell {
 
 extension ChatListCollectionViewCell {
     func loadProfileImage(url: String) {
-        ImageManager.shared.getImage(url: url)
+        print(url)
+        ImageManager.shared.getProfileImage(url: url)
             .subscribe { [weak self] image in
                 self?.profileImageView.image = image
             } onFailure: { error in
