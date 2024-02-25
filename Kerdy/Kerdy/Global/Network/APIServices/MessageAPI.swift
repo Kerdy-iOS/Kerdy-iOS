@@ -34,7 +34,7 @@ extension MessageAPI: KerdyAPI {
     var headerType: HTTPHeaderFields {
         switch self {
         case .postMessge:
-            return .plain
+            return .hasAccessToken
         }
     }
     
