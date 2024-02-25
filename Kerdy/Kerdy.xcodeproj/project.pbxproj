@@ -148,6 +148,8 @@
 		31571C242AF3CBC00037A2F2 /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C1D2AF3CBC00037A2F2 /* EventVC.swift */; };
 		31571C262AF3CBC80037A2F2 /* EventResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C252AF3CBC80037A2F2 /* EventResponseDTO.swift */; };
 		31571C292AF3E1540037A2F2 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 31571C282AF3E1540037A2F2 /* .swiftlint.yml */; };
+		3159CCD72B8B1903000DECC9 /* MessageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3159CCD62B8B1903000DECC9 /* MessageAPI.swift */; };
+		3159CCD92B8B190C000DECC9 /* RoomAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3159CCD82B8B190C000DECC9 /* RoomAPI.swift */; };
 		3162F0732AEA775E001B1D32 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 3162F0722AEA775E001B1D32 /* RxCocoa */; };
 		3162F0752AEA775E001B1D32 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3162F0742AEA775E001B1D32 /* RxSwift */; };
 		3164D47F2AE21F810054F440 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3164D47E2AE21F810054F440 /* AppDelegate.swift */; };
@@ -366,6 +368,8 @@
 		31571C1D2AF3CBC00037A2F2 /* EventVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
 		31571C252AF3CBC80037A2F2 /* EventResponseDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventResponseDTO.swift; sourceTree = "<group>"; };
 		31571C282AF3E1540037A2F2 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		3159CCD62B8B1903000DECC9 /* MessageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAPI.swift; sourceTree = "<group>"; };
+		3159CCD82B8B190C000DECC9 /* RoomAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomAPI.swift; sourceTree = "<group>"; };
 		3164D47B2AE21F810054F440 /* Kerdy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kerdy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3164D47E2AE21F810054F440 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3164D4802AE21F810054F440 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -752,7 +756,9 @@
 				09ED94352B2C325C001864EF /* BlockAPI.swift */,
 				09ED94342B2C325C001864EF /* CommentAPI.swift */,
 				095A890B2B4FEF0E00DE7DDD /* ReportAPI.swift */,
+				3159CCD62B8B1903000DECC9 /* MessageAPI.swift */,
 				09EEFF622B35B8DB0010754C /* EventAPI.swift */,
+				3159CCD82B8B190C000DECC9 /* RoomAPI.swift */,
 				09ED94362B2C325C001864EF /* FeedAPI.swift */,
 				316B4E812B41917900E9F781 /* ScrapAPI.swift */,
 				31747CD82B344E3300559716 /* EventAPI.swift */,
@@ -1711,6 +1717,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				098294212AF3C1E50011773A /* TermsOfUseVC.swift in Sources */,
+				3159CCD92B8B190C000DECC9 /* RoomAPI.swift in Sources */,
 				09ECB32F2AFE0AB2000F3008 /* SettingWriteCell.swift in Sources */,
 				096CD8E82B49AC570041F621 /* InitialSettingCell.swift in Sources */,
 				5B5D084A2B35D7B800490678 /* UserImageVC.swift in Sources */,
@@ -1789,6 +1796,7 @@
 				09D6379D2B5E499A001CD013 /* ReportCompletedView.swift in Sources */,
 				0964F9562B2F54EB0031D574 /* SettingFeedVC.swift in Sources */,
 				311E98402AFB9720009BEB3F /* PeriodView.swift in Sources */,
+				3159CCD72B8B1903000DECC9 /* MessageAPI.swift in Sources */,
 				09EEFF6C2B39CEFA0010754C /* SwitchNotificationView.swift in Sources */,
 				5BF618512B613D3200A86452 /* InitialSettingViewModel.swift in Sources */,
 				090978ED2AF0E7A3006BD8DE /* MyCardVC.swift in Sources */,

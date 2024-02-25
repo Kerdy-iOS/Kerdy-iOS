@@ -23,6 +23,7 @@ enum KerdyDomain {
     case messages
     case feed
     case notification
+    case rooms
 }
 
 extension KerdyDomain {
@@ -51,6 +52,8 @@ extension KerdyDomain {
             return "/feeds"
         case .notification:
             return "/notifications"
+        case .rooms:
+            return "/rooms"
         }
     }
 }
