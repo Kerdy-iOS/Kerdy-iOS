@@ -152,6 +152,8 @@
 		3159CCD92B8B190C000DECC9 /* RoomAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3159CCD82B8B190C000DECC9 /* RoomAPI.swift */; };
 		3159CCE12B8B1F9B000DECC9 /* MessageRoomsResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3159CCE02B8B1F9B000DECC9 /* MessageRoomsResponseDTO.swift */; };
 		3159CCE32B8B2157000DECC9 /* MessageResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3159CCE22B8B2157000DECC9 /* MessageResponseDTO.swift */; };
+		3159CCE52B8B21E7000DECC9 /* RoomManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3159CCE42B8B21E7000DECC9 /* RoomManager.swift */; };
+		3159CCE72B8B21EF000DECC9 /* MessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3159CCE62B8B21EF000DECC9 /* MessageManager.swift */; };
 		3162F0732AEA775E001B1D32 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 3162F0722AEA775E001B1D32 /* RxCocoa */; };
 		3162F0752AEA775E001B1D32 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3162F0742AEA775E001B1D32 /* RxSwift */; };
 		3164D47F2AE21F810054F440 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3164D47E2AE21F810054F440 /* AppDelegate.swift */; };
@@ -374,6 +376,8 @@
 		3159CCD82B8B190C000DECC9 /* RoomAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomAPI.swift; sourceTree = "<group>"; };
 		3159CCE02B8B1F9B000DECC9 /* MessageRoomsResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRoomsResponseDTO.swift; sourceTree = "<group>"; };
 		3159CCE22B8B2157000DECC9 /* MessageResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageResponseDTO.swift; sourceTree = "<group>"; };
+		3159CCE42B8B21E7000DECC9 /* RoomManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomManager.swift; sourceTree = "<group>"; };
+		3159CCE62B8B21EF000DECC9 /* MessageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManager.swift; sourceTree = "<group>"; };
 		3164D47B2AE21F810054F440 /* Kerdy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kerdy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3164D47E2AE21F810054F440 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3164D4802AE21F810054F440 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -793,6 +797,8 @@
 				099756BC2B222FBA009961B5 /* TagManager.swift */,
 				5B8F6FEC2B46C4CC00F2E44A /* MyProfileManager.swift */,
 				095A890D2B4FF0A800DE7DDD /* ReportManager.swift */,
+				3159CCE42B8B21E7000DECC9 /* RoomManager.swift */,
+				3159CCE62B8B21EF000DECC9 /* MessageManager.swift */,
 			);
 			path = APIManagers;
 			sourceTree = "<group>";
@@ -1728,6 +1734,7 @@
 				096CD8E82B49AC570041F621 /* InitialSettingCell.swift in Sources */,
 				5B5D084A2B35D7B800490678 /* UserImageVC.swift in Sources */,
 				0964F95A2B2F60F00031D574 /* CommentsHeaderView.swift in Sources */,
+				3159CCE52B8B21E7000DECC9 /* RoomManager.swift in Sources */,
 				3127EE0B2B53CFB9005CE78F /* ChatDateSupplementaryView.swift in Sources */,
 				09BB551E2AF0169700A54B1B /* SettingBasicCell.swift in Sources */,
 				09ED94332B2C3249001864EF /* BlockManager.swift in Sources */,
@@ -1820,6 +1827,7 @@
 				09ED94312B2C3249001864EF /* CommentManager.swift in Sources */,
 				3109B2FA2AF52B2000B2EAD2 /* FilterVC.swift in Sources */,
 				31747CCE2B3449DC00559716 /* TagFilterCollectionViewCell.swift in Sources */,
+				3159CCE72B8B21EF000DECC9 /* MessageManager.swift in Sources */,
 				3109B3022AF52B6A00B2EAD2 /* ResetBtn.swift in Sources */,
 				316D690C2B79E71D00CE43AC /* EventDetailTagCell.swift in Sources */,
 				096CD8E52B49ABFB0041F621 /* EventFilter.swift in Sources */,

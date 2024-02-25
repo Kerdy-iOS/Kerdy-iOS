@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MessageResponseDTO {
+struct MessageResponseDTO: Codable {
     let roomId: String
     
     enum CodingKeys: CodingKey {
