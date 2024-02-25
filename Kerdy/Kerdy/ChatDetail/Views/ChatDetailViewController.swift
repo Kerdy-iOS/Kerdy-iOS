@@ -8,12 +8,13 @@
 import UIKit
 import SnapKit
 
-final class ChatDetailVC: UIViewController {
-    
+final class ChatDetailVC: BaseVC {
+    // MARK: - typeAlias
     typealias IncomingCell = IncomingChatCollectionViewCell
     typealias MyCell = MyChatCollectionViewCell
     typealias SectionHeader = ChatDateSupplementaryView
     
+    // MARK: - UI Property
     private lazy var navigationBar = NavigationBarView()
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private lazy var textInputView: UIView = {
@@ -41,14 +42,18 @@ final class ChatDetailVC: UIViewController {
         return button
     }()
     
+    // MARK: - property
     private var viewModel = ChatDetailViewModel()
     
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
         setLayout()
+        bindViewModel()
     }
     
+    // MARK: - Set UI
     private func setUI() {
         navigationBar.delegate = self
         view.backgroundColor = .white
@@ -63,8 +68,14 @@ final class ChatDetailVC: UIViewController {
             withReuseIdentifier: SectionHeader.identifier
         )
     }
+    
+    // MARK: - Method
+    func configure(roomId: String) {
+        viewModel.action(.configre(roomId: roomId))
+    }
 }
 
+// MARK: - layout 설정
 extension ChatDetailVC {
     private func setLayout() {
         view.addSubviews(
@@ -108,20 +119,37 @@ extension ChatDetailVC {
     }
 }
 
+// MARK: - binding
+extension ChatDetailVC {
+    private func bindViewModel() {
+        viewModel
+            .chatsObservable
+            .subscribe { [weak self] _ in
+                self?.collectionView.reloadData()
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
 // MARK: - collectionView DataSource
 extension ChatDetailVC: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return viewModel.processedData.count
+        let chatLogsForDays = viewModel.chatsRelay.value
+        return chatLogsForDays.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let sectionData = viewModel.processedData[section]
+        let chatLogsForDays = viewModel.chatsRelay.value
+        let sectionData = chatLogsForDays[section]
         let messages = sectionData.messages
         return messages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let sectionData = viewModel.processedData[indexPath.section].messages
+        guard let id = viewModel.myId else { return UICollectionViewCell() }
+        
+        let chatLogsForDays = viewModel.chatsRelay.value
+        let sectionData = chatLogsForDays[indexPath.section].messages
         let curData = sectionData[indexPath.row]
         var isContinuous = false
         
@@ -130,7 +158,7 @@ extension ChatDetailVC: UICollectionViewDataSource {
             isContinuous = curData.sender.name == prevData.sender.name
         }
         
-        if curData.sender.name == viewModel.interlocutor {
+        if curData.sender.id == id {
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: MyCell.identifier,
                 for: indexPath
@@ -156,7 +184,8 @@ extension ChatDetailVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let section = indexPath.section
-        let sectionData = viewModel.processedData[section]
+        let chatLogsForDays = viewModel.chatsRelay.value
+        let sectionData = chatLogsForDays[section]
         let date = sectionData.date
         
         guard kind == UICollectionView.elementKindSectionHeader else {
@@ -187,8 +216,8 @@ extension ChatDetailVC: UICollectionViewDelegate {
 
 extension ChatDetailVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let curSectionData = viewModel
-            .processedData[indexPath.section]
+        let chatLogsForDays = viewModel.chatsRelay.value
+        let curSectionData = chatLogsForDays[indexPath.section]
             .messages
         let curData = curSectionData[indexPath.row]
         let content = curData.content
