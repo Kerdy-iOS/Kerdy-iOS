@@ -67,11 +67,12 @@ final class ChatDetailVC: BaseVC {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: SectionHeader.identifier
         )
+        inputButton.addTarget(self, action: #selector(inputButtonTapped), for: .touchUpInside)
     }
     
-    // MARK: - Method
-    func configure(roomId: String) {
-        viewModel.action(.configre(roomId: roomId))
+    // MARK: - configure
+    func configure(roomId: String, interlocutorId: Int) {
+        viewModel.action(.configre(roomId: roomId, interlocutorId: interlocutorId))
     }
 }
 
@@ -92,6 +93,12 @@ extension ChatDetailVC {
             $0.height.equalTo(56)
         }
         
+        inputButton.snp.makeConstraints {
+            $0.verticalEdges.equalToSuperview().inset(16)
+            $0.trailing.equalToSuperview().inset(19)
+            $0.width.equalTo(26)
+        }
+        
         textInputView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(17)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(16)
@@ -104,16 +111,10 @@ extension ChatDetailVC {
             $0.horizontalEdges.equalToSuperview().inset(17)
         }
         
-        inputButton.snp.makeConstraints {
-            $0.verticalEdges.equalToSuperview().inset(16)
-            $0.trailing.equalToSuperview().inset(19)
-            $0.width.equalTo(26)
-        }
-        
         textField.snp.makeConstraints {
             $0.verticalEdges.equalToSuperview().inset(16)
             $0.leading.equalToSuperview().inset(19)
-            $0.trailing.equalTo(inputButton.snp.leading).inset(16)
+            $0.trailing.equalTo(inputButton.snp.leading).offset(-16)
         }
         
     }
@@ -128,6 +129,15 @@ extension ChatDetailVC {
                 self?.collectionView.reloadData()
             }
             .disposed(by: disposeBag)
+    }
+}
+
+// MARK: - method
+extension ChatDetailVC {
+    @objc private func inputButtonTapped() {
+        guard let text = textField.text else { return }
+        
+        viewModel.action(.postMessage(content: text))
     }
 }
 

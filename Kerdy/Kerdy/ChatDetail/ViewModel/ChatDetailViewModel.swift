@@ -12,11 +12,14 @@ import RxRelay
 final class ChatDetailViewModel {
     // MARK: - Input
     enum Input {
-        case configre(roomId: String)
+        case configre(roomId: String, interlocutorId: Int)
+        case postMessage(content: String)
     }
     
     // MARK: - property
     private(set) var myId: Int?
+    private var interlocutorId: Int?
+    private let messageManager = MessageManager.shared
     private let roomManager = RoomManager.shared
     private var roomRelay = BehaviorRelay<[MessageRoomResponseDTO]>(value: [])
     private(set) var chatsRelay = BehaviorRelay<[ChatLogsForDay]>(value: [])
@@ -42,8 +45,10 @@ final class ChatDetailViewModel {
     // MARK: - action
     func action(_ input: Input) {
         switch input {
-        case .configre(roomId: let roomId):
-            configure(roomId: roomId)
+        case .configre(roomId: let roomId, interlocutorId: let interlocutorId):
+            configure(roomId: roomId, interlocutorId: interlocutorId)
+        case .postMessage(content: let content):
+            postMessage(content)
         }
     }
 }
@@ -69,8 +74,9 @@ extension ChatDetailViewModel {
 
 // MARK: - method
 extension ChatDetailViewModel {
-    private func configure(roomId: String) {
+    private func configure(roomId: String, interlocutorId: Int) {
         roomIdRelay.accept(roomId)
+        self.interlocutorId = interlocutorId
     }
     
     private func getRoomDetail(roomId: String) {
@@ -80,7 +86,28 @@ extension ChatDetailViewModel {
             }
             .disposed(by: disposeBag)
     }
+    
+    private func postMessage(_ content: String) {
+        guard
+            let myId = myId,
+            let interlocutorId = interlocutorId
+        else { return }
+        
+        messageManager.postMessage(
+            senderId: myId,
+            receiverId: interlocutorId,
+            content: content
+        )
+        .subscribe { [weak self] result in
+            guard let self = self else { return }
+            self.getRoomDetail(roomId: self.roomIdRelay.value)
+        }
+        .disposed(by: disposeBag)
+    }
+}
 
+// MARK: - 메세지를 날짜별로 나누는 method
+extension ChatDetailViewModel {
     private func groupMessagesByDate(_ messages: [MessageRoomResponseDTO]) -> [ChatLogsForDay] {
         let groupedByDate = Dictionary(grouping: roomRelay.value) { message -> String in
             let formattedDate = formatDateString(message.createdAt)

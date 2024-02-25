@@ -136,10 +136,18 @@ extension ChatVC: UICollectionViewDelegate {
         if let cell = collectionView.cellForItem(at: indexPath) {
             cell.contentView.backgroundColor = .kerdyGray01
             let rooms = viewModel.roomsRelay.value
-            let roomId = rooms[indexPath.row].roomId
+            let curRoom = rooms[indexPath.row]
+            
+            let roomId = curRoom.roomId
+            let interlocutorId = curRoom.interlocutor.id
             let nextVC = ChatDetailVC()
-            nextVC.configure(roomId: roomId)
+            
+            nextVC.configure(roomId: roomId, interlocutorId: interlocutorId)
             navigationController?.pushViewController(nextVC, animated: true)
+            
+            UIView.animate(withDuration: 0.1, delay: 0.1) {
+                cell.contentView.backgroundColor = .clear
+            }
         }
     }
 
