@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Core
 
-final class ChatVC: UIViewControlleruitl {
+final class ChatVC: UIViewController {
     
     private lazy var navigationView = UIView()
     
