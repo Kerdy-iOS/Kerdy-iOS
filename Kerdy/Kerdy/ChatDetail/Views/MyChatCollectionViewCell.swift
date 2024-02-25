@@ -8,7 +8,7 @@
 import UIKit
 
 final class MyChatCollectionViewCell: UICollectionViewCell {
-    
+    // MARK: - UI property
     private lazy var contentLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1000
@@ -38,8 +38,7 @@ final class MyChatCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private var viewModel = ChatDetailCellViewModel()
-    
+    // MARK: - initialize
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
@@ -49,6 +48,7 @@ final class MyChatCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - configure cell
     func configure(isContinuous: Bool, data: MessageRoomResponseDTO) {
         if isContinuous {
             messageView.snp.remakeConstraints {
@@ -65,6 +65,7 @@ final class MyChatCollectionViewCell: UICollectionViewCell {
     }
 }
 
+// MARK: - layout 설정
 extension MyChatCollectionViewCell {
     private func setLayout() {
         contentView.addSubviews(
@@ -101,5 +102,4 @@ extension MyChatCollectionViewCell {
             $0.width.greaterThanOrEqualTo(10)
         }
     }
-
 }

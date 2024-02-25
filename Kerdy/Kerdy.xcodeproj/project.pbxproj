@@ -132,7 +132,6 @@
 		3127EE052B539060005CE78F /* IncomingChatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127EE042B539060005CE78F /* IncomingChatCollectionViewCell.swift */; };
 		3127EE072B539071005CE78F /* MyChatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127EE062B539071005CE78F /* MyChatCollectionViewCell.swift */; };
 		3127EE0B2B53CFB9005CE78F /* ChatDateSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127EE0A2B53CFB9005CE78F /* ChatDateSupplementaryView.swift */; };
-		313AAF9E2B5E8C3000254938 /* ChatDetailCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313AAF9D2B5E8C3000254938 /* ChatDetailCellViewModel.swift */; };
 		31530ADE2B47AEAC00F33317 /* SearchStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31530ADD2B47AEAC00F33317 /* SearchStatus.swift */; };
 		31530AE32B47AEE300F33317 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31530AE22B47AEE300F33317 /* SearchViewController.swift */; };
 		31530AE52B47AEF100F33317 /* RecentDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31530AE42B47AEF100F33317 /* RecentDescriptionView.swift */; };
@@ -148,6 +147,12 @@
 		31571C242AF3CBC00037A2F2 /* EventVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C1D2AF3CBC00037A2F2 /* EventVC.swift */; };
 		31571C262AF3CBC80037A2F2 /* EventResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31571C252AF3CBC80037A2F2 /* EventResponseDTO.swift */; };
 		31571C292AF3E1540037A2F2 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 31571C282AF3E1540037A2F2 /* .swiftlint.yml */; };
+		3159CCD72B8B1903000DECC9 /* MessageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3159CCD62B8B1903000DECC9 /* MessageAPI.swift */; };
+		3159CCD92B8B190C000DECC9 /* RoomAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3159CCD82B8B190C000DECC9 /* RoomAPI.swift */; };
+		3159CCE12B8B1F9B000DECC9 /* MessageRoomsResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3159CCE02B8B1F9B000DECC9 /* MessageRoomsResponseDTO.swift */; };
+		3159CCE32B8B2157000DECC9 /* MessageResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3159CCE22B8B2157000DECC9 /* MessageResponseDTO.swift */; };
+		3159CCE52B8B21E7000DECC9 /* RoomManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3159CCE42B8B21E7000DECC9 /* RoomManager.swift */; };
+		3159CCE72B8B21EF000DECC9 /* MessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3159CCE62B8B21EF000DECC9 /* MessageManager.swift */; };
 		3162F0732AEA775E001B1D32 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 3162F0722AEA775E001B1D32 /* RxCocoa */; };
 		3162F0752AEA775E001B1D32 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3162F0742AEA775E001B1D32 /* RxSwift */; };
 		3164D47F2AE21F810054F440 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3164D47E2AE21F810054F440 /* AppDelegate.swift */; };
@@ -181,6 +186,7 @@
 		31AD5DA32B5C21F70050C8D8 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD5DA22B5C21F70050C8D8 /* ChatViewModel.swift */; };
 		31AD5DB12B5D662B0050C8D8 /* ChatDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD5DB02B5D662B0050C8D8 /* ChatDetailViewModel.swift */; };
 		31AD5DB32B5D677F0050C8D8 /* MessageRoomResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD5DB22B5D677F0050C8D8 /* MessageRoomResponseDTO.swift */; };
+		31CE33052B8B7B05008A15C9 /* ChatLogsForDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CE33042B8B7B05008A15C9 /* ChatLogsForDay.swift */; };
 		31FBEC792B107DCD00DE68F3 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC782B107DCD00DE68F3 /* EventDetailViewController.swift */; };
 		31FBEC7B2B109A1C00DE68F3 /* EventDetailPostCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC7A2B109A1C00DE68F3 /* EventDetailPostCVCell.swift */; };
 		31FBEC7F2B109D4500DE68F3 /* PostListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC7E2B109D4500DE68F3 /* PostListModel.swift */; };
@@ -350,7 +356,6 @@
 		3127EE042B539060005CE78F /* IncomingChatCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingChatCollectionViewCell.swift; sourceTree = "<group>"; };
 		3127EE062B539071005CE78F /* MyChatCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatCollectionViewCell.swift; sourceTree = "<group>"; };
 		3127EE0A2B53CFB9005CE78F /* ChatDateSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDateSupplementaryView.swift; sourceTree = "<group>"; };
-		313AAF9D2B5E8C3000254938 /* ChatDetailCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailCellViewModel.swift; sourceTree = "<group>"; };
 		31530ADD2B47AEAC00F33317 /* SearchStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStatus.swift; sourceTree = "<group>"; };
 		31530AE22B47AEE300F33317 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		31530AE42B47AEF100F33317 /* RecentDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentDescriptionView.swift; sourceTree = "<group>"; };
@@ -366,6 +371,12 @@
 		31571C1D2AF3CBC00037A2F2 /* EventVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventVC.swift; sourceTree = "<group>"; };
 		31571C252AF3CBC80037A2F2 /* EventResponseDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventResponseDTO.swift; sourceTree = "<group>"; };
 		31571C282AF3E1540037A2F2 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		3159CCD62B8B1903000DECC9 /* MessageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAPI.swift; sourceTree = "<group>"; };
+		3159CCD82B8B190C000DECC9 /* RoomAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomAPI.swift; sourceTree = "<group>"; };
+		3159CCE02B8B1F9B000DECC9 /* MessageRoomsResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRoomsResponseDTO.swift; sourceTree = "<group>"; };
+		3159CCE22B8B2157000DECC9 /* MessageResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageResponseDTO.swift; sourceTree = "<group>"; };
+		3159CCE42B8B21E7000DECC9 /* RoomManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomManager.swift; sourceTree = "<group>"; };
+		3159CCE62B8B21EF000DECC9 /* MessageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManager.swift; sourceTree = "<group>"; };
 		3164D47B2AE21F810054F440 /* Kerdy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kerdy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3164D47E2AE21F810054F440 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3164D4802AE21F810054F440 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -399,6 +410,7 @@
 		31AD5DA22B5C21F70050C8D8 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		31AD5DB02B5D662B0050C8D8 /* ChatDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailViewModel.swift; sourceTree = "<group>"; };
 		31AD5DB22B5D677F0050C8D8 /* MessageRoomResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRoomResponseDTO.swift; sourceTree = "<group>"; };
+		31CE33042B8B7B05008A15C9 /* ChatLogsForDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogsForDay.swift; sourceTree = "<group>"; };
 		31FBEC782B107DCD00DE68F3 /* EventDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		31FBEC7A2B109A1C00DE68F3 /* EventDetailPostCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailPostCVCell.swift; sourceTree = "<group>"; };
 		31FBEC7E2B109D4500DE68F3 /* PostListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListModel.swift; sourceTree = "<group>"; };
@@ -741,6 +753,8 @@
 				099756BE2B223002009961B5 /* TagsResponseDTO.swift */,
 				09ECB3342AFE15E7000F3008 /* CommentsResponseDTO.swift */,
 				31AD5DB22B5D677F0050C8D8 /* MessageRoomResponseDTO.swift */,
+				3159CCE02B8B1F9B000DECC9 /* MessageRoomsResponseDTO.swift */,
+				3159CCE22B8B2157000DECC9 /* MessageResponseDTO.swift */,
 				09D637A42B60066F001CD013 /* ArchiveResponseDTO.swift */,
 			);
 			path = DataModel;
@@ -752,7 +766,9 @@
 				09ED94352B2C325C001864EF /* BlockAPI.swift */,
 				09ED94342B2C325C001864EF /* CommentAPI.swift */,
 				095A890B2B4FEF0E00DE7DDD /* ReportAPI.swift */,
+				3159CCD62B8B1903000DECC9 /* MessageAPI.swift */,
 				09EEFF622B35B8DB0010754C /* EventAPI.swift */,
+				3159CCD82B8B190C000DECC9 /* RoomAPI.swift */,
 				09ED94362B2C325C001864EF /* FeedAPI.swift */,
 				316B4E812B41917900E9F781 /* ScrapAPI.swift */,
 				31747CD82B344E3300559716 /* EventAPI.swift */,
@@ -781,6 +797,8 @@
 				099756BC2B222FBA009961B5 /* TagManager.swift */,
 				5B8F6FEC2B46C4CC00F2E44A /* MyProfileManager.swift */,
 				095A890D2B4FF0A800DE7DDD /* ReportManager.swift */,
+				3159CCE42B8B21E7000DECC9 /* RoomManager.swift */,
+				3159CCE62B8B21EF000DECC9 /* MessageManager.swift */,
 			);
 			path = APIManagers;
 			sourceTree = "<group>";
@@ -1160,6 +1178,7 @@
 		3127EDFE2B53884E005CE78F /* ChatDetail */ = {
 			isa = PBXGroup;
 			children = (
+				31CE33032B8B7ABE008A15C9 /* Model */,
 				31AD5DAF2B5D661A0050C8D8 /* ViewModel */,
 				3127EE082B53CF4C005CE78F /* Views */,
 			);
@@ -1372,9 +1391,16 @@
 			isa = PBXGroup;
 			children = (
 				31AD5DB02B5D662B0050C8D8 /* ChatDetailViewModel.swift */,
-				313AAF9D2B5E8C3000254938 /* ChatDetailCellViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		31CE33032B8B7ABE008A15C9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				31CE33042B8B7B05008A15C9 /* ChatLogsForDay.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		31FBEC762B0FA1D000DE68F3 /* EventDetail */ = {
@@ -1711,10 +1737,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				098294212AF3C1E50011773A /* TermsOfUseVC.swift in Sources */,
+				3159CCD92B8B190C000DECC9 /* RoomAPI.swift in Sources */,
 				09ECB32F2AFE0AB2000F3008 /* SettingWriteCell.swift in Sources */,
 				096CD8E82B49AC570041F621 /* InitialSettingCell.swift in Sources */,
+				31CE33052B8B7B05008A15C9 /* ChatLogsForDay.swift in Sources */,
 				5B5D084A2B35D7B800490678 /* UserImageVC.swift in Sources */,
 				0964F95A2B2F60F00031D574 /* CommentsHeaderView.swift in Sources */,
+				3159CCE52B8B21E7000DECC9 /* RoomManager.swift in Sources */,
 				3127EE0B2B53CFB9005CE78F /* ChatDateSupplementaryView.swift in Sources */,
 				09BB551E2AF0169700A54B1B /* SettingBasicCell.swift in Sources */,
 				09ED94332B2C3249001864EF /* BlockManager.swift in Sources */,
@@ -1735,7 +1764,6 @@
 				09ED94212B2C31B9001864EF /* PopUpView.swift in Sources */,
 				09A3E1812B18E525004BD432 /* SettingAPI.swift in Sources */,
 				5B370F422AF546CE00D0D3DE /* ThirdInitialSettingVC.swift in Sources */,
-				313AAF9E2B5E8C3000254938 /* ChatDetailCellViewModel.swift in Sources */,
 				5BA8E79B2B488E7800C9ED11 /* ActivityBtn.swift in Sources */,
 				095A88FB2B4FCD1100DE7DDD /* NotificationManager.swift in Sources */,
 				09ED94252B2C31D3001864EF /* SettingWrittenDataSource.swift in Sources */,
@@ -1789,6 +1817,7 @@
 				09D6379D2B5E499A001CD013 /* ReportCompletedView.swift in Sources */,
 				0964F9562B2F54EB0031D574 /* SettingFeedVC.swift in Sources */,
 				311E98402AFB9720009BEB3F /* PeriodView.swift in Sources */,
+				3159CCD72B8B1903000DECC9 /* MessageAPI.swift in Sources */,
 				09EEFF6C2B39CEFA0010754C /* SwitchNotificationView.swift in Sources */,
 				5BF618512B613D3200A86452 /* InitialSettingViewModel.swift in Sources */,
 				090978ED2AF0E7A3006BD8DE /* MyCardVC.swift in Sources */,
@@ -1800,11 +1829,13 @@
 				5BE9BA9E2B25D6FD00D5971F /* MyBusinessCardVC.swift in Sources */,
 				3109B30E2AF7F4ED00B2EAD2 /* FilterBtn.swift in Sources */,
 				098D801D2B2FF8A600706897 /* CommentsContainerView.swift in Sources */,
+				3159CCE32B8B2157000DECC9 /* MessageResponseDTO.swift in Sources */,
 				09472C292B13720C00B4A84E /* KerdyAPI.swift in Sources */,
 				0986667D2B35136D0066E394 /* NotificationSectionItem.swift in Sources */,
 				09ED94312B2C3249001864EF /* CommentManager.swift in Sources */,
 				3109B2FA2AF52B2000B2EAD2 /* FilterVC.swift in Sources */,
 				31747CCE2B3449DC00559716 /* TagFilterCollectionViewCell.swift in Sources */,
+				3159CCE72B8B21EF000DECC9 /* MessageManager.swift in Sources */,
 				3109B3022AF52B6A00B2EAD2 /* ResetBtn.swift in Sources */,
 				316D690C2B79E71D00CE43AC /* EventDetailTagCell.swift in Sources */,
 				096CD8E52B49ABFB0041F621 /* EventFilter.swift in Sources */,
@@ -1814,6 +1845,7 @@
 				5B370F3C2AF53E1300D0D3DE /* FirstInitialSettingVC.swift in Sources */,
 				31FBEC832B109EA800DE68F3 /* EventDetailPhotoTVCell.swift in Sources */,
 				316B4E7E2B41909A00E9F781 /* ImageManager.swift in Sources */,
+				3159CCE12B8B1F9B000DECC9 /* MessageRoomsResponseDTO.swift in Sources */,
 				098294232AF3C6180011773A /* ExternalURL.swift in Sources */,
 				095EBE822AFF66A300629F06 /* Util.swift in Sources */,
 				31571C202AF3CBC00037A2F2 /* CategoryView.swift in Sources */,

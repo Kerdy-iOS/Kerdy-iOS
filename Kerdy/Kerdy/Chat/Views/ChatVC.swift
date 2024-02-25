@@ -9,8 +9,8 @@ import UIKit
 import SnapKit
 import Core
 
-final class ChatVC: UIViewController {
-    
+final class ChatVC: BaseVC {
+    // MARK: - UI Property
     private lazy var navigationView = UIView()
     
     private lazy var titleLabel: UILabel = {
@@ -38,12 +38,22 @@ final class ChatVC: UIViewController {
         return collectionView
     }()
     
+    // MARK: - Property
+    private let viewModel = ChatViewModel()
+    
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
         setLayout()
+        bindViewModel()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.action(.refresh)
+    }
+    // MARK: - set UI
     private func setUI() {
         view.backgroundColor = .white
         collectionView.delegate = self
@@ -91,16 +101,30 @@ extension ChatVC {
     }
 }
 
+// MARK: - binding
+extension ChatVC {
+    func bindViewModel() {
+        viewModel
+            .roomsObservable
+            .subscribe { [weak self] _ in
+                self?.collectionView.reloadData()
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
 // MARK: - collectionView DataSource
 extension ChatVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        let count = viewModel.roomsRelay.value.count
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChatListCollectionViewCell.identifier, for: indexPath) as? ChatListCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.configure()
+        let rooms = viewModel.roomsRelay.value
+        cell.configure(room: rooms[indexPath.row])
         return cell
     }
     
@@ -111,8 +135,19 @@ extension ChatVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) {
             cell.contentView.backgroundColor = .kerdyGray01
+            let rooms = viewModel.roomsRelay.value
+            let curRoom = rooms[indexPath.row]
+            
+            let roomId = curRoom.roomId
+            let interlocutorId = curRoom.interlocutor.id
             let nextVC = ChatDetailVC()
+            
+            nextVC.configure(roomId: roomId, interlocutorId: interlocutorId)
             navigationController?.pushViewController(nextVC, animated: true)
+            
+            UIView.animate(withDuration: 0.1, delay: 0.1) {
+                cell.contentView.backgroundColor = .clear
+            }
         }
     }
 
