@@ -187,6 +187,7 @@
 		31AD5DA32B5C21F70050C8D8 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD5DA22B5C21F70050C8D8 /* ChatViewModel.swift */; };
 		31AD5DB12B5D662B0050C8D8 /* ChatDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD5DB02B5D662B0050C8D8 /* ChatDetailViewModel.swift */; };
 		31AD5DB32B5D677F0050C8D8 /* MessageRoomResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD5DB22B5D677F0050C8D8 /* MessageRoomResponseDTO.swift */; };
+		31CE33052B8B7B05008A15C9 /* ChatLogsForDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CE33042B8B7B05008A15C9 /* ChatLogsForDay.swift */; };
 		31FBEC792B107DCD00DE68F3 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC782B107DCD00DE68F3 /* EventDetailViewController.swift */; };
 		31FBEC7B2B109A1C00DE68F3 /* EventDetailPostCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC7A2B109A1C00DE68F3 /* EventDetailPostCVCell.swift */; };
 		31FBEC7F2B109D4500DE68F3 /* PostListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC7E2B109D4500DE68F3 /* PostListModel.swift */; };
@@ -411,6 +412,7 @@
 		31AD5DA22B5C21F70050C8D8 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		31AD5DB02B5D662B0050C8D8 /* ChatDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailViewModel.swift; sourceTree = "<group>"; };
 		31AD5DB22B5D677F0050C8D8 /* MessageRoomResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRoomResponseDTO.swift; sourceTree = "<group>"; };
+		31CE33042B8B7B05008A15C9 /* ChatLogsForDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogsForDay.swift; sourceTree = "<group>"; };
 		31FBEC782B107DCD00DE68F3 /* EventDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		31FBEC7A2B109A1C00DE68F3 /* EventDetailPostCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailPostCVCell.swift; sourceTree = "<group>"; };
 		31FBEC7E2B109D4500DE68F3 /* PostListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListModel.swift; sourceTree = "<group>"; };
@@ -1178,6 +1180,7 @@
 		3127EDFE2B53884E005CE78F /* ChatDetail */ = {
 			isa = PBXGroup;
 			children = (
+				31CE33032B8B7ABE008A15C9 /* Model */,
 				31AD5DAF2B5D661A0050C8D8 /* ViewModel */,
 				3127EE082B53CF4C005CE78F /* Views */,
 			);
@@ -1393,6 +1396,14 @@
 				313AAF9D2B5E8C3000254938 /* ChatDetailCellViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		31CE33032B8B7ABE008A15C9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				31CE33042B8B7B05008A15C9 /* ChatLogsForDay.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		31FBEC762B0FA1D000DE68F3 /* EventDetail */ = {
@@ -1732,6 +1743,7 @@
 				3159CCD92B8B190C000DECC9 /* RoomAPI.swift in Sources */,
 				09ECB32F2AFE0AB2000F3008 /* SettingWriteCell.swift in Sources */,
 				096CD8E82B49AC570041F621 /* InitialSettingCell.swift in Sources */,
+				31CE33052B8B7B05008A15C9 /* ChatLogsForDay.swift in Sources */,
 				5B5D084A2B35D7B800490678 /* UserImageVC.swift in Sources */,
 				0964F95A2B2F60F00031D574 /* CommentsHeaderView.swift in Sources */,
 				3159CCE52B8B21E7000DECC9 /* RoomManager.swift in Sources */,
