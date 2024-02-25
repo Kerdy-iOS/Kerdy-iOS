@@ -10,7 +10,7 @@ import Moya
 
 enum RoomAPI {
     case getRooms(memberId: Int)
-    case getRoomByUUID(uuid: Int)
+    case getRoomByUUID(uuid: String)
     case getRoomByUserId(receiverId: Int)
 }
 

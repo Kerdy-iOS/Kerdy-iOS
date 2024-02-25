@@ -150,6 +150,8 @@
 		31571C292AF3E1540037A2F2 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 31571C282AF3E1540037A2F2 /* .swiftlint.yml */; };
 		3159CCD72B8B1903000DECC9 /* MessageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3159CCD62B8B1903000DECC9 /* MessageAPI.swift */; };
 		3159CCD92B8B190C000DECC9 /* RoomAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3159CCD82B8B190C000DECC9 /* RoomAPI.swift */; };
+		3159CCE12B8B1F9B000DECC9 /* MessageRoomsResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3159CCE02B8B1F9B000DECC9 /* MessageRoomsResponseDTO.swift */; };
+		3159CCE32B8B2157000DECC9 /* MessageResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3159CCE22B8B2157000DECC9 /* MessageResponseDTO.swift */; };
 		3162F0732AEA775E001B1D32 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 3162F0722AEA775E001B1D32 /* RxCocoa */; };
 		3162F0752AEA775E001B1D32 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3162F0742AEA775E001B1D32 /* RxSwift */; };
 		3164D47F2AE21F810054F440 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3164D47E2AE21F810054F440 /* AppDelegate.swift */; };
@@ -370,6 +372,8 @@
 		31571C282AF3E1540037A2F2 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		3159CCD62B8B1903000DECC9 /* MessageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAPI.swift; sourceTree = "<group>"; };
 		3159CCD82B8B190C000DECC9 /* RoomAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomAPI.swift; sourceTree = "<group>"; };
+		3159CCE02B8B1F9B000DECC9 /* MessageRoomsResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRoomsResponseDTO.swift; sourceTree = "<group>"; };
+		3159CCE22B8B2157000DECC9 /* MessageResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageResponseDTO.swift; sourceTree = "<group>"; };
 		3164D47B2AE21F810054F440 /* Kerdy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kerdy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3164D47E2AE21F810054F440 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3164D4802AE21F810054F440 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -745,6 +749,8 @@
 				099756BE2B223002009961B5 /* TagsResponseDTO.swift */,
 				09ECB3342AFE15E7000F3008 /* CommentsResponseDTO.swift */,
 				31AD5DB22B5D677F0050C8D8 /* MessageRoomResponseDTO.swift */,
+				3159CCE02B8B1F9B000DECC9 /* MessageRoomsResponseDTO.swift */,
+				3159CCE22B8B2157000DECC9 /* MessageResponseDTO.swift */,
 				09D637A42B60066F001CD013 /* ArchiveResponseDTO.swift */,
 			);
 			path = DataModel;
@@ -1808,6 +1814,7 @@
 				5BE9BA9E2B25D6FD00D5971F /* MyBusinessCardVC.swift in Sources */,
 				3109B30E2AF7F4ED00B2EAD2 /* FilterBtn.swift in Sources */,
 				098D801D2B2FF8A600706897 /* CommentsContainerView.swift in Sources */,
+				3159CCE32B8B2157000DECC9 /* MessageResponseDTO.swift in Sources */,
 				09472C292B13720C00B4A84E /* KerdyAPI.swift in Sources */,
 				0986667D2B35136D0066E394 /* NotificationSectionItem.swift in Sources */,
 				09ED94312B2C3249001864EF /* CommentManager.swift in Sources */,
@@ -1822,6 +1829,7 @@
 				5B370F3C2AF53E1300D0D3DE /* FirstInitialSettingVC.swift in Sources */,
 				31FBEC832B109EA800DE68F3 /* EventDetailPhotoTVCell.swift in Sources */,
 				316B4E7E2B41909A00E9F781 /* ImageManager.swift in Sources */,
+				3159CCE12B8B1F9B000DECC9 /* MessageRoomsResponseDTO.swift in Sources */,
 				098294232AF3C6180011773A /* ExternalURL.swift in Sources */,
 				095EBE822AFF66A300629F06 /* Util.swift in Sources */,
 				31571C202AF3CBC00037A2F2 /* CategoryView.swift in Sources */,
