@@ -8,9 +8,10 @@
 import UIKit
 import SnapKit
 import Core
+import RxSwift
 
-final class EventDetailPostTVCell: UITableViewCell {
-    
+final class EventDetailFeedTVCell: UITableViewCell {
+    // MARK: - UI Property
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .nanumSquare(to: .bold, size: 13)
@@ -70,28 +71,11 @@ final class EventDetailPostTVCell: UITableViewCell {
         return label
     }()
     
-    private lazy var likeStackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .horizontal
-        view.spacing = 3
-        view.distribution = .equalSpacing
-        view.alignment = .leading
-        return view
-    }()
-    
-    private lazy var likeIcon: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "ic_like")
-        return view
-    }()
-    
-    private lazy var likeLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .kerdyRed
-        label.font = .nanumSquare(to: .regular, size: 11)
-        return label
-    }()
-    
+    // MARK: - Property
+    private(set) var feedId: Int?
+    private var disposeBag = DisposeBag()
+
+    // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setLayout()
@@ -100,9 +84,22 @@ final class EventDetailPostTVCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Cell configuration
+    func configure(with feed: FeedResponseDTO) {
+        titleLabel.text = feed.title
+        contentLabel.text = feed.content
+        timeLabel.text = feed.updateDate
+        commentLabel.text = "\(feed.commentCount)"
+        feedId = feed.id
+        if let url = feed.images.first {
+            setImage(url: url)
+        }
+    }
 }
 
-extension EventDetailPostTVCell {
+// MARK: - layout 설정
+extension EventDetailFeedTVCell {
     private func setLayout() {
         addSubviews(
             titleLabel,
@@ -158,9 +155,8 @@ extension EventDetailPostTVCell {
     }
     
     private func setIconLayout() {
-        iconStackView.addArrangedSubviews(commentStackView, likeStackView)
+        iconStackView.addArrangedSubviews(commentStackView)
         commentStackView.addArrangedSubviews(commentIcon, commentLabel)
-        likeStackView.addArrangedSubviews(likeIcon, likeLabel)
         
         commentStackView.snp.makeConstraints {
             $0.width.equalTo(21).priority(500)
@@ -174,36 +170,18 @@ extension EventDetailPostTVCell {
         commentLabel.snp.makeConstraints {
             $0.width.equalTo(7)
         }
-        
-        likeStackView.snp.makeConstraints {
-            $0.width.equalTo(21).priority(500)
-            $0.height.equalTo(12)
-        }
-        
-        likeIcon.snp.makeConstraints {
-            $0.size.equalTo(11)
-        }
-        
-        likeLabel.snp.makeConstraints {
-            $0.width.equalTo(7)
-        }
     }
 }
 
-extension EventDetailPostTVCell: ConfigurableCell {
-    typealias CellType = PostListModel
-    
-    func configure(with data: PostListModel) {
-        titleLabel.text = data.title
-        contentLabel.text = data.content
-        image.image = data.image
-        commentLabel.text = String(data.commentCnt)
-        timeLabel.text = "임시 날짜"
-        
-        if let likeCnt = data.likeCnt {
-            likeLabel.text = String(likeCnt)
-        } else {
-            likeStackView.isHidden = true
-        }
+// MARK: - image 설정
+extension EventDetailFeedTVCell {
+    func setImage(url: String) {
+        ImageManager.shared.getImage(url: url)
+            .subscribe { [weak self] image in
+                self?.image.image = image
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
     }
 }

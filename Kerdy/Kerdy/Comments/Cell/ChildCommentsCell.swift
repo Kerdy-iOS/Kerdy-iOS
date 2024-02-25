@@ -15,6 +15,10 @@ import RxCocoa
 
 final class ChildCommentsCell: UICollectionViewCell {
     
+    // MARK: = Property
+    
+    var disposeBag = DisposeBag()
+    
     // MARK: = UI Components
     
     private let arrowIcon: UIImageView = {
@@ -59,6 +63,11 @@ final class ChildCommentsCell: UICollectionViewCell {
         button.setImage(.dotButton, for: .normal)
         return button
     }()
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.disposeBag = DisposeBag()
+    }
     
     // MARK: = Init
     
@@ -127,9 +136,21 @@ extension ChildCommentsCell {
         guard let url = URL(string: data.memberImageURL ) else { return }
         profile.kf.setImage(with: url, placeholder: UIImage.emptyIcon)
         
-        userLabel.text = data.memberName ?? "KERDY"
+        userLabel.text = data.deleted ? "삭제" : data.memberName ?? "KERDY"
         dateLabel.text = data.timeAgoSinceDate()
         commentsLabel.text = data.content
+    
+        deleteComments(isDeleted: data.deleted)
+    }
+    
+    func deleteComments(isDeleted: Bool) {
+        dotButton.isHidden = isDeleted
+        dateLabel.isHidden = isDeleted
+        
+        if isDeleted {
+            profile.image = .emptyIcon
+            profile.makeBorder(width: 0, color: .clear)
+        }
     }
 }
 

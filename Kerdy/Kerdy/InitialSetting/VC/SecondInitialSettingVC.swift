@@ -8,15 +8,29 @@
 import UIKit
 import Core
 import RxSwift
-import Moya
+import RxCocoa
 
-final class SecondInitialSettingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    private let categoryViewModel = CategoryViewModel()
+final class SecondInitialSettingVC: UIViewController {
+    
+    private let viewModel = InitialSettingViewModel.shared
+    
     private let disposeBag = DisposeBag()
-    private var buttons: [UIButton] = []
-    private var isDataLoaded = false
-    private var isDataLoading = false
-    var memberInfo: MemberInfo = MemberInfo()
+    
+    typealias DataSource = UICollectionViewDiffableDataSource<Int, ActivityResponse>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, ActivityResponse>
+    
+    private lazy var scrollView: UIScrollView = {
+        let sv = UIScrollView()
+        sv.showsVerticalScrollIndicator = false
+        sv.isScrollEnabled = true
+        return sv
+    }()
+    
+    private lazy var scrollContentView = UIView()
+    
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
+    
+    private var dataSource: DataSource?
     
     private lazy var progressLabel: UILabel = {
         let label = UILabel()
@@ -49,7 +63,7 @@ final class SecondInitialSettingVC: UIViewController, UITableViewDelegate, UITab
         return label
     }()
     
-    private lazy var nextButton: UIButton = {
+    private lazy var nextBtn: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .nanumSquare(to: .regular, size: 16)
         button.backgroundColor = .kerdyMain
@@ -59,69 +73,29 @@ final class SecondInitialSettingVC: UIViewController, UITableViewDelegate, UITab
         return button
     }()
     
-    private lazy var tableView: UITableView = {
-        let tv = UITableView()
-        return tv
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
         setUI()
         setLayout()
         setNaviBar()
-        setTableView()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        getJobActivities()
-    }
-    
-    private func getJobActivities() {
-        if !isDataLoaded && !isDataLoading {
-            isDataLoading = true
-            categoryViewModel.jobActivities
-                .subscribe(onNext: { clubActivities in
-                    for activity in clubActivities {
-                        let btn: InitialSettingSelectBtn = InitialSettingSelectBtn(target: self, action: #selector(self.categoryButtonTapped(_:)), title: activity.name, id: activity.id)
-                        btn.snp.makeConstraints { make in
-                            make.width.equalTo((btn.titleLabel?.text!.count)! * 14)
-                        }
-                        self.buttons.append(btn)
-                    }
-                    self.tableView.reloadData()
-                    if self.buttons.count >= 21 {
-                        self.tableView.isScrollEnabled = true
-                    } else {
-                        self.tableView.isScrollEnabled = false
-                    }
-                    self.setButton()
-                    self.isDataLoaded = true
-                    self.isDataLoading = false
-                }).disposed(by: disposeBag)
-
-            categoryViewModel.fetchActivities()
-        }
-    }
-    
-    private func setTableView() {
-        view.addSubview(tableView)
-        tableView.register(InitialSettingCell.self, forCellReuseIdentifier: "cell")
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.separatorStyle = .none
-
-        tableView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(277.5)
-            $0.leading.equalToSuperview().offset(21)
-            $0.trailing.equalToSuperview().offset(-21)
-            $0.bottom.equalTo(nextButton.snp.top).offset(-10)
-        }
+        setDataSource()
+        setViewModel()
     }
     
     private func setLayout() {
-        view.addSubviews(progressLabel, interestingPartLabel, interestingCategoryLabel, notifyLabel, nextButton)
+        view.addSubviews(
+            progressLabel,
+            interestingPartLabel,
+            interestingCategoryLabel,
+            notifyLabel,
+            nextBtn,
+            scrollView
+        )
+        
+        scrollView.addSubview(scrollContentView)
+        
+        scrollContentView.addSubview(collectionView)
         
         progressLabel.snp.makeConstraints {
             $0.width.equalTo(24)
@@ -151,11 +125,28 @@ final class SecondInitialSettingVC: UIViewController, UITableViewDelegate, UITab
             $0.leading.equalToSuperview().offset(21)
         }
         
-        nextButton.snp.makeConstraints {
+        nextBtn.snp.makeConstraints {
             $0.height.equalTo(60)
             $0.top.equalToSuperview().offset(675)
             $0.leading.equalToSuperview().offset(17)
             $0.trailing.equalToSuperview().offset(-17)
+        }
+        
+        scrollView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(277.5)
+            $0.leading.equalToSuperview().offset(21)
+            $0.trailing.equalToSuperview().offset(-21)
+            $0.bottom.equalTo(nextBtn.snp.top).offset(-10)
+        }
+        
+        scrollContentView.snp.makeConstraints {
+            $0.height.equalTo(scrollView.snp.height).priority(250)
+            $0.width.equalTo(view.bounds.width)
+        }
+        
+        collectionView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.verticalEdges.equalTo(scrollContentView.snp.verticalEdges)
         }
     }
     
@@ -164,78 +155,117 @@ final class SecondInitialSettingVC: UIViewController, UITableViewDelegate, UITab
         navigationItem.backButtonTitle = ""
     }
     
-    private func setButton() {
-        DispatchQueue.main.async {
-            for button in self.buttons {
-                button.roundCorners(topLeft: 10, topRight: 20, bottomLeft: 20, bottomRight: 10)
-                let borderLayer = CAShapeLayer()
-                guard let buttonMaskLayer = button.layer.mask as? CAShapeLayer else {
-                    continue
-                }
-                borderLayer.path = buttonMaskLayer.path
-                borderLayer.strokeColor = UIColor(named: "kerdy_main")?.cgColor
-                borderLayer.fillColor = UIColor.clear.cgColor
-                borderLayer.lineWidth = 3
-                borderLayer.frame = button.bounds
-                button.layer.addSublayer(borderLayer)
-                button.titleLabel?.font = .nanumSquare(to: .regular, size: 13)
-                
-                self.categoryViewModel.categorySelectedDict[button] = BehaviorSubject<Bool>(value: false)
-                self.categoryViewModel.categorySelectedDict[button]?.subscribe(onNext: {isSelected in
-                    button.backgroundColor = isSelected ? .kerdyMain : .white
-                }).disposed(by: self.disposeBag)
-                
-                button.snp.makeConstraints {
-                    $0.height.equalTo(32)
-                }
-            }
-        }
-    }
-    
     private func setUI() {
         view.backgroundColor = .systemBackground
+        scrollView.delegate = self
+        collectionView.isScrollEnabled = false
+        collectionView.delegate = self
     }
     
     @objc private func nextButtonTapped() {
         let nextVC = ThirdInitialSettingVC()
-        nextVC.memberInfo = memberInfo
         navigationController?.pushViewController(nextVC, animated: true)
     }
-    
-    @objc private func categoryButtonTapped(_ sender: InitialSettingSelectBtn) {
-        categoryViewModel.categoryButtonTapped(button: sender)
+}
 
-        if let id = sender.id {
-            if let buttonState = try? categoryViewModel.categorySelectedDict[sender]?.value() {
-                if buttonState == true {
-                    if memberInfo.activityIds == nil {
-                        memberInfo.activityIds = [Int]()
-                    }
-                    memberInfo.activityIds?.append(id)
-                } else if buttonState == false, let index = memberInfo.activityIds?.firstIndex(of: id) {
-                    memberInfo.activityIds?.remove(at: index)
-                }
-            }
+extension SecondInitialSettingVC {
+    private func setDataSource() {
+        let cellRegistration = UICollectionView.CellRegistration<ProfileTagCell, ActivityResponse> { cell, indexPath, itemIdentifier in
+            let activity: ActivityResponse
+            activity = self.viewModel.jobActivities.value[indexPath.row]
+            
+            let isSelected = self.viewModel.selectedCategory.value.contains(activity.id)
+            cell.confiure(tag: activity.name)
+            cell.setBackgroundColor(isSelected: isSelected)
         }
+        
+        dataSource = DataSource(collectionView: collectionView) {
+            (collectionView: UICollectionView, indexPath: IndexPath, identifier: ActivityResponse) -> UICollectionViewCell? in
+            return collectionView.dequeueConfiguredReusableCell(
+                using: cellRegistration,
+                for: indexPath,
+                item: identifier
+            )
+        }
+        
+        var snapshot = Snapshot()
+        snapshot.appendSections([0])
+        snapshot.appendItems(viewModel.jobActivities.value, toSection: 0)
+        dataSource?.apply(snapshot, animatingDifferences: false)
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (buttons.count + 2) / 3
+    private func createCollectionViewLayout() -> UICollectionViewLayout {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .estimated(50),
+            heightDimension: .estimated(32)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.edgeSpacing = NSCollectionLayoutEdgeSpacing(
+            leading: .fixed(0),
+            top: .fixed(11),
+            trailing: .fixed(5),
+            bottom: .fixed(0)
+        )
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .estimated(100)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 0
+        section.contentInsets = NSDirectionalEdgeInsets(
+            top: 4,
+            leading: 0,
+            bottom: 35,
+            trailing: 0
+        )
+        
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        return layout
     }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! InitialSettingCell
-        cell.selectionStyle = .none
-
-        if buttons.count > indexPath.row * 3 {
-            cell.buttonStackView.addArrangedSubview(buttons[indexPath.row * 3])
-        }
-        if buttons.count > indexPath.row * 3 + 1 {
-            cell.buttonStackView.addArrangedSubview(buttons[indexPath.row * 3 + 1])
-        }
-        if buttons.count > indexPath.row * 3 + 2 {
-            cell.buttonStackView.addArrangedSubview(buttons[indexPath.row * 3 + 2])
-        }
-        return cell
+    
+    private func updateCollectionView(with activities: [ActivityResponse]) {
+        var snapshot = Snapshot()
+        snapshot.appendSections([0])
+        snapshot.appendItems(activities, toSection: 0)
+        dataSource?.apply(snapshot, animatingDifferences: false)
     }
+}
+
+// MARK: - collectionView delegate
+extension SecondInitialSettingVC: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ProfileTagCell else { return }
+        let selectedActivity: ActivityResponse
+        selectedActivity = viewModel.jobActivities.value[indexPath.row]
+        
+        let isSelected = viewModel.toggleSelectedCategory(id: selectedActivity.id)
+        cell.setBackgroundColor(isSelected: isSelected)
+        
+        if viewModel.selectedCategory.value.count  > 4 {
+            viewModel.toggleSelectedCategory(id: selectedActivity.id)
+            cell.setBackgroundColor(isSelected: !isSelected)
+        }
+    }
+}
+
+// MARK: - binding
+
+extension SecondInitialSettingVC {
+    private func setViewModel() {
+        viewModel.getAllActivities()
+        viewModel.jobActivities
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] activities in
+                self?.updateCollectionView(with: activities)
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
+// MARK: - scrollView delegate
+extension SecondInitialSettingVC: UIScrollViewDelegate {
+    
 }

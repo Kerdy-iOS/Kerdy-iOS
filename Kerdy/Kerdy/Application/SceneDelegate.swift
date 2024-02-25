@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window.overrideUserInterfaceStyle = UIUserInterfaceStyle.light
             
             let tabBarVC = TabBarVC()
-            let authVC = AuthVC(viewModel: AuthViewModel(loginManager: LoginManager.shared))
+            let authVC = AuthVC(viewModel: AuthViewModel())
             let hasKeychain = KeyChainManager.hasKeychain(forkey: .accessToken)
             let rootViewController: UIViewController = hasKeychain ? tabBarVC : authVC
             

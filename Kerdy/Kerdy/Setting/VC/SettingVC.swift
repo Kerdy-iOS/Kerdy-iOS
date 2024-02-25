@@ -18,7 +18,7 @@ final class SettingVC: BaseVC {
     
     private var dataSource: DataSource!
     private let viewModel: SettingViewModel
-    private var authType: AuthType?
+    private var authType: AlertType?
     
     // MARK: - UI Components
     
@@ -47,7 +47,7 @@ final class SettingVC: BaseVC {
         setLayout()
         setDataSource()
         setDelegate()
-        bind()
+        setBindings()
     }
     
     required init?(coder: NSCoder) {
@@ -78,7 +78,7 @@ extension SettingVC {
         authView.delegate = self
     }
     
-    private func bind() {
+    private func setBindings() {
         
         let input = SettingViewModel.Input(viewWillAppear: rx.viewWillAppear.asDriver())
         let output = viewModel.transform(input: input)
@@ -94,9 +94,9 @@ extension SettingVC {
 
                 switch indexPath.item {
                 case 0:
-                    vc = NotificationVC(viewModel: NotificationViewModel(tagManager: TagManager.shared))
+                    vc = NotificationVC(viewModel: NotificationViewModel())
                 case 1:
-                    vc = BlockListVC(viewModel: BlockListViewModel(blockManager: BlockManager.shared))
+                    vc = BlockListVC(viewModel: BlockListViewModel())
                 case 2:
                     vc = TermsOfUseVC()
                 case 4:
@@ -177,7 +177,7 @@ extension SettingVC {
 
 extension SettingVC {
     
-    private func showPopupView(alert: PopUpView, type: AuthType) {
+    private func showPopupView(alert: PopUpView, type: AlertType) {
         alert.configureTitle(title: type.title, subTitle: type.subTitle, unlock: type.button)
         
         view.addSubview(alert)
@@ -191,14 +191,14 @@ extension SettingVC {
         cell.rx.comment
             .asDriver()
             .drive(with: self) { owner, _ in
-                let nextVC = SettingCommentsVC(viewModel: SettingCommenetViewModel(commentManager: CommentManager.shared))
+                let nextVC = SettingCommentsVC(viewModel: SettingCommenetViewModel())
                 owner.navigationController?.pushViewController(nextVC, animated: true)
             }
             .disposed(by: cell.disposeBag)
     }
 }
 
-// MARk: = PopUp Delegate
+// MARk: - PopUp Delegate
 
 extension SettingVC: PopUptoBlockDelegate {
     
@@ -207,7 +207,7 @@ extension SettingVC: PopUptoBlockDelegate {
         guard let authType = self.authType else { return }
         self.viewModel.authMember(type: authType)
         
-        SceneDelegate.shared?.changeRootViewControllerTo(AuthVC(viewModel: AuthViewModel(loginManager: LoginManager.shared)))
+        SceneDelegate.shared?.changeRootViewControllerTo(AuthVC(viewModel: AuthViewModel()))
     }
     
     func cancel() {
