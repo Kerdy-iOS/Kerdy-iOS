@@ -19,4 +19,11 @@ final class ImageManager {
                 return UIImage(data: response.data) ?? .eventOn
             }
     }
+    
+    func getProfileImage(url: String) -> Single<UIImage> {
+        return provider.rx.request(.getProfileImage(url: url))
+            .map { response in
+                return UIImage(data: response.data) ?? .eventOn
+            }
+    }
 }
