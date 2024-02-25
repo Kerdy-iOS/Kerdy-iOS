@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MessageRoomsResponseDTO: Codable {
+struct MessageRoomsResponseDTO: Codable, Equatable {
     let roomId: String
     let interlocutor: Sender
     let recentlyMessage: RecentlyMessage
@@ -16,6 +16,10 @@ struct MessageRoomsResponseDTO: Codable {
         case roomId
         case interlocutor
         case recentlyMessage
+    }
+    
+    static func == (lhs: MessageRoomsResponseDTO, rhs: MessageRoomsResponseDTO) -> Bool {
+        lhs.roomId == rhs.roomId
     }
 }
 
