@@ -7,8 +7,10 @@
 
 import UIKit
 import SnapKit
+import RxSwift
 
 final class ChatListCollectionViewCell: UICollectionViewCell {
+    // MARK: - property
     private lazy var profileImageView: UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 20
@@ -35,6 +37,10 @@ final class ChatListCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    // MARK: - property
+    private let disposeBag = DisposeBag()
+    
+    // MARK: - initialize
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
@@ -44,11 +50,15 @@ final class ChatListCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure() {
-        profileImageView.image = .imgUser
-        nameLabel.text = "ssddd"
-        contentLabel.text = "ssddd"
-        timeLabel.text = "ssddd"
+    // MARK: - configure cell
+    func configure(room: MessageRoomsResponseDTO) {
+        let profileImageURL = room.interlocutor.imageURL
+        let time = room.recentlyMessage.createdAt
+        nameLabel.text = room.interlocutor.name
+        contentLabel.text = room.recentlyMessage.content
+        timeLabel.text = convertDateToTime(date: time)
+        
+        loadProfileImage(url: profileImageURL)
     }
 }
 
@@ -85,5 +95,17 @@ extension ChatListCollectionViewCell {
             $0.trailing.equalToSuperview().inset(17)
             $0.height.equalTo(13)
         }
+    }
+}
+
+extension ChatListCollectionViewCell {
+    func loadProfileImage(url: String) {
+        ImageManager.shared.getImage(url: url)
+            .subscribe { [weak self] image in
+                self?.profileImageView.image = image
+            } onFailure: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
     }
 }
