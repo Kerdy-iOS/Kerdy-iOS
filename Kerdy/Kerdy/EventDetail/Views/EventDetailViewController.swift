@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+// MARK: - 상세정보, 댓글, 함께해요
 enum EventDetailCategoryType: Int, CaseIterable {
     case photo
     case feed
@@ -33,10 +34,12 @@ enum EventDetailCategoryType: Int, CaseIterable {
     }
 }
 
+// MARK: - feed 화면으로 넘어가기 위한 delegate
 protocol EventDetailShowFeedDelegate: AnyObject {
     func showFeed(feedId: Int)
 }
 
+// MARK: - VC
 final class EventDetailViewController: BaseVC {
     // MARK: - UI Property
     private var navigationBar = NavigationBarView()
@@ -115,6 +118,7 @@ final class EventDetailViewController: BaseVC {
         collectionView.register(EventDetailPostCVCell.self, forCellWithReuseIdentifier: EventDetailPostCVCell.identifier)
         bottomView.moveWebsiteBtn.addTarget(self, action: #selector(moveWebBtnTapped), for: .touchUpInside)
         bottomView.bookmarkBtn.addTarget(self, action: #selector(bookMarkBtnTapped), for: .touchUpInside)
+        addButton.addTarget(self, action: #selector(addBtnTapped), for: .touchUpInside)
         addButton.isHidden = true
         bindViewModel()
     }
@@ -154,7 +158,12 @@ final class EventDetailViewController: BaseVC {
                 $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             }
             bottomView.isHidden = true
-            addButton.isHidden = false
+            
+            if index == EventDetailCategoryType.feed.rawValue {
+                addButton.isHidden = true
+            } else {
+                addButton.isHidden = false 
+            }
         }
     }
     
@@ -190,6 +199,11 @@ final class EventDetailViewController: BaseVC {
     
     @objc private func bookMarkBtnTapped() {
         viewModel.scrapButtonTapped()
+    }
+    
+    @objc private func addBtnTapped() {
+        let nextVC = CreateRecruitViewController()
+        navigationController?.pushViewController(nextVC, animated: true)
     }
 }
 
