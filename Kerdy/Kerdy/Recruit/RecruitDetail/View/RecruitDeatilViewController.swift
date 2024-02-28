@@ -165,7 +165,9 @@ extension RecruitDeatilViewController {
     }
     
     @objc private func recruitBtnTapped() {
-        
+        let nextVC = SendRecruitmentViewController()
+        nextVC.modalPresentationStyle = .overFullScreen
+        present(nextVC, animated: false)
     }
 }
 
