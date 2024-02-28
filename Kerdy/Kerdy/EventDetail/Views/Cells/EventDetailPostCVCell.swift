@@ -94,6 +94,9 @@ extension EventDetailPostCVCell {
         if postType == .feed {
             let id = feeds[indexPath.row].id
             delegate?.showFeed(feedId: id)
+        } else {
+            let id = recruitmemts[indexPath.row].postId
+            delegate?.showRecruitMent(postId: id)
         }
     }
     

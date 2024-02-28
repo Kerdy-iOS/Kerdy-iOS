@@ -37,6 +37,7 @@ enum EventDetailCategoryType: Int, CaseIterable {
 // MARK: - feed 화면으로 넘어가기 위한 delegate
 protocol EventDetailShowFeedDelegate: AnyObject {
     func showFeed(feedId: Int)
+    func showRecruitMent(postId: Int)
 }
 
 // MARK: - VC
@@ -468,6 +469,11 @@ extension EventDetailViewController: EventDetailShowFeedDelegate {
     func showFeed(feedId: Int) {
 //        let commentVC = CommentsVC(viewModel: CommentsViewModel(commentID: feedId, commentsManager: CommentManager.shared))
 //        self.navigationController?.pushViewController(commentVC, animated: true)
+    }
+    
+    func showRecruitMent(postId: Int) {
+        let nextVC = RecruitDeatilViewController()
+        navigationController?.pushViewController(nextVC, animated: true)
     }
 }
 

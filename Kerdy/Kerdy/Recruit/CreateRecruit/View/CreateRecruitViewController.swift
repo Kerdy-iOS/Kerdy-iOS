@@ -51,6 +51,7 @@ final class CreateRecruitViewController: UIViewController {
     private func setUI() {
         view.backgroundColor = .white
         navigationBar.configureUI(to: "글쓰기")
+        navigationBar.delegate = self
         textView.delegate = self
     }
 }
@@ -111,5 +112,12 @@ extension CreateRecruitViewController: UITextViewDelegate {
 extension CreateRecruitViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         textView.endEditing(true)
+    }
+}
+
+// MARK: - 뒤로가기 delegate
+extension CreateRecruitViewController: BackButtonActionProtocol {
+    func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }

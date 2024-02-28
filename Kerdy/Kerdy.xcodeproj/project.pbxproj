@@ -182,6 +182,7 @@
 		31AD5DB12B5D662B0050C8D8 /* ChatDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD5DB02B5D662B0050C8D8 /* ChatDetailViewModel.swift */; };
 		31AD5DB32B5D677F0050C8D8 /* MessageRoomResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD5DB22B5D677F0050C8D8 /* MessageRoomResponseDTO.swift */; };
 		31B1C2922B8F179700B5EC1C /* CreateRecruitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B1C2912B8F179700B5EC1C /* CreateRecruitViewController.swift */; };
+		31B1C2952B8F261E00B5EC1C /* RecruitDeatilViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B1C2942B8F261E00B5EC1C /* RecruitDeatilViewController.swift */; };
 		31FBEC792B107DCD00DE68F3 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC782B107DCD00DE68F3 /* EventDetailViewController.swift */; };
 		31FBEC7B2B109A1C00DE68F3 /* EventDetailPostCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC7A2B109A1C00DE68F3 /* EventDetailPostCVCell.swift */; };
 		31FBEC7F2B109D4500DE68F3 /* PostListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FBEC7E2B109D4500DE68F3 /* PostListModel.swift */; };
@@ -401,6 +402,7 @@
 		31AD5DB02B5D662B0050C8D8 /* ChatDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailViewModel.swift; sourceTree = "<group>"; };
 		31AD5DB22B5D677F0050C8D8 /* MessageRoomResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRoomResponseDTO.swift; sourceTree = "<group>"; };
 		31B1C2912B8F179700B5EC1C /* CreateRecruitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecruitViewController.swift; sourceTree = "<group>"; };
+		31B1C2942B8F261E00B5EC1C /* RecruitDeatilViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecruitDeatilViewController.swift; sourceTree = "<group>"; };
 		31FBEC782B107DCD00DE68F3 /* EventDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		31FBEC7A2B109A1C00DE68F3 /* EventDetailPostCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailPostCVCell.swift; sourceTree = "<group>"; };
 		31FBEC7E2B109D4500DE68F3 /* PostListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListModel.swift; sourceTree = "<group>"; };
@@ -1392,6 +1394,7 @@
 		31B1C28E2B8F174400B5EC1C /* TogetherDetail */ = {
 			isa = PBXGroup;
 			children = (
+				31B1C2932B8F260E00B5EC1C /* View */,
 			);
 			path = TogetherDetail;
 			sourceTree = "<group>";
@@ -1408,6 +1411,14 @@
 			isa = PBXGroup;
 			children = (
 				31B1C2912B8F179700B5EC1C /* CreateRecruitViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		31B1C2932B8F260E00B5EC1C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				31B1C2942B8F261E00B5EC1C /* RecruitDeatilViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1895,6 +1906,7 @@
 				09ED94382B2C325C001864EF /* BlockAPI.swift in Sources */,
 				09C5A6F72B4ADD61004586CE /* NotificationArchiveVC.swift in Sources */,
 				09472C152B131D4700B4A84E /* BaseInfoManager.swift in Sources */,
+				31B1C2952B8F261E00B5EC1C /* RecruitDeatilViewController.swift in Sources */,
 				31AD5DA32B5C21F70050C8D8 /* ChatViewModel.swift in Sources */,
 				090979002AF287E0006BD8DE /* NavigationBarView.swift in Sources */,
 				09ED941D2B2C316E001864EF /* BlockReponseDTO.swift in Sources */,
