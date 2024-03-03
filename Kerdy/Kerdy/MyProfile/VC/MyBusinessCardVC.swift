@@ -41,7 +41,8 @@ final class MyBusinessCardVC: UIViewController {
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "김커디"
+        label.text = ""
+        label.adjustsFontSizeToFitWidth = true
         label.font = .nanumSquare(to: .bold, size: 17)
         return label
     }()
@@ -269,10 +270,10 @@ final class MyBusinessCardVC: UIViewController {
         }
         
         nameLabel.snp.makeConstraints {
-            $0.width.equalTo(47)
             $0.height.equalTo(16)
             $0.top.equalToSuperview().offset(167)
             $0.leading.equalToSuperview().offset(17)
+            $0.trailing.equalTo(greenRing.snp.leading).offset(-10)
         }
         
         introduceLabel.snp.makeConstraints {

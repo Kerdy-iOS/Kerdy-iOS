@@ -45,7 +45,8 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate, Profil
     
     private lazy var nameLabel: UILabel = {
        let label = UILabel()
-        label.text = "김커디"
+        label.text = ""
+        label.adjustsFontSizeToFitWidth = true
         label.font = .nanumSquare(to: .bold, size: 17)
         return label
     }()
@@ -208,12 +209,6 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate, Profil
                 self?.setTags()
             })
             .disposed(by: disposeBag)
-        
-//        profileViewModel.myTags
-//            .subscribe(onNext: { [weak self] _ in
-//                self?.setTags()
-//            })
-//            .disposed(by: disposeBag)
     }
 
     private func updateUI(member: MemberProfileResponseDTO) {
@@ -289,6 +284,7 @@ final class ProfileEditVC: UIViewController, ProfileActivityCellDelegate, Profil
             $0.height.equalTo(16)
             $0.top.equalToSuperview().offset(184)
             $0.leading.equalToSuperview().offset(17)
+            $0.trailing.equalTo(greenRing.snp.leading).offset(-10)
         }
         
         descTextView.snp.makeConstraints {
